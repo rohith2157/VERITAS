@@ -413,8 +413,12 @@ export default function DalaInteractiveCanvas({ theme = 'dark', scrollProgress }
       mouse.x += (mouse.targetX - mouse.x) * 0.05;
       mouse.y += (mouse.targetY - mouse.y) * 0.05;
 
-      // Lerp scroll
-      smoothScroll += (targetScrollNorm - smoothScroll) * 0.08;
+      // Lerp scroll (or use synchronized ASScroll progress if provided)
+      if (typeof progressRef.current === 'number') {
+        smoothScroll = progressRef.current;
+      } else {
+        smoothScroll += (targetScrollNorm - smoothScroll) * 0.08;
+      }
 
       const prefersReducedMotion = typeof window !== 'undefined' &&
         window.matchMedia &&

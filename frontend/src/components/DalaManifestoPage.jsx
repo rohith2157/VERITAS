@@ -1,8 +1,81 @@
-import React, { useState } from 'react';
-import { ArrowLeft, ArrowRight, Sparkles, CheckCircle, ShieldCheck, Cpu, Database, Network } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { ArrowLeft, ArrowRight, Sparkles, ShieldCheck, Cpu, Database, Network } from 'lucide-react';
+
+/**
+ * SplitLine: exact Dala rotating line reveal animation
+ * animate-from="preset: 'splitTextRotateIn', rotate: 7, delay: ..., duration: 0.8"
+ */
+function SplitLine({ children, inView, delay = 0, style = {}, align = 'start' }) {
+  return (
+    <div style={{ display: 'block', textAlign: align, position: 'relative', overflow: 'hidden', ...style }}>
+      <div
+        style={{
+          transformOrigin: '0px 0px',
+          transform: inView ? 'translate(0px, 0px) rotate(0deg)' : 'translate(0px, 120%) rotate(7deg)',
+          transition: `transform 0.85s cubic-bezier(0.16, 1, 0.3, 1) ${delay}s`,
+          willChange: 'transform'
+        }}
+      >
+        {children}
+      </div>
+    </div>
+  );
+}
 
 export default function DalaManifestoPage({ onOpenStudio, onOpenClassroom, onOpenDemoBench }) {
   const [activePartnerSlide, setActivePartnerSlide] = useState(0);
+
+  // Section visibility tracking for splitTextRotateIn
+  const [visibleSections, setVisibleSections] = useState({
+    landing: true,
+    intro: false,
+    chaos1: false,
+    chaos2: false,
+    chaos3: false,
+    lightbulb: false,
+    world: false,
+    team: false,
+    investors: false,
+    footer: false
+  });
+
+  const sectionRefs = {
+    landing: useRef(null),
+    intro: useRef(null),
+    chaos1: useRef(null),
+    chaos2: useRef(null),
+    chaos3: useRef(null),
+    lightbulb: useRef(null),
+    world: useRef(null),
+    team: useRef(null),
+    investors: useRef(null),
+    footer: useRef(null)
+  };
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const key = entry.target.getAttribute('data-section-key');
+            if (key) {
+              setVisibleSections((prev) => ({ ...prev, [key]: true }));
+            }
+          }
+        });
+      },
+      { threshold: 0.15 }
+    );
+
+    Object.entries(sectionRefs).forEach(([key, ref]) => {
+      if (ref.current) {
+        ref.current.setAttribute('data-section-key', key);
+        observer.observe(ref.current);
+      }
+    });
+
+    return () => observer.disconnect();
+  }, []);
 
   const triadNodes = [
     {
@@ -60,209 +133,354 @@ export default function DalaManifestoPage({ onOpenStudio, onOpenClassroom, onOpe
   return (
     <div style={{ position: 'relative', zIndex: 1, color: 'var(--color-bone-white)', background: 'transparent' }}>
       
-      {/* ==================== 1. HERO SECTION (Frames 1-4) ==================== */}
-      <section style={{
-        minHeight: '100vh',
-        display: 'flex',
-        alignItems: 'center',
-        padding: '120px 32px 60px',
-        maxWidth: 'var(--page-max-width)',
-        margin: '0 auto',
-        boxSizing: 'border-box'
-      }}>
-        <div style={{ maxWidth: 620 }}>
-          <div style={{
-            fontSize: 13,
-            fontWeight: 600,
-            textTransform: 'uppercase',
-            letterSpacing: '0.35px',
-            color: 'var(--color-saffron-spark)',
-            marginBottom: 24,
-            display: 'inline-block'
-          }}>
-            STOP GUESSING INTEGRITY. VERIFY WITH COLLECTIVE TRUTH.
-          </div>
-
-          <h1 className="display-title" style={{ marginBottom: 32, lineHeight: 1.05 }}>
-            <span style={{ display: 'block' }}>Unlock</span>
-            <span style={{ display: 'block' }}>collective</span>
-            <span style={{ display: 'block' }}>truth.</span>
-          </h1>
-
-          <p className="body-light" style={{ marginBottom: 40, maxWidth: 540, lineHeight: 1.6 }}>
-            Plug into the Veritas distributed intelligence triad. Three specialized engines — Python Vector & AST Fingerprinting, Spring Boot Institutional Ledger, and React Real-time Forensics — operating in synchrony to expose collusion, paraphrase evasion, and AI synthetic fabrication.
-          </p>
-
-          <div style={{ display: 'flex', alignItems: 'center', gap: 18, flexWrap: 'wrap' }}>
-            <button
-              onClick={onOpenStudio}
-              className="btn-pill-primary"
-            >
-              Launch Studio
-            </button>
-
-            <button
-              onClick={onOpenDemoBench}
-              className="btn-ghost"
-              style={{ color: 'var(--color-silver-mist)' }}
-            >
-              <span>1-Click Bench</span>
-              <Sparkles size={15} color="var(--color-saffron-spark)" />
-            </button>
-          </div>
-        </div>
-      </section>
-
-      {/* ==================== 2. MAKE DECISIONS WITH CONFIDENCE (Frames 5-9) ==================== */}
-      <section style={{
-        minHeight: '90vh',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'flex-end',
-        padding: '100px 32px',
-        maxWidth: 'var(--page-max-width)',
-        margin: '0 auto',
-        boxSizing: 'border-box'
-      }}>
-        <div style={{ maxWidth: 540 }}>
-          <span className="eyebrow-accent">
-            TRIAD ARCHITECTURE & CONVICTION
-          </span>
-
-          <h2 className="heading-lg" style={{ marginBottom: 28 }}>
-            Make decisions with confidence
+      {/* ==================== 1. LANDING / HERO (Frames 1-4) ==================== */}
+      <div anchor-target="landing"></div>
+      <section
+        ref={sectionRefs.landing}
+        className="section landing | js-section"
+        section-name="landing"
+        style={{
+          minHeight: '100vh',
+          display: 'flex',
+          alignItems: 'center',
+          padding: '140px 32px 80px',
+          maxWidth: 'var(--page-max-width)',
+          margin: '0 auto',
+          boxSizing: 'border-box'
+        }}
+      >
+        <div style={{ maxWidth: 640 }}>
+          <h2 className="display-title" style={{ marginBottom: 28, lineHeight: 1.05 }}>
+            <SplitLine inView={visibleSections.landing} delay={0}>
+              <span style={{ display: 'block' }}>Unlock</span>
+            </SplitLine>
+            <SplitLine inView={visibleSections.landing} delay={0.12}>
+              <span style={{ display: 'block' }}>collective</span>
+            </SplitLine>
+            <SplitLine inView={visibleSections.landing} delay={0.24}>
+              <span style={{ display: 'block' }}>truth.</span>
+            </SplitLine>
           </h2>
 
-          <p className="body-light" style={{ lineHeight: 1.6 }}>
-            Veritas unifies three autonomous detection nodes in a continuous verification circle. While traditional scanners check isolated strings, our triad correlates structural AST syntax trees, cross-language homoglyph attacks, and semantic perplexity in milliseconds.
-          </p>
+          <div className="mobile-blur mt-0 mb-auto">
+            <div className="landing__body">
+              <SplitLine inView={visibleSections.landing} delay={0.35}>
+                <div style={{
+                  fontSize: 14,
+                  fontWeight: 600,
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.04em',
+                  color: 'var(--color-saffron-spark)',
+                  marginBottom: 16
+                }}>
+                  Stop guessing integrity. Start verifying it.
+                </div>
+              </SplitLine>
+
+              <SplitLine inView={visibleSections.landing} delay={0.45}>
+                <p className="body-light" style={{ marginBottom: 36, maxWidth: 540, lineHeight: 1.6 }}>
+                  Plug into the Veritas distributed intelligence triad. Three specialized engines — Python Vector & AST Fingerprinting, Spring Boot Institutional Ledger, and React Real-time Forensics — operating in synchrony to expose collusion, paraphrase evasion, and AI synthetic fabrication.
+                </p>
+              </SplitLine>
+
+              <div style={{ overflow: 'hidden' }}>
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 18,
+                  flexWrap: 'wrap',
+                  transform: visibleSections.landing ? 'translate(0px, 0px)' : 'translate(0px, 120%)',
+                  transition: 'transform 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.55s'
+                }}>
+                  <button
+                    onClick={onOpenStudio}
+                    className="btn-pill-primary"
+                  >
+                    Launch Studio
+                  </button>
+
+                  <button
+                    onClick={onOpenDemoBench}
+                    className="btn-ghost"
+                    style={{ color: 'var(--color-silver-mist)' }}
+                  >
+                    <span>1-Click Bench</span>
+                    <Sparkles size={15} color="var(--color-saffron-spark)" />
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* ==================== 3. CHAOS & DISPERSED FRAGMENTS (Frames 10-18) ==================== */}
-      <section style={{
-        minHeight: '110vh',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        textAlign: 'center',
-        padding: '120px 24px',
-        maxWidth: 900,
-        margin: '0 auto',
-        boxSizing: 'border-box'
-      }}>
-        <p style={{
-          fontSize: 'clamp(22px, 3.5vw, 36px)',
-          fontWeight: 400,
-          lineHeight: 1.35,
-          color: 'var(--color-bone-white)',
-          marginBottom: 48,
-          letterSpacing: '-0.8px'
-        }}>
-          This is academic evaluation today. Dispersed submissions, siloed classrooms, undetected AI substitutions, and fragmented grading criteria.
-        </p>
-
-        <div style={{
+      {/* ==================== 2. INTRODUCTION: DECISIONS WITH CONFIDENCE (Frames 5-9) ==================== */}
+      <section
+        ref={sectionRefs.intro}
+        className="section section--tall introduction | js-section"
+        style={{
+          minHeight: '100vh',
           display: 'flex',
-          flexDirection: 'column',
-          gap: 24,
-          maxWidth: 680,
-          color: 'var(--color-silver-mist)',
-          fontSize: 18,
-          fontWeight: 200,
-          lineHeight: 1.6
-        }}>
-          <p>
-            30% of faculty hours are consumed cross-checking code duplicates and investigating disguised text.
-          </p>
-          <p>
-            Single-vector plagiarism detectors miss Cyrillic homoglyph substitutions, structural AST reshuffling, and LLM burstiness anomalies.
-          </p>
-          <p style={{ color: 'var(--color-saffron-spark)', fontWeight: 400 }}>
-            Leaving instructors to connect the dots with incomplete evidence and subjective guesswork.
-          </p>
+          alignItems: 'center',
+          justifyContent: 'flex-end',
+          padding: '120px 32px',
+          maxWidth: 'var(--page-max-width)',
+          margin: '0 auto',
+          boxSizing: 'border-box'
+        }}
+      >
+        <div style={{ maxWidth: 560 }}>
+          <SplitLine inView={visibleSections.intro} delay={0}>
+            <span className="eyebrow-accent" style={{ marginBottom: 12 }}>
+              TRIAD ARCHITECTURE & CONVICTION
+            </span>
+          </SplitLine>
+
+          <h2 className="heading-lg" style={{ marginBottom: 28 }}>
+            <SplitLine inView={visibleSections.intro} delay={0.1}>
+              Make decisions
+            </SplitLine>
+            <SplitLine inView={visibleSections.intro} delay={0.2}>
+              with confidence
+            </SplitLine>
+          </h2>
+
+          <div className="body-light" style={{ lineHeight: 1.6 }}>
+            <SplitLine inView={visibleSections.intro} delay={0.3}>
+              Veritas unifies three autonomous detection nodes in a continuous
+            </SplitLine>
+            <SplitLine inView={visibleSections.intro} delay={0.38}>
+              verification circle. While traditional scanners check isolated strings,
+            </SplitLine>
+            <SplitLine inView={visibleSections.intro} delay={0.46}>
+              our triad correlates structural AST syntax trees, cross-language
+            </SplitLine>
+            <SplitLine inView={visibleSections.intro} delay={0.54}>
+              homoglyph attacks, and semantic perplexity in milliseconds.
+            </SplitLine>
+          </div>
         </div>
       </section>
+
+      {/* ==================== 3. MANIFESTO INTRODUCTION / DISPERSED CHAOS (Frames 10-18) ==================== */}
+      <div className="js-section" section-name="manifesto">
+        <div className="manifesto--introduction-container" style={{ maxWidth: 960, margin: '0 auto', padding: '60px 24px' }}>
+          
+          {/* Chaos Block 1 */}
+          <div ref={sectionRefs.chaos1} className="section manifesto--introduction" style={{ minHeight: '60vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', textAlign: 'center' }}>
+            <div className="manifesto__body">
+              <div style={{ fontSize: 'clamp(24px, 3.8vw, 42px)', fontWeight: 400, lineHeight: 1.35, color: 'var(--color-bone-white)', marginBottom: 28, letterSpacing: '-0.8px' }}>
+                <SplitLine inView={visibleSections.chaos1} delay={0} align="center">
+                  This is academic evaluation today. Countless fragments of critical
+                </SplitLine>
+                <SplitLine inView={visibleSections.chaos1} delay={0.12} align="center">
+                  knowledge scattered across hundreds of disparate systems.
+                </SplitLine>
+              </div>
+
+              <div style={{ fontSize: 18, color: 'var(--color-silver-mist)', fontWeight: 300, lineHeight: 1.6 }}>
+                <SplitLine inView={visibleSections.chaos1} delay={0.24} align="center">
+                  30% of faculty hours are consumed cross-checking code duplicates
+                </SplitLine>
+                <SplitLine inView={visibleSections.chaos1} delay={0.32} align="center">
+                  and investigating disguised, paraphrased text.
+                </SplitLine>
+              </div>
+            </div>
+          </div>
+
+          {/* Chaos Block 2 */}
+          <div ref={sectionRefs.chaos2} className="section manifesto--introduction" style={{ minHeight: '60vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', textAlign: 'center' }}>
+            <div className="manifesto__body">
+              <div style={{ fontSize: 'clamp(24px, 3.8vw, 42px)', fontWeight: 400, lineHeight: 1.35, color: 'var(--color-bone-white)', marginBottom: 28, letterSpacing: '-0.8px' }}>
+                <SplitLine inView={visibleSections.chaos2} delay={0} align="center">
+                  The impossible battle to make sense of this chaos leaves
+                </SplitLine>
+                <SplitLine inView={visibleSections.chaos2} delay={0.12} align="center">
+                  evaluators overwhelmed and uncertain.
+                </SplitLine>
+              </div>
+
+              <div style={{ fontSize: 18, color: 'var(--color-silver-mist)', fontWeight: 300, lineHeight: 1.6 }}>
+                <SplitLine inView={visibleSections.chaos2} delay={0.24} align="center">
+                  Instructors are confronted with the anxiety of false positives,
+                </SplitLine>
+                <SplitLine inView={visibleSections.chaos2} delay={0.32} align="center">
+                  or aimlessly trying to connect the dots with incomplete context.
+                </SplitLine>
+              </div>
+            </div>
+          </div>
+
+          {/* Chaos Block 3 */}
+          <div ref={sectionRefs.chaos3} className="section manifesto--introduction" style={{ minHeight: '60vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', textAlign: 'center' }}>
+            <div className="manifesto__body">
+              <div style={{ fontSize: 'clamp(24px, 3.8vw, 42px)', fontWeight: 400, lineHeight: 1.35, color: 'var(--color-bone-white)', marginBottom: 28, letterSpacing: '-0.8px' }}>
+                <SplitLine inView={visibleSections.chaos3} delay={0} align="center">
+                  Legacy solutions are cumbersome and quickly bypassed.
+                </SplitLine>
+                <SplitLine inView={visibleSections.chaos3} delay={0.12} align="center">
+                  Yet another black-box scanner that requires continuous overrides.
+                </SplitLine>
+              </div>
+
+              <div style={{ fontSize: 18, color: 'var(--color-silver-mist)', fontWeight: 300, lineHeight: 1.6 }}>
+                <SplitLine inView={visibleSections.chaos3} delay={0.24} align="center">
+                  They fail to explain why a submission was flagged, eroding the trust
+                </SplitLine>
+                <SplitLine inView={visibleSections.chaos3} delay={0.32} align="center">
+                  between educators and students.
+                </SplitLine>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
 
       {/* ==================== 4. SPARK LIGHTBULB MOMENTS (Frames 19-29) ==================== */}
-      <section style={{
-        minHeight: '100vh',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'flex-end',
-        padding: '100px 32px',
-        maxWidth: 'var(--page-max-width)',
-        margin: '0 auto',
-        boxSizing: 'border-box'
-      }}>
-        <div style={{ maxWidth: 560 }}>
-          <span className="eyebrow-accent">
-            TRIAD CONSENSUS & PROOF
-          </span>
+      <section
+        ref={sectionRefs.lightbulb}
+        className="section section--tall manifesto manifesto--section items-end@md js-section"
+        section-name="manifesto"
+        style={{
+          minHeight: '100vh',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'flex-end',
+          padding: '120px 32px',
+          maxWidth: 'var(--page-max-width)',
+          margin: '0 auto',
+          boxSizing: 'border-box'
+        }}
+      >
+        <div className="manifesto__inner mobile-blur" style={{ maxWidth: 560 }}>
+          <SplitLine inView={visibleSections.lightbulb} delay={0}>
+            <span className="eyebrow-accent" style={{ marginBottom: 12 }}>
+              A CLEAR SOURCE OF TRUTH
+            </span>
+          </SplitLine>
 
           <h2 className="heading-lg" style={{ marginBottom: 28 }}>
-            Spark lightbulb moments
+            <SplitLine inView={visibleSections.lightbulb} delay={0.1}>
+              Spark lightbulb
+            </SplitLine>
+            <SplitLine inView={visibleSections.lightbulb} delay={0.2}>
+              moments
+            </SplitLine>
           </h2>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-            <p className="body-light">
-              Veritas acts as your unified, real-time integrity engine that eliminates the ambiguity of single-score cheating reports.
-            </p>
-            <p className="body-light">
-              Node A (FastAPI) parses winnowing k-grams and AST syntax trees; Node B (Spring Boot) cross-validates institution-wide student cohorts; Node C (Studio) surfaces visual side-by-side diff matrices.
-            </p>
-            <p className="body-light">
-              Immediate, mathematical proof that empowers educators to mentor rather than police.
-            </p>
+          <div className="manifesto__body" style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+            <div className="body-light">
+              <SplitLine inView={visibleSections.lightbulb} delay={0.3}>
+                Veritas is your intelligent, real-time source of truth that
+              </SplitLine>
+              <SplitLine inView={visibleSections.lightbulb} delay={0.36}>
+                eliminates the anxiety and ambiguity of splintered scanners.
+              </SplitLine>
+            </div>
+
+            <div className="body-light">
+              <SplitLine inView={visibleSections.lightbulb} delay={0.42}>
+                We connect the three engines behind the scenes and pull together
+              </SplitLine>
+              <SplitLine inView={visibleSections.lightbulb} delay={0.48}>
+                exactly the forensic proof into an elegant side-by-side view.
+              </SplitLine>
+            </div>
+
+            <div className="body-light">
+              <SplitLine inView={visibleSections.lightbulb} delay={0.54}>
+                Empower your faculty with mathematical conviction and clarity.
+              </SplitLine>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* ==================== 5. BUILD A CULTURE OF ORIGINALITY (Frames 30-34) ==================== */}
-      <section style={{
-        minHeight: '100vh',
-        display: 'flex',
-        alignItems: 'center',
-        padding: '100px 32px',
-        maxWidth: 'var(--page-max-width)',
-        margin: '0 auto',
-        boxSizing: 'border-box'
-      }}>
-        <div style={{ maxWidth: 560 }}>
-          <span className="eyebrow-accent">
-            INTENTIONAL RIGOR & EMPATHY
-          </span>
+      {/* ==================== 5. BUILD A BETTER WORLD OF WORK / LEARNING (Frames 30-34) ==================== */}
+      <section
+        ref={sectionRefs.world}
+        className="section section--tall manifesto manifesto--section items-start@md js-section"
+        section-name="manifesto"
+        style={{
+          minHeight: '100vh',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'flex-start',
+          padding: '120px 32px',
+          maxWidth: 'var(--page-max-width)',
+          margin: '0 auto',
+          boxSizing: 'border-box'
+        }}
+      >
+        <div className="manifesto__inner mobile-blur" style={{ maxWidth: 560 }}>
+          <SplitLine inView={visibleSections.world} delay={0}>
+            <span className="eyebrow-accent" style={{ marginBottom: 12 }}>
+              INTENTIONAL RIGOR & PURPOSE
+            </span>
+          </SplitLine>
 
           <h2 className="heading-lg" style={{ marginBottom: 28 }}>
-            Build a culture of genuine originality
+            <SplitLine inView={visibleSections.world} delay={0.1}>
+              Build a culture
+            </SplitLine>
+            <SplitLine inView={visibleSections.world} delay={0.2}>
+              of genuine originality
+            </SplitLine>
           </h2>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-            <p className="body-light">
-              Our mission is to restore trust in human authorship and student inquiry — reframing integrity from punitive surveillance to authentic mastery.
-            </p>
-            <p className="body-light">
-              Educators and students do their best work when submissions are evaluated with objective rigor, transparent explainability, and pedagogical empathy.
-            </p>
-            <p className="body-light">
-              Every scan generates actionable forensic insight, proving where thought originated and how ideas evolved.
-            </p>
+          <div className="manifesto__body" style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+            <div className="body-light">
+              <SplitLine inView={visibleSections.world} delay={0.3}>
+                Our mission is to restore trust in human scholarship —
+              </SplitLine>
+              <SplitLine inView={visibleSections.world} delay={0.36}>
+                reframing integrity from punitive policing to authentic mastery.
+              </SplitLine>
+            </div>
+
+            <div className="body-light">
+              <SplitLine inView={visibleSections.world} delay={0.42}>
+                Students and researchers produce their best work when submissions
+              </SplitLine>
+              <SplitLine inView={visibleSections.world} delay={0.48}>
+                are evaluated with transparent explainability and fairness.
+              </SplitLine>
+            </div>
+
+            <div className="body-light">
+              <SplitLine inView={visibleSections.world} delay={0.54}>
+                We want to recreate that confidence on every submission.
+              </SplitLine>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* ==================== 6. THE ENGINES BEHIND VERITAS ==================== */}
-      <section style={{
-        minHeight: '80vh',
-        padding: '100px 32px',
-        maxWidth: 'var(--page-max-width)',
-        margin: '0 auto',
-        boxSizing: 'border-box'
-      }}>
+      {/* ==================== 6. THE ENGINES BEHIND VERITAS (TEAM) ==================== */}
+      <section
+        ref={sectionRefs.team}
+        className="section js-section js-team-section mb-1"
+        section-name="team"
+        anchor-target="team"
+        style={{
+          minHeight: '80vh',
+          padding: '120px 32px 80px',
+          maxWidth: 'var(--page-max-width)',
+          margin: '0 auto',
+          boxSizing: 'border-box'
+        }}
+      >
         <div style={{ marginBottom: 48 }}>
-          <span className="eyebrow-accent">THE TRIAD ARCHITECTURE</span>
-          <h2 className="heading-md">The engines behind Veritas</h2>
+          <SplitLine inView={visibleSections.team} delay={0}>
+            <span className="eyebrow-accent">THE TRIAD ARCHITECTURE</span>
+          </SplitLine>
+          <h2 className="heading-md">
+            <SplitLine inView={visibleSections.team} delay={0.1}>
+              The engines behind Veritas
+            </SplitLine>
+          </h2>
         </div>
 
         <div style={{
@@ -283,7 +501,7 @@ export default function DalaManifestoPage({ onOpenStudio, onOpenClassroom, onOpe
                   display: 'flex',
                   flexDirection: 'column',
                   justifyContent: 'space-between',
-                  transition: 'transform 0.2s ease, border-color 0.2s ease, background-color 0.2s ease'
+                  transition: 'transform 0.25s ease, border-color 0.25s ease, background-color 0.25s ease'
                 }}
               >
                 <div>
@@ -349,19 +567,23 @@ export default function DalaManifestoPage({ onOpenStudio, onOpenClassroom, onOpe
         </div>
       </section>
 
-      {/* ==================== 7. INSTITUTIONAL ACCREDITATION (Frames 35-39) ==================== */}
-      <section style={{
-        minHeight: '80vh',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'flex-end',
-        padding: '100px 32px',
-        maxWidth: 'var(--page-max-width)',
-        margin: '0 auto',
-        boxSizing: 'border-box'
-      }}>
+      {/* ==================== 7. INVESTORS & PARTNERS (Frames 35-39) ==================== */}
+      <section
+        ref={sectionRefs.investors}
+        className="investors"
+        style={{
+          minHeight: '80vh',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'flex-end',
+          padding: '120px 32px',
+          maxWidth: 'var(--page-max-width)',
+          margin: '0 auto',
+          boxSizing: 'border-box'
+        }}
+      >
         <div style={{ maxWidth: 540 }}>
-          {/* Arrow navigation buttons in purple circles */}
+          {/* Arrow navigation buttons in violet circles */}
           <div style={{ display: 'flex', gap: 12, marginBottom: 32 }}>
             <button
               onClick={() => setActivePartnerSlide(prev => (prev - 1 + partners.length) % partners.length)}
@@ -402,12 +624,22 @@ export default function DalaManifestoPage({ onOpenStudio, onOpenClassroom, onOpe
           </div>
 
           <h2 className="heading-lg" style={{ marginBottom: 24 }}>
-            Validated across academia
+            <SplitLine inView={visibleSections.investors} delay={0}>
+              Validated across
+            </SplitLine>
+            <SplitLine inView={visibleSections.investors} delay={0.1}>
+              academia
+            </SplitLine>
           </h2>
 
-          <p className="body-light" style={{ lineHeight: 1.6, marginBottom: 32 }}>
-            We collaborate with leading academic consortia, computer science departments, and AI safety labs to continually benchmark detection fidelity.
-          </p>
+          <div className="body-light" style={{ lineHeight: 1.6, marginBottom: 32 }}>
+            <SplitLine inView={visibleSections.investors} delay={0.2}>
+              We collaborate with leading research consortia, computer science
+            </SplitLine>
+            <SplitLine inView={visibleSections.investors} delay={0.28}>
+              departments, and AI labs to continually benchmark detection fidelity.
+            </SplitLine>
+          </div>
 
           <div style={{
             background: 'var(--bg-card)',
@@ -428,19 +660,23 @@ export default function DalaManifestoPage({ onOpenStudio, onOpenClassroom, onOpe
         </div>
       </section>
 
-      {/* ==================== 8. FINAL CTA & LOGO CONVERGENCE (Frames 40-42) ==================== */}
-      <section style={{
-        minHeight: '85vh',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        textAlign: 'center',
-        padding: '120px 24px',
-        maxWidth: 900,
-        margin: '0 auto',
-        boxSizing: 'border-box'
-      }}>
+      {/* ==================== 8. FINAL CTA & FOOTER ==================== */}
+      <section
+        ref={sectionRefs.footer}
+        className="section footer | js-section"
+        style={{
+          minHeight: '85vh',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+          textAlign: 'center',
+          padding: '120px 24px',
+          maxWidth: 900,
+          margin: '0 auto',
+          boxSizing: 'border-box'
+        }}
+      >
         <h2 style={{
           fontSize: 'clamp(36px, 5.5vw, 68px)',
           fontWeight: 400,
@@ -449,8 +685,12 @@ export default function DalaManifestoPage({ onOpenStudio, onOpenClassroom, onOpe
           lineHeight: 1.15,
           marginBottom: 36
         }}>
-          Your institution has the standard.<br />
-          Veritas delivers the proof.
+          <SplitLine inView={visibleSections.footer} delay={0} align="center">
+            Your institution has the standard.
+          </SplitLine>
+          <SplitLine inView={visibleSections.footer} delay={0.12} align="center">
+            Veritas delivers the proof.
+          </SplitLine>
         </h2>
 
         <button
@@ -462,7 +702,7 @@ export default function DalaManifestoPage({ onOpenStudio, onOpenClassroom, onOpe
         </button>
       </section>
 
-      {/* ==================== 9. FOOTER ==================== */}
+      {/* ==================== FOOTER BAR ==================== */}
       <footer style={{
         borderTop: '1px solid var(--border-subtle)',
         padding: '36px 32px',
