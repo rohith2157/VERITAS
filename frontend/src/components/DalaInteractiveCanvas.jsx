@@ -8,10 +8,17 @@ import * as THREE from 'three';
  * 4. Lightbulb (Left) -> 5. Sphere / Globe (Right) ->
  * 6. Wireframe Prisms (Investors) -> 7. Dala Logo (Center)
  */
-export default function DalaInteractiveCanvas({ theme = 'dark' }) {
+export default function DalaInteractiveCanvas({ theme = 'dark', scrollProgress }) {
   const mountRef = useRef(null);
   const sceneRef = useRef(null);
   const materialRef = useRef(null);
+  const progressRef = useRef(scrollProgress);
+
+  useEffect(() => {
+    if (typeof scrollProgress === 'number') {
+      progressRef.current = scrollProgress;
+    }
+  }, [scrollProgress]);
 
   // Dynamically update canvas background and material when theme changes
   useEffect(() => {
