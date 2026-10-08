@@ -1,14 +1,28 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense, lazy } from 'react';
 import Navbar from './components/Navbar';
 import DalaInteractiveCanvas from './components/DalaInteractiveCanvas';
 import DalaManifestoPage from './components/DalaManifestoPage';
-import UniversalStudio from './components/studio/UniversalStudio';
-import ClassroomPortal from './components/classroom/ClassroomPortal';
-import DemoBench from './components/DemoBench';
+
+const UniversalStudio = lazy(() => import('./components/studio/UniversalStudio'));
+const ClassroomPortal = lazy(() => import('./components/classroom/ClassroomPortal'));
+const DemoBench = lazy(() => import('./components/DemoBench'));
 
 export default function App() {
   const [activeTab, setActiveTab] = useState('manifesto'); // 'manifesto', 'studio', 'classroom', 'demobench'
   const [serverStatus, setServerStatus] = useState({ online: false, spring: false, python: false });
+  const [theme, setTheme] = useState(() => {
+    return localStorage.getItem('veritas_theme') || 'dark';
+  });
+
+  const toggleTheme = () => {
+    const next = theme === 'dark' ? 'light' : 'dark';
+    setTheme(next);
+    localStorage.setItem('veritas_theme', next);
+  };
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+  }, [theme]);
 
   const checkHealth = async () => {
     let pythonUp = false;
@@ -38,16 +52,18 @@ export default function App() {
   }, []);
 
   return (
-    <div style={{ position: 'relative', minHeight: '100vh', background: '#000000', overflowX: 'hidden' }}>
+    <div style={{ position: 'relative', minHeight: '100vh', background: 'var(--color-void)', overflowX: 'hidden', transition: 'background-color 0.25s ease' }}>
       
       {/* 1. Global 3D Scroll-Morphing Particle Canvas */}
-      <DalaInteractiveCanvas />
+      <DalaInteractiveCanvas theme={theme} />
 
       {/* 2. Top-Aligned Sticky Navbar */}
       <Navbar
         activeTab={activeTab}
         setActiveTab={setActiveTab}
         serverStatus={serverStatus}
+        theme={theme}
+        toggleTheme={toggleTheme}
       />
 
       {/* 3. Main View Router */}
@@ -69,23 +85,30 @@ export default function App() {
           />
         )}
 
-        {activeTab === 'studio' && (
-          <div style={{ paddingTop: 80 }}>
-            <UniversalStudio />
+        <Suspense fallback={
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '60vh', color: 'var(--color-ash-gray)', fontSize: 13, textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+            <span style={{ display: 'inline-block', width: 8, height: 8, borderRadius: '50%', background: 'var(--color-electric-iris)', marginRight: 10, animation: 'pulse 1.2s infinite' }} />
+            Initializing Node Telemetry...
           </div>
-        )}
+        }>
+          {activeTab === 'studio' && (
+            <div style={{ paddingTop: 80 }}>
+              <UniversalStudio />
+            </div>
+          )}
 
-        {activeTab === 'classroom' && (
-          <div style={{ paddingTop: 80 }}>
-            <ClassroomPortal />
-          </div>
-        )}
+          {activeTab === 'classroom' && (
+            <div style={{ paddingTop: 80 }}>
+              <ClassroomPortal />
+            </div>
+          )}
 
-        {activeTab === 'demobench' && (
-          <div style={{ paddingTop: 80 }}>
-            <DemoBench />
-          </div>
-        )}
+          {activeTab === 'demobench' && (
+            <div style={{ paddingTop: 80 }}>
+              <DemoBench />
+            </div>
+          )}
+        </Suspense>
       </main>
 
     </div>

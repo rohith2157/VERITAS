@@ -8,8 +8,22 @@ import * as THREE from 'three';
  * 4. Lightbulb (Left) -> 5. Sphere / Globe (Right) ->
  * 6. Wireframe Prisms (Investors) -> 7. Dala Logo (Center)
  */
-export default function DalaInteractiveCanvas() {
+export default function DalaInteractiveCanvas({ theme = 'dark' }) {
   const mountRef = useRef(null);
+  const sceneRef = useRef(null);
+  const materialRef = useRef(null);
+
+  // Dynamically update canvas background and material when theme changes
+  useEffect(() => {
+    if (sceneRef.current) {
+      sceneRef.current.background = new THREE.Color(theme === 'light' ? 0xf8f9fc : 0x000000);
+    }
+    if (materialRef.current) {
+      materialRef.current.blending = theme === 'light' ? THREE.NormalBlending : THREE.AdditiveBlending;
+      materialRef.current.opacity = theme === 'light' ? 0.88 : 0.95;
+      materialRef.current.needsUpdate = true;
+    }
+  }, [theme]);
 
   useEffect(() => {
     const container = mountRef.current;
@@ -20,7 +34,8 @@ export default function DalaInteractiveCanvas() {
 
     // 1. Scene, Camera, Renderer
     const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x000000);
+    scene.background = new THREE.Color(theme === 'light' ? 0xf8f9fc : 0x000000);
+    sceneRef.current = scene;
 
     const camera = new THREE.PerspectiveCamera(38, width / height, 0.1, 100);
     camera.position.set(0, 0, 12);
@@ -316,9 +331,10 @@ export default function DalaInteractiveCanvas() {
       transparent: true,
       vertexColors: true,
       depthWrite: false,
-      blending: THREE.AdditiveBlending,
-      opacity: 0.95
+      blending: theme === 'light' ? THREE.NormalBlending : THREE.AdditiveBlending,
+      opacity: theme === 'light' ? 0.88 : 0.95
     });
+    materialRef.current = material;
 
     const pointCloud = new THREE.Points(geometry, material);
     scene.add(pointCloud);
@@ -393,6 +409,10 @@ export default function DalaInteractiveCanvas() {
       // Lerp scroll
       smoothScroll += (targetScrollNorm - smoothScroll) * 0.08;
 
+      const prefersReducedMotion = typeof window !== 'undefined' &&
+        window.matchMedia &&
+        window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
       // Map smoothScroll (0 to 1) into index in [0, 6]
       const totalStages = 6;
       const stageFloat = Math.min(Math.max(smoothScroll * totalStages, 0), totalStages);
@@ -412,8 +432,8 @@ export default function DalaInteractiveCanvas() {
       for (let i = 0; i < COUNT; i++) {
         const idx = i * 3;
 
-        // Subtle organic breathing noise
-        const breath = Math.sin(elapsed * 1.5 + i) * 0.035;
+        // Subtle organic breathing noise (zeroed if prefers reduced motion)
+        const breath = prefersReducedMotion ? 0 : Math.sin(elapsed * 1.5 + i) * 0.035;
 
         const x1 = fromShape[idx];
         const y1 = fromShape[idx + 1];

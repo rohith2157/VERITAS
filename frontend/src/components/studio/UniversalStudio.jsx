@@ -214,7 +214,7 @@ def compute_fact(num):
         marginBottom: 36,
         flexWrap: 'wrap',
         gap: 24,
-        borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
+        borderBottom: '1px solid var(--border-subtle)',
         paddingBottom: 24
       }}>
         <div>
@@ -225,7 +225,7 @@ def compute_fact(num):
             Universal Originality Studio
           </h1>
           <p className="body-light" style={{ maxWidth: 540 }}>
-            Algorithmic document integrity and peer collusion discovery across the black velvet stage.
+            Algorithmic document integrity and peer collusion discovery across the Veritas Triad.
           </p>
         </div>
 
@@ -247,9 +247,9 @@ def compute_fact(num):
                   fontWeight: 600,
                   textTransform: 'uppercase',
                   letterSpacing: '0.025em',
-                  background: isActive ? 'var(--color-electric-iris)' : 'rgba(255, 255, 255, 0.04)',
+                  background: isActive ? 'var(--color-electric-iris)' : 'var(--bg-card)',
                   color: isActive ? '#ffffff' : 'var(--color-ash-gray)',
-                  border: isActive ? '1px solid var(--color-electric-iris)' : '1px solid rgba(255, 255, 255, 0.08)',
+                  border: isActive ? '1px solid var(--color-electric-iris)' : '1px solid var(--border-subtle)',
                   cursor: 'pointer',
                   transition: 'all 0.2s ease'
                 }}
@@ -268,7 +268,7 @@ def compute_fact(num):
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: 24, marginBottom: 24 }}>
             <div className="dala-surface">
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
-                <span style={{ fontWeight: 400, fontSize: 16, color: '#ffffff' }}>Primary Submission (Document A)</span>
+                <span style={{ fontWeight: 400, fontSize: 16, color: 'var(--color-bone-white)' }}>Primary Submission (Document A)</span>
                 <span style={{ fontSize: 12, color: 'var(--color-ash-gray)' }}>{textA.length} characters</span>
               </div>
               <textarea
@@ -283,7 +283,7 @@ def compute_fact(num):
 
             <div className="dala-surface">
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
-                <span style={{ fontWeight: 400, fontSize: 16, color: '#ffffff' }}>Comparison Source (Document B)</span>
+                <span style={{ fontWeight: 400, fontSize: 16, color: 'var(--color-bone-white)' }}>Comparison Source (Document B)</span>
                 <span style={{ fontSize: 12, color: 'var(--color-ash-gray)' }}>{textB.length} characters</span>
               </div>
               <textarea

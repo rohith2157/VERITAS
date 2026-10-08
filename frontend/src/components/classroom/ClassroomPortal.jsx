@@ -267,12 +267,12 @@ export default function ClassroomPortal() {
           <table className="matrix-table" style={{ textAlign: 'left' }}>
             <thead>
               <tr>
-                <th style={{ textAlign: 'left', background: '#0a0a0c', color: '#ffffff' }}>Student Name</th>
-                <th style={{ textAlign: 'left', background: '#0a0a0c', color: 'var(--color-silver-mist)' }}>File</th>
-                <th style={{ background: '#0a0a0c', color: 'var(--color-silver-mist)' }}>Peer Similarity</th>
-                <th style={{ background: '#0a0a0c', color: 'var(--color-silver-mist)' }}>Deduction / Rule</th>
-                <th style={{ background: '#0a0a0c', color: '#ffffff' }}>Final Grade</th>
-                <th style={{ background: '#0a0a0c', color: 'var(--color-silver-mist)' }}>Status</th>
+                <th style={{ textAlign: 'left', background: 'var(--input-bg)', color: 'var(--color-bone-white)' }}>Student Name</th>
+                <th style={{ textAlign: 'left', background: 'var(--input-bg)', color: 'var(--color-silver-mist)' }}>File</th>
+                <th style={{ background: 'var(--input-bg)', color: 'var(--color-silver-mist)' }}>Peer Similarity</th>
+                <th style={{ background: 'var(--input-bg)', color: 'var(--color-silver-mist)' }}>Deduction / Rule</th>
+                <th style={{ background: 'var(--input-bg)', color: 'var(--color-bone-white)' }}>Final Grade</th>
+                <th style={{ background: 'var(--input-bg)', color: 'var(--color-silver-mist)' }}>Status</th>
               </tr>
             </thead>
             <tbody>
@@ -283,7 +283,7 @@ export default function ClassroomPortal() {
 
                 return (
                   <tr key={s.id}>
-                    <td style={{ fontWeight: 400, color: '#ffffff' }}>{s.studentName}</td>
+                    <td style={{ fontWeight: 400, color: 'var(--color-bone-white)' }}>{s.studentName}</td>
                     <td style={{ color: 'var(--color-ash-gray)', fontSize: 12, fontFamily: 'var(--font-mono)' }}>{s.filename || 'essay.txt'}</td>
                     <td style={{ textAlign: 'center', fontWeight: 600, color: badgeColor }}>
                       {s.similarityScore ? `${s.similarityScore}%` : '—'}

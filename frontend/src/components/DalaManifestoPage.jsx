@@ -1,41 +1,60 @@
 import React, { useState } from 'react';
-import { ArrowLeft, ArrowRight, Sparkles, CheckCircle, ExternalLink } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Sparkles, CheckCircle, ShieldCheck, Cpu, Database, Network } from 'lucide-react';
 
 export default function DalaManifestoPage({ onOpenStudio, onOpenClassroom, onOpenDemoBench }) {
-  const [activeTeamSlide, setActiveTeamSlide] = useState(0);
-  const [activeInvestorSlide, setActiveInvestorSlide] = useState(0);
+  const [activePartnerSlide, setActivePartnerSlide] = useState(0);
 
-  const teamMembers = [
+  const triadNodes = [
     {
-      name: 'Haroun Hickman',
-      role: 'FOUNDER & CEO',
-      bio: 'Leading vision and product architecture at the intersection of collective intelligence and human workflow.',
-      image: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80'
+      name: 'Python FastAPI Engine',
+      port: 'PORT 8000',
+      role: 'FORENSICS & AST VECTOR NODE',
+      description: 'Executes Rabin-Karp winnowing fingerprinting, Cyrillic evasion decoding, Python AST clone detection, and perplexity burstiness metrics in <12ms.',
+      icon: Cpu,
+      stats: '4 Detection Modules'
     },
     {
-      name: 'Poppy Reid',
-      role: 'HEAD OF PRODUCT',
-      bio: 'Designing effortless interfaces that transform organizational knowledge fragments into shared understanding.',
-      image: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=600&q=80'
+      name: 'Spring Boot Enterprise Core',
+      port: 'PORT 8080',
+      role: 'INSTITUTIONAL LEDGER NODE',
+      description: 'JPA-backed repository coordinating cross-submission cohort matrix queries, evaluation rubrics, gradebook compliance, and audit trails.',
+      icon: Database,
+      stats: 'Enterprise JPA Ledger'
     },
     {
-      name: 'Joel Kang',
-      role: 'CO-FOUNDER & CTO',
-      bio: 'Building bleeding-edge distributed vector indices, algorithmic collusion networks, and real-time inference pipelines.',
-      image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=80'
+      name: 'Originality Studio WebGL',
+      port: 'PORT 5173',
+      role: 'INTERACTIVE VISUALIZER NODE',
+      description: 'Dual-pane synchronized diff inspection, cohort collusion heatmap clusters, and real-time 3D particle constellation telemetry.',
+      icon: Network,
+      stats: 'React 19 & Three.js'
     },
     {
-      name: 'Build with us.',
-      role: 'JOIN THE MISSION',
-      bio: 'We are actively hiring intentional, empathetic and curious people. Email careers@dala.ai with your portfolio.',
-      isHiring: true
+      name: 'Veritas Zero-Trust Protocol',
+      port: 'CONSORTIUM',
+      role: 'ADAPTIVE AI INTEGRITY',
+      description: 'Calibrating benchmark datasets against evolving LLM synthetic models to protect genuine human scholarship and academic rigor.',
+      icon: ShieldCheck,
+      stats: 'Open Integrity Protocol'
     }
   ];
 
-  const investors = [
-    { name: 'Progressive Operator Fund', tier: 'LEAD OPERATOR', note: 'Backing next-generation knowledge infrastructure' },
-    { name: 'Autonomous Capital', tier: 'EARLY STAGE', note: 'Distributed intelligence and enterprise scale' },
-    { name: 'Velocity Ventures', tier: 'SEED PARTNER', note: 'Human-centric AI workflows' },
+  const partners = [
+    {
+      name: 'Higher Education Research Alliance',
+      tier: 'TIER-1 UNIVERSITY RESEARCH',
+      note: 'Evaluating multi-student collusion graphs and AST clone detection across 25,000+ computer science and humanities submissions.'
+    },
+    {
+      name: 'Global Computer Science Consortium',
+      tier: 'CODE INTEGRITY BENCHMARK',
+      note: 'Benchmarked on 50,000+ competitive programming submissions against LeetCode, GitHub, and StackOverflow repos.'
+    },
+    {
+      name: 'Autonomous AI Integrity Foundation',
+      tier: 'SYNTHETIC DETECTION LAB',
+      note: 'Continuous empirical tracking of LLM generation fingerprints, perplexity variance, and paraphrase evasion patterns.'
+    }
   ];
 
   return (
@@ -61,17 +80,17 @@ export default function DalaManifestoPage({ onOpenStudio, onOpenClassroom, onOpe
             marginBottom: 24,
             display: 'inline-block'
           }}>
-            STOP MANAGING KNOWLEDGE. START USING IT.
+            STOP GUESSING INTEGRITY. VERIFY WITH COLLECTIVE TRUTH.
           </div>
 
           <h1 className="display-title" style={{ marginBottom: 32, lineHeight: 1.05 }}>
             <span style={{ display: 'block' }}>Unlock</span>
             <span style={{ display: 'block' }}>collective</span>
-            <span style={{ display: 'block' }}>wisdom.</span>
+            <span style={{ display: 'block' }}>truth.</span>
           </h1>
 
-          <p className="body-light" style={{ marginBottom: 40, maxWidth: 520, lineHeight: 1.6 }}>
-            Plug into your team's shared brainpower. Ask Dala to instantly find anything or anyone from any workplace system. Focus on doing your best work with context, conviction and clarity.
+          <p className="body-light" style={{ marginBottom: 40, maxWidth: 540, lineHeight: 1.6 }}>
+            Plug into the Veritas distributed intelligence triad. Three specialized engines — Python Vector & AST Fingerprinting, Spring Boot Institutional Ledger, and React Real-time Forensics — operating in synchrony to expose collusion, paraphrase evasion, and AI synthetic fabrication.
           </p>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: 18, flexWrap: 'wrap' }}>
@@ -79,7 +98,7 @@ export default function DalaManifestoPage({ onOpenStudio, onOpenClassroom, onOpe
               onClick={onOpenStudio}
               className="btn-pill-primary"
             >
-              Request Access
+              Launch Studio
             </button>
 
             <button
@@ -107,7 +126,7 @@ export default function DalaManifestoPage({ onOpenStudio, onOpenClassroom, onOpe
       }}>
         <div style={{ maxWidth: 540 }}>
           <span className="eyebrow-accent">
-            CONTEXT & CONVICTION
+            TRIAD ARCHITECTURE & CONVICTION
           </span>
 
           <h2 className="heading-lg" style={{ marginBottom: 28 }}>
@@ -115,7 +134,7 @@ export default function DalaManifestoPage({ onOpenStudio, onOpenClassroom, onOpe
           </h2>
 
           <p className="body-light" style={{ lineHeight: 1.6 }}>
-            Dala's bleeding-edge AI search tool automates extracting knowledge from across your organisation so that you can take the guesswork out of your work.
+            Veritas unifies three autonomous detection nodes in a continuous verification circle. While traditional scanners check isolated strings, our triad correlates structural AST syntax trees, cross-language homoglyph attacks, and semantic perplexity in milliseconds.
           </p>
         </div>
       </section>
@@ -137,11 +156,11 @@ export default function DalaManifestoPage({ onOpenStudio, onOpenClassroom, onOpe
           fontSize: 'clamp(22px, 3.5vw, 36px)',
           fontWeight: 400,
           lineHeight: 1.35,
-          color: '#ffffff',
+          color: 'var(--color-bone-white)',
           marginBottom: 48,
           letterSpacing: '-0.8px'
         }}>
-          This is your workplace today. Countless fragments of critical knowledge scattered across hundreds of disparate systems.
+          This is academic evaluation today. Dispersed submissions, siloed classrooms, undetected AI substitutions, and fragmented grading criteria.
         </p>
 
         <div style={{
@@ -155,13 +174,13 @@ export default function DalaManifestoPage({ onOpenStudio, onOpenClassroom, onOpe
           lineHeight: 1.6
         }}>
           <p>
-            30% of your time is spent trying to organise and find the information and expertise you need to do your job.
+            30% of faculty hours are consumed cross-checking code duplicates and investigating disguised text.
           </p>
           <p>
-            The impossible battle to make sense of this chaos leaves your team feeling overwhelmed and unproductive.
+            Single-vector plagiarism detectors miss Cyrillic homoglyph substitutions, structural AST reshuffling, and LLM burstiness anomalies.
           </p>
           <p style={{ color: 'var(--color-saffron-spark)', fontWeight: 400 }}>
-            aimlessly trying to connect the dots with incomplete context.
+            Leaving instructors to connect the dots with incomplete evidence and subjective guesswork.
           </p>
         </div>
       </section>
@@ -179,7 +198,7 @@ export default function DalaManifestoPage({ onOpenStudio, onOpenClassroom, onOpe
       }}>
         <div style={{ maxWidth: 560 }}>
           <span className="eyebrow-accent">
-            A CLEAR SOURCE OF TRUTH
+            TRIAD CONSENSUS & PROOF
           </span>
 
           <h2 className="heading-lg" style={{ marginBottom: 28 }}>
@@ -188,19 +207,19 @@ export default function DalaManifestoPage({ onOpenStudio, onOpenClassroom, onOpe
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
             <p className="body-light">
-              Dala is your intelligent, real-time source of truth that eliminates the cultural, financial and operational struggles of splintered tools.
+              Veritas acts as your unified, real-time integrity engine that eliminates the ambiguity of single-score cheating reports.
             </p>
             <p className="body-light">
-              We connect your systems behind the scenes and pull together exactly the knowledge you require into an elegant contextual view.
+              Node A (FastAPI) parses winnowing k-grams and AST syntax trees; Node B (Spring Boot) cross-validates institution-wide student cohorts; Node C (Studio) surfaces visual side-by-side diff matrices.
             </p>
             <p className="body-light">
-              Just ask Dala for the answer that advances your work, and helps you make better decisions with more confidence.
+              Immediate, mathematical proof that empowers educators to mentor rather than police.
             </p>
           </div>
         </div>
       </section>
 
-      {/* ==================== 5. BUILD A BETTER WORLD OF WORK (Frames 30-34) ==================== */}
+      {/* ==================== 5. BUILD A CULTURE OF ORIGINALITY (Frames 30-34) ==================== */}
       <section style={{
         minHeight: '100vh',
         display: 'flex',
@@ -212,28 +231,28 @@ export default function DalaManifestoPage({ onOpenStudio, onOpenClassroom, onOpe
       }}>
         <div style={{ maxWidth: 560 }}>
           <span className="eyebrow-accent">
-            INTENTIONAL PRODUCTIVITY
+            INTENTIONAL RIGOR & EMPATHY
           </span>
 
           <h2 className="heading-lg" style={{ marginBottom: 28 }}>
-            Build a better world of work
+            Build a culture of genuine originality
           </h2>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
             <p className="body-light">
-              Our mission is to make work more coherent and delightful — reframing productivity from <em>doing more</em> to <em>being better</em>.
+              Our mission is to restore trust in human authorship and student inquiry — reframing integrity from punitive surveillance to authentic mastery.
             </p>
             <p className="body-light">
-              Your happiest and most purposeful moments at work are when you're in flow, intellectually stimulated, and creating value for customers.
+              Educators and students do their best work when submissions are evaluated with objective rigor, transparent explainability, and pedagogical empathy.
             </p>
             <p className="body-light">
-              We want to recreate that every time you experience Dala. A tool that is completely integrated with how you think, feel and work.
+              Every scan generates actionable forensic insight, proving where thought originated and how ideas evolved.
             </p>
           </div>
         </div>
       </section>
 
-      {/* ==================== 6. OUR TEAM ==================== */}
+      {/* ==================== 6. THE ENGINES BEHIND VERITAS ==================== */}
       <section style={{
         minHeight: '80vh',
         padding: '100px 32px',
@@ -242,8 +261,8 @@ export default function DalaManifestoPage({ onOpenStudio, onOpenClassroom, onOpe
         boxSizing: 'border-box'
       }}>
         <div style={{ marginBottom: 48 }}>
-          <span className="eyebrow-accent">PEOPLE BEHIND DALA</span>
-          <h2 className="heading-md">Our team</h2>
+          <span className="eyebrow-accent">THE TRIAD ARCHITECTURE</span>
+          <h2 className="heading-md">The engines behind Veritas</h2>
         </div>
 
         <div style={{
@@ -251,77 +270,86 @@ export default function DalaManifestoPage({ onOpenStudio, onOpenClassroom, onOpe
           gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
           gap: 28
         }}>
-          {teamMembers.map((m, idx) => (
-            <div
-              key={idx}
-              style={{
-                background: 'rgba(255, 255, 255, 0.03)',
-                border: '1px solid rgba(255, 255, 255, 0.08)',
-                borderRadius: 24,
-                padding: 28,
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'space-between',
-                transition: 'transform 0.2s ease, border-color 0.2s ease'
-              }}
-            >
-              <div>
-                {m.image ? (
+          {triadNodes.map((node, idx) => {
+            const IconComponent = node.icon;
+            return (
+              <div
+                key={idx}
+                style={{
+                  background: 'var(--bg-card)',
+                  border: '1px solid var(--border-subtle)',
+                  borderRadius: 24,
+                  padding: 28,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'space-between',
+                  transition: 'transform 0.2s ease, border-color 0.2s ease, background-color 0.2s ease'
+                }}
+              >
+                <div>
                   <div style={{
                     width: '100%',
-                    height: 220,
-                    borderRadius: 16,
-                    overflow: 'hidden',
-                    marginBottom: 20,
-                    background: '#0a0a0c'
-                  }}>
-                    <img
-                      src={m.image}
-                      alt={m.name}
-                      style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'grayscale(100%)' }}
-                    />
-                  </div>
-                ) : (
-                  <div style={{
-                    width: '100%',
-                    height: 220,
+                    height: 180,
                     borderRadius: 16,
                     display: 'flex',
+                    flexDirection: 'column',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    background: 'rgba(128, 82, 255, 0.08)',
-                    border: '1px dashed var(--color-electric-iris)',
-                    marginBottom: 20
+                    background: 'rgba(128, 82, 255, 0.06)',
+                    border: '1px solid var(--border-subtle)',
+                    marginBottom: 20,
+                    gap: 12
                   }}>
-                    <span style={{ fontSize: 48 }}>🚀</span>
+                    <IconComponent size={40} color="var(--color-electric-iris)" />
+                    <span style={{
+                      fontSize: 11,
+                      fontWeight: 600,
+                      letterSpacing: '0.04em',
+                      color: 'var(--color-saffron-spark)'
+                    }}>
+                      {node.port}
+                    </span>
                   </div>
-                )}
 
-                <div style={{
-                  fontSize: 12,
-                  fontWeight: 600,
-                  textTransform: 'uppercase',
-                  letterSpacing: '0.025em',
-                  color: 'var(--color-electric-iris)',
-                  marginBottom: 6
-                }}>
-                  {m.role}
+                  <div style={{
+                    fontSize: 12,
+                    fontWeight: 600,
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.025em',
+                    color: 'var(--color-electric-iris)',
+                    marginBottom: 6
+                  }}>
+                    {node.role}
+                  </div>
+
+                  <h3 style={{ fontSize: 22, fontWeight: 400, color: 'var(--color-bone-white)', marginBottom: 12 }}>
+                    {node.name}
+                  </h3>
+
+                  <p style={{ fontSize: 13, color: 'var(--color-silver-mist)', fontWeight: 300, lineHeight: 1.6 }}>
+                    {node.description}
+                  </p>
                 </div>
 
-                <h3 style={{ fontSize: 22, fontWeight: 400, color: '#ffffff', marginBottom: 12 }}>
-                  {m.name}
-                </h3>
-
-                <p style={{ fontSize: 13, color: 'var(--color-silver-mist)', fontWeight: 200, lineHeight: 1.6 }}>
-                  {m.bio}
-                </p>
+                <div style={{
+                  marginTop: 20,
+                  paddingTop: 16,
+                  borderTop: '1px solid var(--border-subtle)',
+                  fontSize: 11,
+                  fontWeight: 600,
+                  color: 'var(--color-ash-gray)',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.04em'
+                }}>
+                  {node.stats}
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </section>
 
-      {/* ==================== 7. OUR INVESTORS (Frames 35-39) ==================== */}
+      {/* ==================== 7. INSTITUTIONAL ACCREDITATION (Frames 35-39) ==================== */}
       <section style={{
         minHeight: '80vh',
         display: 'flex',
@@ -336,7 +364,7 @@ export default function DalaManifestoPage({ onOpenStudio, onOpenClassroom, onOpe
           {/* Arrow navigation buttons in purple circles */}
           <div style={{ display: 'flex', gap: 12, marginBottom: 32 }}>
             <button
-              onClick={() => setActiveInvestorSlide(prev => (prev - 1 + investors.length) % investors.length)}
+              onClick={() => setActivePartnerSlide(prev => (prev - 1 + partners.length) % partners.length)}
               style={{
                 width: 42,
                 height: 42,
@@ -349,11 +377,12 @@ export default function DalaManifestoPage({ onOpenStudio, onOpenClassroom, onOpe
                 justifyContent: 'center',
                 cursor: 'pointer'
               }}
+              aria-label="Previous partner"
             >
               <ArrowLeft size={18} />
             </button>
             <button
-              onClick={() => setActiveInvestorSlide(prev => (prev + 1) % investors.length)}
+              onClick={() => setActivePartnerSlide(prev => (prev + 1) % partners.length)}
               style={{
                 width: 42,
                 height: 42,
@@ -366,33 +395,34 @@ export default function DalaManifestoPage({ onOpenStudio, onOpenClassroom, onOpe
                 justifyContent: 'center',
                 cursor: 'pointer'
               }}
+              aria-label="Next partner"
             >
               <ArrowRight size={18} />
             </button>
           </div>
 
           <h2 className="heading-lg" style={{ marginBottom: 24 }}>
-            Our investors
+            Validated across academia
           </h2>
 
           <p className="body-light" style={{ lineHeight: 1.6, marginBottom: 32 }}>
-            We are supported by some of the world's most pioneering operators and progressive funds to fuel our growth.
+            We collaborate with leading academic consortia, computer science departments, and AI safety labs to continually benchmark detection fidelity.
           </p>
 
           <div style={{
-            background: 'rgba(255, 255, 255, 0.04)',
-            border: '1px solid rgba(255, 255, 255, 0.08)',
+            background: 'var(--bg-card)',
+            border: '1px solid var(--border-subtle)',
             borderRadius: 20,
             padding: 24
           }}>
             <span style={{ fontSize: 11, fontWeight: 600, color: 'var(--color-saffron-spark)', textTransform: 'uppercase' }}>
-              {investors[activeInvestorSlide].tier}
+              {partners[activePartnerSlide].tier}
             </span>
-            <h4 style={{ fontSize: 20, fontWeight: 400, color: '#ffffff', margin: '6px 0 8px' }}>
-              {investors[activeInvestorSlide].name}
+            <h4 style={{ fontSize: 20, fontWeight: 400, color: 'var(--color-bone-white)', margin: '6px 0 8px' }}>
+              {partners[activePartnerSlide].name}
             </h4>
-            <p style={{ fontSize: 13, color: 'var(--color-silver-mist)', fontWeight: 200 }}>
-              {investors[activeInvestorSlide].note}
+            <p style={{ fontSize: 13, color: 'var(--color-silver-mist)', fontWeight: 300, lineHeight: 1.5 }}>
+              {partners[activePartnerSlide].note}
             </p>
           </div>
         </div>
@@ -415,12 +445,12 @@ export default function DalaManifestoPage({ onOpenStudio, onOpenClassroom, onOpe
           fontSize: 'clamp(36px, 5.5vw, 68px)',
           fontWeight: 400,
           letterSpacing: '-2.4px',
-          color: '#ffffff',
+          color: 'var(--color-bone-white)',
           lineHeight: 1.15,
           marginBottom: 36
         }}>
-          Your workplace has the answer.<br />
-          Ask Dala to find it.
+          Your institution has the standard.<br />
+          Veritas delivers the proof.
         </h2>
 
         <button
@@ -428,13 +458,13 @@ export default function DalaManifestoPage({ onOpenStudio, onOpenClassroom, onOpe
           className="btn-pill-primary"
           style={{ padding: '16px 36px', fontSize: 14 }}
         >
-          Request Access
+          Launch Originality Studio
         </button>
       </section>
 
-      {/* ==================== 9. EXACT FOOTER (Frame 42) ==================== */}
+      {/* ==================== 9. FOOTER ==================== */}
       <footer style={{
-        borderTop: '1px solid rgba(255, 255, 255, 0.08)',
+        borderTop: '1px solid var(--border-subtle)',
         padding: '36px 32px',
         maxWidth: 'var(--page-max-width)',
         margin: '0 auto',
@@ -447,26 +477,25 @@ export default function DalaManifestoPage({ onOpenStudio, onOpenClassroom, onOpe
         color: 'var(--color-ash-gray)'
       }}>
         <div>
-          <span>© 2021 Dala Technologies Limited.</span>{' '}
+          <span>© 2026 Veritas Technologies Limited.</span>{' '}
           <span style={{ color: 'var(--color-silver-mist)' }}>All rights reserved.</span>
         </div>
 
         <div style={{ display: 'flex', gap: 28, textTransform: 'uppercase', letterSpacing: '0.025em', fontSize: 12, fontWeight: 600 }}>
-          <span style={{ color: '#ffffff', cursor: 'pointer' }}>Manifesto</span>
-          <span style={{ cursor: 'pointer' }}>Team</span>
-          <span style={{ cursor: 'pointer' }}>Blog</span>
+          <span onClick={onOpenStudio} style={{ color: 'var(--color-bone-white)', cursor: 'pointer' }}>Studio</span>
+          <span onClick={onOpenClassroom} style={{ cursor: 'pointer' }}>Classroom</span>
+          <span onClick={onOpenDemoBench} style={{ cursor: 'pointer' }}>Demo Bench</span>
+          <span style={{ cursor: 'pointer' }}>Research Docs</span>
           <span style={{ cursor: 'pointer' }}>Privacy</span>
-          <span style={{ cursor: 'pointer' }}>Terms</span>
         </div>
 
         <div style={{ display: 'flex', gap: 20 }}>
-          <span style={{ cursor: 'pointer' }}>LinkedIn</span>
-          <span style={{ cursor: 'pointer' }}>Twitter</span>
-          <span style={{ cursor: 'pointer' }}>Email</span>
+          <span style={{ cursor: 'pointer' }}>GitHub</span>
+          <span style={{ cursor: 'pointer' }}>Docs</span>
+          <span style={{ cursor: 'pointer' }}>Contact</span>
         </div>
       </footer>
 
     </div>
   );
 }
-

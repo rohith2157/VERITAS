@@ -1,6 +1,7 @@
 import React from 'react';
+import { Sun, Moon } from 'lucide-react';
 
-export default function Navbar({ activeTab, setActiveTab, serverStatus }) {
+export default function Navbar({ activeTab, setActiveTab, serverStatus, theme = 'dark', toggleTheme }) {
   const navLinks = [
     { id: 'manifesto', label: 'Manifesto' },
     { id: 'studio', label: 'Originality Studio' },
@@ -15,10 +16,11 @@ export default function Navbar({ activeTab, setActiveTab, serverStatus }) {
       left: 0,
       right: 0,
       zIndex: 100,
-      background: 'rgba(0, 0, 0, 0.75)',
+      background: 'var(--bg-nav)',
       backdropFilter: 'blur(16px)',
-      borderBottom: '1px solid rgba(255, 255, 255, 0.06)',
-      padding: '16px 32px'
+      borderBottom: '1px solid var(--border-subtle)',
+      padding: '16px 32px',
+      transition: 'background-color 0.25s ease, border-color 0.25s ease'
     }}>
       <div style={{
         maxWidth: 'var(--page-max-width)',
@@ -28,12 +30,16 @@ export default function Navbar({ activeTab, setActiveTab, serverStatus }) {
         justifyContent: 'space-between'
       }}>
         
-        {/* Brand Lockup: Stylized Dala Geometric Mark + Wordmark */}
+        {/* Brand Lockup: Stylized Veritas Geometric Mark + Wordmark */}
         <div
           onClick={() => setActiveTab('manifesto')}
           style={{ display: 'flex', alignItems: 'center', gap: 14, cursor: 'pointer' }}
+          role="button"
+          tabIndex={0}
+          onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') setActiveTab('manifesto'); }}
+          aria-label="Veritas Home"
         >
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden="true">
             <defs>
               <linearGradient id="dala-poly-grad" x1="0%" y1="0%" x2="100%" y2="100%">
                 <stop offset="0%" stopColor="#8052ff" />
@@ -50,7 +56,7 @@ export default function Navbar({ activeTab, setActiveTab, serverStatus }) {
             color: 'var(--color-bone-white)',
             textTransform: 'uppercase'
           }}>
-            Dala
+            Veritas
           </span>
 
           <span style={{
@@ -58,10 +64,10 @@ export default function Navbar({ activeTab, setActiveTab, serverStatus }) {
             color: 'var(--color-ash-gray)',
             letterSpacing: '0.04em',
             textTransform: 'uppercase',
-            borderLeft: '1px solid rgba(255,255,255,0.15)',
+            borderLeft: '1px solid var(--border-subtle)',
             paddingLeft: 12
           }}>
-            Veritas Edition
+            Triad Integrity
           </span>
         </div>
 
@@ -104,9 +110,32 @@ export default function Navbar({ activeTab, setActiveTab, serverStatus }) {
           })}
         </nav>
 
-        {/* Right Section: Telemetry Pulse + Request Access Violet Pill */}
+        {/* Right Section: Theme Toggle + Telemetry Pulse + Launch Studio Violet Pill */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
           
+          {/* Light/Dark Mode Switcher */}
+          <button
+            onClick={toggleTheme}
+            className="btn-ghost"
+            style={{
+              padding: '8px',
+              borderRadius: '50%',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              border: '1px solid var(--border-subtle)',
+              background: 'var(--bg-card)'
+            }}
+            title={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+            aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+          >
+            {theme === 'dark' ? (
+              <Sun size={15} color="var(--color-saffron-spark)" />
+            ) : (
+              <Moon size={15} color="var(--color-electric-iris)" />
+            )}
+          </button>
+
           <div style={{
             display: 'flex',
             alignItems: 'center',
@@ -136,7 +165,7 @@ export default function Navbar({ activeTab, setActiveTab, serverStatus }) {
               borderRadius: 24
             }}
           >
-            Request Access
+            Launch Studio
           </button>
 
         </div>

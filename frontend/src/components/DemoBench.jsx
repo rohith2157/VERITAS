@@ -137,7 +137,7 @@ export default function DemoBench() {
     <div style={{ maxWidth: 'var(--page-max-width)', margin: '40px auto', padding: '0 24px' }}>
       
       {/* Header in Dala Style */}
-      <div style={{ marginBottom: 36, borderBottom: '1px solid rgba(255, 255, 255, 0.08)', paddingBottom: 24 }}>
+      <div style={{ marginBottom: 36, borderBottom: '1px solid var(--border-subtle)', paddingBottom: 24 }}>
         <span className="eyebrow-accent">
           Instant Validation
         </span>
@@ -159,21 +159,21 @@ export default function DemoBench() {
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'space-between',
-              border: activeScenario === s.id ? '1px solid var(--color-electric-iris)' : '1px solid rgba(255, 255, 255, 0.08)',
+              border: activeScenario === s.id ? '1px solid var(--color-electric-iris)' : '1px solid var(--border-subtle)',
               padding: 28
             }}
           >
             <div>
               <div style={{ marginBottom: 14 }}>
                 <span className="badge-tag" style={{
-                  background: 'rgba(255, 255, 255, 0.04)',
+                  background: 'var(--bg-card)',
                   color: s.badgeColor,
                   border: `1px solid ${s.badgeColor}55`
                 }}>
                   {s.badge}
                 </span>
               </div>
-              <h3 style={{ fontSize: 18, fontWeight: 400, color: '#ffffff', marginBottom: 10, lineHeight: 1.3 }}>
+              <h3 style={{ fontSize: 18, fontWeight: 400, color: 'var(--color-bone-white)', marginBottom: 10, lineHeight: 1.3 }}>
                 {s.title}
               </h3>
               <p style={{ fontSize: 13, color: 'var(--color-silver-mist)', lineHeight: 1.6, marginBottom: 24, fontWeight: 200 }}>
@@ -197,7 +197,7 @@ export default function DemoBench() {
       {/* Live Demo Output Card */}
       {demoOutput && (
         <div className="dala-surface" style={{ marginBottom: 40 }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16, borderBottom: '1px solid rgba(255, 255, 255, 0.08)', paddingBottom: 14 }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16, borderBottom: '1px solid var(--border-subtle)', paddingBottom: 14 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
               <CheckCircle size={18} color="#34d399" />
               <h3 className="heading-sm" style={{ margin: 0, fontSize: 18 }}>
@@ -208,8 +208,8 @@ export default function DemoBench() {
           </div>
 
           <pre style={{
-            background: '#0a0a0c',
-            border: '1px solid rgba(255, 255, 255, 0.08)',
+            background: 'var(--input-bg)',
+            border: '1px solid var(--border-subtle)',
             padding: 20,
             borderRadius: 16,
             overflowX: 'auto',
