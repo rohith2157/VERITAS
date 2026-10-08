@@ -1,0 +1,6 @@
+Distributed consensus algorithms ensure that a cluster of nodes can agree on values despite network partitions. 
+Raft simplifies consensus by decomposing it into leader election, log replication, and safety guarantees. 
+A leader is elected via randomized heartbeat timers to prevent split-vote scenarios. 
+Once established, all client state transitions flow strictly through the leader before being committed to follower logs.
+Append-only logs guarantee consistent state machine replication across all participating replicas.
+
