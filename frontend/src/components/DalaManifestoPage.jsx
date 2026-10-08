@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { ArrowLeft, ArrowRight, Sparkles, ShieldCheck, Cpu, Database, Network } from 'lucide-react';
+import { ArrowLeft, ArrowRight, ShieldCheck, Cpu, Database, Network, ExternalLink } from 'lucide-react';
 
 /**
  * SplitLine: exact Dala rotating line reveal animation
@@ -23,7 +23,7 @@ function SplitLine({ children, inView, delay = 0, style = {}, align = 'start' })
 }
 
 export default function DalaManifestoPage({ onOpenStudio, onOpenClassroom, onOpenDemoBench, scrollProgress }) {
-  const [activePartnerSlide, setActivePartnerSlide] = useState(0);
+  const [activeTeamSlide, setActiveTeamSlide] = useState(0);
 
   // Section visibility tracking for splitTextRotateIn
   const [visibleSections, setVisibleSections] = useState({
@@ -52,7 +52,7 @@ export default function DalaManifestoPage({ onOpenStudio, onOpenClassroom, onOpe
     footer: useRef(null)
   };
 
-  // 1. Dynamic check triggered on virtual scroll translation
+  // Dynamic check triggered on virtual scroll translation
   useEffect(() => {
     const winHeight = typeof window !== 'undefined' ? window.innerHeight : 800;
     Object.entries(sectionRefs).forEach(([key, ref]) => {
@@ -68,7 +68,7 @@ export default function DalaManifestoPage({ onOpenStudio, onOpenClassroom, onOpe
     });
   }, [scrollProgress]);
 
-  // 2. Standard IntersectionObserver fallback
+  // Standard IntersectionObserver fallback
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -94,63 +94,98 @@ export default function DalaManifestoPage({ onOpenStudio, onOpenClassroom, onOpe
     return () => observer.disconnect();
   }, []);
 
-  const triadNodes = [
+  // Team members with authentic portraits from /images/team/
+  const teamMembers = [
     {
-      name: 'Python FastAPI Engine',
-      port: 'PORT 8000',
-      role: 'FORENSICS & AST VECTOR NODE',
-      description: 'Executes Rabin-Karp winnowing fingerprinting, Cyrillic evasion decoding, Python AST clone detection, and perplexity burstiness metrics in <12ms.',
-      icon: Cpu,
-      stats: '4 Detection Modules'
+      name: 'Haroun Hickman',
+      role: 'Head of AI & Detection Research',
+      image: '/images/team/haroun.jpg',
+      bio: 'Leading neural tokenization, LLM burstiness forensics, and cross-encoder vector similarity architectures.'
     },
     {
-      name: 'Spring Boot Enterprise Core',
-      port: 'PORT 8080',
-      role: 'INSTITUTIONAL LEDGER NODE',
-      description: 'JPA-backed repository coordinating cross-submission cohort matrix queries, evaluation rubrics, gradebook compliance, and audit trails.',
-      icon: Database,
-      stats: 'Enterprise JPA Ledger'
+      name: 'Poppy Reid',
+      role: 'VP of Product & Institutional Integrity',
+      image: '/images/team/poppy.jpg',
+      bio: 'Designing rubric validation engines, instructor audit workflows, and multi-student collusion graphs.'
     },
     {
-      name: 'Originality Studio WebGL',
-      port: 'PORT 5173',
-      role: 'INTERACTIVE VISUALIZER NODE',
-      description: 'Dual-pane synchronized diff inspection, cohort collusion heatmap clusters, and real-time 3D particle constellation telemetry.',
-      icon: Network,
-      stats: 'React 19 & Three.js'
-    },
-    {
-      name: 'Veritas Zero-Trust Protocol',
-      port: 'CONSORTIUM',
-      role: 'ADAPTIVE AI INTEGRITY',
-      description: 'Calibrating benchmark datasets against evolving LLM synthetic models to protect genuine human scholarship and academic rigor.',
-      icon: ShieldCheck,
-      stats: 'Open Integrity Protocol'
+      name: 'Joel Kang',
+      role: 'Staff Engineer & Core AST Forensics',
+      image: '/images/team/joel.jpg',
+      bio: 'Author of the Python AST syntactic normalizer and sub-12ms Rabin-Karp winnowing fingerprint engine.'
     }
   ];
 
+  // Investors & Research Partners using authentic 1.png - 5.png icons
   const partners = [
     {
-      name: 'Higher Education Research Alliance',
-      tier: 'TIER-1 UNIVERSITY RESEARCH',
-      note: 'Evaluating multi-student collusion graphs and AST clone detection across 25,000+ computer science and humanities submissions.'
+      id: 1,
+      name: 'Seedcamp',
+      subtitle: 'Higher Education Research Alliance',
+      icon: '/images/investors/1.png',
+      tag: 'RESEARCH ALLIANCE'
     },
     {
-      name: 'Global Computer Science Consortium',
-      tier: 'CODE INTEGRITY BENCHMARK',
-      note: 'Benchmarked on 50,000+ competitive programming submissions against LeetCode, GitHub, and StackOverflow repos.'
+      id: 2,
+      name: 'James Meekings',
+      subtitle: 'Global CS Consortium Benchmark',
+      icon: '/images/investors/2.png',
+      tag: 'CODE INTELLIGENCE'
     },
     {
-      name: 'Autonomous AI Integrity Foundation',
-      tier: 'SYNTHETIC DETECTION LAB',
-      note: 'Continuous empirical tracking of LLM generation fingerprints, perplexity variance, and paraphrase evasion patterns.'
+      id: 3,
+      name: 'LocalGlobe',
+      subtitle: 'Autonomous AI Integrity Foundation',
+      icon: '/images/investors/3.png',
+      tag: 'SYNTHETIC DETECTION'
+    },
+    {
+      id: 4,
+      name: 'Episode 1',
+      subtitle: 'Open Academic Forensics Lab',
+      icon: '/images/investors/4.png',
+      tag: 'ALGORITHM BENCHMARK'
+    },
+    {
+      id: 5,
+      name: 'Kima Ventures',
+      subtitle: 'Enterprise LMS & Institutional Federation',
+      icon: '/images/investors/5.png',
+      tag: 'LMS INTEGRATION'
+    }
+  ];
+
+  const forensicFeatures = [
+    {
+      badge: 'TIER 1 • WINNOWING',
+      title: 'Rabin-Karp Fingerprinting',
+      desc: 'Hashes document k-grams through rolling polynomial fingerprinting. Identifies exact phrase theft in under 12 milliseconds across multi-million token indexes with zero false positives.',
+      icon: Cpu
+    },
+    {
+      badge: 'TIER 2 • HOMOGLYPHS',
+      title: 'Cyrillic & Zero-Width Decoder',
+      desc: 'Normalizes invisible unicode control codes, Cyrillic lookalikes, and zero-width spaces designed to blind regex and legacy scanners.',
+      icon: ShieldCheck
+    },
+    {
+      badge: 'TIER 3 • AST TREES',
+      title: 'Structural AST Normalization',
+      desc: 'Parses Python and C++ source into abstract syntax trees. Neutralizes renamed variables, loop inversions, and cosmetic restyling to expose structural code duplication.',
+      icon: Database
+    },
+    {
+      badge: 'TIER 4 • PERPLEXITY',
+      title: 'Burstiness & AI Synthetic Probe',
+      desc: 'Measures sentence-level entropy and token predictability. Human text exhibits high burstiness, while uniform probability distributions signal LLM generation.',
+      icon: Network
     }
   ];
 
   return (
     <div style={{ position: 'relative', zIndex: 1, color: 'var(--color-bone-white)', background: 'transparent' }}>
       
-      {/* ==================== 1. LANDING / HERO (Frames 1-4) ==================== */}
+      {/* ==================== 1. LANDING / HERO ==================== */}
       <div anchor-target="landing"></div>
       <section
         ref={sectionRefs.landing}
@@ -160,17 +195,15 @@ export default function DalaManifestoPage({ onOpenStudio, onOpenClassroom, onOpe
           minHeight: '100vh',
           display: 'flex',
           alignItems: 'center',
-          padding: '140px 32px 80px',
+          padding: '140px 6vw 80px',
           maxWidth: 'var(--page-max-width)',
           margin: '0 auto',
-          boxSizing: 'border-box'
+          boxSizing: 'border-box',
+          width: '100%'
         }}
       >
-        <div style={{ maxWidth: 640 }}>
-          <h2
-            className="landing__title t-56 t-80@xs t-104@sm t-150@md t-lh-0.9 -t-ls-0.03 t-400 mb-1.5 t-lh-1.1 mb-1"
-            style={{ marginBottom: 28 }}
-          >
+        <div style={{ maxWidth: 540, width: '100%', marginLeft: 0, marginRight: 'auto' }}>
+          <h2 className="landing__title t-56 t-80@xs t-104@sm t-150@md t-lh-0.9 -t-ls-0.03 t-400 mb-1.5">
             <SplitLine inView={visibleSections.landing} delay={0}>
               <span className="d-block">Unlock</span>
             </SplitLine>
@@ -186,23 +219,26 @@ export default function DalaManifestoPage({ onOpenStudio, onOpenClassroom, onOpe
             <div className="landing__body">
               <SplitLine inView={visibleSections.landing} delay={0.35}>
                 <div className="t-16 t-lh-1.2 t-ls-0.05 t-600 t-uppercase mb-1 t-yellow">
-                  Stop guessing integrity. Start verifying it.
+                  STOP MANAGING ACCUSATIONS. START PROVING ORIGINALITY.
                 </div>
               </SplitLine>
 
               <SplitLine inView={visibleSections.landing} delay={0.45}>
-                <p className="t-24 t-lh-1.5 -t-ls-0.02 t-200" style={{ marginBottom: 36, maxWidth: 540, color: 'var(--color-silver-mist)' }}>
-                  Plug into the Veritas distributed intelligence triad. Three specialized engines — Python Vector & AST Fingerprinting, Spring Boot Institutional Ledger, and React Real-time Forensics — operating in synchrony to expose collusion, paraphrase evasion, and AI synthetic fabrication.
+                <p
+                  className="t-24 t-lh-1.5 -t-ls-0.02 t-200"
+                  style={{
+                    maxWidth: 500,
+                    marginBottom: 36,
+                    color: 'var(--color-silver-mist)'
+                  }}
+                >
+                  Plug into institutional-grade document intelligence. Ask Veritas to instantly verify originality across billions of academic sources, repositories, and AI synthetics. Focus on doing your best work with context, conviction and clarity.
                 </p>
               </SplitLine>
 
               <div className="overflow-hidden">
                 <div
-                  className="d-flex"
                   style={{
-                    alignItems: 'center',
-                    gap: 18,
-                    flexWrap: 'wrap',
                     transform: visibleSections.landing ? 'translate(0px, 0px)' : 'translate(0px, 120%) rotate(2deg)',
                     transition: 'transform 1s cubic-bezier(0.16, 1, 0.3, 1) 0.55s'
                   }}
@@ -210,19 +246,10 @@ export default function DalaManifestoPage({ onOpenStudio, onOpenClassroom, onOpe
                   <button
                     onClick={onOpenStudio}
                     className="btn t-16 t-14@xs t-16@sm t-ls-0.025 t-600 t-uppercase"
-                    aria-label="Launch Originality Studio"
+                    aria-label="Request Access"
                   >
-                    <span className="btn__text pointer-events-none">Launch Studio</span>
+                    <span className="btn__text pointer-events-none">Request Access</span>
                     <div className="btn__hover pointer-events-none" aria-hidden="true" />
-                  </button>
-
-                  <button
-                    onClick={onOpenDemoBench}
-                    className="btn-ghost"
-                    style={{ color: 'var(--color-silver-mist)' }}
-                  >
-                    <span>1-Click Bench</span>
-                    <Sparkles size={15} color="var(--color-saffron-spark)" />
                   </button>
                 </div>
               </div>
@@ -231,7 +258,7 @@ export default function DalaManifestoPage({ onOpenStudio, onOpenClassroom, onOpe
         </div>
       </section>
 
-      {/* ==================== 2. INTRODUCTION: DECISIONS WITH CONFIDENCE (Frames 5-9) ==================== */}
+      {/* ==================== 2. INTRODUCTION ==================== */}
       <section
         ref={sectionRefs.intro}
         className="section section--tall introduction | js-section"
@@ -246,10 +273,10 @@ export default function DalaManifestoPage({ onOpenStudio, onOpenClassroom, onOpe
           boxSizing: 'border-box'
         }}
       >
-        <div className="mobile-blur" style={{ maxWidth: 560 }}>
+        <div className="mobile-blur" style={{ maxWidth: 580 }}>
           <SplitLine inView={visibleSections.intro} delay={0}>
             <span className="eyebrow-accent" style={{ marginBottom: 12 }}>
-              TRIAD ARCHITECTURE & CONVICTION
+              MULTI-ENGINE FORENSIC CONVICTION
             </span>
           </SplitLine>
 
@@ -279,7 +306,7 @@ export default function DalaManifestoPage({ onOpenStudio, onOpenClassroom, onOpe
         </div>
       </section>
 
-      {/* ==================== 3. MANIFESTO INTRODUCTION / DISPERSED CHAOS (Frames 10-18) ==================== */}
+      {/* ==================== 3. MANIFESTO (DISPERSED CHAOS) ==================== */}
       <div className="js-section" section-name="manifesto">
         <div className="manifesto--introduction-container" style={{ maxWidth: 960, margin: '0 auto', padding: '60px 24px' }}>
           
@@ -355,7 +382,7 @@ export default function DalaManifestoPage({ onOpenStudio, onOpenClassroom, onOpe
         </div>
       </div>
 
-      {/* ==================== 4. SPARK LIGHTBULB MOMENTS (Frames 19-29) ==================== */}
+      {/* ==================== 4. SPARK FORENSIC CLARITY (LIGHTBULB MOMENT) ==================== */}
       <section
         ref={sectionRefs.lightbulb}
         className="section section--tall manifesto manifesto--section items-end@md js-section"
@@ -371,51 +398,56 @@ export default function DalaManifestoPage({ onOpenStudio, onOpenClassroom, onOpe
           boxSizing: 'border-box'
         }}
       >
-        <div className="manifesto__inner mobile-blur" style={{ maxWidth: 560 }}>
+        <div className="mobile-blur" style={{ maxWidth: 580 }}>
           <SplitLine inView={visibleSections.lightbulb} delay={0}>
             <span className="eyebrow-accent" style={{ marginBottom: 12 }}>
-              A CLEAR SOURCE OF TRUTH
+              THE VERIFICATION CORE
             </span>
           </SplitLine>
 
-          <h2 className="heading-lg" style={{ marginBottom: 28 }}>
+          <h2 className="heading-lg" style={{ marginBottom: 24 }}>
             <SplitLine inView={visibleSections.lightbulb} delay={0.1}>
-              Spark lightbulb
+              Spark forensic
             </SplitLine>
             <SplitLine inView={visibleSections.lightbulb} delay={0.2}>
-              moments
+              clarity
             </SplitLine>
           </h2>
 
-          <div className="manifesto__body" style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-            <div className="body-light">
-              <SplitLine inView={visibleSections.lightbulb} delay={0.3}>
-                Veritas is your intelligent, real-time source of truth that
-              </SplitLine>
-              <SplitLine inView={visibleSections.lightbulb} delay={0.36}>
-                eliminates the anxiety and ambiguity of splintered scanners.
-              </SplitLine>
-            </div>
+          <div className="body-light" style={{ lineHeight: 1.6, marginBottom: 32 }}>
+            <SplitLine inView={visibleSections.lightbulb} delay={0.3}>
+              Veritas is an intelligent originality infrastructure that surfaces deep
+            </SplitLine>
+            <SplitLine inView={visibleSections.lightbulb} delay={0.38}>
+              attribution across your entire document and code ecosystem. By unifying
+            </SplitLine>
+            <SplitLine inView={visibleSections.lightbulb} delay={0.46}>
+              winnowing fingerprinting, AST parsing, and perplexity scoring, it delivers
+            </SplitLine>
+            <SplitLine inView={visibleSections.lightbulb} delay={0.54}>
+              transparent explanations instead of arbitrary similarity scores.
+            </SplitLine>
+          </div>
 
-            <div className="body-light">
-              <SplitLine inView={visibleSections.lightbulb} delay={0.42}>
-                We connect the three engines behind the scenes and pull together
-              </SplitLine>
-              <SplitLine inView={visibleSections.lightbulb} delay={0.48}>
-                exactly the forensic proof into an elegant side-by-side view.
-              </SplitLine>
-            </div>
-
-            <div className="body-light">
-              <SplitLine inView={visibleSections.lightbulb} delay={0.54}>
-                Empower your faculty with mathematical conviction and clarity.
-              </SplitLine>
-            </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 16, marginTop: 24 }}>
+            {forensicFeatures.slice(0, 2).map((feat, i) => (
+              <div key={i} className="dala-surface" style={{ padding: 20 }}>
+                <span style={{ fontSize: 10, fontWeight: 600, color: 'var(--color-saffron-spark)', letterSpacing: '0.04em' }}>
+                  {feat.badge}
+                </span>
+                <h4 style={{ fontSize: 16, fontWeight: 400, color: 'var(--color-bone-white)', margin: '6px 0 8px' }}>
+                  {feat.title}
+                </h4>
+                <p style={{ fontSize: 12, color: 'var(--color-silver-mist)', fontWeight: 300, lineHeight: 1.5, margin: 0 }}>
+                  {feat.desc}
+                </p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* ==================== 5. BUILD A BETTER WORLD OF WORK / LEARNING (Frames 30-34) ==================== */}
+      {/* ==================== 5. BUILD A HIGHER STANDARD OF INTEGRITY (WORLD) ==================== */}
       <section
         ref={sectionRefs.world}
         className="section section--tall manifesto manifesto--section items-start@md js-section"
@@ -431,256 +463,248 @@ export default function DalaManifestoPage({ onOpenStudio, onOpenClassroom, onOpe
           boxSizing: 'border-box'
         }}
       >
-        <div className="manifesto__inner mobile-blur" style={{ maxWidth: 560 }}>
-          <h2 className="heading-lg" style={{ marginBottom: 32 }}>
+        <div className="mobile-blur" style={{ maxWidth: 580 }}>
+          <SplitLine inView={visibleSections.world} delay={0}>
+            <span className="eyebrow-accent" style={{ marginBottom: 12 }}>
+              INSTITUTIONAL ECOSYSTEM
+            </span>
+          </SplitLine>
+
+          <h2 className="heading-lg" style={{ marginBottom: 24 }}>
             <SplitLine inView={visibleSections.world} delay={0.1}>
-              Build a better world
+              Build a higher
             </SplitLine>
             <SplitLine inView={visibleSections.world} delay={0.2}>
-              of scholarship
+              standard of trust
             </SplitLine>
           </h2>
 
-          <div className="manifesto__body" style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
-            <div className="body-light" style={{ lineHeight: 1.6 }}>
-              <SplitLine inView={visibleSections.world} delay={0.3}>
-                Our mission is to make scholarship more coherent and
-              </SplitLine>
-              <SplitLine inView={visibleSections.world} delay={0.36}>
-                authentic—reframing academic integrity from policing compliance
-              </SplitLine>
-              <SplitLine inView={visibleSections.world} delay={0.42}>
-                <span className="t-yellow" style={{ fontStyle: 'italic', fontWeight: 400 }}>to inspiring mastery.</span>
-              </SplitLine>
-            </div>
+          <div className="body-light" style={{ lineHeight: 1.6, marginBottom: 32 }}>
+            <SplitLine inView={visibleSections.world} delay={0.3}>
+              Our mission is to empower universities, research labs, and technical
+            </SplitLine>
+            <SplitLine inView={visibleSections.world} delay={0.38}>
+              organizations to celebrate genuine human scholarship. Through immutable
+            </SplitLine>
+            <SplitLine inView={visibleSections.world} delay={0.46}>
+              grading compliance and peer collusion detection, instructors foster
+            </SplitLine>
+            <SplitLine inView={visibleSections.world} delay={0.54}>
+              culture rooted in rigor, accountability, and student growth.
+            </SplitLine>
+          </div>
 
-            <div className="body-light" style={{ lineHeight: 1.6 }}>
-              <SplitLine inView={visibleSections.world} delay={0.48}>
-                Your happiest and most purposeful academic breakthroughs occur
-              </SplitLine>
-              <SplitLine inView={visibleSections.world} delay={0.54}>
-                when students and researchers create with conviction, intellectual
-              </SplitLine>
-              <SplitLine inView={visibleSections.world} delay={0.60}>
-                rigor, and verifiable transparency.
-              </SplitLine>
-            </div>
-
-            <div className="body-light" style={{ lineHeight: 1.6 }}>
-              <SplitLine inView={visibleSections.world} delay={0.66}>
-                We want to recreate that confidence every time you evaluate work.
-              </SplitLine>
-              <SplitLine inView={visibleSections.world} delay={0.72}>
-                A platform completely integrated with how faculty teach, assess, and guide.
-              </SplitLine>
-            </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 16, marginTop: 24 }}>
+            {forensicFeatures.slice(2, 4).map((feat, i) => (
+              <div key={i} className="dala-surface" style={{ padding: 20 }}>
+                <span style={{ fontSize: 10, fontWeight: 600, color: 'var(--color-electric-iris)', letterSpacing: '0.04em' }}>
+                  {feat.badge}
+                </span>
+                <h4 style={{ fontSize: 16, fontWeight: 400, color: 'var(--color-bone-white)', margin: '6px 0 8px' }}>
+                  {feat.title}
+                </h4>
+                <p style={{ fontSize: 12, color: 'var(--color-silver-mist)', fontWeight: 300, lineHeight: 1.5, margin: 0 }}>
+                  {feat.desc}
+                </p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* ==================== 6. THE ENGINES BEHIND VERITAS (TEAM) ==================== */}
+      {/* ==================== 6. OUR TEAM (EXACT DALA SLIDER) ==================== */}
       <section
         ref={sectionRefs.team}
         className="section js-section js-team-section mb-1"
         section-name="team"
         anchor-target="team"
         style={{
-          minHeight: '80vh',
-          padding: '120px 32px 80px',
+          padding: '120px 32px 60px',
           maxWidth: 'var(--page-max-width)',
           margin: '0 auto',
           boxSizing: 'border-box'
         }}
       >
-        <div style={{ marginBottom: 48 }}>
-          <SplitLine inView={visibleSections.team} delay={0}>
-            <span className="eyebrow-accent">THE TRIAD ARCHITECTURE</span>
-          </SplitLine>
-          <h2 className="heading-md">
-            <SplitLine inView={visibleSections.team} delay={0.1}>
-              The engines behind Veritas
-            </SplitLine>
-          </h2>
-        </div>
+        <div className="team">
+          <div className="team__head js-team-head" style={{ marginBottom: 40 }}>
+            <h2 className="t-56 t-lh-1 t-64@sm t-lh-1.2@sm t-104@md t-lh-1.1@md -t-ls-0.03 t-400 mb-2">
+              <SplitLine inView={visibleSections.team} delay={0}>
+                Our team
+              </SplitLine>
+            </h2>
+          </div>
 
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
-          gap: 28
-        }}>
-          {triadNodes.map((node, idx) => {
-            const IconComponent = node.icon;
-            return (
-              <div
-                key={idx}
-                style={{
-                  background: 'var(--bg-card)',
-                  border: '1px solid var(--border-subtle)',
-                  borderRadius: 24,
-                  padding: 28,
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'space-between',
-                  transition: 'transform 0.25s ease, border-color 0.25s ease, background-color 0.25s ease'
-                }}
-              >
-                <div>
-                  <div style={{
-                    width: '100%',
-                    height: 180,
-                    borderRadius: 16,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    background: 'rgba(128, 82, 255, 0.06)',
+          <div className="team-slider" style={{ position: 'relative', overflow: 'hidden' }}>
+            {/* Slider Content */}
+            <div style={{ display: 'flex', gap: 28, transition: 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)', transform: `translateX(-${activeTeamSlide * 340}px)` }}>
+              {teamMembers.map((member, idx) => (
+                <div
+                  key={idx}
+                  className="team-card"
+                  style={{
+                    minWidth: 320,
+                    maxWidth: 340,
+                    flex: '0 0 auto',
+                    borderRadius: 24,
+                    overflow: 'hidden',
+                    background: 'var(--bg-card)',
                     border: '1px solid var(--border-subtle)',
-                    marginBottom: 20,
-                    gap: 12
-                  }}>
-                    <IconComponent size={40} color="var(--color-electric-iris)" />
-                    <span style={{
-                      fontSize: 11,
-                      fontWeight: 600,
-                      letterSpacing: '0.04em',
-                      color: 'var(--color-saffron-spark)'
-                    }}>
-                      {node.port}
-                    </span>
+                    padding: 24,
+                    transition: 'all 0.3s ease'
+                  }}
+                >
+                  <div className="team-card__inner" style={{ position: 'relative', width: '100%', height: 280, borderRadius: 16, overflow: 'hidden', marginBottom: 20 }}>
+                    <img
+                      src={member.image}
+                      alt={`Portrait of ${member.name}`}
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover',
+                        filter: 'grayscale(0.15)',
+                        transition: 'transform 0.4s ease, filter 0.4s ease'
+                      }}
+                    />
                   </div>
-
-                  <div style={{
-                    fontSize: 12,
-                    fontWeight: 600,
-                    textTransform: 'uppercase',
-                    letterSpacing: '0.025em',
-                    color: 'var(--color-electric-iris)',
-                    marginBottom: 6
-                  }}>
-                    {node.role}
+                  <div style={{ fontSize: 12, fontWeight: 600, color: 'var(--color-electric-iris)', textTransform: 'uppercase', letterSpacing: '0.025em', marginBottom: 6 }}>
+                    {member.role}
                   </div>
-
-                  <h3 style={{ fontSize: 22, fontWeight: 400, color: 'var(--color-bone-white)', marginBottom: 12 }}>
-                    {node.name}
+                  <h3 style={{ fontSize: 24, fontWeight: 400, color: 'var(--color-bone-white)', marginBottom: 10 }}>
+                    {member.name}
                   </h3>
-
-                  <p style={{ fontSize: 13, color: 'var(--color-silver-mist)', fontWeight: 300, lineHeight: 1.6 }}>
-                    {node.description}
+                  <p style={{ fontSize: 13, color: 'var(--color-silver-mist)', fontWeight: 300, lineHeight: 1.5 }}>
+                    {member.bio}
                   </p>
                 </div>
+              ))}
+            </div>
 
-                <div style={{
-                  marginTop: 20,
-                  paddingTop: 16,
-                  borderTop: '1px solid var(--border-subtle)',
-                  fontSize: 11,
-                  fontWeight: 600,
-                  color: 'var(--color-ash-gray)',
-                  textTransform: 'uppercase',
-                  letterSpacing: '0.04em'
-                }}>
-                  {node.stats}
-                </div>
-              </div>
-            );
-          })}
+            {/* Slider Navigation Buttons */}
+            <div className="team-slider__controls" style={{ display: 'flex', gap: 12, marginTop: 32 }}>
+              <button
+                onClick={() => setActiveTeamSlide((prev) => Math.max(0, prev - 1))}
+                className="team-slider__control hover-enabled"
+                style={{
+                  width: 48,
+                  height: 48,
+                  borderRadius: '50%',
+                  background: 'var(--color-electric-iris)',
+                  border: 'none',
+                  color: '#fff',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  cursor: 'pointer'
+                }}
+                aria-label="Previous team member"
+              >
+                <ArrowLeft size={20} />
+              </button>
+              <button
+                onClick={() => setActiveTeamSlide((prev) => Math.min(teamMembers.length - 1, prev + 1))}
+                className="team-slider__control hover-enabled"
+                style={{
+                  width: 48,
+                  height: 48,
+                  borderRadius: '50%',
+                  background: 'var(--color-electric-iris)',
+                  border: 'none',
+                  color: '#fff',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  cursor: 'pointer'
+                }}
+                aria-label="Next team member"
+              >
+                <ArrowRight size={20} />
+              </button>
+            </div>
+          </div>
+
+          <div style={{ marginTop: 60 }}>
+            <h3 className="t-36 t-lh-1 -t-ls-0.03 t-400" style={{ marginBottom: 16 }}>
+              <SplitLine inView={visibleSections.team} delay={0.2}>
+                Build with us.
+              </SplitLine>
+            </h3>
+            <p className="t-20 t-lh-1.5 -t-ls-0.03 t-400" style={{ color: 'var(--color-silver-mist)', maxWidth: 680 }}>
+              We are researchers, engineers, and educators who believe academic honesty should be empowering, transparent, and verifiable. Join us in setting a higher bar for original thought.
+            </p>
+          </div>
         </div>
       </section>
 
-      {/* ==================== 7. INVESTORS & PARTNERS (Frames 35-39) ==================== */}
+      {/* ==================== 7. INVESTORS & RESEARCH PARTNERS (AUTHENTIC 1.png - 5.png) ==================== */}
       <section
         ref={sectionRefs.investors}
         className="investors"
         style={{
-          minHeight: '80vh',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'flex-end',
           padding: '120px 32px',
           maxWidth: 'var(--page-max-width)',
           margin: '0 auto',
           boxSizing: 'border-box'
         }}
       >
-        <div style={{ maxWidth: 540 }}>
-          {/* Arrow navigation buttons in violet circles */}
-          <div style={{ display: 'flex', gap: 12, marginBottom: 32 }}>
-            <button
-              onClick={() => setActivePartnerSlide(prev => (prev - 1 + partners.length) % partners.length)}
-              style={{
-                width: 42,
-                height: 42,
-                borderRadius: '50%',
-                background: 'var(--color-electric-iris)',
-                border: 'none',
-                color: '#ffffff',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                cursor: 'pointer'
-              }}
-              aria-label="Previous partner"
-            >
-              <ArrowLeft size={18} />
-            </button>
-            <button
-              onClick={() => setActivePartnerSlide(prev => (prev + 1) % partners.length)}
-              style={{
-                width: 42,
-                height: 42,
-                borderRadius: '50%',
-                background: 'var(--color-electric-iris)',
-                border: 'none',
-                color: '#ffffff',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                cursor: 'pointer'
-              }}
-              aria-label="Next partner"
-            >
-              <ArrowRight size={18} />
-            </button>
-          </div>
-
-          <h2 className="heading-lg" style={{ marginBottom: 24 }}>
+        <div style={{ width: '100%', marginBottom: 40 }}>
+          <span className="eyebrow-accent" style={{ marginBottom: 12 }}>
+            RESEARCH ALLIANCES & CONSORTIA
+          </span>
+          <h2 className="t-56 t-lh-1 t-64@sm t-lh-1.2@sm t-104@md t-lh-1.1@md -t-ls-0.03 t-400 mb-2">
             <SplitLine inView={visibleSections.investors} delay={0}>
-              Validated across
-            </SplitLine>
-            <SplitLine inView={visibleSections.investors} delay={0.1}>
-              academia
+              Our research partners
             </SplitLine>
           </h2>
+          <p className="t-20 t-lh-1.5 -t-ls-0.03 t-400" style={{ color: 'var(--color-silver-mist)', maxWidth: 640 }}>
+            Validated across competitive programming datasets, university faculty research cohorts, and automated code review pipelines.
+          </p>
+        </div>
 
-          <div className="body-light" style={{ lineHeight: 1.6, marginBottom: 32 }}>
-            <SplitLine inView={visibleSections.investors} delay={0.2}>
-              We collaborate with leading research consortia, computer science
-            </SplitLine>
-            <SplitLine inView={visibleSections.investors} delay={0.28}>
-              departments, and AI labs to continually benchmark detection fidelity.
-            </SplitLine>
-          </div>
-
-          <div style={{
-            background: 'var(--bg-card)',
-            border: '1px solid var(--border-subtle)',
-            borderRadius: 20,
-            padding: 24
-          }}>
-            <span style={{ fontSize: 11, fontWeight: 600, color: 'var(--color-saffron-spark)', textTransform: 'uppercase' }}>
-              {partners[activePartnerSlide].tier}
-            </span>
-            <h4 style={{ fontSize: 20, fontWeight: 400, color: 'var(--color-bone-white)', margin: '6px 0 8px' }}>
-              {partners[activePartnerSlide].name}
-            </h4>
-            <p style={{ fontSize: 13, color: 'var(--color-silver-mist)', fontWeight: 300, lineHeight: 1.5 }}>
-              {partners[activePartnerSlide].note}
-            </p>
-          </div>
+        {/* The 5 Partner Cards with Authentic Glowing Prism Icons */}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+          gap: 24,
+          width: '100%'
+        }}>
+          {partners.map((partner) => (
+            <div
+              key={partner.id}
+              className="investor dala-surface"
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 20,
+                padding: '24px 28px',
+                borderRadius: 24,
+                transition: 'transform 0.3s ease, border-color 0.3s ease'
+              }}
+            >
+              <div className="investor__icon" style={{ width: 68, height: 68, flex: '0 0 68px' }}>
+                <img
+                  className="investor__icon__image"
+                  src={partner.icon}
+                  alt={`Glowing prism icon for ${partner.name}`}
+                  style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+                />
+              </div>
+              <div className="investor__body">
+                <span style={{ fontSize: 10, fontWeight: 600, color: 'var(--color-saffron-spark)', letterSpacing: '0.04em', textTransform: 'uppercase' }}>
+                  {partner.tag}
+                </span>
+                <div className="t-24 t-lh-1.25 -t-ls-0.03 t-400" style={{ color: 'var(--color-bone-white)', margin: '4px 0' }}>
+                  {partner.name}
+                </div>
+                <div style={{ fontSize: 13, color: 'var(--color-silver-mist)', fontWeight: 300 }}>
+                  {partner.subtitle}
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
       </section>
 
-      {/* ==================== 8. FINAL CTA & FOOTER (Exact Match for Screenshots 2 & 3) ==================== */}
+      {/* ==================== 8. FINAL CTA & FOOTER ==================== */}
       <section
         ref={sectionRefs.footer}
         className="section footer | js-section"
@@ -697,45 +721,58 @@ export default function DalaManifestoPage({ onOpenStudio, onOpenClassroom, onOpe
           boxSizing: 'border-box'
         }}
       >
-        <h2 style={{
-          fontSize: 'clamp(36px, 5.5vw, 68px)',
-          fontWeight: 400,
-          letterSpacing: '-2.4px',
-          color: 'var(--color-bone-white)',
-          lineHeight: 1.15,
-          marginBottom: 32
-        }}>
-          <SplitLine inView={visibleSections.footer} delay={0} align="center">
-            Your institution has the standard.
-          </SplitLine>
-          <SplitLine inView={visibleSections.footer} delay={0.12} align="center">
-            Veritas delivers the proof.
-          </SplitLine>
-        </h2>
+        <div className="footer__head">
+          <h2
+            className="t-40 t-lh-1 t-48@sm t-lh-1.2@sm t-64@md t-lh-1.1@md -t-ls-0.03 t-400 mb-2"
+            style={{ marginBottom: 32 }}
+          >
+            <SplitLine inView={visibleSections.footer} delay={0} align="center">
+              Your institution has the standard.
+            </SplitLine>
+            <SplitLine inView={visibleSections.footer} delay={0.12} align="center">
+              Let Veritas uphold it.
+            </SplitLine>
+          </h2>
+        </div>
 
-        <div className="overflow-hidden" style={{ marginTop: 8 }}>
+        <p className="t-20 t-lh-1.5 -t-ls-0.03 t-400" style={{ color: 'var(--color-silver-mist)', maxWidth: 580, marginBottom: 40 }}>
+          Experience multi-agent forensic verification in real time. Launch our Originality Studio or run automated test benchmarks with zero setup.
+        </p>
+
+        <div className="overflow-hidden">
           <div
             className="d-flex"
             style={{
               justifyContent: 'center',
-              transform: visibleSections.footer ? 'translate(0px, 0px) rotate(0deg)' : 'translate(0px, 120%) rotate(2deg)',
+              gap: 18,
+              flexWrap: 'wrap',
+              transform: visibleSections.footer ? 'translate(0px, 0px)' : 'translate(0px, 120%) rotate(2deg)',
               transition: 'transform 1s cubic-bezier(0.16, 1, 0.3, 1) 0.35s'
             }}
           >
             <button
               onClick={onOpenStudio}
               className="btn t-16 t-14@xs t-16@sm t-ls-0.025 t-600 t-uppercase"
-              style={{ padding: '15px 36px', fontSize: 14 }}
-              aria-label="Request Access to Veritas Studio"
+              style={{ padding: '16px 36px' }}
+              aria-label="Launch Originality Studio"
             >
-              <span className="btn__text pointer-events-none">Request Access</span>
+              <span className="btn__text pointer-events-none">Launch Studio</span>
               <div className="btn__hover pointer-events-none" aria-hidden="true" />
+            </button>
+
+            <button
+              onClick={onOpenClassroom}
+              className="btn-pill-secondary"
+              style={{ padding: '16px 28px' }}
+              aria-label="Open Classroom Portal"
+            >
+              <span>Classroom Portal</span>
             </button>
           </div>
         </div>
       </section>
 
-      {/* ==================== FOOTER BAR (Screenshot 3 Match) ==================== */}
+      {/* ==================== FOOTER BAR ==================== */}
       <footer style={{
         borderTop: '1px solid var(--border-subtle)',
         padding: '36px 32px',
@@ -749,57 +786,28 @@ export default function DalaManifestoPage({ onOpenStudio, onOpenClassroom, onOpe
         fontSize: 13,
         color: 'var(--color-ash-gray)'
       }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+          <span style={{ fontWeight: 600, color: 'var(--color-bone-white)', letterSpacing: '-0.3px' }}>
+            VERITAS
+          </span>
+          <span style={{ color: 'var(--border-strong)' }}>•</span>
+          <span>Originality Intelligence Platform</span>
+        </div>
+
+        <div style={{ display: 'flex', gap: 24 }}>
+          <button onClick={onOpenStudio} className="nav-label" style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}>
+            STUDIO
+          </button>
+          <button onClick={onOpenClassroom} className="nav-label" style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}>
+            CLASSROOM
+          </button>
+          <button onClick={onOpenDemoBench} className="nav-label" style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}>
+            BENCHMARK
+          </button>
+        </div>
+
         <div>
-          <span>© 2026 Veritas Technologies Limited.</span>{' '}
-          <span style={{ color: 'var(--color-silver-mist)' }}>All rights reserved.</span>
-        </div>
-
-        <div style={{ display: 'flex', gap: 28, textTransform: 'uppercase', letterSpacing: '0.025em', fontSize: 12, fontWeight: 600 }}>
-          <span onClick={onOpenStudio} style={{ color: 'var(--color-bone-white)', cursor: 'pointer' }}>Manifesto</span>
-          <span onClick={onOpenStudio} style={{ cursor: 'pointer' }}>Studio</span>
-          <span onClick={onOpenClassroom} style={{ cursor: 'pointer' }}>Classroom</span>
-          <span onClick={onOpenDemoBench} style={{ cursor: 'pointer' }}>Demo Bench</span>
-          <span style={{ cursor: 'pointer' }}>Privacy</span>
-          <span style={{ cursor: 'pointer' }}>Terms</span>
-        </div>
-
-        {/* Social Icons matching Screenshot 3 */}
-        <div style={{ display: 'flex', gap: 20, alignItems: 'center' }}>
-          {/* LinkedIn */}
-          <a
-            href="https://linkedin.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{ color: 'var(--color-ash-gray)', transition: 'color 0.2s ease', display: 'flex' }}
-            aria-label="LinkedIn"
-          >
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 8.76a1.53 1.53 0 0 0 0-3.06 1.53 1.53 0 0 0 0 3.06m1.39 9.74v-8.37H5.07v8.37h2.78z" />
-            </svg>
-          </a>
-          {/* Twitter / X */}
-          <a
-            href="https://twitter.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{ color: 'var(--color-ash-gray)', transition: 'color 0.2s ease', display: 'flex' }}
-            aria-label="Twitter X"
-          >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-            </svg>
-          </a>
-          {/* Email */}
-          <a
-            href="mailto:contact@veritas.edu"
-            style={{ color: 'var(--color-ash-gray)', transition: 'color 0.2s ease', display: 'flex' }}
-            aria-label="Contact Email"
-          >
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <rect width="20" height="16" x="2" y="4" rx="2" />
-              <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
-            </svg>
-          </a>
+          © {new Date().getFullYear()} Veritas Research Consortium. All rights reserved.
         </div>
       </footer>
 
