@@ -1,21 +1,24 @@
 import React from 'react';
 
-export default function Navbar({ activeTab, setActiveTab, activeTier, setActiveTier, serverStatus }) {
+export default function Navbar({ activeTab, setActiveTab, serverStatus }) {
   const navLinks = [
-    { id: 'studio', label: 'Studio' },
+    { id: 'manifesto', label: 'Manifesto' },
+    { id: 'studio', label: 'Originality Studio' },
     { id: 'classroom', label: 'Classroom' },
     { id: 'demobench', label: 'Demo Bench' },
   ];
 
   return (
     <header style={{
-      position: 'sticky',
+      position: 'fixed',
       top: 0,
+      left: 0,
+      right: 0,
       zIndex: 100,
-      background: 'rgba(0, 0, 0, 0.85)',
-      backdropFilter: 'blur(12px)',
+      background: 'rgba(0, 0, 0, 0.75)',
+      backdropFilter: 'blur(16px)',
       borderBottom: '1px solid rgba(255, 255, 255, 0.06)',
-      padding: '18px 32px'
+      padding: '16px 32px'
     }}>
       <div style={{
         maxWidth: 'var(--page-max-width)',
@@ -25,30 +28,29 @@ export default function Navbar({ activeTab, setActiveTab, activeTier, setActiveT
         justifyContent: 'space-between'
       }}>
         
-        {/* Brand Lockup: Sharp Triangular Icon + Monolithic Wordmark */}
+        {/* Brand Lockup: Stylized Dala Geometric Mark + Wordmark */}
         <div
-          onClick={() => setActiveTab('hero')}
+          onClick={() => setActiveTab('manifesto')}
           style={{ display: 'flex', alignItems: 'center', gap: 14, cursor: 'pointer' }}
         >
-          {/* Triangular Brand Glyph with Violet-Teal Gradient */}
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
             <defs>
-              <linearGradient id="dala-logo-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <linearGradient id="dala-poly-grad" x1="0%" y1="0%" x2="100%" y2="100%">
                 <stop offset="0%" stopColor="#8052ff" />
                 <stop offset="100%" stopColor="#15846e" />
               </linearGradient>
             </defs>
-            <polygon points="12,2 22,20 2,20" fill="url(#dala-logo-grad)" />
+            <polygon points="12,2 22,20 2,20" fill="url(#dala-poly-grad)" />
           </svg>
 
           <span style={{
-            fontSize: 16,
+            fontSize: 18,
             fontWeight: 400,
-            letterSpacing: '-0.3px',
+            letterSpacing: '-0.4px',
             color: 'var(--color-bone-white)',
             textTransform: 'uppercase'
           }}>
-            Veritas
+            Dala
           </span>
 
           <span style={{
@@ -56,10 +58,10 @@ export default function Navbar({ activeTab, setActiveTab, activeTier, setActiveT
             color: 'var(--color-ash-gray)',
             letterSpacing: '0.04em',
             textTransform: 'uppercase',
-            borderLeft: '1px solid rgba(255,255,255,0.12)',
+            borderLeft: '1px solid rgba(255,255,255,0.15)',
             paddingLeft: 12
           }}>
-            Dala Edition
+            Veritas Edition
           </span>
         </div>
 
@@ -71,10 +73,10 @@ export default function Navbar({ activeTab, setActiveTab, activeTier, setActiveT
               <button
                 key={link.id}
                 onClick={() => setActiveTab(link.id)}
-                className={`btn-ghost ${isActive ? 'active' : ''}`}
+                className="btn-ghost"
                 style={{
                   color: isActive ? 'var(--color-bone-white)' : 'var(--color-ash-gray)',
-                  fontSize: 14,
+                  fontSize: 13,
                   fontWeight: 600,
                   textTransform: 'uppercase',
                   letterSpacing: '0.35px',
@@ -102,10 +104,9 @@ export default function Navbar({ activeTab, setActiveTab, activeTier, setActiveT
           })}
         </nav>
 
-        {/* Right Section: Service Pulse + Primary Action Pill */}
+        {/* Right Section: Telemetry Pulse + Request Access Violet Pill */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
           
-          {/* Micro Telemetry Indicator */}
           <div style={{
             display: 'flex',
             alignItems: 'center',
@@ -123,20 +124,19 @@ export default function Navbar({ activeTab, setActiveTab, activeTier, setActiveT
               backgroundColor: serverStatus?.online ? '#34d399' : '#f87171',
               boxShadow: serverStatus?.online ? '0 0 8px #34d399' : 'none'
             }} />
-            <span>{serverStatus?.online ? 'Connected' : 'Engines Offline'}</span>
+            <span>{serverStatus?.online ? 'Ready' : 'Connecting'}</span>
           </div>
 
-          {/* Singular Dala Primary Violet Pill Button */}
           <button
             onClick={() => setActiveTab('studio')}
             className="btn-pill-primary"
             style={{
-              padding: '10px 20px',
-              fontSize: 12,
+              padding: '10px 22px',
+              fontSize: 13,
               borderRadius: 24
             }}
           >
-            Launch Studio
+            Request Access
           </button>
 
         </div>

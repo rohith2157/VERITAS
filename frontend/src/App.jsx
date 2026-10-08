@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
-import Hero from './components/Hero';
-import TriadNetwork from './components/TriadNetwork';
+import DalaInteractiveCanvas from './components/DalaInteractiveCanvas';
+import DalaManifestoPage from './components/DalaManifestoPage';
 import UniversalStudio from './components/studio/UniversalStudio';
 import ClassroomPortal from './components/classroom/ClassroomPortal';
 import DemoBench from './components/DemoBench';
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState('hero'); // 'hero', 'studio', 'classroom', 'demobench'
-  const [activeTier, setActiveTier] = useState('pro');
+  const [activeTab, setActiveTab] = useState('manifesto'); // 'manifesto', 'studio', 'classroom', 'demobench'
   const [serverStatus, setServerStatus] = useState({ online: false, spring: false, python: false });
 
   const checkHealth = async () => {
@@ -39,62 +38,56 @@ export default function App() {
   }, []);
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', background: 'var(--color-void)' }}>
+    <div style={{ position: 'relative', minHeight: '100vh', background: '#000000', overflowX: 'hidden' }}>
+      
+      {/* 1. Global 3D Scroll-Morphing Particle Canvas */}
+      <DalaInteractiveCanvas />
+
+      {/* 2. Top-Aligned Sticky Navbar */}
       <Navbar
         activeTab={activeTab}
         setActiveTab={setActiveTab}
-        activeTier={activeTier}
-        setActiveTier={setActiveTier}
         serverStatus={serverStatus}
       />
 
-      <main style={{ flex: 1, paddingBottom: 60 }}>
-        {activeTab === 'hero' && (
-          <>
-            <Hero
-              onExploreStudio={() => setActiveTab('studio')}
-              onOpenDemoBench={() => setActiveTab('demobench')}
-            />
-            <TriadNetwork serverStatus={serverStatus} />
-          </>
+      {/* 3. Main View Router */}
+      <main style={{ position: 'relative', zIndex: 1, minHeight: '100vh' }}>
+        {activeTab === 'manifesto' && (
+          <DalaManifestoPage
+            onOpenStudio={() => {
+              setActiveTab('studio');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+            onOpenClassroom={() => {
+              setActiveTab('classroom');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+            onOpenDemoBench={() => {
+              setActiveTab('demobench');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+          />
         )}
 
-        {activeTab === 'studio' && <UniversalStudio />}
-        {activeTab === 'classroom' && <ClassroomPortal />}
-        {activeTab === 'demobench' && <DemoBench />}
+        {activeTab === 'studio' && (
+          <div style={{ paddingTop: 80 }}>
+            <UniversalStudio />
+          </div>
+        )}
+
+        {activeTab === 'classroom' && (
+          <div style={{ paddingTop: 80 }}>
+            <ClassroomPortal />
+          </div>
+        )}
+
+        {activeTab === 'demobench' && (
+          <div style={{ paddingTop: 80 }}>
+            <DemoBench />
+          </div>
+        )}
       </main>
 
-      {/* Dala Style Minimal Void Footer */}
-      <footer style={{
-        borderTop: '1px solid rgba(255, 255, 255, 0.08)',
-        padding: '32px 24px',
-        background: 'var(--color-void)',
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        flexWrap: 'wrap',
-        gap: 16,
-        maxWidth: 'var(--page-max-width)',
-        margin: '0 auto',
-        width: '100%'
-      }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-            <polygon points="12,2 22,20 2,20" fill="#8052ff" />
-          </svg>
-          <span style={{ fontSize: 13, color: 'var(--color-silver-mist)', fontWeight: 200 }}>
-            Veritas Collective Integrity • Dala Dark Velvet Edition
-          </span>
-        </div>
-
-        <div style={{ display: 'flex', gap: 24, fontSize: 12, color: 'var(--color-ash-gray)' }}>
-          <span>React 19</span>
-          <span>•</span>
-          <span>Spring Boot 3</span>
-          <span>•</span>
-          <span>Python FastAPI</span>
-        </div>
-      </footer>
     </div>
   );
 }
