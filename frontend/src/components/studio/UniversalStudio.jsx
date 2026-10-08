@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FileText, Cpu, AlertTriangle, ShieldCheck, Zap, RefreshCw, Eye, Code, Search } from 'lucide-react';
+import { FileText, Cpu, AlertTriangle, ShieldCheck, Zap, RefreshCw, Eye, Code, Search, Sparkles } from 'lucide-react';
 
 export default function UniversalStudio() {
   const [subTab, setSubTab] = useState('1to1'); // '1to1', 'matrix', 'ai', 'code'
@@ -77,7 +77,6 @@ def compute_fact(num):
   const run1to1Diff = async () => {
     setLoading(true);
     try {
-      // Direct call to Spring Boot gateway or Python engine
       const res = await fetch('http://localhost:8080/api/studio/compare-1to1', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -93,7 +92,6 @@ def compute_fact(num):
       const data = await res.json();
       setDiffResult(data);
     } catch (e) {
-      // Fallback directly to Python port 8000 if Spring Boot is temporarily offline
       try {
         const fallback = await fetch('http://localhost:8000/api/v1/compare/one-to-one', {
           method: 'POST',
@@ -198,165 +196,201 @@ def compute_fact(num):
     }
   };
 
+  const tabs = [
+    { id: '1to1', label: '1-to-1 Split Diff', tier: 'FLASH', icon: '⚡' },
+    { id: 'matrix', label: 'Cohort N×N Matrix', tier: 'PRO', icon: '👥' },
+    { id: 'ai', label: 'AI Forensics', tier: 'ULTRA', icon: '🤖' },
+    { id: 'code', label: 'Code AST Clone', tier: 'MAX', icon: '💻' },
+  ];
+
   return (
-    <div style={{ maxWidth: 1400, margin: '24px auto', padding: '0 24px' }}>
+    <div style={{ maxWidth: 'var(--page-max-width)', margin: '40px auto', padding: '0 24px' }}>
       
-      {/* Studio Header & Sub-Tabs */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20, flexWrap: 'wrap', gap: 12 }}>
+      {/* Studio Header & Sub-Tabs in Dala Monolithic Rhythm */}
+      <div style={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'flex-end',
+        marginBottom: 36,
+        flexWrap: 'wrap',
+        gap: 24,
+        borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
+        paddingBottom: 24
+      }}>
         <div>
-          <h1 style={{ fontSize: 24, fontWeight: 700, margin: 0 }}>Universal Originality Studio</h1>
-          <p style={{ color: 'var(--text-secondary)', fontSize: 14 }}>
-            Direct algorithmic testing across all four operational tiers.
+          <span className="eyebrow-accent">
+            Originality Architecture
+          </span>
+          <h1 className="heading-md" style={{ marginBottom: 8 }}>
+            Universal Originality Studio
+          </h1>
+          <p className="body-light" style={{ maxWidth: 540 }}>
+            Algorithmic document integrity and peer collusion discovery across the black velvet stage.
           </p>
         </div>
 
-        <div style={{ display: 'flex', gap: 8, background: '#131A26', padding: 4, borderRadius: 10, border: '1px solid var(--border-subtle)' }}>
-          <button
-            onClick={() => setSubTab('1to1')}
-            className="btn"
-            style={{
-              padding: '6px 12px',
-              fontSize: 13,
-              background: subTab === '1to1' ? '#2563EB' : 'transparent',
-              color: subTab === '1to1' ? '#fff' : 'var(--text-secondary)'
-            }}
-          >
-            ⚡ 1-to-1 Split Diff (Flash)
-          </button>
-
-          <button
-            onClick={() => setSubTab('matrix')}
-            className="btn"
-            style={{
-              padding: '6px 12px',
-              fontSize: 13,
-              background: subTab === 'matrix' ? '#10B981' : 'transparent',
-              color: subTab === 'matrix' ? '#fff' : 'var(--text-secondary)'
-            }}
-          >
-            🏆 Cohort NxN Matrix (Pro)
-          </button>
-
-          <button
-            onClick={() => setSubTab('ai')}
-            className="btn"
-            style={{
-              padding: '6px 12px',
-              fontSize: 13,
-              background: subTab === 'ai' ? '#F59E0B' : 'transparent',
-              color: subTab === 'ai' ? '#fff' : 'var(--text-secondary)'
-            }}
-          >
-            👑 AI Writing Forensics (Ultra)
-          </button>
-
-          <button
-            onClick={() => setSubTab('code')}
-            className="btn"
-            style={{
-              padding: '6px 12px',
-              fontSize: 13,
-              background: subTab === 'code' ? '#8B5CF6' : 'transparent',
-              color: subTab === 'code' ? '#fff' : 'var(--text-secondary)'
-            }}
-          >
-            🚀 Code AST Clone (Max)
-          </button>
+        {/* Tab Controls: Floating Ghost Pills */}
+        <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+          {tabs.map(t => {
+            const isActive = subTab === t.id;
+            return (
+              <button
+                key={t.id}
+                onClick={() => setSubTab(t.id)}
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: 8,
+                  padding: '10px 18px',
+                  borderRadius: 24,
+                  fontSize: 13,
+                  fontWeight: 600,
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.025em',
+                  background: isActive ? 'var(--color-electric-iris)' : 'rgba(255, 255, 255, 0.04)',
+                  color: isActive ? '#ffffff' : 'var(--color-ash-gray)',
+                  border: isActive ? '1px solid var(--color-electric-iris)' : '1px solid rgba(255, 255, 255, 0.08)',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s ease'
+                }}
+              >
+                <span>{t.icon}</span>
+                <span>{t.label}</span>
+              </button>
+            );
+          })}
         </div>
       </div>
 
       {/* ==================== SUB-TAB 1: 1-TO-1 SPLIT DIFF ==================== */}
       {subTab === '1to1' && (
         <div>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20, marginBottom: 16 }}>
-            <div className="card">
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
-                <span style={{ fontWeight: 600, fontSize: 14 }}>📄 Document A (Student Submission)</span>
-                <span style={{ fontSize: 12, color: 'var(--text-muted)' }}>{textA.length} chars</span>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: 24, marginBottom: 24 }}>
+            <div className="dala-surface">
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
+                <span style={{ fontWeight: 400, fontSize: 16, color: '#ffffff' }}>Primary Submission (Document A)</span>
+                <span style={{ fontSize: 12, color: 'var(--color-ash-gray)' }}>{textA.length} characters</span>
               </div>
               <textarea
                 className="form-textarea"
-                rows={8}
+                rows={9}
                 value={textA}
                 onChange={e => setTextA(e.target.value)}
                 placeholder="Paste primary document here..."
+                style={{ fontSize: 14, lineHeight: 1.6 }}
               />
             </div>
 
-            <div className="card">
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
-                <span style={{ fontWeight: 600, fontSize: 14 }}>📑 Document B (Comparison Source)</span>
-                <span style={{ fontSize: 12, color: 'var(--text-muted)' }}>{textB.length} chars</span>
+            <div className="dala-surface">
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
+                <span style={{ fontWeight: 400, fontSize: 16, color: '#ffffff' }}>Comparison Source (Document B)</span>
+                <span style={{ fontSize: 12, color: 'var(--color-ash-gray)' }}>{textB.length} characters</span>
               </div>
               <textarea
                 className="form-textarea"
-                rows={8}
+                rows={9}
                 value={textB}
                 onChange={e => setTextB(e.target.value)}
                 placeholder="Paste reference or peer document here..."
+                style={{ fontSize: 14, lineHeight: 1.6 }}
               />
             </div>
           </div>
 
-          {/* Options & Action */}
-          <div className="card" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20, padding: 16 }}>
-            <div style={{ display: 'flex', gap: 20 }}>
-              <label style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, cursor: 'pointer' }}>
+          {/* Options & Action Bar */}
+          <div className="dala-surface" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 32, padding: '20px 28px', flexWrap: 'wrap', gap: 16 }}>
+            <div style={{ display: 'flex', gap: 24, flexWrap: 'wrap' }}>
+              <label style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, color: 'var(--color-silver-mist)', cursor: 'pointer' }}>
                 <input
                   type="checkbox"
                   checked={excludeQuotes}
                   onChange={e => setExcludeQuotes(e.target.checked)}
+                  style={{ accentColor: 'var(--color-electric-iris)' }}
                 />
                 Exclude Direct Quotations ("...")
               </label>
 
-              <label style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, cursor: 'pointer' }}>
+              <label style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, color: 'var(--color-silver-mist)', cursor: 'pointer' }}>
                 <input
                   type="checkbox"
                   checked={excludeBiblio}
                   onChange={e => setExcludeBiblio(e.target.checked)}
+                  style={{ accentColor: 'var(--color-electric-iris)' }}
                 />
                 Exclude References / Bibliography
               </label>
             </div>
 
-            <button onClick={run1to1Diff} disabled={loading} className="btn btn-primary">
-              <Zap size={16} />
-              {loading ? 'Analyzing...' : 'Execute 1-to-1 Comparison'}
+            <button
+              onClick={run1to1Diff}
+              disabled={loading}
+              className="btn-pill-primary"
+            >
+              <Zap size={15} />
+              <span>{loading ? 'Fingerprinting...' : 'Execute Comparison'}</span>
             </button>
           </div>
 
-          {/* 1-to-1 Results Card */}
+          {/* 1-to-1 Results Dossier */}
           {diffResult && (
-            <div className="card" style={{ marginBottom: 24 }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid var(--border-subtle)', paddingBottom: 16, marginBottom: 16 }}>
+            <div className="dala-surface" style={{ marginBottom: 40 }}>
+              <div style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
+                paddingBottom: 24,
+                marginBottom: 24,
+                flexWrap: 'wrap',
+                gap: 16
+              }}>
                 <div>
-                  <h3 style={{ fontSize: 18, fontWeight: 700 }}>Comparison Dossier</h3>
-                  <p style={{ fontSize: 13, color: 'var(--text-secondary)' }}>
+                  <span className="eyebrow-accent" style={{ marginBottom: 4 }}>
+                    Winnowing N-Gram Analysis
+                  </span>
+                  <h3 className="heading-sm" style={{ margin: 0 }}>
+                    Comparison Dossier
+                  </h3>
+                  <p style={{ fontSize: 13, color: 'var(--color-silver-mist)', marginTop: 4 }}>
                     Fingerprinting generated via Winnowing Algorithm (w=4, k=5)
                   </p>
                 </div>
 
-                <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-                  <div style={{ textAlign: 'right' }}>
-                    <div style={{ fontSize: 28, fontWeight: 800, color: diffResult.color_tier.hex }}>
-                      {diffResult.similarity_score}%
-                    </div>
-                    <div style={{ fontSize: 12, color: diffResult.color_tier.hex, fontWeight: 600 }}>
-                      {diffResult.color_tier.label}
-                    </div>
+                <div style={{ textAlign: 'right' }}>
+                  <div style={{
+                    fontSize: 48,
+                    fontWeight: 400,
+                    letterSpacing: -1.68,
+                    color: diffResult.color_tier?.hex || 'var(--color-bone-white)'
+                  }}>
+                    {diffResult.similarity_score}%
+                  </div>
+                  <div style={{
+                    fontSize: 12,
+                    fontWeight: 600,
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.025em',
+                    color: diffResult.color_tier?.hex || 'var(--color-saffron-spark)'
+                  }}>
+                    {diffResult.color_tier?.label || 'Match Evaluation'}
                   </div>
                 </div>
               </div>
 
               {/* Integrity Evasion Audit */}
-              {diffResult.document_stats.doc_a.integrity.is_suspicious && (
-                <div style={{ background: 'rgba(239, 68, 68, 0.1)', border: '1px solid #EF4444', borderRadius: 8, padding: 12, marginBottom: 16 }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 8, color: '#F87171', fontWeight: 600, fontSize: 14 }}>
+              {diffResult.document_stats?.doc_a?.integrity?.is_suspicious && (
+                <div style={{
+                  background: 'rgba(239, 68, 68, 0.08)',
+                  border: '1px solid rgba(239, 68, 68, 0.4)',
+                  borderRadius: 16,
+                  padding: 16,
+                  marginBottom: 24
+                }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 8, color: '#f87171', fontWeight: 600, fontSize: 14 }}>
                     <AlertTriangle size={18} />
                     Integrity Evasion Attack Detected in Document A!
                   </div>
-                  <ul style={{ margin: '8px 0 0 24px', fontSize: 13, color: '#FCA5A5' }}>
+                  <ul style={{ margin: '8px 0 0 24px', fontSize: 13, color: '#fca5a5' }}>
                     {diffResult.document_stats.doc_a.integrity.flags.map((f, i) => (
                       <li key={i}>{f.description}</li>
                     ))}
@@ -364,18 +398,30 @@ def compute_fact(num):
                 </div>
               )}
 
-              {/* Highlighted Matched Snippets */}
-              <h4 style={{ fontSize: 14, fontWeight: 600, marginBottom: 10, color: 'var(--text-secondary)' }}>
+              {/* Matched Snippets */}
+              <h4 style={{ fontSize: 14, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.025em', color: 'var(--color-silver-mist)', marginBottom: 16 }}>
                 Matched Passages ({diffResult.total_matches_found} segments identified):
               </h4>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-                {diffResult.matched_segments.map((seg, idx) => (
-                  <div key={idx} style={{ background: '#0F172A', border: '1px solid var(--border-subtle)', borderRadius: 8, padding: 12 }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12, color: 'var(--text-muted)', marginBottom: 6 }}>
-                      <span>Match #{idx + 1} (Characters {seg.start_a} to {seg.end_a})</span>
-                      <span className="badge badge-flash">Exact Shingle Match</span>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+                {diffResult.matched_segments?.map((seg, idx) => (
+                  <div key={idx} style={{
+                    background: 'rgba(255, 255, 255, 0.03)',
+                    border: '1px solid rgba(255, 255, 255, 0.06)',
+                    borderRadius: 16,
+                    padding: 18
+                  }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12, color: 'var(--color-ash-gray)', marginBottom: 8 }}>
+                      <span>Fragment #{idx + 1} (Characters {seg.start_a} to {seg.end_a})</span>
+                      <span className="badge-tag badge-flash">Exact Shingle Match</span>
                     </div>
-                    <div style={{ fontSize: 14, color: '#F87171', background: 'rgba(239, 68, 68, 0.08)', padding: 8, borderRadius: 4 }}>
+                    <div style={{
+                      fontSize: 14,
+                      color: 'var(--color-saffron-spark)',
+                      background: 'rgba(255, 184, 41, 0.06)',
+                      padding: 12,
+                      borderRadius: 8,
+                      lineHeight: 1.6
+                    }}>
                       "{seg.snippet_a}"
                     </div>
                   </div>
@@ -389,27 +435,39 @@ def compute_fact(num):
       {/* ==================== SUB-TAB 2: COHORT MATRIX ==================== */}
       {subTab === 'matrix' && (
         <div>
-          <div className="card" style={{ marginBottom: 20 }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
+          <div className="dala-surface" style={{ marginBottom: 32 }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24, flexWrap: 'wrap', gap: 16 }}>
               <div>
-                <h3 style={{ fontSize: 16, fontWeight: 700 }}>Classroom Cohort Batch ({cohortDocs.length} submissions)</h3>
-                <p style={{ fontSize: 13, color: 'var(--text-secondary)' }}>
-                  Cross-checks all students against each other to discover peer collusion rings and patient zero.
+                <span className="eyebrow-accent">Peer Collusion Matrix</span>
+                <h3 className="heading-sm" style={{ margin: 0 }}>Classroom Cohort Batch ({cohortDocs.length} submissions)</h3>
+                <p style={{ fontSize: 13, color: 'var(--color-silver-mist)', marginTop: 4 }}>
+                  Cross-checks all submissions in O(N²) to identify collusion rings and original submitter (Patient Zero).
                 </p>
               </div>
-              <button onClick={runCohortMatrix} disabled={loading} className="btn btn-primary" style={{ background: '#10B981' }}>
-                <Zap size={16} />
-                {loading ? 'Computing Matrix...' : 'Run NxN Collusion Analysis'}
+              <button
+                onClick={runCohortMatrix}
+                disabled={loading}
+                className="btn-pill-primary"
+              >
+                <Zap size={15} />
+                <span>{loading ? 'Cross-Matching...' : 'Run N×N Collusion Scan'}</span>
               </button>
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 12 }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 16 }}>
               {cohortDocs.map(d => (
-                <div key={d.id} style={{ background: '#0F172A', border: '1px solid var(--border-subtle)', borderRadius: 8, padding: 12 }}>
-                  <div style={{ fontWeight: 600, fontSize: 13, color: '#38BDF8', marginBottom: 4 }}>{d.name}</div>
-                  <div style={{ fontSize: 11, color: 'var(--text-muted)', marginBottom: 6 }}>Submitted: {d.timestamp}</div>
-                  <div style={{ fontSize: 12, color: 'var(--text-secondary)', maxLines: 2, overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                    {d.text.substring(0, 100)}...
+                <div key={d.id} style={{
+                  background: 'rgba(255, 255, 255, 0.03)',
+                  border: '1px solid rgba(255, 255, 255, 0.06)',
+                  borderRadius: 16,
+                  padding: 16
+                }}>
+                  <div style={{ fontWeight: 400, fontSize: 15, color: '#ffffff', marginBottom: 4 }}>{d.name}</div>
+                  <div style={{ fontSize: 11, color: 'var(--color-ash-gray)', marginBottom: 8, fontFamily: 'var(--font-mono)' }}>
+                    Timestamp: {d.timestamp}
+                  </div>
+                  <div style={{ fontSize: 13, color: 'var(--color-silver-mist)', fontWeight: 200, lineHeight: 1.5 }}>
+                    {d.text.substring(0, 110)}...
                   </div>
                 </div>
               ))}
@@ -418,21 +476,37 @@ def compute_fact(num):
 
           {/* Matrix Results */}
           {matrixResult && (
-            <div className="card">
-              <h3 style={{ fontSize: 18, fontWeight: 700, marginBottom: 12 }}>Interactive NxN Collusion Matrix Heatmap</h3>
+            <div className="dala-surface" style={{ marginBottom: 40 }}>
+              <div style={{ marginBottom: 20 }}>
+                <span className="eyebrow-accent">Calculated Graph</span>
+                <h3 className="heading-sm" style={{ margin: 0 }}>N×N Pairwise Collusion Heatmap</h3>
+              </div>
 
               {/* Collusion Rings */}
               {matrixResult.collusion_clusters && matrixResult.collusion_clusters.length > 0 && (
-                <div style={{ background: 'rgba(239, 68, 68, 0.1)', border: '1px solid #EF4444', borderRadius: 8, padding: 14, marginBottom: 20 }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 8, color: '#F87171', fontWeight: 700 }}>
+                <div style={{
+                  background: 'rgba(239, 68, 68, 0.08)',
+                  border: '1px solid rgba(239, 68, 68, 0.35)',
+                  borderRadius: 16,
+                  padding: 18,
+                  marginBottom: 24
+                }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 8, color: '#f87171', fontWeight: 600 }}>
                     <AlertTriangle size={18} />
                     {matrixResult.collusion_clusters.length} Collusion Ring(s) Detected!
                   </div>
                   {matrixResult.collusion_clusters.map((c, i) => (
-                    <div key={i} style={{ marginTop: 8, fontSize: 13, color: '#FCA5A5' }}>
-                      <strong>Ring {i + 1}:</strong> {c.members.map(m => m.name).join(' ↔ ')}
-                      <span style={{ marginLeft: 12, background: '#1E293B', padding: '2px 8px', borderRadius: 4, color: '#38BDF8' }}>
-                        Patient Zero (Original Submitter): <strong>{c.patient_zero}</strong>
+                    <div key={i} style={{ marginTop: 10, fontSize: 13, color: '#fca5a5' }}>
+                      <strong>Cluster #{i + 1}:</strong> {c.members?.map(m => m.name).join(' ↔ ')}
+                      <span style={{
+                        marginLeft: 14,
+                        background: 'rgba(128, 82, 255, 0.2)',
+                        border: '1px solid var(--color-electric-iris)',
+                        padding: '3px 10px',
+                        borderRadius: 12,
+                        color: '#ffffff'
+                      }}>
+                        Patient Zero: <strong>{c.patient_zero}</strong>
                       </span>
                     </div>
                   ))}
@@ -440,33 +514,33 @@ def compute_fact(num):
               )}
 
               {/* Visual Heatmap Table */}
-              <div style={{ overflowX: 'auto', marginBottom: 20 }}>
+              <div style={{ overflowX: 'auto', marginBottom: 12 }}>
                 <table className="matrix-table">
                   <thead>
                     <tr>
-                      <th style={{ background: '#0F172A' }}>Submissions</th>
-                      {matrixResult.document_headers.map(h => (
-                        <th key={h.id} style={{ background: '#0F172A', color: '#94A3B8' }}>{h.name}</th>
+                      <th style={{ background: '#0a0a0c', color: '#ffffff' }}>Submissions</th>
+                      {matrixResult.document_headers?.map(h => (
+                        <th key={h.id} style={{ background: '#0a0a0c', color: 'var(--color-silver-mist)' }}>{h.name}</th>
                       ))}
                     </tr>
                   </thead>
                   <tbody>
-                    {matrixResult.similarity_matrix.map((row, rIdx) => (
+                    {matrixResult.similarity_matrix?.map((row, rIdx) => (
                       <tr key={rIdx}>
-                        <td style={{ fontWeight: 600, color: '#F8FAFC', textAlign: 'left', background: '#0F172A' }}>
-                          {matrixResult.document_headers[rIdx].name}
+                        <td style={{ fontWeight: 400, color: '#ffffff', textAlign: 'left', background: '#0a0a0c' }}>
+                          {matrixResult.document_headers[rIdx]?.name}
                         </td>
                         {row.map((val, cIdx) => {
                           const isSelf = rIdx === cIdx;
-                          let bg = '#131A26';
-                          let textColor = '#64748B';
+                          let bg = 'rgba(255, 255, 255, 0.02)';
+                          let textColor = 'var(--color-ash-gray)';
                           if (!isSelf) {
-                            if (val >= 50) { bg = 'rgba(239, 68, 68, 0.35)'; textColor = '#FCA5A5'; }
-                            else if (val >= 25) { bg = 'rgba(245, 158, 11, 0.25)'; textColor = '#FCD34D'; }
-                            else if (val > 0) { bg = 'rgba(16, 185, 129, 0.15)'; textColor = '#6EE7B7'; }
+                            if (val >= 50) { bg = 'rgba(239, 68, 68, 0.25)'; textColor = '#fca5a5'; }
+                            else if (val >= 25) { bg = 'rgba(255, 184, 41, 0.2)'; textColor = '#fde68a'; }
+                            else if (val > 0) { bg = 'rgba(21, 132, 110, 0.2)'; textColor = '#6ee7b7'; }
                           }
                           return (
-                            <td key={cIdx} style={{ background: bg, color: textColor, fontWeight: val > 20 ? 700 : 400 }}>
+                            <td key={cIdx} style={{ background: bg, color: textColor, fontWeight: val > 20 ? 600 : 400 }}>
                               {isSelf ? '—' : `${val}%`}
                             </td>
                           );
@@ -484,72 +558,81 @@ def compute_fact(num):
       {/* ==================== SUB-TAB 3: AI FORENSICS ==================== */}
       {subTab === 'ai' && (
         <div>
-          <div className="card" style={{ marginBottom: 20 }}>
-            <h3 style={{ fontSize: 16, fontWeight: 700, marginBottom: 8 }}>AI Writing Predictability & Burstiness Analyzer</h3>
-            <p style={{ fontSize: 13, color: 'var(--text-secondary)', marginBottom: 12 }}>
-              Measures perplexity (statistical predictability) and burstiness (sentence rhythm variation) to detect LLM generation.
+          <div className="dala-surface" style={{ marginBottom: 32 }}>
+            <span className="eyebrow-accent">Language Predictability</span>
+            <h3 className="heading-sm" style={{ marginBottom: 8 }}>AI Writing Forensics (Perplexity & Burstiness)</h3>
+            <p style={{ fontSize: 13, color: 'var(--color-silver-mist)', marginBottom: 16 }}>
+              Measures n-gram perplexity (statistical predictability) and sentence burstiness (syntactic variation) to separate generative models from human writing.
             </p>
             <textarea
               className="form-textarea"
-              rows={6}
+              rows={7}
               value={aiText}
               onChange={e => setAiText(e.target.value)}
               placeholder="Paste text to analyze for AI writing..."
+              style={{ fontSize: 14, lineHeight: 1.6 }}
             />
-            <div style={{ marginTop: 12, textAlign: 'right' }}>
-              <button onClick={runAiForensics} disabled={loading} className="btn btn-primary" style={{ background: '#F59E0B' }}>
-                <Cpu size={16} />
-                {loading ? 'Evaluating...' : 'Analyze AI Forensics'}
+            <div style={{ marginTop: 18, textAlign: 'right' }}>
+              <button
+                onClick={runAiForensics}
+                disabled={loading}
+                className="btn-pill-primary"
+              >
+                <Cpu size={15} />
+                <span>{loading ? 'Evaluating Model Forensics...' : 'Analyze AI Forensics'}</span>
               </button>
             </div>
           </div>
 
           {aiResult && (
-            <div className="card">
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 16, marginBottom: 20 }}>
-                <div style={{ background: '#0F172A', padding: 16, borderRadius: 8, border: '1px solid var(--border-subtle)', textAlign: 'center' }}>
-                  <div style={{ fontSize: 12, color: 'var(--text-muted)' }}>AI Probability Score</div>
-                  <div style={{ fontSize: 32, fontWeight: 800, color: aiResult.ai_probability > 60 ? '#EF4444' : '#10B981' }}>
+            <div className="dala-surface" style={{ marginBottom: 40 }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 20, marginBottom: 28 }}>
+                <div style={{ background: 'rgba(255, 255, 255, 0.03)', padding: 24, borderRadius: 16, border: '1px solid rgba(255, 255, 255, 0.06)', textAlign: 'center' }}>
+                  <div style={{ fontSize: 12, color: 'var(--color-ash-gray)', textTransform: 'uppercase', letterSpacing: '0.025em' }}>AI Probability Score</div>
+                  <div style={{ fontSize: 42, fontWeight: 400, color: aiResult.ai_probability > 60 ? '#ef4444' : '#10b981', margin: '8px 0' }}>
                     {aiResult.ai_probability}%
                   </div>
-                  <div style={{ fontSize: 12, fontWeight: 600 }}>{aiResult.verdict}</div>
+                  <div style={{ fontSize: 13, fontWeight: 600, color: '#ffffff' }}>{aiResult.verdict}</div>
                 </div>
 
-                <div style={{ background: '#0F172A', padding: 16, borderRadius: 8, border: '1px solid var(--border-subtle)', textAlign: 'center' }}>
-                  <div style={{ fontSize: 12, color: 'var(--text-muted)' }}>Burstiness (Std Dev)</div>
-                  <div style={{ fontSize: 28, fontWeight: 700, color: '#38BDF8' }}>
-                    {aiResult.metrics.burstiness_std_dev}
+                <div style={{ background: 'rgba(255, 255, 255, 0.03)', padding: 24, borderRadius: 16, border: '1px solid rgba(255, 255, 255, 0.06)', textAlign: 'center' }}>
+                  <div style={{ fontSize: 12, color: 'var(--color-ash-gray)', textTransform: 'uppercase', letterSpacing: '0.025em' }}>Burstiness (Std Dev)</div>
+                  <div style={{ fontSize: 42, fontWeight: 400, color: 'var(--color-saffron-spark)', margin: '8px 0' }}>
+                    {aiResult.metrics?.burstiness_std_dev}
                   </div>
-                  <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>Higher = More Human Variation</div>
+                  <div style={{ fontSize: 11, color: 'var(--color-silver-mist)' }}>Higher = Human Sentence Rhythm</div>
                 </div>
 
-                <div style={{ background: '#0F172A', padding: 16, borderRadius: 8, border: '1px solid var(--border-subtle)', textAlign: 'center' }}>
-                  <div style={{ fontSize: 12, color: 'var(--text-muted)' }}>Perplexity Index</div>
-                  <div style={{ fontSize: 28, fontWeight: 700, color: '#C084FC' }}>
-                    {aiResult.metrics.perplexity_index}
+                <div style={{ background: 'rgba(255, 255, 255, 0.03)', padding: 24, borderRadius: 16, border: '1px solid rgba(255, 255, 255, 0.06)', textAlign: 'center' }}>
+                  <div style={{ fontSize: 12, color: 'var(--color-ash-gray)', textTransform: 'uppercase', letterSpacing: '0.025em' }}>Perplexity Index</div>
+                  <div style={{ fontSize: 42, fontWeight: 400, color: 'var(--color-electric-iris)', margin: '8px 0' }}>
+                    {aiResult.metrics?.perplexity_index}
                   </div>
-                  <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>Higher = More Unpredictable</div>
+                  <div style={{ fontSize: 11, color: 'var(--color-silver-mist)' }}>Higher = More Unpredictable</div>
                 </div>
               </div>
 
               {/* Sentence Heatmap */}
-              <h4 style={{ fontSize: 14, fontWeight: 600, marginBottom: 10 }}>Sentence-Level Predictability Map:</h4>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-                {aiResult.sentence_analysis.map((s, idx) => (
+              <h4 style={{ fontSize: 13, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.025em', color: 'var(--color-silver-mist)', marginBottom: 12 }}>
+                Sentence-Level Predictability Distribution:
+              </h4>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                {aiResult.sentence_analysis?.map((s, idx) => (
                   <div
                     key={idx}
                     style={{
-                      padding: 10,
-                      borderRadius: 6,
-                      background: s.classification === 'AI' ? 'rgba(239, 68, 68, 0.15)' : 'rgba(16, 185, 129, 0.1)',
-                      borderLeft: `4px solid ${s.classification === 'AI' ? '#EF4444' : '#10B981'}`,
-                      fontSize: 13
+                      padding: 14,
+                      borderRadius: 12,
+                      background: s.classification === 'AI' ? 'rgba(239, 68, 68, 0.08)' : 'rgba(21, 132, 110, 0.08)',
+                      borderLeft: `4px solid ${s.classification === 'AI' ? '#ef4444' : '#10b981'}`,
+                      fontSize: 13,
+                      lineHeight: 1.5
                     }}
                   >
-                    <span style={{ fontWeight: 600, marginRight: 8, color: s.classification === 'AI' ? '#FCA5A5' : '#6EE7B7' }}>
-                      [{s.classification} - {s.ai_probability}%]:
+                    <span style={{ fontWeight: 600, marginRight: 8, color: s.classification === 'AI' ? '#fca5a5' : '#6ee7b7' }}>
+                      [{s.classification} • {s.ai_probability}%]:
                     </span>
-                    {s.sentence}
+                    <span style={{ color: 'var(--color-bone-white)' }}>{s.sentence}</span>
                   </div>
                 ))}
               </div>
@@ -561,59 +644,66 @@ def compute_fact(num):
       {/* ==================== SUB-TAB 4: CODE AST ==================== */}
       {subTab === 'code' && (
         <div>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20, marginBottom: 16 }}>
-            <div className="card">
-              <h3 style={{ fontSize: 14, fontWeight: 600, marginBottom: 8 }}>Source Code A (Original)</h3>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: 24, marginBottom: 24 }}>
+            <div className="dala-surface">
+              <span className="eyebrow-accent" style={{ marginBottom: 4 }}>Original Script</span>
+              <h3 style={{ fontSize: 16, fontWeight: 400, marginBottom: 12 }}>Source Code A</h3>
               <textarea
                 className="form-textarea"
-                rows={8}
-                style={{ fontFamily: 'var(--font-mono)', fontSize: 13 }}
+                rows={9}
+                style={{ fontFamily: 'var(--font-mono)', fontSize: 13, lineHeight: 1.5 }}
                 value={codeA}
                 onChange={e => setCodeA(e.target.value)}
               />
             </div>
 
-            <div className="card">
-              <h3 style={{ fontSize: 14, fontWeight: 600, marginBottom: 8 }}>Source Code B (Renamed / Modified)</h3>
+            <div className="dala-surface">
+              <span className="eyebrow-accent" style={{ marginBottom: 4 }}>Modified / Renamed Identifiers</span>
+              <h3 style={{ fontSize: 16, fontWeight: 400, marginBottom: 12 }}>Source Code B</h3>
               <textarea
                 className="form-textarea"
-                rows={8}
-                style={{ fontFamily: 'var(--font-mono)', fontSize: 13 }}
+                rows={9}
+                style={{ fontFamily: 'var(--font-mono)', fontSize: 13, lineHeight: 1.5 }}
                 value={codeB}
                 onChange={e => setCodeB(e.target.value)}
               />
             </div>
           </div>
 
-          <div style={{ textAlign: 'right', marginBottom: 20 }}>
-            <button onClick={runCodeAst} disabled={loading} className="btn btn-primary" style={{ background: '#8B5CF6' }}>
-              <Code size={16} />
-              {loading ? 'Parsing AST...' : 'Run AST Code Comparison'}
+          <div style={{ textAlign: 'right', marginBottom: 32 }}>
+            <button
+              onClick={runCodeAst}
+              disabled={loading}
+              className="btn-pill-primary"
+            >
+              <Code size={15} />
+              <span>{loading ? 'Normalizing Abstract Syntax Tree...' : 'Execute AST Comparison'}</span>
             </button>
           </div>
 
           {codeResult && (
-            <div className="card">
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
+            <div className="dala-surface" style={{ marginBottom: 40 }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20, flexWrap: 'wrap', gap: 16 }}>
                 <div>
-                  <h3 style={{ fontSize: 18, fontWeight: 700 }}>Abstract Syntax Tree (AST) Clone Analysis</h3>
-                  <p style={{ fontSize: 13, color: 'var(--text-secondary)' }}>
+                  <span className="eyebrow-accent">Syntactic Equivalence</span>
+                  <h3 className="heading-sm" style={{ margin: 0 }}>AST Structural Clone Dossier</h3>
+                  <p style={{ fontSize: 13, color: 'var(--color-silver-mist)', marginTop: 4 }}>
                     Normalized variables, functions, and control flow before tokenization.
                   </p>
                 </div>
                 <div style={{ textAlign: 'right' }}>
-                  <div style={{ fontSize: 32, fontWeight: 800, color: codeResult.is_code_clone ? '#EF4444' : '#10B981' }}>
+                  <div style={{ fontSize: 48, fontWeight: 400, color: codeResult.is_code_clone ? '#ef4444' : '#10b981' }}>
                     {codeResult.structural_similarity}%
                   </div>
-                  <div style={{ fontSize: 12, fontWeight: 600, color: codeResult.is_code_clone ? '#EF4444' : '#10B981' }}>
-                    {codeResult.is_code_clone ? '⚠️ Structural Code Clone Detected' : 'Unique Logic'}
+                  <div style={{ fontSize: 12, fontWeight: 600, color: codeResult.is_code_clone ? '#ef4444' : '#10b981', textTransform: 'uppercase' }}>
+                    {codeResult.is_code_clone ? '⚠️ Structural Code Clone Detected' : 'Unique Logic Structure'}
                   </div>
                 </div>
               </div>
 
-              <div style={{ background: '#0F172A', padding: 12, borderRadius: 8, fontSize: 12, fontFamily: 'var(--font-mono)', color: '#38BDF8' }}>
-                <div>// AST Normalized Structure (Identifiers mapped to VAR_X tokens):</div>
-                <pre style={{ margin: '8px 0 0' }}>{codeResult.normalized_code_b}</pre>
+              <div style={{ background: '#0a0a0c', border: '1px solid rgba(255, 255, 255, 0.08)', padding: 18, borderRadius: 16, fontSize: 12, fontFamily: 'var(--font-mono)', color: 'var(--color-saffron-spark)' }}>
+                <div style={{ color: 'var(--color-ash-gray)', marginBottom: 8 }}>// Normalized AST Representation:</div>
+                <pre style={{ margin: 0, whiteSpace: 'pre-wrap', lineHeight: 1.6 }}>{codeResult.normalized_code_b}</pre>
               </div>
             </div>
           )}
@@ -623,4 +713,3 @@ def compute_fact(num):
     </div>
   );
 }
-

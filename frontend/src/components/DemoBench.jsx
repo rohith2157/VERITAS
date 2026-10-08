@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Layers, ShieldAlert, Cpu, Code, ArrowRight, Zap, CheckCircle } from 'lucide-react';
 
-export default function DemoBench({ onSelectScenario }) {
+export default function DemoBench() {
   const [activeScenario, setActiveScenario] = useState(null);
   const [demoOutput, setDemoOutput] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -9,10 +9,10 @@ export default function DemoBench({ onSelectScenario }) {
   const scenarios = [
     {
       id: 'homoglyph',
-      title: '🚨 Scenario 1: Adversarial Evasion Attack (Cyrillic Homoglyph)',
+      title: 'Adversarial Evasion Attack (Cyrillic Homoglyph)',
       badge: 'PRO TIER EVASION',
-      badgeColor: '#EF4444',
-      description: 'A student deliberately swapped English Latin letters (a, e, o) with Cyrillic lookalikes to fool naive plagiarism checkers.',
+      badgeColor: '#ef4444',
+      description: 'Swaps English Latin letters (a, e, o) with identical Cyrillic Unicode characters and zero-width spaces to evade naive scanners.',
       execute: async () => {
         setLoading(true);
         setActiveScenario('homoglyph');
@@ -39,10 +39,10 @@ export default function DemoBench({ onSelectScenario }) {
     },
     {
       id: 'collusion',
-      title: '👥 Scenario 2: Classroom Peer Collusion ($N \\times N$ Matrix)',
+      title: 'Classroom Peer Collusion (N × N Matrix)',
       badge: 'PRO CLASSROOM',
-      badgeColor: '#10B981',
-      description: 'Cross-checks 3 student submissions, identifies who copied from whom, and catches the original author (Patient Zero).',
+      badgeColor: '#34d399',
+      description: 'Cross-checks 3 student submissions, traces who copied from whom, and catches the original author (Patient Zero).',
       execute: async () => {
         setLoading(true);
         setActiveScenario('collusion');
@@ -73,10 +73,10 @@ export default function DemoBench({ onSelectScenario }) {
     },
     {
       id: 'code_ast',
-      title: '💻 Scenario 3: Code Plagiarism with Renamed Variables (AST)',
+      title: 'Code Plagiarism with Renamed Identifiers (AST)',
       badge: 'MAX TIER CODE',
-      badgeColor: '#8B5CF6',
-      description: 'A student renamed every single variable, rearranged functions, and added comments in a Python script.',
+      badgeColor: 'var(--color-electric-iris)',
+      description: 'Renamed variables, rearranged functions, and added comments in a Python script normalized via Abstract Syntax Tree parsing.',
       execute: async () => {
         setLoading(true);
         setActiveScenario('code_ast');
@@ -104,10 +104,10 @@ export default function DemoBench({ onSelectScenario }) {
     },
     {
       id: 'ai_forensics',
-      title: '🤖 Scenario 4: AI Writing Forensics (Perplexity & Burstiness)',
+      title: 'AI Writing Forensics (Perplexity & Burstiness)',
       badge: 'ULTRA TIER AI',
-      badgeColor: '#F59E0B',
-      description: 'Evaluates the uniform predictability and flat sentence rhythm of synthetic AI text vs human writing.',
+      badgeColor: 'var(--color-saffron-spark)',
+      description: 'Evaluates the uniform statistical predictability and flat sentence rhythm of synthetic AI text vs human cadence.',
       execute: async () => {
         setLoading(true);
         setActiveScenario('ai_forensics');
@@ -134,44 +134,61 @@ export default function DemoBench({ onSelectScenario }) {
   ];
 
   return (
-    <div style={{ maxWidth: 1400, margin: '24px auto', padding: '0 24px' }}>
-      <div style={{ marginBottom: 20 }}>
-        <h1 style={{ fontSize: 24, fontWeight: 700, margin: 0 }}>Presentation Demo Bench</h1>
-        <p style={{ color: 'var(--text-secondary)', fontSize: 14 }}>
-          Pre-configured live scenarios ready for testing in front of your professor or reviewers.
+    <div style={{ maxWidth: 'var(--page-max-width)', margin: '40px auto', padding: '0 24px' }}>
+      
+      {/* Header in Dala Style */}
+      <div style={{ marginBottom: 36, borderBottom: '1px solid rgba(255, 255, 255, 0.08)', paddingBottom: 24 }}>
+        <span className="eyebrow-accent">
+          Instant Validation
+        </span>
+        <h1 className="heading-md" style={{ marginBottom: 8 }}>
+          Presentation Demo Bench
+        </h1>
+        <p className="body-light" style={{ maxWidth: 580 }}>
+          Four pre-configured live forensic tests ready for instant execution in front of professors or reviewers.
         </p>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 16, marginBottom: 24 }}>
+      {/* Grid of Scenarios */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 24, marginBottom: 36 }}>
         {scenarios.map(s => (
           <div
             key={s.id}
-            className="card"
+            className="dala-surface"
             style={{
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'space-between',
-              border: activeScenario === s.id ? '2px solid #3B82F6' : '1px solid var(--border-subtle)'
+              border: activeScenario === s.id ? '1px solid var(--color-electric-iris)' : '1px solid rgba(255, 255, 255, 0.08)',
+              padding: 28
             }}
           >
             <div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}>
-                <span className="badge" style={{ background: `${s.badgeColor}22`, color: s.badgeColor, border: `1px solid ${s.badgeColor}55` }}>
+              <div style={{ marginBottom: 14 }}>
+                <span className="badge-tag" style={{
+                  background: 'rgba(255, 255, 255, 0.04)',
+                  color: s.badgeColor,
+                  border: `1px solid ${s.badgeColor}55`
+                }}>
                   {s.badge}
                 </span>
               </div>
-              <h3 style={{ fontSize: 15, fontWeight: 700, marginBottom: 8 }}>{s.title}</h3>
-              <p style={{ fontSize: 13, color: 'var(--text-secondary)', marginBottom: 16 }}>{s.description}</p>
+              <h3 style={{ fontSize: 18, fontWeight: 400, color: '#ffffff', marginBottom: 10, lineHeight: 1.3 }}>
+                {s.title}
+              </h3>
+              <p style={{ fontSize: 13, color: 'var(--color-silver-mist)', lineHeight: 1.6, marginBottom: 24, fontWeight: 200 }}>
+                {s.description}
+              </p>
             </div>
 
             <button
               onClick={s.execute}
               disabled={loading}
-              className="btn btn-primary"
-              style={{ width: '100%', justifyContent: 'center' }}
+              className="btn-pill-primary"
+              style={{ width: '100%', padding: '12px 18px', fontSize: 13 }}
             >
               <Zap size={15} />
-              {loading && activeScenario === s.id ? 'Running...' : 'Execute Live Demo'}
+              <span>{loading && activeScenario === s.id ? 'Executing...' : 'Run Scenario'}</span>
             </button>
           </div>
         ))}
@@ -179,22 +196,27 @@ export default function DemoBench({ onSelectScenario }) {
 
       {/* Live Demo Output Card */}
       {demoOutput && (
-        <div className="card">
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 14, borderBottom: '1px solid var(--border-subtle)', paddingBottom: 10 }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-              <CheckCircle size={18} color="#10B981" />
-              <h3 style={{ fontSize: 16, fontWeight: 700 }}>Live Output: {demoOutput.scenario}</h3>
+        <div className="dala-surface" style={{ marginBottom: 40 }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16, borderBottom: '1px solid rgba(255, 255, 255, 0.08)', paddingBottom: 14 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+              <CheckCircle size={18} color="#34d399" />
+              <h3 className="heading-sm" style={{ margin: 0, fontSize: 18 }}>
+                Live Response: {demoOutput.scenario}
+              </h3>
             </div>
+            <span style={{ fontSize: 12, color: 'var(--color-ash-gray)', fontFamily: 'var(--font-mono)' }}>STATUS 200 OK</span>
           </div>
 
           <pre style={{
-            background: '#0F172A',
-            padding: 16,
-            borderRadius: 8,
+            background: '#0a0a0c',
+            border: '1px solid rgba(255, 255, 255, 0.08)',
+            padding: 20,
+            borderRadius: 16,
             overflowX: 'auto',
             fontSize: 13,
-            color: '#38BDF8',
-            fontFamily: 'var(--font-mono)'
+            color: 'var(--color-saffron-spark)',
+            fontFamily: 'var(--font-mono)',
+            lineHeight: 1.6
           }}>
             {JSON.stringify(demoOutput.data, null, 2)}
           </pre>
@@ -203,4 +225,3 @@ export default function DemoBench({ onSelectScenario }) {
     </div>
   );
 }
-
