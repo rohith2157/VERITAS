@@ -10,7 +10,7 @@ function SplitLine({ children, inView, delay = 0, style = {}, align = 'start' })
     <div style={{ display: 'block', textAlign: align, position: 'relative', overflow: 'hidden', ...style }}>
       <div
         style={{
-          transformOrigin: '0px 0px',
+          transformOrigin: '0% 100%',
           transform: inView ? 'translate(0px, 0px) rotate(0deg)' : 'translate(0px, 120%) rotate(7deg)',
           transition: `transform 0.85s cubic-bezier(0.16, 1, 0.3, 1) ${delay}s`,
           willChange: 'transform'
@@ -22,7 +22,7 @@ function SplitLine({ children, inView, delay = 0, style = {}, align = 'start' })
   );
 }
 
-export default function DalaManifestoPage({ onOpenStudio, onOpenClassroom, onOpenDemoBench }) {
+export default function DalaManifestoPage({ onOpenStudio, onOpenClassroom, onOpenDemoBench, scrollProgress }) {
   const [activePartnerSlide, setActivePartnerSlide] = useState(0);
 
   // Section visibility tracking for splitTextRotateIn
@@ -52,6 +52,23 @@ export default function DalaManifestoPage({ onOpenStudio, onOpenClassroom, onOpe
     footer: useRef(null)
   };
 
+  // 1. Dynamic check triggered on virtual scroll translation
+  useEffect(() => {
+    const winHeight = typeof window !== 'undefined' ? window.innerHeight : 800;
+    Object.entries(sectionRefs).forEach(([key, ref]) => {
+      if (ref.current) {
+        const rect = ref.current.getBoundingClientRect();
+        if (rect.top < winHeight * 0.88 && rect.bottom > 0) {
+          setVisibleSections((prev) => {
+            if (!prev[key]) return { ...prev, [key]: true };
+            return prev;
+          });
+        }
+      }
+    });
+  }, [scrollProgress]);
+
+  // 2. Standard IntersectionObserver fallback
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -64,7 +81,7 @@ export default function DalaManifestoPage({ onOpenStudio, onOpenClassroom, onOpe
           }
         });
       },
-      { threshold: 0.15 }
+      { threshold: 0.12 }
     );
 
     Object.entries(sectionRefs).forEach(([key, ref]) => {
@@ -150,53 +167,53 @@ export default function DalaManifestoPage({ onOpenStudio, onOpenClassroom, onOpe
         }}
       >
         <div style={{ maxWidth: 640 }}>
-          <h2 className="display-title" style={{ marginBottom: 28, lineHeight: 1.05 }}>
+          <h2
+            className="landing__title t-56 t-80@xs t-104@sm t-150@md t-lh-0.9 -t-ls-0.03 t-400 mb-1.5 t-lh-1.1 mb-1"
+            style={{ marginBottom: 28 }}
+          >
             <SplitLine inView={visibleSections.landing} delay={0}>
-              <span style={{ display: 'block' }}>Unlock</span>
+              <span className="d-block">Unlock</span>
             </SplitLine>
             <SplitLine inView={visibleSections.landing} delay={0.12}>
-              <span style={{ display: 'block' }}>collective</span>
+              <span className="d-block">collective</span>
             </SplitLine>
             <SplitLine inView={visibleSections.landing} delay={0.24}>
-              <span style={{ display: 'block' }}>truth.</span>
+              <span className="d-block">truth.</span>
             </SplitLine>
           </h2>
 
           <div className="mobile-blur mt-0 mb-auto">
             <div className="landing__body">
               <SplitLine inView={visibleSections.landing} delay={0.35}>
-                <div style={{
-                  fontSize: 14,
-                  fontWeight: 600,
-                  textTransform: 'uppercase',
-                  letterSpacing: '0.04em',
-                  color: 'var(--color-saffron-spark)',
-                  marginBottom: 16
-                }}>
+                <div className="t-16 t-lh-1.2 t-ls-0.05 t-600 t-uppercase mb-1 t-yellow">
                   Stop guessing integrity. Start verifying it.
                 </div>
               </SplitLine>
 
               <SplitLine inView={visibleSections.landing} delay={0.45}>
-                <p className="body-light" style={{ marginBottom: 36, maxWidth: 540, lineHeight: 1.6 }}>
+                <p className="t-24 t-lh-1.5 -t-ls-0.02 t-200" style={{ marginBottom: 36, maxWidth: 540, color: 'var(--color-silver-mist)' }}>
                   Plug into the Veritas distributed intelligence triad. Three specialized engines — Python Vector & AST Fingerprinting, Spring Boot Institutional Ledger, and React Real-time Forensics — operating in synchrony to expose collusion, paraphrase evasion, and AI synthetic fabrication.
                 </p>
               </SplitLine>
 
-              <div style={{ overflow: 'hidden' }}>
-                <div style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 18,
-                  flexWrap: 'wrap',
-                  transform: visibleSections.landing ? 'translate(0px, 0px)' : 'translate(0px, 120%)',
-                  transition: 'transform 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.55s'
-                }}>
+              <div className="overflow-hidden">
+                <div
+                  className="d-flex"
+                  style={{
+                    alignItems: 'center',
+                    gap: 18,
+                    flexWrap: 'wrap',
+                    transform: visibleSections.landing ? 'translate(0px, 0px)' : 'translate(0px, 120%) rotate(2deg)',
+                    transition: 'transform 1s cubic-bezier(0.16, 1, 0.3, 1) 0.55s'
+                  }}
+                >
                   <button
                     onClick={onOpenStudio}
-                    className="btn-pill-primary"
+                    className="btn t-16 t-14@xs t-16@sm t-ls-0.025 t-600 t-uppercase"
+                    aria-label="Launch Originality Studio"
                   >
-                    Launch Studio
+                    <span className="btn__text pointer-events-none">Launch Studio</span>
+                    <div className="btn__hover pointer-events-none" aria-hidden="true" />
                   </button>
 
                   <button
@@ -229,14 +246,14 @@ export default function DalaManifestoPage({ onOpenStudio, onOpenClassroom, onOpe
           boxSizing: 'border-box'
         }}
       >
-        <div style={{ maxWidth: 560 }}>
+        <div className="mobile-blur" style={{ maxWidth: 560 }}>
           <SplitLine inView={visibleSections.intro} delay={0}>
             <span className="eyebrow-accent" style={{ marginBottom: 12 }}>
               TRIAD ARCHITECTURE & CONVICTION
             </span>
           </SplitLine>
 
-          <h2 className="heading-lg" style={{ marginBottom: 28 }}>
+          <h2 className="introduction__title t-32 t-lh-1.3 t-56@sm t-lh-0.9@sm t-lh-1.2@sm -t-ls-0.03 t-400 mb-1 mb-2@sm">
             <SplitLine inView={visibleSections.intro} delay={0.1}>
               Make decisions
             </SplitLine>
@@ -245,7 +262,7 @@ export default function DalaManifestoPage({ onOpenStudio, onOpenClassroom, onOpe
             </SplitLine>
           </h2>
 
-          <div className="body-light" style={{ lineHeight: 1.6 }}>
+          <div className="introduction__body t-24 t-lh-1.5 -t-ls-0.02 t-200" style={{ color: 'var(--color-silver-mist)' }}>
             <SplitLine inView={visibleSections.intro} delay={0.3}>
               Veritas unifies three autonomous detection nodes in a continuous
             </SplitLine>
@@ -695,10 +712,12 @@ export default function DalaManifestoPage({ onOpenStudio, onOpenClassroom, onOpe
 
         <button
           onClick={onOpenStudio}
-          className="btn-pill-primary"
+          className="btn t-16 t-14@xs t-16@sm t-ls-0.025 t-600 t-uppercase"
           style={{ padding: '16px 36px', fontSize: 14 }}
+          aria-label="Launch Originality Studio"
         >
-          Launch Originality Studio
+          <span className="btn__text pointer-events-none">Launch Originality Studio</span>
+          <div className="btn__hover pointer-events-none" aria-hidden="true" />
         </button>
       </section>
 

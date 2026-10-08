@@ -158,14 +158,16 @@ export default function Navbar({ activeTab, setActiveTab, serverStatus, theme = 
 
           <button
             onClick={() => setActiveTab('studio')}
-            className="btn-pill-primary"
+            className="btn t-16 t-14@xs t-16@sm t-ls-0.025 t-600 t-uppercase"
             style={{
               padding: '10px 22px',
               fontSize: 13,
               borderRadius: 24
             }}
+            aria-label="Launch Originality Studio"
           >
-            Launch Studio
+            <span className="btn__text pointer-events-none">Launch Studio</span>
+            <div className="btn__hover pointer-events-none" aria-hidden="true" />
           </button>
 
         </div>

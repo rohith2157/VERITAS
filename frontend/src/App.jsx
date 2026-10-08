@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Suspense, lazy } from 'react';
+import React, { useState, useEffect, useRef, Suspense, lazy } from 'react';
 import Navbar from './components/Navbar';
 import DalaInteractiveCanvas from './components/DalaInteractiveCanvas';
 import DalaManifestoPage from './components/DalaManifestoPage';
@@ -155,6 +155,7 @@ export default function App() {
               }}
             >
               <DalaManifestoPage
+                scrollProgress={smoothProgress}
                 onOpenStudio={() => {
                   setActiveTab('studio');
                   window.scrollTo({ top: 0, behavior: 'smooth' });

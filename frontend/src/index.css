@@ -298,26 +298,58 @@ html, body {
   color: var(--color-bone-white);
 }
 
-/* Legacy .btn compatibility */
+/* ==================== DALA ACTION BUTTONS & ATOMIC UTILITIES ==================== */
 .btn {
+  position: relative;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
-  padding: 9px 18px;
-  font-size: 13px;
-  font-weight: 600;
+  background-color: var(--color-electric-iris);
+  color: #ffffff;
   border-radius: var(--radius-pill);
-  border: 1px solid transparent;
-  cursor: pointer;
-  transition: all 0.2s ease;
+  padding: 14px 28px;
+  font-family: inherit;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
   text-decoration: none;
+  overflow: hidden;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+}
+.btn .btn__text {
+  position: relative;
+  z-index: 2;
+  pointer-events: none;
+}
+.btn .btn__hover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.18);
+  transform: translateY(100%);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 1;
+  pointer-events: none;
+  border-radius: var(--radius-pill);
+}
+.btn:hover .btn__hover {
+  transform: translateY(0%);
+}
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(128, 82, 255, 0.35);
 }
 .btn-primary {
   background: var(--color-electric-iris);
   color: #fff;
 }
 .btn-primary:hover {
-  opacity: 0.9;
+  opacity: 0.95;
 }
 .btn-secondary {
   background: rgba(255, 255, 255, 0.06);
@@ -327,6 +359,59 @@ html, body {
 .btn-secondary:hover {
   background: rgba(255, 255, 255, 0.1);
 }
+
+/* Dala Atomic Typography & Layout Utilities */
+.t-14 { font-size: 14px; }
+.t-16 { font-size: 16px; }
+.t-24 { font-size: 24px; }
+.t-32 { font-size: 32px; }
+.t-56 { font-size: 56px; }
+@media (min-width: 480px) {
+  .t-14\@xs { font-size: 14px; }
+  .t-80\@xs { font-size: 80px; }
+}
+@media (min-width: 768px) {
+  .t-16\@sm { font-size: 16px; }
+  .t-56\@sm { font-size: 56px; }
+  .t-104\@sm { font-size: 104px; }
+  .t-lh-0\.9\@sm { line-height: 0.9; }
+  .t-lh-1\.2\@sm { line-height: 1.2; }
+  .mb-2\@sm { margin-bottom: 16px; }
+  .items-end\@md { justify-content: flex-end !important; }
+  .items-start\@md { justify-content: flex-start !important; }
+}
+@media (min-width: 1024px) {
+  .t-150\@md { font-size: clamp(78px, 8.5vw, 113px); }
+}
+
+.t-lh-0\.9 { line-height: 0.9; }
+.t-lh-1\.1 { line-height: 1.1; }
+.t-lh-1\.2 { line-height: 1.2; }
+.t-lh-1\.3 { line-height: 1.3; }
+.t-lh-1\.5 { line-height: 1.5; }
+
+.-t-ls-0\.03 { letter-spacing: -0.03em; }
+.-t-ls-0\.02 { letter-spacing: -0.02em; }
+.t-ls-0\.025 { letter-spacing: 0.025em; }
+.t-ls-0\.05 { letter-spacing: 0.05em; }
+
+.t-200 { font-weight: 200; }
+.t-400 { font-weight: 400; }
+.t-600 { font-weight: 600; }
+.t-700 { font-weight: 700; }
+.t-uppercase { text-transform: uppercase; }
+.t-yellow { color: var(--color-saffron-spark); }
+
+.d-block { display: block; }
+.d-flex { display: flex; }
+.overflow-hidden { overflow: hidden; }
+.pointer-events-none { pointer-events: none; }
+.mb-1 { margin-bottom: 8px; }
+.mb-1\.5 { margin-bottom: 12px; }
+.mb-2 { margin-bottom: 16px; }
+.mt-0 { margin-top: 0; }
+.mb-auto { margin-bottom: auto; }
+
 
 /* ==================== BADGES & TAGS ==================== */
 
