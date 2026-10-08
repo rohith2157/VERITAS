@@ -1,123 +1,147 @@
 import React from 'react';
-import { Shield, Sparkles, School, Layers, CheckCircle, AlertCircle } from 'lucide-react';
 
 export default function Navbar({ activeTab, setActiveTab, activeTier, setActiveTier, serverStatus }) {
-  const tiers = [
-    { id: 'flash', label: '⚡ FLASH', desc: '1:1 Diff & Winnowing' },
-    { id: 'pro', label: '🏆 PRO', desc: 'Classroom NxN & Rubrics' },
-    { id: 'max', label: '🚀 MAX', desc: 'Code AST & Vault' },
-    { id: 'ultra', label: '👑 ULTRA', desc: 'AI Writing Forensics' },
+  const navLinks = [
+    { id: 'studio', label: 'Studio' },
+    { id: 'classroom', label: 'Classroom' },
+    { id: 'demobench', label: 'Demo Bench' },
   ];
 
   return (
     <header style={{
-      borderBottom: '1px solid var(--border-subtle)',
-      background: 'rgba(11, 15, 23, 0.95)',
-      backdropFilter: 'blur(12px)',
       position: 'sticky',
       top: 0,
-      zIndex: 50,
-      padding: '12px 24px'
+      zIndex: 100,
+      background: 'rgba(0, 0, 0, 0.85)',
+      backdropFilter: 'blur(12px)',
+      borderBottom: '1px solid rgba(255, 255, 255, 0.06)',
+      padding: '18px 32px'
     }}>
-      <div style={{ maxWidth: 1400, margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 16 }}>
+      <div style={{
+        maxWidth: 'var(--page-max-width)',
+        margin: '0 auto',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between'
+      }}>
         
-        {/* Brand */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-          <div style={{
-            background: 'linear-gradient(135deg, #2563EB, #7C3AED)',
-            padding: 8,
-            borderRadius: 10,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            boxShadow: '0 0 16px rgba(37, 99, 235, 0.4)'
+        {/* Brand Lockup: Sharp Triangular Icon + Monolithic Wordmark */}
+        <div
+          onClick={() => setActiveTab('hero')}
+          style={{ display: 'flex', alignItems: 'center', gap: 14, cursor: 'pointer' }}
+        >
+          {/* Triangular Brand Glyph with Violet-Teal Gradient */}
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+            <defs>
+              <linearGradient id="dala-logo-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#8052ff" />
+                <stop offset="100%" stopColor="#15846e" />
+              </linearGradient>
+            </defs>
+            <polygon points="12,2 22,20 2,20" fill="url(#dala-logo-grad)" />
+          </svg>
+
+          <span style={{
+            fontSize: 16,
+            fontWeight: 400,
+            letterSpacing: '-0.3px',
+            color: 'var(--color-bone-white)',
+            textTransform: 'uppercase'
           }}>
-            <Shield size={22} color="#fff" />
-          </div>
-          <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-              <span style={{ fontSize: 18, fontWeight: 700, letterSpacing: -0.5, color: '#F8FAFC' }}>VERITAS</span>
-              <span style={{ fontSize: 11, background: '#1E293B', color: '#94A3B8', padding: '2px 6px', borderRadius: 4, fontWeight: 600 }}>v1.0 LTS</span>
-            </div>
-            <div style={{ fontSize: 12, color: 'var(--text-muted)' }}>Universal Integrity & Classroom Plagiarism Engine</div>
-          </div>
+            Veritas
+          </span>
+
+          <span style={{
+            fontSize: 11,
+            color: 'var(--color-ash-gray)',
+            letterSpacing: '0.04em',
+            textTransform: 'uppercase',
+            borderLeft: '1px solid rgba(255,255,255,0.12)',
+            paddingLeft: 12
+          }}>
+            Dala Edition
+          </span>
         </div>
 
-        {/* Main View Tabs */}
-        <div style={{ display: 'flex', gap: 6, background: '#131A26', padding: 4, borderRadius: 10, border: '1px solid var(--border-subtle)' }}>
+        {/* Center Nav Links: PPNeueMontreal 14px Weight 600 Uppercase */}
+        <nav style={{ display: 'flex', alignItems: 'center', gap: 32 }}>
+          {navLinks.map(link => {
+            const isActive = activeTab === link.id;
+            return (
+              <button
+                key={link.id}
+                onClick={() => setActiveTab(link.id)}
+                className={`btn-ghost ${isActive ? 'active' : ''}`}
+                style={{
+                  color: isActive ? 'var(--color-bone-white)' : 'var(--color-ash-gray)',
+                  fontSize: 14,
+                  fontWeight: 600,
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.35px',
+                  background: 'none',
+                  border: 'none',
+                  padding: '4px 0',
+                  position: 'relative',
+                  cursor: 'pointer'
+                }}
+              >
+                {link.label}
+                {isActive && (
+                  <span style={{
+                    position: 'absolute',
+                    bottom: -4,
+                    left: 0,
+                    right: 0,
+                    height: 2,
+                    background: 'var(--color-electric-iris)',
+                    borderRadius: 2
+                  }} />
+                )}
+              </button>
+            );
+          })}
+        </nav>
+
+        {/* Right Section: Service Pulse + Primary Action Pill */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+          
+          {/* Micro Telemetry Indicator */}
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 8,
+            fontSize: 11,
+            fontWeight: 600,
+            textTransform: 'uppercase',
+            letterSpacing: '0.04em',
+            color: serverStatus?.online ? '#34d399' : 'var(--color-ash-gray)'
+          }}>
+            <span style={{
+              width: 6,
+              height: 6,
+              borderRadius: '50%',
+              backgroundColor: serverStatus?.online ? '#34d399' : '#f87171',
+              boxShadow: serverStatus?.online ? '0 0 8px #34d399' : 'none'
+            }} />
+            <span>{serverStatus?.online ? 'Connected' : 'Engines Offline'}</span>
+          </div>
+
+          {/* Singular Dala Primary Violet Pill Button */}
           <button
             onClick={() => setActiveTab('studio')}
-            className="btn"
+            className="btn-pill-primary"
             style={{
-              padding: '7px 14px',
-              fontSize: 13,
-              background: activeTab === 'studio' ? '#2563EB' : 'transparent',
-              color: activeTab === 'studio' ? '#fff' : 'var(--text-secondary)'
+              padding: '10px 20px',
+              fontSize: 12,
+              borderRadius: 24
             }}
           >
-            <Sparkles size={16} /> Universal Studio
-          </button>
-          
-          <button
-            onClick={() => setActiveTab('classroom')}
-            className="btn"
-            style={{
-              padding: '7px 14px',
-              fontSize: 13,
-              background: activeTab === 'classroom' ? '#2563EB' : 'transparent',
-              color: activeTab === 'classroom' ? '#fff' : 'var(--text-secondary)'
-            }}
-          >
-            <School size={16} /> Classroom & Rubrics
+            Launch Studio
           </button>
 
-          <button
-            onClick={() => setActiveTab('demobench')}
-            className="btn"
-            style={{
-              padding: '7px 14px',
-              fontSize: 13,
-              background: activeTab === 'demobench' ? '#2563EB' : 'transparent',
-              color: activeTab === 'demobench' ? '#fff' : 'var(--text-secondary)'
-            }}
-          >
-            <Layers size={16} /> 1-Click Demo Bench
-          </button>
-        </div>
-
-        {/* Tier Badges & Server Status */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-          <div style={{ display: 'flex', gap: 6 }}>
-            {tiers.map(t => (
-              <span
-                key={t.id}
-                className={`badge badge-${t.id}`}
-                title={t.desc}
-                style={{ cursor: 'help' }}
-              >
-                {t.label}
-              </span>
-            ))}
-          </div>
-
-          <div style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: 6,
-            fontSize: 12,
-            background: '#131A26',
-            padding: '4px 10px',
-            borderRadius: 20,
-            border: '1px solid var(--border-subtle)',
-            color: serverStatus.online ? '#34D399' : '#F87171'
-          }}>
-            {serverStatus.online ? <CheckCircle size={13} /> : <AlertCircle size={13} />}
-            <span>{serverStatus.online ? 'Services Ready' : 'Connecting...'}</span>
-          </div>
         </div>
 
       </div>
     </header>
   );
 }
-
