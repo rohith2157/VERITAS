@@ -106,3 +106,4 @@ export default function Hero({ onExploreStudio, onOpenDemoBench }) {
     </section>
   );
 }
+

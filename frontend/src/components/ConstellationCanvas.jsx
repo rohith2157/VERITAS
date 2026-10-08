@@ -233,3 +233,4 @@ export default function ConstellationCanvas({ height = 620, interactive = true }
     </div>
   );
 }
+
