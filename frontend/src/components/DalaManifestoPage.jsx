@@ -432,43 +432,46 @@ export default function DalaManifestoPage({ onOpenStudio, onOpenClassroom, onOpe
         }}
       >
         <div className="manifesto__inner mobile-blur" style={{ maxWidth: 560 }}>
-          <SplitLine inView={visibleSections.world} delay={0}>
-            <span className="eyebrow-accent" style={{ marginBottom: 12 }}>
-              INTENTIONAL RIGOR & PURPOSE
-            </span>
-          </SplitLine>
-
-          <h2 className="heading-lg" style={{ marginBottom: 28 }}>
+          <h2 className="heading-lg" style={{ marginBottom: 32 }}>
             <SplitLine inView={visibleSections.world} delay={0.1}>
-              Build a culture
+              Build a better world
             </SplitLine>
             <SplitLine inView={visibleSections.world} delay={0.2}>
-              of genuine originality
+              of scholarship
             </SplitLine>
           </h2>
 
-          <div className="manifesto__body" style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-            <div className="body-light">
+          <div className="manifesto__body" style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
+            <div className="body-light" style={{ lineHeight: 1.6 }}>
               <SplitLine inView={visibleSections.world} delay={0.3}>
-                Our mission is to restore trust in human scholarship —
+                Our mission is to make scholarship more coherent and
               </SplitLine>
               <SplitLine inView={visibleSections.world} delay={0.36}>
-                reframing integrity from punitive policing to authentic mastery.
+                authentic—reframing academic integrity from policing compliance
               </SplitLine>
-            </div>
-
-            <div className="body-light">
               <SplitLine inView={visibleSections.world} delay={0.42}>
-                Students and researchers produce their best work when submissions
-              </SplitLine>
-              <SplitLine inView={visibleSections.world} delay={0.48}>
-                are evaluated with transparent explainability and fairness.
+                <span className="t-yellow" style={{ fontStyle: 'italic', fontWeight: 400 }}>to inspiring mastery.</span>
               </SplitLine>
             </div>
 
-            <div className="body-light">
+            <div className="body-light" style={{ lineHeight: 1.6 }}>
+              <SplitLine inView={visibleSections.world} delay={0.48}>
+                Your happiest and most purposeful academic breakthroughs occur
+              </SplitLine>
               <SplitLine inView={visibleSections.world} delay={0.54}>
-                We want to recreate that confidence on every submission.
+                when students and researchers create with conviction, intellectual
+              </SplitLine>
+              <SplitLine inView={visibleSections.world} delay={0.60}>
+                rigor, and verifiable transparency.
+              </SplitLine>
+            </div>
+
+            <div className="body-light" style={{ lineHeight: 1.6 }}>
+              <SplitLine inView={visibleSections.world} delay={0.66}>
+                We want to recreate that confidence every time you evaluate work.
+              </SplitLine>
+              <SplitLine inView={visibleSections.world} delay={0.72}>
+                A platform completely integrated with how faculty teach, assess, and guide.
               </SplitLine>
             </div>
           </div>
@@ -677,7 +680,7 @@ export default function DalaManifestoPage({ onOpenStudio, onOpenClassroom, onOpe
         </div>
       </section>
 
-      {/* ==================== 8. FINAL CTA & FOOTER ==================== */}
+      {/* ==================== 8. FINAL CTA & FOOTER (Exact Match for Screenshots 2 & 3) ==================== */}
       <section
         ref={sectionRefs.footer}
         className="section footer | js-section"
@@ -688,8 +691,8 @@ export default function DalaManifestoPage({ onOpenStudio, onOpenClassroom, onOpe
           justifyContent: 'center',
           alignItems: 'center',
           textAlign: 'center',
-          padding: '120px 24px',
-          maxWidth: 900,
+          padding: '120px 24px 60px',
+          maxWidth: 960,
           margin: '0 auto',
           boxSizing: 'border-box'
         }}
@@ -700,7 +703,7 @@ export default function DalaManifestoPage({ onOpenStudio, onOpenClassroom, onOpe
           letterSpacing: '-2.4px',
           color: 'var(--color-bone-white)',
           lineHeight: 1.15,
-          marginBottom: 36
+          marginBottom: 32
         }}>
           <SplitLine inView={visibleSections.footer} delay={0} align="center">
             Your institution has the standard.
@@ -710,18 +713,29 @@ export default function DalaManifestoPage({ onOpenStudio, onOpenClassroom, onOpe
           </SplitLine>
         </h2>
 
-        <button
-          onClick={onOpenStudio}
-          className="btn t-16 t-14@xs t-16@sm t-ls-0.025 t-600 t-uppercase"
-          style={{ padding: '16px 36px', fontSize: 14 }}
-          aria-label="Launch Originality Studio"
-        >
-          <span className="btn__text pointer-events-none">Launch Originality Studio</span>
-          <div className="btn__hover pointer-events-none" aria-hidden="true" />
-        </button>
+        <div className="overflow-hidden" style={{ marginTop: 8 }}>
+          <div
+            className="d-flex"
+            style={{
+              justifyContent: 'center',
+              transform: visibleSections.footer ? 'translate(0px, 0px) rotate(0deg)' : 'translate(0px, 120%) rotate(2deg)',
+              transition: 'transform 1s cubic-bezier(0.16, 1, 0.3, 1) 0.35s'
+            }}
+          >
+            <button
+              onClick={onOpenStudio}
+              className="btn t-16 t-14@xs t-16@sm t-ls-0.025 t-600 t-uppercase"
+              style={{ padding: '15px 36px', fontSize: 14 }}
+              aria-label="Request Access to Veritas Studio"
+            >
+              <span className="btn__text pointer-events-none">Request Access</span>
+              <div className="btn__hover pointer-events-none" aria-hidden="true" />
+            </button>
+          </div>
+        </div>
       </section>
 
-      {/* ==================== FOOTER BAR ==================== */}
+      {/* ==================== FOOTER BAR (Screenshot 3 Match) ==================== */}
       <footer style={{
         borderTop: '1px solid var(--border-subtle)',
         padding: '36px 32px',
@@ -741,17 +755,51 @@ export default function DalaManifestoPage({ onOpenStudio, onOpenClassroom, onOpe
         </div>
 
         <div style={{ display: 'flex', gap: 28, textTransform: 'uppercase', letterSpacing: '0.025em', fontSize: 12, fontWeight: 600 }}>
-          <span onClick={onOpenStudio} style={{ color: 'var(--color-bone-white)', cursor: 'pointer' }}>Studio</span>
+          <span onClick={onOpenStudio} style={{ color: 'var(--color-bone-white)', cursor: 'pointer' }}>Manifesto</span>
+          <span onClick={onOpenStudio} style={{ cursor: 'pointer' }}>Studio</span>
           <span onClick={onOpenClassroom} style={{ cursor: 'pointer' }}>Classroom</span>
           <span onClick={onOpenDemoBench} style={{ cursor: 'pointer' }}>Demo Bench</span>
-          <span style={{ cursor: 'pointer' }}>Research Docs</span>
           <span style={{ cursor: 'pointer' }}>Privacy</span>
+          <span style={{ cursor: 'pointer' }}>Terms</span>
         </div>
 
-        <div style={{ display: 'flex', gap: 20 }}>
-          <span style={{ cursor: 'pointer' }}>GitHub</span>
-          <span style={{ cursor: 'pointer' }}>Docs</span>
-          <span style={{ cursor: 'pointer' }}>Contact</span>
+        {/* Social Icons matching Screenshot 3 */}
+        <div style={{ display: 'flex', gap: 20, alignItems: 'center' }}>
+          {/* LinkedIn */}
+          <a
+            href="https://linkedin.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ color: 'var(--color-ash-gray)', transition: 'color 0.2s ease', display: 'flex' }}
+            aria-label="LinkedIn"
+          >
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 8.76a1.53 1.53 0 0 0 0-3.06 1.53 1.53 0 0 0 0 3.06m1.39 9.74v-8.37H5.07v8.37h2.78z" />
+            </svg>
+          </a>
+          {/* Twitter / X */}
+          <a
+            href="https://twitter.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ color: 'var(--color-ash-gray)', transition: 'color 0.2s ease', display: 'flex' }}
+            aria-label="Twitter X"
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+            </svg>
+          </a>
+          {/* Email */}
+          <a
+            href="mailto:contact@veritas.edu"
+            style={{ color: 'var(--color-ash-gray)', transition: 'color 0.2s ease', display: 'flex' }}
+            aria-label="Contact Email"
+          >
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <rect width="20" height="16" x="2" y="4" rx="2" />
+              <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+            </svg>
+          </a>
         </div>
       </footer>
 

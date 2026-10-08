@@ -82,8 +82,8 @@ export default function DalaInteractiveCanvas({ theme = 'dark', scrollProgress }
 
     const triangleTexture = createTriangleTexture();
 
-    // 3. Mathematical Shape Coordinate Generators (N = 2200 particles)
-    const COUNT = 2200;
+    // 3. Mathematical Shape Coordinate Generators (N = 3400 particles for high density)
+    const COUNT = 3400;
 
     // Palette Colors
     const palette = [
@@ -99,6 +99,8 @@ export default function DalaInteractiveCanvas({ theme = 'dark', scrollProgress }
     const goldColor = new THREE.Color('#fcd34d');
     const violetColor = new THREE.Color('#8052ff');
     const tealColor = new THREE.Color('#15846e');
+    const cyanColor = new THREE.Color('#38bdf8');
+    const whiteColor = new THREE.Color('#ffffff');
 
     const shapes = [];
     const shapeColors = [];
@@ -115,9 +117,9 @@ export default function DalaInteractiveCanvas({ theme = 'dark', scrollProgress }
       const theta = u * Math.PI * 2;
       const phi = (v - 0.5) * Math.PI;
 
-      const rx = 1.9 + Math.random() * 0.5;
-      const ry = 1.5 + Math.random() * 0.4;
-      const rz = 1.5 + Math.random() * 0.4;
+      const rx = 2.1 + Math.random() * 0.5;
+      const ry = 1.6 + Math.random() * 0.4;
+      const rz = 1.6 + Math.random() * 0.4;
 
       const bx = 2.4 + lobe * 0.55 + Math.cos(theta) * Math.cos(phi) * rx;
       const by = -0.1 + Math.sin(theta) * ry * 0.9;
@@ -188,7 +190,7 @@ export default function DalaInteractiveCanvas({ theme = 'dark', scrollProgress }
         const theta = u * Math.PI * 2;
         const phi = (v * 0.65 - 0.15) * Math.PI;
 
-        const r = 2.1 + Math.random() * 0.35;
+        const r = 2.2 + Math.random() * 0.35;
         lx = Math.cos(theta) * Math.cos(phi) * r;
         ly = 1.1 + Math.sin(phi) * r;
         lz = Math.sin(theta) * Math.cos(phi) * r;
@@ -229,25 +231,55 @@ export default function DalaInteractiveCanvas({ theme = 'dark', scrollProgress }
     shapes.push(sLightbulb);
     shapeColors.push(cLightbulb);
 
-    // --- SHAPE 4: SPHERE / GLOBE (Right-Aligned) ---
+    // --- SHAPE 4: SPHERE / GLOBE (Right-Aligned, Exact Match for Screenshot 1) ---
     const sGlobe = createBuffer();
     const cGlobe = createBuffer();
     for (let i = 0; i < COUNT; i++) {
-      const u = Math.random();
-      const v = Math.random();
-      const theta = u * Math.PI * 2;
-      const phi = Math.acos(2 * v - 1) - Math.PI / 2;
+      let gx = 0, gy = 0, gz = 0;
+      let col = palette[0];
 
-      const r = 2.4 + (Math.random() - 0.5) * 0.3;
-      const gx = 2.7 + Math.cos(theta) * Math.cos(phi) * r;
-      const gy = 0.0 + Math.sin(phi) * r;
-      const gz = Math.sin(theta) * Math.cos(phi) * r;
+      if (i < COUNT * 0.72) {
+        // Outer sphere crust (R = 3.3, centered at x=2.4)
+        const u = Math.random();
+        const v = Math.random();
+        const theta = u * Math.PI * 2;
+        const phi = Math.acos(2 * v - 1) - Math.PI / 2;
+
+        const r = 3.3 + (Math.random() - 0.5) * 0.35;
+        gx = 2.4 + Math.cos(theta) * Math.cos(phi) * r;
+        gy = 0.0 + Math.sin(phi) * r;
+        gz = Math.sin(theta) * Math.cos(phi) * r;
+
+        // Color zoning matching Screenshot 1:
+        // Top: Emerald / Teal / Cyan
+        if (phi > 0.35) {
+          col = Math.random() > 0.4 ? tealColor : cyanColor;
+        } else if (phi >= -0.32) {
+          // Mid latitude: Saffron / Amber / Gold
+          col = Math.random() > 0.5 ? amberColor : goldColor;
+        } else {
+          // South: Electric Iris / Violet / Magenta
+          col = Math.random() > 0.5 ? violetColor : new THREE.Color('#ec4899');
+        }
+      } else {
+        // Internal glowing core (brain/continents inside the globe)
+        const u = Math.random();
+        const v = Math.random();
+        const theta = u * Math.PI * 2;
+        const phi = (v - 0.5) * Math.PI;
+
+        const r = 1.6 + Math.random() * 0.8;
+        gx = 2.4 + Math.cos(theta) * Math.cos(phi) * r;
+        gy = 0.0 + Math.sin(phi) * r;
+        gz = Math.sin(theta) * Math.cos(phi) * r;
+
+        col = Math.random() > 0.3 ? whiteColor : goldColor;
+      }
 
       sGlobe[i * 3] = gx;
       sGlobe[i * 3 + 1] = gy;
       sGlobe[i * 3 + 2] = gz;
 
-      const col = palette[Math.floor(Math.random() * palette.length)];
       cGlobe[i * 3] = col.r;
       cGlobe[i * 3 + 1] = col.g;
       cGlobe[i * 3 + 2] = col.b;
@@ -255,67 +287,79 @@ export default function DalaInteractiveCanvas({ theme = 'dark', scrollProgress }
     shapes.push(sGlobe);
     shapeColors.push(cGlobe);
 
-    // --- SHAPE 5: INVESTORS PRISMS / CLUSTER (Left-Aligned) ---
-    const sPrisms = createBuffer();
-    const cPrisms = createBuffer();
-    const prismCenters = [
-      { x: -3.4, y: 1.2, z: 0 },
-      { x: -2.0, y: 2.2, z: -1 },
-      { x: -3.8, y: -1.0, z: 1 },
-      { x: -2.2, y: -1.8, z: 0 },
-      { x: -1.5, y: 0.2, z: -1.5 },
-      { x: -4.2, y: 0.5, z: -0.5 }
-    ];
+    // --- SHAPE 5: DISPERSED COSMIC GALAXY / NEBULA (Exact Match for Screenshot 2) ---
+    const sNebula = createBuffer();
+    const cNebula = createBuffer();
     for (let i = 0; i < COUNT; i++) {
-      const c = prismCenters[i % prismCenters.length];
-      const r = 0.8 * Math.pow(Math.random(), 0.5);
+      const r = Math.pow(Math.random(), 0.6) * 6.4;
       const theta = Math.random() * Math.PI * 2;
-      const phi = (Math.random() - 0.5) * Math.PI;
+      const phi = (Math.random() - 0.5) * Math.PI * 0.75;
 
-      sPrisms[i * 3] = c.x + Math.cos(theta) * Math.cos(phi) * r;
-      sPrisms[i * 3 + 1] = c.y + Math.sin(phi) * r;
-      sPrisms[i * 3 + 2] = c.z + Math.sin(theta) * Math.cos(phi) * r;
+      const nx = Math.cos(theta) * Math.cos(phi) * r;
+      const ny = Math.sin(phi) * r * 0.85;
+      const nz = Math.sin(theta) * Math.cos(phi) * r;
 
-      const col = palette[(i % prismCenters.length) % palette.length];
-      cPrisms[i * 3] = col.r;
-      cPrisms[i * 3 + 1] = col.g;
-      cPrisms[i * 3 + 2] = col.b;
+      sNebula[i * 3] = nx;
+      sNebula[i * 3 + 1] = ny;
+      sNebula[i * 3 + 2] = nz;
+
+      let col;
+      if (r < 2.0) {
+        col = Math.random() > 0.4 ? whiteColor : amberColor;
+      } else {
+        const pick = Math.random();
+        if (pick < 0.35) col = violetColor;
+        else if (pick < 0.65) col = amberColor;
+        else if (pick < 0.85) col = cyanColor;
+        else col = tealColor;
+      }
+
+      cNebula[i * 3] = col.r;
+      cNebula[i * 3 + 1] = col.g;
+      cNebula[i * 3 + 2] = col.b;
     }
-    shapes.push(sPrisms);
-    shapeColors.push(cPrisms);
+    shapes.push(sNebula);
+    shapeColors.push(cNebula);
 
-    // --- SHAPE 6: DALA LOGO (Center) ---
+    // --- SHAPE 6: 3D SEGMENTED LOGO (Exact Match for Screenshot 3) ---
     const sLogo = createBuffer();
     const cLogo = createBuffer();
     for (let i = 0; i < COUNT; i++) {
-      const quad = i % 4;
+      const seg = i % 4;
       const u = Math.random();
       const v = Math.random();
-      let lx = 0, ly = 0;
+      let lx = 0, ly = 0, lz = 0;
+      let col = violetColor;
 
-      if (quad === 0) {
-        lx = -1.6 + u * 1.5;
-        ly = 0.1 + v * 2.2 * (1 - u * 0.4);
-      } else if (quad === 1) {
-        lx = 0.1 + u * 1.8;
-        ly = 0.1 + v * 2.0 * (1 - u);
-      } else if (quad === 2) {
-        lx = -1.8 + u * 1.7;
-        ly = -0.1 - v * 2.2 * (1 - u * 0.3);
+      if (seg === 0) {
+        // Top Petal: Teal / Emerald gradient rising and curving right
+        lx = 0.15 + (u * 1.8) * Math.cos(v * 1.3);
+        ly = 0.3 + (0.4 + v * 2.3) * (1 - u * 0.15);
+        lz = Math.sin(v * 2.5) * 0.65;
+        col = Math.random() > 0.5 ? tealColor : cyanColor;
+      } else if (seg === 1) {
+        // Left Petal: Deep Violet / Iris wing swooping left
+        lx = -0.25 - (0.4 + u * 2.4) * (1 - v * 0.25);
+        ly = (v - 0.5) * 2.6;
+        lz = -Math.cos(u * 2.2) * 0.6;
+        col = violetColor;
+      } else if (seg === 2) {
+        // Bottom Petal: Saffron / Amber wave swooping down and curling right
+        lx = 0.15 + (u * 2.1) * Math.cos(-v * 1.3);
+        ly = -0.3 - (0.4 + v * 2.3) * (1 - u * 0.15);
+        lz = Math.sin(u * 2.3) * 0.65;
+        col = Math.random() > 0.4 ? amberColor : goldColor;
       } else {
-        lx = 0.1 + u * 1.8;
-        ly = -0.1 - v * 1.8 * (1 - u * 0.4);
+        // Center luminous boundary seam
+        lx = (Math.random() - 0.5) * 0.4;
+        ly = (Math.random() - 0.5) * 2.4;
+        lz = (Math.random() - 0.5) * 0.4;
+        col = Math.random() > 0.5 ? whiteColor : goldColor;
       }
 
       sLogo[i * 3] = lx;
       sLogo[i * 3 + 1] = ly;
-      sLogo[i * 3 + 2] = (Math.random() - 0.5) * 0.8;
-
-      let col = violetColor;
-      if (quad === 0) col = tealColor;
-      else if (quad === 1) col = violetColor;
-      else if (quad === 2) col = new THREE.Color('#38bdf8');
-      else col = amberColor;
+      sLogo[i * 3 + 2] = lz;
 
       cLogo[i * 3] = col.r;
       cLogo[i * 3 + 1] = col.g;
@@ -333,40 +377,53 @@ export default function DalaInteractiveCanvas({ theme = 'dark', scrollProgress }
     geometry.setAttribute('color', new THREE.BufferAttribute(currentColors, 3));
 
     const material = new THREE.PointsMaterial({
-      size: 0.20,
+      size: 0.22,
       map: triangleTexture,
       transparent: true,
       vertexColors: true,
       depthWrite: false,
       blending: theme === 'light' ? THREE.NormalBlending : THREE.AdditiveBlending,
-      opacity: theme === 'light' ? 0.88 : 0.95
+      opacity: theme === 'light' ? 0.90 : 0.96
     });
     materialRef.current = material;
 
     const pointCloud = new THREE.Points(geometry, material);
     scene.add(pointCloud);
 
-    // 5. Large 3D Wireframe Prisms (Visible in Investor Section 5)
+    // 5. Persistent Ambient 3D Wireframe Prisms (Visible across all screenshots 1, 2, 3)
     const prismGroup = new THREE.Group();
     const prismMeshes = [];
-    const prismColors = ['#8052ff', '#ffb829', '#15846e', '#38bdf8', '#ec4899', '#ffffff'];
+    const ambientPrisms = [
+      { x: 3.8, y: 3.2, z: -1.5, size: 0.85, color: '#ffffff' }, // Top-right (Screenshot 1)
+      { x: 1.2, y: 3.6, z: -2.0, size: 0.65, color: '#ffb829' }, // Top-middle (Screenshot 1)
+      { x: -3.8, y: 2.8, z: -1.2, size: 0.75, color: '#ffffff' }, // Top-left
+      { x: -4.5, y: -0.8, z: 0.5, size: 0.6, color: '#8052ff' },  // Middle-left
+      { x: -3.2, y: -2.5, z: -1.0, size: 0.85, color: '#ffb829' }, // Bottom-left
+      { x: 2.5, y: -3.2, z: 0.5, size: 0.7, color: '#38bdf8' },   // Bottom-right
+      { x: 4.8, y: -0.5, z: -2.5, size: 0.95, color: '#ffffff' }, // Far right
+      { x: -1.8, y: -3.5, z: -1.5, size: 0.55, color: '#15846e' },
+      { x: -1.5, y: 2.2, z: 1.0, size: 0.5, color: '#ec4899' },
+      { x: 3.2, y: 1.0, z: 1.2, size: 0.6, color: '#ffffff' },
+      { x: -5.2, y: 1.2, z: -2.0, size: 0.7, color: '#8052ff' },
+      { x: 0.5, y: -2.8, z: -0.8, size: 0.55, color: '#ffb829' }
+    ];
 
-    prismCenters.forEach((c, idx) => {
-      const tetGeom = new THREE.TetrahedronGeometry(0.75 + Math.random() * 0.35, 0);
+    ambientPrisms.forEach((p) => {
+      const tetGeom = new THREE.TetrahedronGeometry(p.size, 0);
       const edges = new THREE.EdgesGeometry(tetGeom);
       const lineMat = new THREE.LineBasicMaterial({
-        color: new THREE.Color(prismColors[idx % prismColors.length]),
+        color: new THREE.Color(p.color),
         transparent: true,
-        opacity: 0.0,
+        opacity: 0.32,
         linewidth: 1.5
       });
       const lineMesh = new THREE.LineSegments(edges, lineMat);
-      lineMesh.position.set(c.x, c.y, c.z);
+      lineMesh.position.set(p.x, p.y, p.z);
       prismGroup.add(lineMesh);
       prismMeshes.push({
         mesh: lineMesh,
-        rotSpeedX: (Math.random() - 0.5) * 0.02,
-        rotSpeedY: (Math.random() - 0.5) * 0.02,
+        rotSpeedX: (Math.random() - 0.5) * 0.018,
+        rotSpeedY: (Math.random() - 0.5) * 0.018,
         mat: lineMat
       });
     });
@@ -466,12 +523,12 @@ export default function DalaInteractiveCanvas({ theme = 'dark', scrollProgress }
       geometry.attributes.position.needsUpdate = true;
       geometry.attributes.color.needsUpdate = true;
 
-      // Handle Wireframe Prisms visibility (active near stage 5 = investors)
-      const investorProximity = Math.max(0, 1 - Math.abs(stageFloat - 5.0) * 1.6);
-      prismMeshes.forEach(p => {
+      // Ambient Floating Wireframe Triangles (Persistent across all stages matching Screenshots 1, 2, 3)
+      const baseOpacity = theme === 'light' ? 0.28 : 0.36;
+      prismMeshes.forEach((p, idx) => {
         p.mesh.rotation.x += p.rotSpeedX;
         p.mesh.rotation.y += p.rotSpeedY;
-        p.mat.opacity = investorProximity * 0.85;
+        p.mat.opacity = baseOpacity + Math.sin(elapsed * 1.2 + idx) * 0.08;
       });
 
       // Camera gentle float and mouse parallax
