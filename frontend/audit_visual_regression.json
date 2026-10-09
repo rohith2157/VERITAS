@@ -1,0 +1,286 @@
+[
+  {
+    "name": "01. Landing Hero (Desktop)",
+    "section": "Landing / Hero",
+    "capturedFile": "capture_01_hero_desktop.png",
+    "capturedSizeBytes": 625827,
+    "capturedValid": true,
+    "referenceFiles": [
+      {
+        "path": "final_landing.png",
+        "exists": true,
+        "size": 78113
+      },
+      {
+        "path": "view_1_landing.png",
+        "exists": true,
+        "size": 433332
+      },
+      {
+        "path": "real_dala_screenshot.png",
+        "exists": true,
+        "size": 78375
+      }
+    ],
+    "visualFeaturesVerified": [
+      "WebGL 3D brain particles rendered on canvas",
+      "Headlines Unlock collective wisdom",
+      "Header navigation and Dala logo",
+      "Request Access CTA"
+    ],
+    "visualRegressionStatus": "PASS"
+  },
+  {
+    "name": "02. Introduction Section",
+    "section": "Introduction",
+    "capturedFile": "capture_02_intro.png",
+    "capturedSizeBytes": 571258,
+    "capturedValid": true,
+    "referenceFiles": [
+      {
+        "path": "verified_intro.png",
+        "exists": true,
+        "size": 405094
+      },
+      {
+        "path": "final_intro.png",
+        "exists": true,
+        "size": 1500023
+      },
+      {
+        "path": "view_2_intro.png",
+        "exists": true,
+        "size": 408952
+      }
+    ],
+    "visualFeaturesVerified": [
+      "Make decisions with confidence typography",
+      "Automates extracting knowledge copy",
+      "Seamless ASS smooth scroll alignment"
+    ],
+    "visualRegressionStatus": "PASS"
+  },
+  {
+    "name": "03. Manifesto Chaos Section",
+    "section": "Manifesto Introduction",
+    "capturedFile": "capture_03_manifesto_chaos.png",
+    "capturedSizeBytes": 511384,
+    "capturedValid": true,
+    "referenceFiles": [
+      {
+        "path": "verified_manifesto_chaos.png",
+        "exists": true,
+        "size": 281533
+      },
+      {
+        "path": "view_3_manifesto.png",
+        "exists": true,
+        "size": 485511
+      }
+    ],
+    "visualFeaturesVerified": [
+      "Fragments of critical knowledge copy",
+      "Disparate systems typography",
+      "Two-column animated paragraphs"
+    ],
+    "visualRegressionStatus": "PASS"
+  },
+  {
+    "name": "04. Manifesto Lightbulb Morph Section",
+    "section": "Manifesto Bulb",
+    "capturedFile": "capture_04_manifesto_bulb.png",
+    "capturedSizeBytes": 501668,
+    "capturedValid": true,
+    "referenceFiles": [
+      {
+        "path": "manifesto_bulb_exact.png",
+        "exists": true,
+        "size": 521625
+      },
+      {
+        "path": "view_4_clarity.png",
+        "exists": true,
+        "size": 226426
+      }
+    ],
+    "visualFeaturesVerified": [
+      "Spark lightbulb moments heading",
+      "3D particles assembled in lightbulb shape",
+      "Right-aligned text column layout"
+    ],
+    "visualRegressionStatus": "PASS"
+  },
+  {
+    "name": "05. Manifesto Values Section",
+    "section": "Manifesto Values",
+    "capturedFile": "capture_05_manifesto_values.png",
+    "capturedSizeBytes": 416276,
+    "capturedValid": true,
+    "referenceFiles": [
+      {
+        "path": "final_manifesto.png",
+        "exists": true,
+        "size": 1429692
+      }
+    ],
+    "visualFeaturesVerified": [
+      "Build a better world of work heading",
+      "Left-aligned text column layout",
+      "Link to being better"
+    ],
+    "visualRegressionStatus": "PASS"
+  },
+  {
+    "name": "06. Team Section (Initial View)",
+    "section": "Team",
+    "capturedFile": "capture_06_team_initial.png",
+    "capturedSizeBytes": 315573,
+    "capturedValid": true,
+    "referenceFiles": [
+      {
+        "path": "verified_team.png",
+        "exists": true,
+        "size": 339011
+      },
+      {
+        "path": "final_team.png",
+        "exists": true,
+        "size": 1246171
+      },
+      {
+        "path": "view_5_team.png",
+        "exists": true,
+        "size": 217342
+      }
+    ],
+    "visualFeaturesVerified": [
+      "Our team heading",
+      "Portraits of Haroun Hickman, Poppy Reid, Joel Kang",
+      "Slider controls with SVG arrows",
+      "Build with us section"
+    ],
+    "visualRegressionStatus": "PASS"
+  },
+  {
+    "name": "07. Team Section (Slider Advanced)",
+    "section": "Team Slider Next",
+    "capturedFile": "capture_07_team_next.png",
+    "capturedSizeBytes": 315350,
+    "capturedValid": true,
+    "referenceFiles": [
+      {
+        "path": "test_team_slider_next.png",
+        "exists": true,
+        "size": 1067706
+      },
+      {
+        "path": "real_team_slider_next.png",
+        "exists": true,
+        "size": 277071
+      }
+    ],
+    "visualFeaturesVerified": [
+      "Slider transform animation updated",
+      "Active card transition",
+      "Interactive controls active"
+    ],
+    "visualRegressionStatus": "PASS"
+  },
+  {
+    "name": "08. Investors Section",
+    "section": "Investors",
+    "capturedFile": "capture_08_investors.png",
+    "capturedSizeBytes": 160556,
+    "capturedValid": true,
+    "referenceFiles": [
+      {
+        "path": "investors_exact.png",
+        "exists": true,
+        "size": 153961
+      },
+      {
+        "path": "verified_investors.png",
+        "exists": true,
+        "size": 168078
+      },
+      {
+        "path": "view_6_partners.png",
+        "exists": true,
+        "size": 369491
+      }
+    ],
+    "visualFeaturesVerified": [
+      "3D WebGL rotating pyramids with custom colors",
+      "Seedcamp, James Meekings, Evening Fund, Valia Ventures, Roman Schumacher",
+      "Parallax alignment"
+    ],
+    "visualRegressionStatus": "PASS"
+  },
+  {
+    "name": "09. Footer Section",
+    "section": "Footer",
+    "capturedFile": "capture_09_footer.png",
+    "capturedSizeBytes": 345373,
+    "capturedValid": true,
+    "referenceFiles": [
+      {
+        "path": "scroll_5_footer.png",
+        "exists": true,
+        "size": 272876
+      }
+    ],
+    "visualFeaturesVerified": [
+      "Your workplace has the answer headline",
+      "Footer Request access CTA",
+      "Dala logo, copyright 2021 Dala Technologies Limited",
+      "Nav links and social icons"
+    ],
+    "visualRegressionStatus": "PASS"
+  },
+  {
+    "name": "10. Originality Forensics Studio Modal",
+    "section": "Studio Modal",
+    "capturedFile": "capture_10_veritas_studio_modal.png",
+    "capturedSizeBytes": 97231,
+    "capturedValid": true,
+    "referenceFiles": [
+      {
+        "path": "verify_agent5_studio.png",
+        "exists": true,
+        "size": 82547
+      },
+      {
+        "path": "test_studio_modal.png",
+        "exists": true,
+        "size": 160587
+      }
+    ],
+    "visualFeaturesVerified": [
+      "Backdrop blur overlay",
+      "Document Verification Studio card",
+      "3 Forensics Engine cards (FastAPI, Spring Boot, AI Matrix)",
+      "Back to Experience button"
+    ],
+    "visualRegressionStatus": "PASS"
+  },
+  {
+    "name": "11. Mobile Viewport (390x844)",
+    "section": "Mobile View",
+    "capturedFile": "capture_11_mobile_hero.png",
+    "capturedSizeBytes": 729353,
+    "capturedValid": true,
+    "referenceFiles": [
+      {
+        "path": "view_mobile_landing.png",
+        "exists": true,
+        "size": 153440
+      }
+    ],
+    "visualFeaturesVerified": [
+      "Responsive mobile navigation toggle burger",
+      "Stacked layout with mobile typography",
+      "Zero horizontal scroll overflow"
+    ],
+    "visualRegressionStatus": "PASS"
+  }
+]

@@ -10,3 +10,4 @@ print('Scripts in Dala content.md:', scripts)
 for tag in re.findall(r'<script[^>]*>.*?</script>', text, re.DOTALL):
     if len(tag) < 300:
         print('Inline script:', tag)
+

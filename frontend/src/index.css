@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;400;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+@import './variables.css';
 
 /* ==================== DALA THEME TOKENS (LIGHT & DARK) ==================== */
 :root {
@@ -101,8 +102,12 @@
 }
 
 /* Base resets bridging with Dala standard */
-html, body {
-  background-color: var(--color-void);
+html {
+  background-color: #000000;
+}
+
+body {
+  background-color: transparent;
   color: var(--color-bone-white);
   font-family: var(--font-ppneuemontreal);
   font-feature-settings: "ss01" on;
@@ -110,11 +115,31 @@ html, body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+.z-negative {
+  z-index: 0 !important;
+}
+
+[asscroll-container] {
+  position: relative;
+  z-index: 10 !important;
+  pointer-events: none;
+}
+
+[asscroll-container] a,
+[asscroll-container] button,
+[asscroll-container] input,
+[asscroll-container] .btn,
+[asscroll-container] .team-slider__control,
+[asscroll-container] .team-card__social__link {
+  pointer-events: auto;
+}
+
+#root:empty {
+  display: none !important;
+}
+
 #root {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  background-color: var(--color-void);
+  display: contents;
 }
 
 html {
@@ -8207,3 +8232,92 @@ textarea:focus-visible,
     scroll-behavior: auto !important;
   }
 }
+
+/* ==================== DALA EXACT DESIGN FOLDER PARITY RULES ==================== */
+.landing__title {
+  font-family: var(--font-ppneuemontreal, 'PPNeueMontreal', sans-serif) !important;
+  font-size: var(--text-heading-lg, 78px) !important;
+  line-height: var(--leading-heading-lg, 1.1) !important;
+  letter-spacing: var(--tracking-heading-lg, -3.12px) !important;
+  font-weight: var(--font-weight-regular, 400) !important;
+  color: var(--color-bone-white, #ffffff) !important;
+}
+
+@media (min-width: 1024px) {
+  .landing__title {
+    font-size: 78px !important;
+    line-height: 1.1 !important;
+    letter-spacing: -3.12px !important;
+  }
+}
+
+.landing__body {
+  max-width: 480px !important;
+}
+
+.landing__body .t-yellow {
+  color: var(--color-saffron-spark, #ffb829) !important;
+  font-family: var(--font-ppneuemontreal, 'PPNeueMontreal', sans-serif) !important;
+  font-size: var(--text-nav-label, 14px) !important;
+  font-weight: var(--font-weight-semibold, 600) !important;
+  line-height: var(--leading-nav-label, 1.2) !important;
+  letter-spacing: var(--tracking-nav-label, 0.35px) !important;
+  text-transform: uppercase !important;
+  margin-bottom: 14px !important;
+}
+
+.landing__body p {
+  font-family: var(--font-ppneuemontreal, 'PPNeueMontreal', sans-serif) !important;
+  font-size: var(--text-body, 18px) !important;
+  font-weight: var(--font-weight-extralight, 200) !important;
+  line-height: var(--leading-body, 1.5) !important;
+  color: var(--color-bone-white, #ffffff) !important;
+  margin-bottom: 24px !important;
+}
+
+.btn {
+  background-color: var(--color-electric-iris, #8052ff) !important;
+  color: #ffffff !important;
+  font-family: var(--font-ppneuemontreal, 'PPNeueMontreal', sans-serif) !important;
+  font-size: 14px !important;
+  font-weight: var(--font-weight-semibold, 600) !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.025em !important;
+  border-radius: var(--radius-buttons, 24px) !important;
+  padding: 14.4px 24px !important;
+  border: none !important;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease !important;
+}
+
+.btn:hover {
+  transform: scale(1.02);
+  box-shadow: 0 0 20px rgba(128, 82, 255, 0.35);
+}
+
+/* Research Partners / Investors Authentic Prisms */
+.investor__icon {
+  width: 72px !important;
+  height: 72px !important;
+  min-width: 72px !important;
+  min-height: 72px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin-right: 20px !important;
+  position: relative !important;
+}
+
+.investor__icon__image {
+  width: 64px !important;
+  height: 64px !important;
+  object-fit: contain !important;
+  display: block !important;
+  filter: drop-shadow(0 4px 16px rgba(0, 0, 0, 0.6));
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), filter 0.4s ease;
+}
+
+.investor:hover .investor__icon__image {
+  transform: scale(1.08) rotate(4deg);
+  filter: drop-shadow(0 6px 20px rgba(255, 184, 41, 0.45));
+}
+

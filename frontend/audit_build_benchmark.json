@@ -1,0 +1,13 @@
+{
+  "trialsMs": [
+    508,
+    351,
+    475
+  ],
+  "averageMs": 445,
+  "fastestMs": 351,
+  "targetSlaMs": 2000,
+  "compliantUnder2s": true,
+  "rawViteOutput": "> frontend@0.0.0 build\n> vite build\n\n\u001b[36mvite v8.3.3 \u001b[32mbuilding client environment for production...\u001b[36m\u001b[39m\ntransforming...\n✓ 3 modules transformed.\nrendering chunks...\ndist/index.html  52.11 kB\n\n\u001b[32m✓ built in 475ms\u001b[39m",
+  "distFileCount": 39
+}
