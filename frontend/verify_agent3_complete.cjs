@@ -3,8 +3,8 @@ const fs = require('fs');
 const path = require('path');
 const os = require('os');
 
-const PORT = 9745;
-const tempUserDataDir = fs.mkdtempSync(path.join(os.tmpdir(), 'chrome-audit3-'));
+const PORT = 9750;
+const tempUserDataDir = fs.mkdtempSync(path.join(os.tmpdir(), 'chrome-audit3-final-'));
 
 const chrome = spawn('C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe', [
   '--headless=new',
@@ -18,7 +18,7 @@ const chrome = spawn('C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe
 ]);
 
 async function runAudit() {
-  console.log('Starting Agent 3 Complete Audit & Verification Suite...');
+  console.log('=== VERITAS AGENT 3 AUDIT & VERIFICATION SUITE ===');
   await new Promise(r => setTimeout(r, 2500));
 
   const res = await fetch(`http://localhost:${PORT}/json`);
@@ -51,6 +51,28 @@ async function runAudit() {
   const outDir = 'c:\\TTProject\\frontend\\audit_agent3';
   if (!fs.existsSync(outDir)) fs.mkdirSync(outDir, { recursive: true });
 
+  // 1. Wait until portal header and dashboard are fully loaded
+  console.log('Waiting for portal header and OperationsDashboard component to mount...');
+  let mounted = false;
+  for (let attempt = 0; attempt < 30; attempt++) {
+    const check = await send('Runtime.evaluate', {
+      expression: `(() => {
+        const portal = document.getElementById('veritas-portal-shell');
+        const header = document.querySelector('.portal-header');
+        const kpi = document.querySelector('.ops-kpi-grid');
+        const h1 = portal ? portal.querySelector('h1') : null;
+        return !!portal && !!header && !!kpi && !!h1;
+      })()`,
+      returnByValue: true
+    });
+    if (check.result && check.result.value) {
+      mounted = true;
+      break;
+    }
+    await new Promise(r => setTimeout(r, 400));
+  }
+  console.log('Operations Dashboard mounted:', mounted);
+
   const auditReport = {
     timestamp: new Date().toISOString(),
     viewports: {},
@@ -60,10 +82,7 @@ async function runAudit() {
     tokenDiscipline: {}
   };
 
-  // Wait for initial render of dashboard
-  await new Promise(r => setTimeout(r, 1200));
-
-  // --- 1. AUDIT VIEWPORTS (1440px, 1024px, 768px, 375px) ---
+  // --- 2. AUDIT VIEWPORTS (1440px, 1024px, 768px, 375px) ---
   const viewports = [
     { width: 1440, height: 900, name: '1440px_desktop' },
     { width: 1024, height: 800, name: '1024px_laptop' },
@@ -79,18 +98,19 @@ async function runAudit() {
       deviceScaleFactor: 1,
       mobile: vp.width < 768
     });
-    await new Promise(r => setTimeout(r, 600));
+    await new Promise(r => setTimeout(r, 500));
 
     const metricsCode = `
       (() => {
-        const header = document.querySelector('.portal-header') || document.querySelector('header');
-        const main = document.querySelector('main');
+        const portal = document.getElementById('veritas-portal-shell') || document.body;
+        const header = portal.querySelector('.portal-header');
+        const main = portal.querySelector('.portal-main-container') || portal.querySelector('main');
         const backBtn = document.getElementById('veritas-back-to-manifesto');
-        const h1 = document.querySelector('h1');
-        const tabBtns = Array.from(document.querySelectorAll('.portal-tab-btn, header button'));
-        const kpiCards = Array.from(document.querySelectorAll('.veritas-surface'));
-        const subCards = Array.from(document.querySelectorAll('.ops-sub-card'));
-        const badges = Array.from(document.querySelectorAll('.veritas-badge, span[style*="borderRadius"], span[style*="border-radius"], div[style*="borderRadius"]'));
+        const h1 = portal.querySelector('h1');
+        const tabBtns = Array.from(portal.querySelectorAll('.portal-tab-btn'));
+        const kpiCards = Array.from(portal.querySelectorAll('.veritas-surface'));
+        const subCards = Array.from(portal.querySelectorAll('.ops-sub-card'));
+        const badges = Array.from(portal.querySelectorAll('.veritas-badge, span[style*="borderRadius"], span[style*="border-radius"], div[style*="borderRadius"]'));
 
         const getStyle = (el) => {
           if (!el) return null;
@@ -108,14 +128,14 @@ async function runAudit() {
           };
         };
 
-        // Check horizontal overflow
-        const docWidth = document.documentElement.clientWidth;
-        const scrollWidth = document.documentElement.scrollWidth;
-        const bodyScrollWidth = document.body.scrollWidth;
-        const hasHorizontalOverflow = scrollWidth > docWidth || bodyScrollWidth > docWidth;
+        // Check horizontal overflow of the portal
+        const docWidth = window.innerWidth;
+        const portalScrollWidth = portal.scrollWidth;
+        const mainScrollWidth = main ? main.scrollWidth : docWidth;
+        const hasHorizontalOverflow = portalScrollWidth > docWidth || mainScrollWidth > docWidth;
 
-        // Check interactive overlaps in portal
-        const interactiveElements = Array.from(document.querySelectorAll('button, input, a, h1, h2, h3, .veritas-surface, .ops-sub-card'));
+        // Check element overlaps strictly within the portal
+        const interactiveElements = Array.from(portal.querySelectorAll('button, input, a, h1, h2, h3, .veritas-surface, .ops-sub-card'));
         const overlaps = [];
         for (let i = 0; i < interactiveElements.length; i++) {
           const r1 = interactiveElements[i].getBoundingClientRect();
@@ -140,10 +160,10 @@ async function runAudit() {
         return {
           viewport: { width: window.innerWidth, height: window.innerHeight },
           hasHorizontalOverflow,
-          scrollWidth,
           docWidth,
+          portalScrollWidth,
           overlapsCount: overlaps.length,
-          overlaps: overlaps.slice(0, 6),
+          overlaps,
           header: {
             rect: header ? header.getBoundingClientRect() : null,
             style: getStyle(header)
@@ -156,7 +176,7 @@ async function runAudit() {
           titleStyle: getStyle(h1),
           tabs: tabBtns.map(b => ({
             text: b.textContent.trim(),
-            active: b.style.borderBottom && b.style.borderBottom.includes('solid'),
+            active: b.style.borderBottom && b.style.borderBottom.includes('var(--color-electric-iris)'),
             style: getStyle(b)
           })),
           kpiCardCount: kpiCards.length,
@@ -175,19 +195,19 @@ async function runAudit() {
     const vpData = metricsResult.result.value;
     auditReport.viewports[vp.width] = vpData;
 
-    console.log(`  Horizontal Overflow: ${vpData.hasHorizontalOverflow}`);
+    console.log(`  Horizontal Overflow: ${vpData.hasHorizontalOverflow} (scroll: ${vpData.portalScrollWidth}px / client: ${vpData.docWidth}px)`);
     console.log(`  Overlaps Count: ${vpData.overlapsCount}`);
-    console.log(`  Back Button: ${vpData.backBtn.exists} (${vpData.backBtn.text})`);
-    console.log(`  Tab count: ${vpData.tabs.length}`);
+    console.log(`  Back Button: ${vpData.backBtn.exists} ("${vpData.backBtn.text}")`);
+    console.log(`  Tabs present: ${vpData.tabs.map(t => t.text).join(', ')}`);
 
-    // Capture high-res screenshot
+    // Capture screenshot
     const shot = await send('Page.captureScreenshot', { format: 'png' });
     const shotFilename = `dashboard_${vp.width}px.png`;
     fs.writeFileSync(path.join(outDir, shotFilename), Buffer.from(shot.data, 'base64'));
-    console.log(`  Screenshot saved: ${shotFilename}`);
+    console.log(`  Screenshot saved -> ${shotFilename}`);
   }
 
-  // Restore 1440px for tab switching tests
+  // Restore 1440px
   await send('Emulation.setDeviceMetricsOverride', {
     width: 1440,
     height: 900,
@@ -196,21 +216,21 @@ async function runAudit() {
   });
   await new Promise(r => setTimeout(r, 400));
 
-  // --- 2. AUDIT TAB SWITCHING ---
+  // --- 3. AUDIT TAB SWITCHING ---
   console.log('\n=== Testing Tab Switching Across All 6 Views ===');
   const tabsToTest = ['dashboard', 'studio', 'classroom', 'demobench', 'dev', 'manifesto'];
 
   for (const tab of tabsToTest) {
-    console.log(`Switching to view: #${tab}...`);
+    console.log(`Switching to hash: #${tab}...`);
     await send('Runtime.evaluate', { expression: `window.location.hash = '${tab}';` });
-    await new Promise(r => setTimeout(r, 800));
+    // Wait for view transition
+    await new Promise(r => setTimeout(r, 1000));
 
     const tabStateCode = `
       (() => {
-        const header = document.querySelector('.portal-header') || document.querySelector('header');
-        const activeTabBtn = Array.from(document.querySelectorAll('.portal-tab-btn, header button')).find(b => b.style.borderBottom && b.style.borderBottom.includes('solid'));
-        const main = document.querySelector('main');
         const isManifesto = window.location.hash === '#manifesto' || !document.querySelector('.portal-header');
+        const activeTabBtn = Array.from(document.querySelectorAll('.portal-tab-btn')).find(b => b.style.borderBottom && b.style.borderBottom.includes('var(--color-electric-iris)'));
+        const main = document.querySelector('.portal-main-container') || document.querySelector('main');
 
         return {
           currentHash: window.location.hash,
@@ -226,18 +246,18 @@ async function runAudit() {
     auditReport.tabSwitching[tab] = tabStateRes.result.value;
     console.log(`  Result for #${tab}:`, tabStateRes.result.value);
 
-    // Screenshot
+    // Capture screenshot
     const shot = await send('Page.captureScreenshot', { format: 'png' });
     const tabShotName = `tab_${tab}_1440px.png`;
     fs.writeFileSync(path.join(outDir, tabShotName), Buffer.from(shot.data, 'base64'));
-    console.log(`  Screenshot saved: ${tabShotName}`);
+    console.log(`  Screenshot saved -> ${tabShotName}`);
   }
 
-  // --- 3. AUDIT "BACK TO MANIFESTO" BUTTON ---
+  // --- 4. AUDIT "BACK TO MANIFESTO" BUTTON ---
   console.log('\n=== Testing "Back to Manifesto" Button Interaction ===');
   // First switch back to dashboard
   await send('Runtime.evaluate', { expression: `window.location.hash = 'dashboard';` });
-  await new Promise(r => setTimeout(r, 800));
+  await new Promise(r => setTimeout(r, 1000));
 
   const backClickCode = `
     (() => {
@@ -270,45 +290,55 @@ async function runAudit() {
   const backShot = await send('Page.captureScreenshot', { format: 'png' });
   fs.writeFileSync(path.join(outDir, 'after_back_to_manifesto.png'), Buffer.from(backShot.data, 'base64'));
 
-  // --- 4. AUDIT THEME TOGGLE (DARK / LIGHT) ---
+  // --- 5. AUDIT THEME TOGGLE (DARK / LIGHT) ---
   console.log('\n=== Testing Theme Toggle ===');
   // Switch back to dashboard
   await send('Runtime.evaluate', { expression: `window.location.hash = 'dashboard';` });
-  await new Promise(r => setTimeout(r, 800));
+  await new Promise(r => setTimeout(r, 1000));
 
-  const toggleCode = `
-    (() => {
+  const toggleClick = await send('Runtime.evaluate', {
+    expression: `(() => {
       const toggle = document.querySelector('button[aria-label="Toggle Theme"]');
       if (!toggle) return { error: 'Toggle button not found' };
-      const beforeTheme = document.documentElement.getAttribute('data-theme');
+      const before = document.documentElement.getAttribute('data-theme');
       toggle.click();
-      const afterTheme = document.documentElement.getAttribute('data-theme');
+      return { clicked: true, before };
+    })()`,
+    returnByValue: true
+  });
+  console.log('  Toggle clicked, before was:', toggleClick.result.value.before);
+
+  // Wait for state and useEffect update
+  await new Promise(r => setTimeout(r, 500));
+
+  const themeInspect = await send('Runtime.evaluate', {
+    expression: `(() => {
       const rootStyle = window.getComputedStyle(document.documentElement);
+      const portal = document.querySelector('div[style*="zIndex: 99999"], div[style*="z-index: 99999"]');
       return {
-        clicked: true,
-        beforeTheme,
-        afterTheme,
+        themeAttr: document.documentElement.getAttribute('data-theme'),
+        portalBg: portal ? window.getComputedStyle(portal).backgroundColor : null,
         boneWhiteValue: rootStyle.getPropertyValue('--color-bone-white').trim(),
         voidValue: rootStyle.getPropertyValue('--color-void').trim(),
         electricIrisValue: rootStyle.getPropertyValue('--color-electric-iris').trim(),
         deepVerdantValue: rootStyle.getPropertyValue('--color-deep-verdant').trim(),
         saffronSparkValue: rootStyle.getPropertyValue('--color-saffron-spark').trim()
       };
-    })()
-  `;
-  const toggleRes = await send('Runtime.evaluate', { expression: toggleCode, returnByValue: true });
-  console.log('  Theme toggle result:', toggleRes.result.value);
-  auditReport.themeToggle = toggleRes.result.value;
+    })()`,
+    returnByValue: true
+  });
+  console.log('  Theme after toggle to light mode:', themeInspect.result.value);
+  auditReport.themeToggle = themeInspect.result.value;
 
   const lightShot = await send('Page.captureScreenshot', { format: 'png' });
   fs.writeFileSync(path.join(outDir, 'dashboard_theme_light.png'), Buffer.from(lightShot.data, 'base64'));
-  console.log('  Screenshot saved: dashboard_theme_light.png');
+  console.log('  Screenshot saved -> dashboard_theme_light.png');
 
   // Toggle back to dark
   await send('Runtime.evaluate', { expression: `document.querySelector('button[aria-label="Toggle Theme"]')?.click();` });
-  await new Promise(r => setTimeout(r, 400));
+  await new Promise(r => setTimeout(r, 500));
 
-  // --- 5. AUDIT VISUAL TOKEN DISCIPLINE & TYPOGRAPHY ---
+  // --- 6. AUDIT VISUAL TOKEN DISCIPLINE & TYPOGRAPHY ---
   console.log('\n=== Auditing Visual Token Discipline & Typography ===');
   const tokenAuditCode = `
     (() => {

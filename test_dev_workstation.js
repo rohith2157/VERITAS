@@ -273,9 +273,9 @@ async function run() {
 
   const pipelines = [
     { key: 'Winnowing Document Similarity', name: 'Winnowing', expectedMethod: 'POST', expectedEndpoint: '/api/v1/compare/one-to-one' },
-    { key: 'Cohort Collusion Matrix', name: 'Collusion Matrix', expectedMethod: 'POST', expectedEndpoint: '/api/v1/compare/many-to-many' },
+    { key: 'Cohort Collusion Matrix & Patient Zero', name: 'Collusion Matrix', expectedMethod: 'POST', expectedEndpoint: '/api/v1/compare/many-to-many' },
     { key: 'AST Code Structural Normalization', name: 'AST Normalizer', expectedMethod: 'POST', expectedEndpoint: '/api/v1/ast/normalize' },
-    { key: 'Cyrillic Homoglyph', name: 'Cyrillic Sanitizer', expectedMethod: 'POST', expectedEndpoint: '/api/v1/sanitize/homoglyphs' },
+    { key: 'Cyrillic Homoglyph & Zero-Width Sanitizer', name: 'Cyrillic Sanitizer', expectedMethod: 'POST', expectedEndpoint: '/api/v1/sanitize/homoglyphs' },
     { key: 'Spring Boot 3 Classroom Gateway', name: 'Classroom Gateway', expectedMethod: 'GET', expectedEndpoint: '/api/classrooms' }
   ];
 
@@ -285,12 +285,12 @@ async function run() {
     // Click tab
     await evaluate(`
       (() => {
-        const tabs = Array.from(document.querySelectorAll('button')).filter(b => b.textContent.includes('${pipe.name}') || b.textContent.includes('${pipe.key.split(' ')[0]}'));
+        const tabs = Array.from(document.querySelectorAll('button'));
         const tab = tabs.find(t => t.textContent.includes('${pipe.key}') || t.textContent.includes('${pipe.name}'));
         if (tab) tab.click();
       })()
     `);
-    await sleep(600);
+    await sleep(800);
 
     // Verify URL bar
     const urlDisplay = await evaluate(`
@@ -442,10 +442,22 @@ async function run() {
   const resetLength = await evaluate(`document.querySelector('textarea') ? document.querySelector('textarea').value.length : 0`);
   console.log(`[Check 5.3] Reset default payload length: ${resetLength} chars (Matches original: ${resetLength === originalPayloadLength})`);
 
-  // Final Screenshot of full workstation state
+  // Screenshot 3: Agent Matrix & Overview
   const shot3 = await send('Page.captureScreenshot', { format: 'png' });
   fs.writeFileSync('verify_dev_3_full_workstation_verified.png', Buffer.from(shot3.data, 'base64'));
   console.log('  Saved screenshot: verify_dev_3_full_workstation_verified.png');
+
+  // Screenshot 4: Scrolled View showing Live API Wire Playground with Response Inspection
+  console.log('[Capture] Scrolling to Live API Wire Playground...');
+  await evaluate(`
+    const el = Array.from(document.querySelectorAll('h2')).find(h => h.textContent.includes('Live API Wire'));
+    if (el) el.scrollIntoView({ behavior: 'instant', block: 'start' });
+  `);
+  await sleep(600);
+
+  const shot4 = await send('Page.captureScreenshot', { format: 'png' });
+  fs.writeFileSync('verify_dev_4_wire_playground.png', Buffer.from(shot4.data, 'base64'));
+  console.log('  Saved screenshot: verify_dev_4_wire_playground.png');
 
   console.log('\n================================================================');
   console.log('   ALL 5 AGENT 5 MISSION OBJECTIVES VERIFIED SUCCESSFULLY!      ');

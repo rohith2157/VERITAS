@@ -94,6 +94,8 @@ export default function App() {
   // When user opens Dashboard, Studio, Classroom, DemoBench, or Developer Workstation
   return (
     <div
+      id="veritas-portal-shell"
+      className="veritas-portal-shell"
       style={{
         position: 'fixed',
         inset: 0,
