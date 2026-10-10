@@ -1,0 +1,4 @@
+In distributed computation frameworks, consensus protocols permit an interconnected cluster of computing entities to establish collective agreement on mutable state values even during catastrophic communication disruptions. 
+The Raft architecture renders consensus comprehensible by fragmenting the algorithmic process into distinct sub-problems: designated authority selection, sequential journal propagation, and operational invariants.
+A presiding coordinator is designated through stochastic interval timers so as to diminish simultaneous ballot deadlocks.
+Following confirmation of dominance, all transactional operations are channeled exclusively through the designated authority prior to persistent recording in subordinate registers.

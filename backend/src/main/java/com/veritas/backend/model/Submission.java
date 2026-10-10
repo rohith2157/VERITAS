@@ -40,6 +40,8 @@ public class Submission {
     @Column(columnDefinition = "TEXT")
     private String matchedSourcesJson;
 
+    private String ledgerHash;
+
     public Submission() {}
 
     public Submission(Long assignmentId, String studentName, String studentEmail, String filename, String rawText) {
@@ -90,5 +92,14 @@ public class Submission {
 
     public String getMatchedSourcesJson() { return matchedSourcesJson; }
     public void setMatchedSourcesJson(String matchedSourcesJson) { this.matchedSourcesJson = matchedSourcesJson; }
+
+    public String getLedgerHash() { return ledgerHash; }
+    public void setLedgerHash(String ledgerHash) { this.ledgerHash = ledgerHash; }
+
+    // Frontend-compatible serialization aliases
+    public Double getFinalGrade() { return finalMarks; }
+    public Double getRubricDeductions() { return finalMarks != null ? Math.max(0.0, 100.0 - finalMarks) : 0.0; }
+    public String getEvaluationStatus() { return "FLAGGED_FOR_REVIEW".equals(status) ? "FLAGGED" : status; }
+    public String getFlagReason() { return penaltyReason; }
 }
 

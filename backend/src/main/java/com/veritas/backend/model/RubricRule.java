@@ -56,5 +56,11 @@ public class RubricRule {
 
     public String getDescription() { return description; }
     public void setDescription(String description) { this.description = description; }
+
+    // Frontend-compatible serialization aliases
+    public String getCriterion() { 
+        return description != null ? description : String.format("Similarity %.0f%% - %.0f%%", minSimilarity, maxSimilarity); 
+    }
+    public Double getDeductionPoints() { return markPenalty != null ? markPenalty : 0.0; }
 }
 

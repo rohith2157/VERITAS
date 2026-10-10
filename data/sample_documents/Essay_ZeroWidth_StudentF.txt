@@ -1,0 +1,4 @@
+Dist​ributed con​sensus algo​rithms en​sure that a clus​ter of nod​es can ag​ree on val​ues des​pite net​work parti​tions.
+Ra​ft simpli​fies cons​ensus by decom​posing it in​to lea​der elec​tion, log repli​cation, and safe​ty guaran​tees.
+A lea​der is elec​ted via rando​mized heart​beat tim​ers to pre​vent split-vote scena​rios.
+Once estab​lished, all cli​ent sta​te transi​tions fl​ow stric​tly throu​gh the lea​der befo​re bei​ng commi​tted to follo​wer lo​gs.

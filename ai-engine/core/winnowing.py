@@ -123,12 +123,75 @@ def tokenize_with_spans(text: str) -> List[TokenSpan]:
     return token_spans
 
 
+# Karp-Rabin polynomial parameters (64-bit modulus)
+KR_BASE = 10007
+KR_MOD = 1 << 64
+
+
 def hash_kgram(tokens: List[str]) -> int:
     """
     Computes a 64-bit integer hash for a sequence of tokens.
+    Uses MD5 64-bit prefix for single lookups or validation.
     """
     joined = " ".join(tokens)
     return int(hashlib.md5(joined.encode("utf-8")).hexdigest()[:16], 16)
+
+
+def compute_kgram_rolling_hashes(
+    token_spans: List[TokenSpan], k: int
+) -> List[Dict]:
+    """
+    Computes 64-bit Karp-Rabin rolling hashes across token spans in O(N) time.
+    Each sliding step executes in O(1) time.
+    """
+    n = len(token_spans)
+    if n < k or k <= 0:
+        return []
+
+    # Pre-hash individual tokens into 64-bit integers
+    token_hashes = [
+        int(hashlib.md5(t.token.encode("utf-8")).hexdigest()[:16], 16)
+        for t in token_spans
+    ]
+
+    b_k_minus_1 = pow(KR_BASE, k - 1, KR_MOD)
+
+    # Initial window hash
+    curr_hash = 0
+    for i in range(k):
+        curr_hash = (curr_hash * KR_BASE + token_hashes[i]) % KR_MOD
+
+    kgram_hashes = [
+        {
+            "hash": curr_hash,
+            "start_char": token_spans[0].start,
+            "end_char": token_spans[k - 1].end,
+            "token_start": 0,
+            "token_end": k - 1,
+            "index": 0,
+        }
+    ]
+
+    # Roll through the remainder of the token sequence in O(1) per step
+    for i in range(n - k):
+        # Remove outgoing token, multiply by base, add incoming token
+        curr_hash = (
+            (curr_hash - token_hashes[i] * b_k_minus_1) * KR_BASE
+            + token_hashes[i + k]
+        ) % KR_MOD
+
+        kgram_hashes.append(
+            {
+                "hash": curr_hash,
+                "start_char": token_spans[i + 1].start,
+                "end_char": token_spans[i + k].end,
+                "token_start": i + 1,
+                "token_end": i + k,
+                "index": i + 1,
+            }
+        )
+
+    return kgram_hashes
 
 
 def generate_fingerprints(
@@ -139,7 +202,8 @@ def generate_fingerprints(
     exclude_bibliography: bool = False,
 ) -> Tuple[List[Fingerprint], List[TokenSpan], List[Dict]]:
     """
-    Applies the Winnowing algorithm to extract robust document fingerprints.
+    Applies Schleimer, Wilkerson & Aiken (2003) Winnowing algorithm with
+    Karp-Rabin rolling hash to extract robust document fingerprints.
 
     Parameters:
     - k: Size of token n-gram / shingle (default: 5 tokens)
@@ -157,34 +221,26 @@ def generate_fingerprints(
     )
     token_spans = tokenize_with_spans(clean_text)
 
-    if len(token_spans) < k:
+    if not token_spans:
         return [], token_spans, exclusions
 
-    # 1. Generate all k-grams and their hashes
-    kgram_hashes = []
-    for i in range(len(token_spans) - k + 1):
-        window_tokens = [t.token for t in token_spans[i : i + k]]
-        h = hash_kgram(window_tokens)
-        start_char = token_spans[i].start
-        end_char = token_spans[i + k - 1].end
-        kgram_hashes.append(
-            {
-                "hash": h,
-                "start_char": start_char,
-                "end_char": end_char,
-                "token_start": i,
-                "token_end": i + k - 1,
-                "index": i,
-            }
-        )
+    # Clamp k if text has fewer tokens than requested k
+    effective_k = max(1, min(k, len(token_spans)))
+
+    # 1. Generate all k-grams using O(1) Karp-Rabin rolling hash
+    kgram_hashes = compute_kgram_rolling_hashes(token_spans, effective_k)
+    num_hashes = len(kgram_hashes)
+
+    if num_hashes == 0:
+        return [], token_spans, exclusions
 
     # 2. Winnowing algorithm: sliding window of size w
+    effective_w = max(1, min(w, num_hashes))
     fingerprints: List[Fingerprint] = []
     min_selected_idx = -1
 
-    num_hashes = len(kgram_hashes)
-    if num_hashes <= w:
-        # If document is small, pick the minimum hash
+    if num_hashes <= effective_w:
+        # If document produces fewer hashes than window size, pick the minimum hash
         min_item = min(kgram_hashes, key=lambda x: x["hash"])
         fingerprints.append(
             Fingerprint(
@@ -197,8 +253,8 @@ def generate_fingerprints(
         )
         return fingerprints, token_spans, exclusions
 
-    for i in range(num_hashes - w + 1):
-        window = kgram_hashes[i : i + w]
+    for i in range(num_hashes - effective_w + 1):
+        window = kgram_hashes[i : i + effective_w]
         # In case of tie, pick the rightmost occurrence of min value
         min_in_window = window[0]
         for item in window[1:]:
@@ -218,3 +274,4 @@ def generate_fingerprints(
             )
 
     return fingerprints, token_spans, exclusions
+
