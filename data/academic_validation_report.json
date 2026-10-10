@@ -1,0 +1,3936 @@
+{
+  "validator": "Agent 6: Academic Research & Forensic Algorithm Validator",
+  "timestamp": "2026-10-10 17:08:18Z",
+  "total_execution_time_seconds": 11.593,
+  "stages": {
+    "stage_1_corpus_inspection": {
+      "status": "PASSED",
+      "execution_time_sec": 1.82,
+      "total_documents": 16,
+      "type_breakdown": {
+        "CODE": 7,
+        "TEXT": 6,
+        "PDF": 2,
+        "DOCX": 1
+      },
+      "total_bytes": 47114,
+      "total_words": 1012
+    },
+    "stage_2_evasion_robustness": {
+      "status": "PASSED",
+      "execution_time_sec": 2.165,
+      "homoglyphs_detected_recall": 100.0,
+      "homoglyph_recovery_delta_pct": 100.0,
+      "zero_width_chars_tested_types": 17,
+      "token_shattering_evasion_defeat_pct": 100.0,
+      "paraphrasing_multi_tier_forensics": [
+        {
+          "tier": "Level 0: Verbatim Copy",
+          "winnowing_k3_containment": 100.0,
+          "winnowing_k5_containment": 100.0,
+          "winnowing_k7_containment": 100.0,
+          "forensics_ai_probability": 60.0,
+          "forensics_perplexity": 100.0,
+          "forensics_burstiness_cv": 0.16,
+          "forensics_verdict": "SUSPECTED_MIXED_OR_PARAPHRASED"
+        },
+        {
+          "tier": "Level 1: Light Synonym Swap",
+          "winnowing_k3_containment": 77.78,
+          "winnowing_k5_containment": 73.08,
+          "winnowing_k7_containment": 72.73,
+          "forensics_ai_probability": 60.0,
+          "forensics_perplexity": 99.9,
+          "forensics_burstiness_cv": 0.16,
+          "forensics_verdict": "SUSPECTED_MIXED_OR_PARAPHRASED"
+        },
+        {
+          "tier": "Level 2: Structural Clause Reordering",
+          "winnowing_k3_containment": 22.22,
+          "winnowing_k5_containment": 7.69,
+          "winnowing_k7_containment": 0.0,
+          "forensics_ai_probability": 45.0,
+          "forensics_perplexity": 96.31,
+          "forensics_burstiness_cv": 0.14,
+          "forensics_verdict": "SUSPECTED_MIXED_OR_PARAPHRASED"
+        },
+        {
+          "tier": "Level 3: Disguised Paraphrase (Student C)",
+          "winnowing_k3_containment": 0.0,
+          "winnowing_k5_containment": 0.0,
+          "winnowing_k7_containment": 0.0,
+          "forensics_ai_probability": 60.0,
+          "forensics_perplexity": 100.0,
+          "forensics_burstiness_cv": 0.17,
+          "forensics_verdict": "SUSPECTED_MIXED_OR_PARAPHRASED"
+        }
+      ]
+    },
+    "stage_3_cohort_collusion_and_patient_zero": {
+      "status": "PASSED",
+      "execution_time_sec": 0.286,
+      "cohort_size": 6,
+      "flagged_collusion_pairs": 3,
+      "collusion_clusters_detected": 1,
+      "patient_zero_attribution": "Arjun Patel",
+      "patient_zero_temporal_accuracy": "100.0%",
+      "code_ast_clone_detection_arjun_rohan": true,
+      "code_ast_clone_similarity_pct": 100.0
+    },
+    "stage_4_winnowing_detection_rates": {
+      "status": "PASSED",
+      "execution_time_sec": 7.321,
+      "optimal_parameters": {
+        "k": 5,
+        "w": 4,
+        "threshold": 30.0,
+        "FPR": 0.0,
+        "FNR": 0.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1_score": 1.0,
+        "accuracy": 1.0
+      },
+      "false_positive_rate": 0.0,
+      "false_negative_rate": 0.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1_score": 1.0,
+      "accuracy": 1.0,
+      "quotation_false_positive_elimination": true
+    }
+  },
+  "full_reports": {
+    "corpus": {
+      "status": "PASSED",
+      "total_documents": 16,
+      "type_breakdown": {
+        "CODE": 7,
+        "TEXT": 6,
+        "PDF": 2,
+        "DOCX": 1
+      },
+      "total_bytes": 47114,
+      "total_words": 1012,
+      "documents": [
+        {
+          "filename": "DistributedLock_Arjun.java",
+          "file_type": "CODE",
+          "extension": ".java",
+          "size_bytes": 769,
+          "char_count": 769,
+          "word_count": 74,
+          "snippet": "package com.distributed.lock;\r \r public class DistributedLockManager {\r     priv...",
+          "valid_extraction": true
+        },
+        {
+          "filename": "DistributedLock_RohanClone.java",
+          "file_type": "CODE",
+          "extension": ".java",
+          "size_bytes": 877,
+          "char_count": 877,
+          "word_count": 81,
+          "snippet": "package com.consensus.mutex;\r \r // Mutex coordinator adapted for high concurrenc...",
+          "valid_extraction": true
+        },
+        {
+          "filename": "Essay_Copied_StudentB.txt",
+          "file_type": "TEXT",
+          "extension": ".txt",
+          "size_bytes": 523,
+          "char_count": 523,
+          "word_count": 69,
+          "snippet": "Distributed consensus algorithms ensure that a cluster of nodes can agree on val...",
+          "valid_extraction": true
+        },
+        {
+          "filename": "Essay_HomoglyphCheat_StudentE.txt",
+          "file_type": "TEXT",
+          "extension": ".txt",
+          "size_bytes": 304,
+          "char_count": 278,
+          "word_count": 38,
+          "snippet": "Distributed cons\u0435nsus \u0430lgorithms ensure th\u0430t a clust\u0435r of nod\u0435s can agree on val...",
+          "valid_extraction": true
+        },
+        {
+          "filename": "Essay_Independent_StudentD.txt",
+          "file_type": "TEXT",
+          "extension": ".txt",
+          "size_bytes": 373,
+          "char_count": 373,
+          "word_count": 41,
+          "snippet": "Photosynthesis represents the biological mechanism where photosynthetic organism...",
+          "valid_extraction": true
+        },
+        {
+          "filename": "Essay_Original_StudentA.txt",
+          "file_type": "TEXT",
+          "extension": ".txt",
+          "size_bytes": 527,
+          "char_count": 527,
+          "word_count": 70,
+          "snippet": "Distributed consensus algorithms ensure that a cluster of nodes can agree on val...",
+          "valid_extraction": true
+        },
+        {
+          "filename": "Essay_Paraphrased_StudentC.txt",
+          "file_type": "TEXT",
+          "extension": ".txt",
+          "size_bytes": 744,
+          "char_count": 744,
+          "word_count": 86,
+          "snippet": "In distributed computation frameworks, consensus protocols permit an interconnec...",
+          "valid_extraction": true
+        },
+        {
+          "filename": "Essay_ZeroWidth_StudentF.txt",
+          "file_type": "TEXT",
+          "extension": ".txt",
+          "size_bytes": 549,
+          "char_count": 467,
+          "word_count": 59,
+          "snippet": "Dist\u200bributed con\u200bsensus algo\u200brithms en\u200bsure that a clus\u200bter of nod\u200bes can ag\u200bree...",
+          "valid_extraction": true
+        },
+        {
+          "filename": "Raft_Consensus_Final_ArjunPatel.pdf",
+          "file_type": "PDF",
+          "extension": ".pdf",
+          "size_bytes": 1139,
+          "char_count": 508,
+          "word_count": 65,
+          "snippet": "Distributed consensus algorithms ensure node clusters reach agreement despite ne...",
+          "valid_extraction": true
+        },
+        {
+          "filename": "Raft_Homoglyph_ElenaRostova.pdf",
+          "file_type": "PDF",
+          "extension": ".pdf",
+          "size_bytes": 905,
+          "char_count": 302,
+          "word_count": 42,
+          "snippet": "Distributed consensus algorithms ensure that a cluster of nodes can agree on val...",
+          "valid_extraction": true
+        },
+        {
+          "filename": "Raft_Paper_v2_RohanGupta.docx",
+          "file_type": "DOCX",
+          "extension": ".docx",
+          "size_bytes": 36904,
+          "char_count": 554,
+          "word_count": 74,
+          "snippet": "Raft Consensus and State Machine Replication  Distributed consensus algorithms e...",
+          "valid_extraction": true
+        },
+        {
+          "filename": "consensus_david.py",
+          "file_type": "CODE",
+          "extension": ".py",
+          "size_bytes": 475,
+          "char_count": 475,
+          "word_count": 45,
+          "snippet": "# Generated implementation\r def run_consensus_simulation(num_nodes=5, network_de...",
+          "valid_extraction": true
+        },
+        {
+          "filename": "jenkins_raft_impl.py",
+          "file_type": "CODE",
+          "extension": ".py",
+          "size_bytes": 779,
+          "char_count": 779,
+          "word_count": 68,
+          "snippet": "import time\r import random\r \r class PaxosAcceptor:\r     def __init__(self, accep...",
+          "valid_extraction": true
+        },
+        {
+          "filename": "raft_consensus_patel.py",
+          "file_type": "CODE",
+          "extension": ".py",
+          "size_bytes": 652,
+          "char_count": 652,
+          "word_count": 62,
+          "snippet": "class RaftNode:\r     def __init__(self, node_id, peers):\r         self.node_id =...",
+          "valid_extraction": true
+        },
+        {
+          "filename": "raft_elena_final.py",
+          "file_type": "CODE",
+          "extension": ".py",
+          "size_bytes": 774,
+          "char_count": 705,
+          "word_count": 69,
+          "snippet": "# Elena Rostova submission with Cyrillic lookalikes\r class R\u0430ftNod\u0435:\r     def __...",
+          "valid_extraction": true
+        },
+        {
+          "filename": "raft_submission_gupta.py",
+          "file_type": "CODE",
+          "extension": ".py",
+          "size_bytes": 820,
+          "char_count": 820,
+          "word_count": 69,
+          "snippet": "# Raft protocol implementation by Rohan Gupta\r class ConsensusClusterNode:\r     ...",
+          "valid_extraction": true
+        }
+      ]
+    },
+    "evasion": {
+      "benchmark": "Adversarial Evasion Robustness",
+      "homoglyph_audit": {
+        "homoglyph_catalog_size": 49,
+        "catalog_recall_pct": 100.0,
+        "stress_test_rates": [
+          {
+            "target_rate": 0.05,
+            "injected_homoglyphs": 8,
+            "detected_homoglyphs": 8,
+            "raw_similarity_bypassed": 65.38,
+            "veritas_similarity_recovered": 100.0,
+            "recovery_delta": 34.62,
+            "integrity_score": 60
+          },
+          {
+            "target_rate": 0.15,
+            "injected_homoglyphs": 41,
+            "detected_homoglyphs": 41,
+            "raw_similarity_bypassed": 3.85,
+            "veritas_similarity_recovered": 100.0,
+            "recovery_delta": 96.15,
+            "integrity_score": 60
+          },
+          {
+            "target_rate": 0.3,
+            "injected_homoglyphs": 84,
+            "detected_homoglyphs": 84,
+            "raw_similarity_bypassed": 3.85,
+            "veritas_similarity_recovered": 100.0,
+            "recovery_delta": 96.15,
+            "integrity_score": 60
+          },
+          {
+            "target_rate": 0.5,
+            "injected_homoglyphs": 119,
+            "detected_homoglyphs": 119,
+            "raw_similarity_bypassed": 0.0,
+            "veritas_similarity_recovered": 100.0,
+            "recovery_delta": 100.0,
+            "integrity_score": 60
+          },
+          {
+            "target_rate": 0.8,
+            "injected_homoglyphs": 185,
+            "detected_homoglyphs": 185,
+            "raw_similarity_bypassed": 0.0,
+            "veritas_similarity_recovered": 100.0,
+            "recovery_delta": 100.0,
+            "integrity_score": 60
+          },
+          {
+            "target_rate": 1.0,
+            "injected_homoglyphs": 242,
+            "detected_homoglyphs": 242,
+            "raw_similarity_bypassed": 0.0,
+            "veritas_similarity_recovered": 100.0,
+            "recovery_delta": 100.0,
+            "integrity_score": 60
+          }
+        ]
+      },
+      "zero_width_audit": {
+        "individual_characters_tested": [
+          {
+            "name": "Soft Hyphen (U+00AD)",
+            "codepoint": "U+00AD",
+            "injected": 8,
+            "detected": 8,
+            "stripped_cleanly": true
+          },
+          {
+            "name": "Zero-Width Space (U+200B)",
+            "codepoint": "U+200B",
+            "injected": 8,
+            "detected": 8,
+            "stripped_cleanly": true
+          },
+          {
+            "name": "Zero-Width Non-Joiner (U+200C)",
+            "codepoint": "U+200C",
+            "injected": 8,
+            "detected": 8,
+            "stripped_cleanly": true
+          },
+          {
+            "name": "Zero-Width Joiner (U+200D)",
+            "codepoint": "U+200D",
+            "injected": 8,
+            "detected": 8,
+            "stripped_cleanly": true
+          },
+          {
+            "name": "Left-To-Right Mark (U+200E)",
+            "codepoint": "U+200E",
+            "injected": 8,
+            "detected": 8,
+            "stripped_cleanly": true
+          },
+          {
+            "name": "Right-To-Left Mark (U+200F)",
+            "codepoint": "U+200F",
+            "injected": 8,
+            "detected": 8,
+            "stripped_cleanly": true
+          },
+          {
+            "name": "Left-To-Right Embedding (U+202A)",
+            "codepoint": "U+202A",
+            "injected": 8,
+            "detected": 8,
+            "stripped_cleanly": true
+          },
+          {
+            "name": "Right-To-Left Embedding (U+202B)",
+            "codepoint": "U+202B",
+            "injected": 8,
+            "detected": 8,
+            "stripped_cleanly": true
+          },
+          {
+            "name": "Pop Directional Formatting (U+202C)",
+            "codepoint": "U+202C",
+            "injected": 8,
+            "detected": 8,
+            "stripped_cleanly": true
+          },
+          {
+            "name": "Left-To-Right Override (U+202D)",
+            "codepoint": "U+202D",
+            "injected": 8,
+            "detected": 8,
+            "stripped_cleanly": true
+          },
+          {
+            "name": "Right-To-Left Override (U+202E)",
+            "codepoint": "U+202E",
+            "injected": 8,
+            "detected": 8,
+            "stripped_cleanly": true
+          },
+          {
+            "name": "Word Joiner (U+2060)",
+            "codepoint": "U+2060",
+            "injected": 8,
+            "detected": 8,
+            "stripped_cleanly": true
+          },
+          {
+            "name": "Function Application (U+2061)",
+            "codepoint": "U+2061",
+            "injected": 8,
+            "detected": 8,
+            "stripped_cleanly": true
+          },
+          {
+            "name": "Invisible Times (U+2062)",
+            "codepoint": "U+2062",
+            "injected": 8,
+            "detected": 8,
+            "stripped_cleanly": true
+          },
+          {
+            "name": "Invisible Separator (U+2063)",
+            "codepoint": "U+2063",
+            "injected": 8,
+            "detected": 8,
+            "stripped_cleanly": true
+          },
+          {
+            "name": "Invisible Plus (U+2064)",
+            "codepoint": "U+2064",
+            "injected": 8,
+            "detected": 8,
+            "stripped_cleanly": true
+          },
+          {
+            "name": "Zero-Width No-Break Space (BOM)",
+            "codepoint": "U+FEFF",
+            "injected": 8,
+            "detected": 8,
+            "stripped_cleanly": true
+          }
+        ],
+        "token_shattering_attack": {
+          "injected_zw_chars": 54,
+          "detected_zw_chars": 54,
+          "unprotected_similarity": 0.0,
+          "veritas_protected_similarity": 100.0,
+          "integrity_score": 80
+        }
+      },
+      "paraphrasing_audit": [
+        {
+          "tier": "Level 0: Verbatim Copy",
+          "winnowing_k3_containment": 100.0,
+          "winnowing_k5_containment": 100.0,
+          "winnowing_k7_containment": 100.0,
+          "forensics_ai_probability": 60.0,
+          "forensics_perplexity": 100.0,
+          "forensics_burstiness_cv": 0.16,
+          "forensics_verdict": "SUSPECTED_MIXED_OR_PARAPHRASED"
+        },
+        {
+          "tier": "Level 1: Light Synonym Swap",
+          "winnowing_k3_containment": 77.78,
+          "winnowing_k5_containment": 73.08,
+          "winnowing_k7_containment": 72.73,
+          "forensics_ai_probability": 60.0,
+          "forensics_perplexity": 99.9,
+          "forensics_burstiness_cv": 0.16,
+          "forensics_verdict": "SUSPECTED_MIXED_OR_PARAPHRASED"
+        },
+        {
+          "tier": "Level 2: Structural Clause Reordering",
+          "winnowing_k3_containment": 22.22,
+          "winnowing_k5_containment": 7.69,
+          "winnowing_k7_containment": 0.0,
+          "forensics_ai_probability": 45.0,
+          "forensics_perplexity": 96.31,
+          "forensics_burstiness_cv": 0.14,
+          "forensics_verdict": "SUSPECTED_MIXED_OR_PARAPHRASED"
+        },
+        {
+          "tier": "Level 3: Disguised Paraphrase (Student C)",
+          "winnowing_k3_containment": 0.0,
+          "winnowing_k5_containment": 0.0,
+          "winnowing_k7_containment": 0.0,
+          "forensics_ai_probability": 60.0,
+          "forensics_perplexity": 100.0,
+          "forensics_burstiness_cv": 0.17,
+          "forensics_verdict": "SUSPECTED_MIXED_OR_PARAPHRASED"
+        }
+      ]
+    },
+    "cohort": {
+      "benchmark": "Cohort Collusion & Patient Zero",
+      "matrix_audit": {
+        "cohort_size": 6,
+        "similarity_matrix": [
+          [
+            100.0,
+            96.15,
+            46.15,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            92.59,
+            100.0,
+            44.44,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            100.0,
+            100.0,
+            100.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            100.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            100.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            100.0
+          ]
+        ],
+        "flagged_pairs": [
+          {
+            "doc_a_id": "s1_arjun",
+            "doc_a_name": "Arjun Patel",
+            "doc_b_id": "s3_elena",
+            "doc_b_name": "Elena Rostova",
+            "similarity_score": 100.0,
+            "jaccard_score": 46.15,
+            "containment_a_in_b": 46.15,
+            "containment_b_in_a": 100.0,
+            "color_tier": {
+              "code": "RED",
+              "hex": "#EF4444",
+              "label": "High / Critical Similarity (75-100%)"
+            },
+            "suspected_original_submitter": "Arjun Patel",
+            "time_delta_minutes": 315
+          },
+          {
+            "doc_a_id": "s2_rohan",
+            "doc_a_name": "Rohan Gupta",
+            "doc_b_id": "s3_elena",
+            "doc_b_name": "Elena Rostova",
+            "similarity_score": 100.0,
+            "jaccard_score": 44.44,
+            "containment_a_in_b": 44.44,
+            "containment_b_in_a": 100.0,
+            "color_tier": {
+              "code": "RED",
+              "hex": "#EF4444",
+              "label": "High / Critical Similarity (75-100%)"
+            },
+            "suspected_original_submitter": "Rohan Gupta",
+            "time_delta_minutes": 165
+          },
+          {
+            "doc_a_id": "s1_arjun",
+            "doc_a_name": "Arjun Patel",
+            "doc_b_id": "s2_rohan",
+            "doc_b_name": "Rohan Gupta",
+            "similarity_score": 96.15,
+            "jaccard_score": 89.29,
+            "containment_a_in_b": 96.15,
+            "containment_b_in_a": 92.59,
+            "color_tier": {
+              "code": "RED",
+              "hex": "#EF4444",
+              "label": "High / Critical Similarity (75-100%)"
+            },
+            "suspected_original_submitter": "Arjun Patel",
+            "time_delta_minutes": 150
+          }
+        ],
+        "clusters": [
+          {
+            "cluster_id": "ring_1",
+            "size": 3,
+            "members": [
+              {
+                "id": "s1_arjun",
+                "name": "Arjun Patel",
+                "timestamp": "2026-10-01T09:00:00Z"
+              },
+              {
+                "id": "s2_rohan",
+                "name": "Rohan Gupta",
+                "timestamp": "2026-10-01T11:30:00Z"
+              },
+              {
+                "id": "s3_elena",
+                "name": "Elena Rostova",
+                "timestamp": "2026-10-01T14:15:00Z"
+              }
+            ],
+            "patient_zero": "Arjun Patel"
+          }
+        ]
+      },
+      "temporal_audit": [
+        {
+          "scenario": "Chronological (Arjun First)",
+          "expected_patient_zero": "Arjun Patel",
+          "actual_patient_zero": "Arjun Patel",
+          "accuracy": 1.0
+        },
+        {
+          "scenario": "Rohan First Leaker",
+          "expected_patient_zero": "Rohan Gupta",
+          "actual_patient_zero": "Rohan Gupta",
+          "accuracy": 1.0
+        },
+        {
+          "scenario": "Elena First Source",
+          "expected_patient_zero": "Elena Rostova",
+          "actual_patient_zero": "Elena Rostova",
+          "accuracy": 1.0
+        },
+        {
+          "scenario": "Sub-Second Offset",
+          "expected_patient_zero": "Arjun Patel",
+          "actual_patient_zero": "Arjun Patel",
+          "accuracy": 1.0
+        }
+      ],
+      "ast_audit": {
+        "python_arjun_vs_rohan": {
+          "status": "success",
+          "language": "python",
+          "structural_similarity": 100.0,
+          "jaccard_similarity": 100.0,
+          "ast_equivalence_percentage": 100.0,
+          "is_code_clone": true,
+          "ast_nodes_count": 128,
+          "variable_mappings": {
+            "identifier": "node_id",
+            "cluster_members": "peers",
+            "ballot_count": "votes",
+            "member": "peer",
+            "initiate_leader_ballot": "start_election"
+          },
+          "structural_verdict": "IDENTICAL CODE CLONE DETECTED (Variable Renaming Evasion)",
+          "normalized_code_a": "class CLASS_1:\n\n    def __init__(self, VAR_1, VAR_2):\n        self.ATTR_1 = VAR_1\n        self.ATTR_2 = VAR_2\n        self.ATTR_3 = 'FOLLOWER'\n        self.ATTR_4 = 0\n        self.ATTR_5 = None\n        self.ATTR_6 = []\n\n    def FUNC_1(self):\n        self.ATTR_3 = 'CANDIDATE'\n        self.ATTR_4 += 1\n        self.ATTR_5 = self.ATTR_1\n        VAR_3 = 1\n        for VAR_4 in self.ATTR_2:\n            if self.ATTR_7(VAR_4, self.ATTR_4, self.ATTR_1):\n                VAR_3 += 1\n        if VAR_3 > len(self.ATTR_2) // 2:\n            self.ATTR_3 = 'LEADER'\n            return True\n        return False",
+          "normalized_code_b": "class CLASS_1:\n\n    def __init__(self, VAR_1, VAR_2):\n        self.ATTR_1 = VAR_1\n        self.ATTR_2 = VAR_2\n        self.ATTR_3 = 'FOLLOWER'\n        self.ATTR_4 = 0\n        self.ATTR_5 = None\n        self.ATTR_6 = []\n\n    def FUNC_1(self):\n        self.ATTR_3 = 'CANDIDATE'\n        self.ATTR_4 += 1\n        self.ATTR_5 = self.ATTR_1\n        VAR_3 = 1\n        for VAR_4 in self.ATTR_2:\n            if self.ATTR_7(VAR_4, self.ATTR_4, self.ATTR_1):\n                VAR_3 += 1\n        if VAR_3 > len(self.ATTR_2) // 2:\n            self.ATTR_3 = 'LEADER'\n            return True\n        return False",
+          "meta": {
+            "doc_a": {
+              "success": true,
+              "node_count": 128,
+              "variables_renamed": 4,
+              "functions_renamed": 1,
+              "classes_renamed": 1,
+              "attributes_renamed": 7,
+              "var_map": {
+                "node_id": "VAR_1",
+                "peers": "VAR_2",
+                "votes": "VAR_3",
+                "peer": "VAR_4"
+              },
+              "func_map": {
+                "start_election": "FUNC_1"
+              },
+              "class_map": {
+                "RaftNode": "CLASS_1"
+              },
+              "attr_map": {
+                "node_id": "ATTR_1",
+                "peers": "ATTR_2",
+                "state": "ATTR_3",
+                "current_term": "ATTR_4",
+                "voted_for": "ATTR_5",
+                "log": "ATTR_6",
+                "request_vote": "ATTR_7"
+              }
+            },
+            "doc_b": {
+              "success": true,
+              "node_count": 128,
+              "variables_renamed": 4,
+              "functions_renamed": 1,
+              "classes_renamed": 1,
+              "attributes_renamed": 7,
+              "var_map": {
+                "identifier": "VAR_1",
+                "cluster_members": "VAR_2",
+                "ballot_count": "VAR_3",
+                "member": "VAR_4"
+              },
+              "func_map": {
+                "initiate_leader_ballot": "FUNC_1"
+              },
+              "class_map": {
+                "ConsensusClusterNode": "CLASS_1"
+              },
+              "attr_map": {
+                "identifier": "ATTR_1",
+                "cluster_members": "ATTR_2",
+                "role": "ATTR_3",
+                "term_epoch": "ATTR_4",
+                "candidate_vote": "ATTR_5",
+                "operation_log": "ATTR_6",
+                "request_vote": "ATTR_7"
+              }
+            }
+          }
+        },
+        "python_arjun_vs_jenkins": {
+          "status": "success",
+          "language": "python",
+          "structural_similarity": 5.71,
+          "jaccard_similarity": 3.12,
+          "ast_equivalence_percentage": 5.71,
+          "is_code_clone": false,
+          "ast_nodes_count": 130,
+          "variable_mappings": {
+            "acceptor_id": "node_id",
+            "proposal_id": "peers",
+            "value": "votes",
+            "prepare": "start_election"
+          },
+          "structural_verdict": "UNIQUE LOGIC STRUCTURE (NO CLONE DETECTED)",
+          "normalized_code_a": "class CLASS_1:\n\n    def __init__(self, VAR_1, VAR_2):\n        self.ATTR_1 = VAR_1\n        self.ATTR_2 = VAR_2\n        self.ATTR_3 = 'FOLLOWER'\n        self.ATTR_4 = 0\n        self.ATTR_5 = None\n        self.ATTR_6 = []\n\n    def FUNC_1(self):\n        self.ATTR_3 = 'CANDIDATE'\n        self.ATTR_4 += 1\n        self.ATTR_5 = self.ATTR_1\n        VAR_3 = 1\n        for VAR_4 in self.ATTR_2:\n            if self.ATTR_7(VAR_4, self.ATTR_4, self.ATTR_1):\n                VAR_3 += 1\n        if VAR_3 > len(self.ATTR_2) // 2:\n            self.ATTR_3 = 'LEADER'\n            return True\n        return False",
+          "normalized_code_b": "import time\nimport random\n\nclass CLASS_1:\n\n    def __init__(self, VAR_1):\n        self.ATTR_1 = VAR_1\n        self.ATTR_2 = None\n        self.ATTR_3 = None\n        self.ATTR_4 = None\n\n    def FUNC_1(self, VAR_2):\n        if self.ATTR_2 is None or VAR_2 > self.ATTR_2:\n            self.ATTR_2 = VAR_2\n            return (True, self.ATTR_3, self.ATTR_4)\n        return (False, None, None)\n\n    def FUNC_2(self, VAR_2, VAR_3):\n        if self.ATTR_2 is None or VAR_2 >= self.ATTR_2:\n            self.ATTR_2 = VAR_2\n            self.ATTR_3 = VAR_2\n            self.ATTR_4 = VAR_3\n            return True\n        return False",
+          "meta": {
+            "doc_a": {
+              "success": true,
+              "node_count": 128,
+              "variables_renamed": 4,
+              "functions_renamed": 1,
+              "classes_renamed": 1,
+              "attributes_renamed": 7,
+              "var_map": {
+                "node_id": "VAR_1",
+                "peers": "VAR_2",
+                "votes": "VAR_3",
+                "peer": "VAR_4"
+              },
+              "func_map": {
+                "start_election": "FUNC_1"
+              },
+              "class_map": {
+                "RaftNode": "CLASS_1"
+              },
+              "attr_map": {
+                "node_id": "ATTR_1",
+                "peers": "ATTR_2",
+                "state": "ATTR_3",
+                "current_term": "ATTR_4",
+                "voted_for": "ATTR_5",
+                "log": "ATTR_6",
+                "request_vote": "ATTR_7"
+              }
+            },
+            "doc_b": {
+              "success": true,
+              "node_count": 130,
+              "variables_renamed": 3,
+              "functions_renamed": 2,
+              "classes_renamed": 1,
+              "attributes_renamed": 4,
+              "var_map": {
+                "acceptor_id": "VAR_1",
+                "proposal_id": "VAR_2",
+                "value": "VAR_3"
+              },
+              "func_map": {
+                "prepare": "FUNC_1",
+                "accept": "FUNC_2"
+              },
+              "class_map": {
+                "PaxosAcceptor": "CLASS_1"
+              },
+              "attr_map": {
+                "acceptor_id": "ATTR_1",
+                "promised_id": "ATTR_2",
+                "accepted_id": "ATTR_3",
+                "accepted_value": "ATTR_4"
+              }
+            }
+          }
+        },
+        "java_arjun_vs_rohan": {
+          "status": "success",
+          "language": "java",
+          "structural_similarity": 93.75,
+          "jaccard_similarity": 85.71,
+          "ast_equivalence_percentage": 93.75,
+          "is_code_clone": true,
+          "ast_nodes_count": 72,
+          "variable_mappings": {
+            "resourceId": "lockKey",
+            "activeState": "isHeld",
+            "expiryTimestamp": "leaseExpiration",
+            "duration": "ttlMillis",
+            "currentTime": "now",
+            "MutexSyncCoordinator": "DistributedLockManager",
+            "obtainLease": "acquireLock",
+            "unlockResource": "releaseLock"
+          },
+          "structural_verdict": "IDENTICAL CODE CLONE DETECTED (Variable Renaming Evasion)",
+          "normalized_code_a": "package com . distributed . lock ; public class FUNC_1 { private final String VAR_1 ; private boolean VAR_2 ; private long VAR_3 ; public FUNC_1 ( String VAR_1 ) { this . VAR_1 = VAR_1 ; this . VAR_2 = false ; this . VAR_3 = 0L ; } public synchronized boolean FUNC_2 ( long VAR_4 ) { long VAR_5 = System . currentTimeMillis ( ) ; if ( ! VAR_2 || VAR_5 > VAR_3 ) { this . VAR_2 = true ; this . VAR_3 = VAR_5 + VAR_4 ; return true ; } return false ; } public synchronized void FUNC_3 ( ) { this . VAR_2 = false ; this . VAR_3 = 0L ; } }",
+          "normalized_code_b": "package com . consensus . mutex ; public class FUNC_1 { private final String VAR_1 ; private boolean VAR_2 ; private long VAR_3 ; public FUNC_1 ( String VAR_1 ) { this . VAR_1 = VAR_1 ; this . VAR_2 = false ; this . VAR_3 = 0L ; } public synchronized boolean FUNC_2 ( long VAR_4 ) { long VAR_5 = System . currentTimeMillis ( ) ; if ( ! VAR_2 || VAR_5 > VAR_3 ) { this . VAR_2 = true ; this . VAR_3 = VAR_5 + VAR_4 ; return true ; } return false ; } public synchronized void FUNC_3 ( ) { this . VAR_2 = false ; this . VAR_3 = 0L ; } }",
+          "meta": {
+            "doc_a": {
+              "success": true,
+              "node_count": 72,
+              "variables_renamed": 5,
+              "functions_renamed": 3,
+              "classes_renamed": 1,
+              "var_map": {
+                "lockKey": "VAR_1",
+                "isHeld": "VAR_2",
+                "leaseExpiration": "VAR_3",
+                "ttlMillis": "VAR_4",
+                "now": "VAR_5"
+              },
+              "func_map": {
+                "DistributedLockManager": "FUNC_1",
+                "acquireLock": "FUNC_2",
+                "releaseLock": "FUNC_3"
+              },
+              "class_map": {
+                "DistributedLockManager": "CLASS_1"
+              }
+            },
+            "doc_b": {
+              "success": true,
+              "node_count": 72,
+              "variables_renamed": 5,
+              "functions_renamed": 3,
+              "classes_renamed": 1,
+              "var_map": {
+                "resourceId": "VAR_1",
+                "activeState": "VAR_2",
+                "expiryTimestamp": "VAR_3",
+                "duration": "VAR_4",
+                "currentTime": "VAR_5"
+              },
+              "func_map": {
+                "MutexSyncCoordinator": "FUNC_1",
+                "obtainLease": "FUNC_2",
+                "unlockResource": "FUNC_3"
+              },
+              "class_map": {
+                "MutexSyncCoordinator": "CLASS_1"
+              }
+            }
+          }
+        }
+      }
+    },
+    "winnowing": {
+      "benchmark": "Winnowing FPR & FNR Detection Rates",
+      "optimal_configuration": {
+        "k": 5,
+        "w": 4,
+        "threshold": 30.0,
+        "FPR": 0.0,
+        "FNR": 0.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1_score": 1.0,
+        "accuracy": 1.0
+      },
+      "parameter_grid": [
+        {
+          "k": 3,
+          "w": 2,
+          "threshold": 30.0,
+          "exclude_quotes": true,
+          "exclude_bibliography": true,
+          "tp": 6,
+          "fp": 0,
+          "tn": 6,
+          "fn": 0,
+          "FPR": 0.0,
+          "FNR": 0.0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "specificity": 1.0,
+          "accuracy": 1.0,
+          "f1_score": 1.0,
+          "pair_details": [
+            {
+              "id": "POS_01_Verbatim",
+              "type": "Verbatim Duplicate",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 100.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_02_HighOverlap",
+              "type": "High Overlap (80%)",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 92.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_03_HomoglyphCheat",
+              "type": "Homoglyph Obfuscated",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 100.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_04_ZeroWidthInjection",
+              "type": "Zero-Width Space Injection",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 100.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_05_CollageSpliced",
+              "type": "Spliced / Patchwork Plagiarism",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 66.67,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_06_LightParaphrase",
+              "type": "Light Synonym Paraphrase",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 78.26,
+              "verdict": "TP"
+            },
+            {
+              "id": "NEG_01_SameDomainIndependent",
+              "type": "Same Domain Independent (Raft vs Paxos)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_02_SameTopicDifferentAuthors",
+              "type": "Same Topic Independent (Both about Raft)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_03_CrossDomainOrthogonal",
+              "type": "Cross Domain (Distributed Systems vs Biology)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_04_DifferentDiscipline",
+              "type": "Different Discipline (Quantum Computing vs Economics)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_05_IndependentCodeTheory",
+              "type": "Independent CS Theory (Compilers vs Graphics)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_06_QuotedAcademicCitations",
+              "type": "Cited Quotations & References Section",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            }
+          ]
+        },
+        {
+          "k": 3,
+          "w": 4,
+          "threshold": 30.0,
+          "exclude_quotes": true,
+          "exclude_bibliography": true,
+          "tp": 6,
+          "fp": 0,
+          "tn": 6,
+          "fn": 0,
+          "FPR": 0.0,
+          "FNR": 0.0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "specificity": 1.0,
+          "accuracy": 1.0,
+          "f1_score": 1.0,
+          "pair_details": [
+            {
+              "id": "POS_01_Verbatim",
+              "type": "Verbatim Duplicate",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 100.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_02_HighOverlap",
+              "type": "High Overlap (80%)",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 92.86,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_03_HomoglyphCheat",
+              "type": "Homoglyph Obfuscated",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 100.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_04_ZeroWidthInjection",
+              "type": "Zero-Width Space Injection",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 100.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_05_CollageSpliced",
+              "type": "Spliced / Patchwork Plagiarism",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 64.29,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_06_LightParaphrase",
+              "type": "Light Synonym Paraphrase",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 66.67,
+              "verdict": "TP"
+            },
+            {
+              "id": "NEG_01_SameDomainIndependent",
+              "type": "Same Domain Independent (Raft vs Paxos)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_02_SameTopicDifferentAuthors",
+              "type": "Same Topic Independent (Both about Raft)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_03_CrossDomainOrthogonal",
+              "type": "Cross Domain (Distributed Systems vs Biology)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_04_DifferentDiscipline",
+              "type": "Different Discipline (Quantum Computing vs Economics)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_05_IndependentCodeTheory",
+              "type": "Independent CS Theory (Compilers vs Graphics)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_06_QuotedAcademicCitations",
+              "type": "Cited Quotations & References Section",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            }
+          ]
+        },
+        {
+          "k": 3,
+          "w": 8,
+          "threshold": 30.0,
+          "exclude_quotes": true,
+          "exclude_bibliography": true,
+          "tp": 6,
+          "fp": 0,
+          "tn": 6,
+          "fn": 0,
+          "FPR": 0.0,
+          "FNR": 0.0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "specificity": 1.0,
+          "accuracy": 1.0,
+          "f1_score": 1.0,
+          "pair_details": [
+            {
+              "id": "POS_01_Verbatim",
+              "type": "Verbatim Duplicate",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 100.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_02_HighOverlap",
+              "type": "High Overlap (80%)",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 90.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_03_HomoglyphCheat",
+              "type": "Homoglyph Obfuscated",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 100.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_04_ZeroWidthInjection",
+              "type": "Zero-Width Space Injection",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 100.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_05_CollageSpliced",
+              "type": "Spliced / Patchwork Plagiarism",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 75.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_06_LightParaphrase",
+              "type": "Light Synonym Paraphrase",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 57.14,
+              "verdict": "TP"
+            },
+            {
+              "id": "NEG_01_SameDomainIndependent",
+              "type": "Same Domain Independent (Raft vs Paxos)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_02_SameTopicDifferentAuthors",
+              "type": "Same Topic Independent (Both about Raft)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_03_CrossDomainOrthogonal",
+              "type": "Cross Domain (Distributed Systems vs Biology)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_04_DifferentDiscipline",
+              "type": "Different Discipline (Quantum Computing vs Economics)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_05_IndependentCodeTheory",
+              "type": "Independent CS Theory (Compilers vs Graphics)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_06_QuotedAcademicCitations",
+              "type": "Cited Quotations & References Section",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            }
+          ]
+        },
+        {
+          "k": 3,
+          "w": 12,
+          "threshold": 30.0,
+          "exclude_quotes": true,
+          "exclude_bibliography": true,
+          "tp": 5,
+          "fp": 0,
+          "tn": 6,
+          "fn": 1,
+          "FPR": 0.0,
+          "FNR": 0.1667,
+          "precision": 1.0,
+          "recall": 0.8333,
+          "specificity": 1.0,
+          "accuracy": 0.9167,
+          "f1_score": 0.9091,
+          "pair_details": [
+            {
+              "id": "POS_01_Verbatim",
+              "type": "Verbatim Duplicate",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 100.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_02_HighOverlap",
+              "type": "High Overlap (80%)",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 100.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_03_HomoglyphCheat",
+              "type": "Homoglyph Obfuscated",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 100.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_04_ZeroWidthInjection",
+              "type": "Zero-Width Space Injection",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 100.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_05_CollageSpliced",
+              "type": "Spliced / Patchwork Plagiarism",
+              "actual": 1,
+              "predicted": 0,
+              "similarity_score": 20.0,
+              "verdict": "FN"
+            },
+            {
+              "id": "POS_06_LightParaphrase",
+              "type": "Light Synonym Paraphrase",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 50.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "NEG_01_SameDomainIndependent",
+              "type": "Same Domain Independent (Raft vs Paxos)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_02_SameTopicDifferentAuthors",
+              "type": "Same Topic Independent (Both about Raft)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_03_CrossDomainOrthogonal",
+              "type": "Cross Domain (Distributed Systems vs Biology)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_04_DifferentDiscipline",
+              "type": "Different Discipline (Quantum Computing vs Economics)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_05_IndependentCodeTheory",
+              "type": "Independent CS Theory (Compilers vs Graphics)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_06_QuotedAcademicCitations",
+              "type": "Cited Quotations & References Section",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            }
+          ]
+        },
+        {
+          "k": 4,
+          "w": 2,
+          "threshold": 30.0,
+          "exclude_quotes": true,
+          "exclude_bibliography": true,
+          "tp": 6,
+          "fp": 0,
+          "tn": 6,
+          "fn": 0,
+          "FPR": 0.0,
+          "FNR": 0.0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "specificity": 1.0,
+          "accuracy": 1.0,
+          "f1_score": 1.0,
+          "pair_details": [
+            {
+              "id": "POS_01_Verbatim",
+              "type": "Verbatim Duplicate",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 100.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_02_HighOverlap",
+              "type": "High Overlap (80%)",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 90.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_03_HomoglyphCheat",
+              "type": "Homoglyph Obfuscated",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 100.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_04_ZeroWidthInjection",
+              "type": "Zero-Width Space Injection",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 100.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_05_CollageSpliced",
+              "type": "Spliced / Patchwork Plagiarism",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 55.56,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_06_LightParaphrase",
+              "type": "Light Synonym Paraphrase",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 78.26,
+              "verdict": "TP"
+            },
+            {
+              "id": "NEG_01_SameDomainIndependent",
+              "type": "Same Domain Independent (Raft vs Paxos)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_02_SameTopicDifferentAuthors",
+              "type": "Same Topic Independent (Both about Raft)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_03_CrossDomainOrthogonal",
+              "type": "Cross Domain (Distributed Systems vs Biology)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_04_DifferentDiscipline",
+              "type": "Different Discipline (Quantum Computing vs Economics)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_05_IndependentCodeTheory",
+              "type": "Independent CS Theory (Compilers vs Graphics)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_06_QuotedAcademicCitations",
+              "type": "Cited Quotations & References Section",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            }
+          ]
+        },
+        {
+          "k": 4,
+          "w": 4,
+          "threshold": 30.0,
+          "exclude_quotes": true,
+          "exclude_bibliography": true,
+          "tp": 6,
+          "fp": 0,
+          "tn": 6,
+          "fn": 0,
+          "FPR": 0.0,
+          "FNR": 0.0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "specificity": 1.0,
+          "accuracy": 1.0,
+          "f1_score": 1.0,
+          "pair_details": [
+            {
+              "id": "POS_01_Verbatim",
+              "type": "Verbatim Duplicate",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 100.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_02_HighOverlap",
+              "type": "High Overlap (80%)",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 91.67,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_03_HomoglyphCheat",
+              "type": "Homoglyph Obfuscated",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 100.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_04_ZeroWidthInjection",
+              "type": "Zero-Width Space Injection",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 100.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_05_CollageSpliced",
+              "type": "Spliced / Patchwork Plagiarism",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 55.56,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_06_LightParaphrase",
+              "type": "Light Synonym Paraphrase",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 72.73,
+              "verdict": "TP"
+            },
+            {
+              "id": "NEG_01_SameDomainIndependent",
+              "type": "Same Domain Independent (Raft vs Paxos)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_02_SameTopicDifferentAuthors",
+              "type": "Same Topic Independent (Both about Raft)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_03_CrossDomainOrthogonal",
+              "type": "Cross Domain (Distributed Systems vs Biology)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_04_DifferentDiscipline",
+              "type": "Different Discipline (Quantum Computing vs Economics)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_05_IndependentCodeTheory",
+              "type": "Independent CS Theory (Compilers vs Graphics)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_06_QuotedAcademicCitations",
+              "type": "Cited Quotations & References Section",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            }
+          ]
+        },
+        {
+          "k": 4,
+          "w": 8,
+          "threshold": 30.0,
+          "exclude_quotes": true,
+          "exclude_bibliography": true,
+          "tp": 6,
+          "fp": 0,
+          "tn": 6,
+          "fn": 0,
+          "FPR": 0.0,
+          "FNR": 0.0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "specificity": 1.0,
+          "accuracy": 1.0,
+          "f1_score": 1.0,
+          "pair_details": [
+            {
+              "id": "POS_01_Verbatim",
+              "type": "Verbatim Duplicate",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 100.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_02_HighOverlap",
+              "type": "High Overlap (80%)",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 83.33,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_03_HomoglyphCheat",
+              "type": "Homoglyph Obfuscated",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 100.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_04_ZeroWidthInjection",
+              "type": "Zero-Width Space Injection",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 100.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_05_CollageSpliced",
+              "type": "Spliced / Patchwork Plagiarism",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 42.86,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_06_LightParaphrase",
+              "type": "Light Synonym Paraphrase",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 80.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "NEG_01_SameDomainIndependent",
+              "type": "Same Domain Independent (Raft vs Paxos)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_02_SameTopicDifferentAuthors",
+              "type": "Same Topic Independent (Both about Raft)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_03_CrossDomainOrthogonal",
+              "type": "Cross Domain (Distributed Systems vs Biology)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_04_DifferentDiscipline",
+              "type": "Different Discipline (Quantum Computing vs Economics)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_05_IndependentCodeTheory",
+              "type": "Independent CS Theory (Compilers vs Graphics)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_06_QuotedAcademicCitations",
+              "type": "Cited Quotations & References Section",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            }
+          ]
+        },
+        {
+          "k": 4,
+          "w": 12,
+          "threshold": 30.0,
+          "exclude_quotes": true,
+          "exclude_bibliography": true,
+          "tp": 6,
+          "fp": 0,
+          "tn": 6,
+          "fn": 0,
+          "FPR": 0.0,
+          "FNR": 0.0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "specificity": 1.0,
+          "accuracy": 1.0,
+          "f1_score": 1.0,
+          "pair_details": [
+            {
+              "id": "POS_01_Verbatim",
+              "type": "Verbatim Duplicate",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 100.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_02_HighOverlap",
+              "type": "High Overlap (80%)",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 75.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_03_HomoglyphCheat",
+              "type": "Homoglyph Obfuscated",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 100.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_04_ZeroWidthInjection",
+              "type": "Zero-Width Space Injection",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 100.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_05_CollageSpliced",
+              "type": "Spliced / Patchwork Plagiarism",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 60.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_06_LightParaphrase",
+              "type": "Light Synonym Paraphrase",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 66.67,
+              "verdict": "TP"
+            },
+            {
+              "id": "NEG_01_SameDomainIndependent",
+              "type": "Same Domain Independent (Raft vs Paxos)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_02_SameTopicDifferentAuthors",
+              "type": "Same Topic Independent (Both about Raft)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_03_CrossDomainOrthogonal",
+              "type": "Cross Domain (Distributed Systems vs Biology)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_04_DifferentDiscipline",
+              "type": "Different Discipline (Quantum Computing vs Economics)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_05_IndependentCodeTheory",
+              "type": "Independent CS Theory (Compilers vs Graphics)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_06_QuotedAcademicCitations",
+              "type": "Cited Quotations & References Section",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            }
+          ]
+        },
+        {
+          "k": 5,
+          "w": 2,
+          "threshold": 30.0,
+          "exclude_quotes": true,
+          "exclude_bibliography": true,
+          "tp": 6,
+          "fp": 0,
+          "tn": 6,
+          "fn": 0,
+          "FPR": 0.0,
+          "FNR": 0.0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "specificity": 1.0,
+          "accuracy": 1.0,
+          "f1_score": 1.0,
+          "pair_details": [
+            {
+              "id": "POS_01_Verbatim",
+              "type": "Verbatim Duplicate",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 100.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_02_HighOverlap",
+              "type": "High Overlap (80%)",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 90.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_03_HomoglyphCheat",
+              "type": "Homoglyph Obfuscated",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 100.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_04_ZeroWidthInjection",
+              "type": "Zero-Width Space Injection",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 100.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_05_CollageSpliced",
+              "type": "Spliced / Patchwork Plagiarism",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 56.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_06_LightParaphrase",
+              "type": "Light Synonym Paraphrase",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 72.73,
+              "verdict": "TP"
+            },
+            {
+              "id": "NEG_01_SameDomainIndependent",
+              "type": "Same Domain Independent (Raft vs Paxos)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_02_SameTopicDifferentAuthors",
+              "type": "Same Topic Independent (Both about Raft)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_03_CrossDomainOrthogonal",
+              "type": "Cross Domain (Distributed Systems vs Biology)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_04_DifferentDiscipline",
+              "type": "Different Discipline (Quantum Computing vs Economics)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_05_IndependentCodeTheory",
+              "type": "Independent CS Theory (Compilers vs Graphics)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_06_QuotedAcademicCitations",
+              "type": "Cited Quotations & References Section",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            }
+          ]
+        },
+        {
+          "k": 5,
+          "w": 4,
+          "threshold": 30.0,
+          "exclude_quotes": true,
+          "exclude_bibliography": true,
+          "tp": 6,
+          "fp": 0,
+          "tn": 6,
+          "fn": 0,
+          "FPR": 0.0,
+          "FNR": 0.0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "specificity": 1.0,
+          "accuracy": 1.0,
+          "f1_score": 1.0,
+          "pair_details": [
+            {
+              "id": "POS_01_Verbatim",
+              "type": "Verbatim Duplicate",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 100.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_02_HighOverlap",
+              "type": "High Overlap (80%)",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 90.91,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_03_HomoglyphCheat",
+              "type": "Homoglyph Obfuscated",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 100.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_04_ZeroWidthInjection",
+              "type": "Zero-Width Space Injection",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 100.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_05_CollageSpliced",
+              "type": "Spliced / Patchwork Plagiarism",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 53.33,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_06_LightParaphrase",
+              "type": "Light Synonym Paraphrase",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 66.67,
+              "verdict": "TP"
+            },
+            {
+              "id": "NEG_01_SameDomainIndependent",
+              "type": "Same Domain Independent (Raft vs Paxos)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_02_SameTopicDifferentAuthors",
+              "type": "Same Topic Independent (Both about Raft)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_03_CrossDomainOrthogonal",
+              "type": "Cross Domain (Distributed Systems vs Biology)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_04_DifferentDiscipline",
+              "type": "Different Discipline (Quantum Computing vs Economics)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_05_IndependentCodeTheory",
+              "type": "Independent CS Theory (Compilers vs Graphics)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_06_QuotedAcademicCitations",
+              "type": "Cited Quotations & References Section",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            }
+          ]
+        },
+        {
+          "k": 5,
+          "w": 8,
+          "threshold": 30.0,
+          "exclude_quotes": true,
+          "exclude_bibliography": true,
+          "tp": 6,
+          "fp": 0,
+          "tn": 6,
+          "fn": 0,
+          "FPR": 0.0,
+          "FNR": 0.0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "specificity": 1.0,
+          "accuracy": 1.0,
+          "f1_score": 1.0,
+          "pair_details": [
+            {
+              "id": "POS_01_Verbatim",
+              "type": "Verbatim Duplicate",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 100.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_02_HighOverlap",
+              "type": "High Overlap (80%)",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 100.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_03_HomoglyphCheat",
+              "type": "Homoglyph Obfuscated",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 100.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_04_ZeroWidthInjection",
+              "type": "Zero-Width Space Injection",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 100.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_05_CollageSpliced",
+              "type": "Spliced / Patchwork Plagiarism",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 60.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_06_LightParaphrase",
+              "type": "Light Synonym Paraphrase",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 50.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "NEG_01_SameDomainIndependent",
+              "type": "Same Domain Independent (Raft vs Paxos)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_02_SameTopicDifferentAuthors",
+              "type": "Same Topic Independent (Both about Raft)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_03_CrossDomainOrthogonal",
+              "type": "Cross Domain (Distributed Systems vs Biology)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_04_DifferentDiscipline",
+              "type": "Different Discipline (Quantum Computing vs Economics)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_05_IndependentCodeTheory",
+              "type": "Independent CS Theory (Compilers vs Graphics)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_06_QuotedAcademicCitations",
+              "type": "Cited Quotations & References Section",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            }
+          ]
+        },
+        {
+          "k": 5,
+          "w": 12,
+          "threshold": 30.0,
+          "exclude_quotes": true,
+          "exclude_bibliography": true,
+          "tp": 6,
+          "fp": 0,
+          "tn": 6,
+          "fn": 0,
+          "FPR": 0.0,
+          "FNR": 0.0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "specificity": 1.0,
+          "accuracy": 1.0,
+          "f1_score": 1.0,
+          "pair_details": [
+            {
+              "id": "POS_01_Verbatim",
+              "type": "Verbatim Duplicate",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 100.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_02_HighOverlap",
+              "type": "High Overlap (80%)",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 100.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_03_HomoglyphCheat",
+              "type": "Homoglyph Obfuscated",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 100.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_04_ZeroWidthInjection",
+              "type": "Zero-Width Space Injection",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 100.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_05_CollageSpliced",
+              "type": "Spliced / Patchwork Plagiarism",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 75.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_06_LightParaphrase",
+              "type": "Light Synonym Paraphrase",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 33.33,
+              "verdict": "TP"
+            },
+            {
+              "id": "NEG_01_SameDomainIndependent",
+              "type": "Same Domain Independent (Raft vs Paxos)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_02_SameTopicDifferentAuthors",
+              "type": "Same Topic Independent (Both about Raft)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_03_CrossDomainOrthogonal",
+              "type": "Cross Domain (Distributed Systems vs Biology)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_04_DifferentDiscipline",
+              "type": "Different Discipline (Quantum Computing vs Economics)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_05_IndependentCodeTheory",
+              "type": "Independent CS Theory (Compilers vs Graphics)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_06_QuotedAcademicCitations",
+              "type": "Cited Quotations & References Section",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            }
+          ]
+        },
+        {
+          "k": 7,
+          "w": 2,
+          "threshold": 30.0,
+          "exclude_quotes": true,
+          "exclude_bibliography": true,
+          "tp": 6,
+          "fp": 0,
+          "tn": 6,
+          "fn": 0,
+          "FPR": 0.0,
+          "FNR": 0.0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "specificity": 1.0,
+          "accuracy": 1.0,
+          "f1_score": 1.0,
+          "pair_details": [
+            {
+              "id": "POS_01_Verbatim",
+              "type": "Verbatim Duplicate",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 100.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_02_HighOverlap",
+              "type": "High Overlap (80%)",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 90.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_03_HomoglyphCheat",
+              "type": "Homoglyph Obfuscated",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 100.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_04_ZeroWidthInjection",
+              "type": "Zero-Width Space Injection",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 100.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_05_CollageSpliced",
+              "type": "Spliced / Patchwork Plagiarism",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 44.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_06_LightParaphrase",
+              "type": "Light Synonym Paraphrase",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 52.63,
+              "verdict": "TP"
+            },
+            {
+              "id": "NEG_01_SameDomainIndependent",
+              "type": "Same Domain Independent (Raft vs Paxos)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_02_SameTopicDifferentAuthors",
+              "type": "Same Topic Independent (Both about Raft)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_03_CrossDomainOrthogonal",
+              "type": "Cross Domain (Distributed Systems vs Biology)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_04_DifferentDiscipline",
+              "type": "Different Discipline (Quantum Computing vs Economics)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_05_IndependentCodeTheory",
+              "type": "Independent CS Theory (Compilers vs Graphics)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_06_QuotedAcademicCitations",
+              "type": "Cited Quotations & References Section",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            }
+          ]
+        },
+        {
+          "k": 7,
+          "w": 4,
+          "threshold": 30.0,
+          "exclude_quotes": true,
+          "exclude_bibliography": true,
+          "tp": 6,
+          "fp": 0,
+          "tn": 6,
+          "fn": 0,
+          "FPR": 0.0,
+          "FNR": 0.0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "specificity": 1.0,
+          "accuracy": 1.0,
+          "f1_score": 1.0,
+          "pair_details": [
+            {
+              "id": "POS_01_Verbatim",
+              "type": "Verbatim Duplicate",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 100.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_02_HighOverlap",
+              "type": "High Overlap (80%)",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 90.91,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_03_HomoglyphCheat",
+              "type": "Homoglyph Obfuscated",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 100.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_04_ZeroWidthInjection",
+              "type": "Zero-Width Space Injection",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 100.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_05_CollageSpliced",
+              "type": "Spliced / Patchwork Plagiarism",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 41.67,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_06_LightParaphrase",
+              "type": "Light Synonym Paraphrase",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 58.33,
+              "verdict": "TP"
+            },
+            {
+              "id": "NEG_01_SameDomainIndependent",
+              "type": "Same Domain Independent (Raft vs Paxos)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_02_SameTopicDifferentAuthors",
+              "type": "Same Topic Independent (Both about Raft)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_03_CrossDomainOrthogonal",
+              "type": "Cross Domain (Distributed Systems vs Biology)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_04_DifferentDiscipline",
+              "type": "Different Discipline (Quantum Computing vs Economics)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_05_IndependentCodeTheory",
+              "type": "Independent CS Theory (Compilers vs Graphics)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_06_QuotedAcademicCitations",
+              "type": "Cited Quotations & References Section",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            }
+          ]
+        },
+        {
+          "k": 7,
+          "w": 8,
+          "threshold": 30.0,
+          "exclude_quotes": true,
+          "exclude_bibliography": true,
+          "tp": 6,
+          "fp": 0,
+          "tn": 6,
+          "fn": 0,
+          "FPR": 0.0,
+          "FNR": 0.0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "specificity": 1.0,
+          "accuracy": 1.0,
+          "f1_score": 1.0,
+          "pair_details": [
+            {
+              "id": "POS_01_Verbatim",
+              "type": "Verbatim Duplicate",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 100.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_02_HighOverlap",
+              "type": "High Overlap (80%)",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 100.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_03_HomoglyphCheat",
+              "type": "Homoglyph Obfuscated",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 100.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_04_ZeroWidthInjection",
+              "type": "Zero-Width Space Injection",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 100.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_05_CollageSpliced",
+              "type": "Spliced / Patchwork Plagiarism",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 42.86,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_06_LightParaphrase",
+              "type": "Light Synonym Paraphrase",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 50.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "NEG_01_SameDomainIndependent",
+              "type": "Same Domain Independent (Raft vs Paxos)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_02_SameTopicDifferentAuthors",
+              "type": "Same Topic Independent (Both about Raft)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_03_CrossDomainOrthogonal",
+              "type": "Cross Domain (Distributed Systems vs Biology)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_04_DifferentDiscipline",
+              "type": "Different Discipline (Quantum Computing vs Economics)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_05_IndependentCodeTheory",
+              "type": "Independent CS Theory (Compilers vs Graphics)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_06_QuotedAcademicCitations",
+              "type": "Cited Quotations & References Section",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            }
+          ]
+        },
+        {
+          "k": 7,
+          "w": 12,
+          "threshold": 30.0,
+          "exclude_quotes": true,
+          "exclude_bibliography": true,
+          "tp": 5,
+          "fp": 0,
+          "tn": 6,
+          "fn": 1,
+          "FPR": 0.0,
+          "FNR": 0.1667,
+          "precision": 1.0,
+          "recall": 0.8333,
+          "specificity": 1.0,
+          "accuracy": 0.9167,
+          "f1_score": 0.9091,
+          "pair_details": [
+            {
+              "id": "POS_01_Verbatim",
+              "type": "Verbatim Duplicate",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 100.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_02_HighOverlap",
+              "type": "High Overlap (80%)",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 100.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_03_HomoglyphCheat",
+              "type": "Homoglyph Obfuscated",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 100.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_04_ZeroWidthInjection",
+              "type": "Zero-Width Space Injection",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 100.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_05_CollageSpliced",
+              "type": "Spliced / Patchwork Plagiarism",
+              "actual": 1,
+              "predicted": 0,
+              "similarity_score": 20.0,
+              "verdict": "FN"
+            },
+            {
+              "id": "POS_06_LightParaphrase",
+              "type": "Light Synonym Paraphrase",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 50.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "NEG_01_SameDomainIndependent",
+              "type": "Same Domain Independent (Raft vs Paxos)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_02_SameTopicDifferentAuthors",
+              "type": "Same Topic Independent (Both about Raft)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_03_CrossDomainOrthogonal",
+              "type": "Cross Domain (Distributed Systems vs Biology)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_04_DifferentDiscipline",
+              "type": "Different Discipline (Quantum Computing vs Economics)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_05_IndependentCodeTheory",
+              "type": "Independent CS Theory (Compilers vs Graphics)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_06_QuotedAcademicCitations",
+              "type": "Cited Quotations & References Section",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            }
+          ]
+        },
+        {
+          "k": 10,
+          "w": 2,
+          "threshold": 30.0,
+          "exclude_quotes": true,
+          "exclude_bibliography": true,
+          "tp": 5,
+          "fp": 0,
+          "tn": 6,
+          "fn": 1,
+          "FPR": 0.0,
+          "FNR": 0.1667,
+          "precision": 1.0,
+          "recall": 0.8333,
+          "specificity": 1.0,
+          "accuracy": 0.9167,
+          "f1_score": 0.9091,
+          "pair_details": [
+            {
+              "id": "POS_01_Verbatim",
+              "type": "Verbatim Duplicate",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 100.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_02_HighOverlap",
+              "type": "High Overlap (80%)",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 90.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_03_HomoglyphCheat",
+              "type": "Homoglyph Obfuscated",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 100.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_04_ZeroWidthInjection",
+              "type": "Zero-Width Space Injection",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 100.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_05_CollageSpliced",
+              "type": "Spliced / Patchwork Plagiarism",
+              "actual": 1,
+              "predicted": 0,
+              "similarity_score": 27.27,
+              "verdict": "FN"
+            },
+            {
+              "id": "POS_06_LightParaphrase",
+              "type": "Light Synonym Paraphrase",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 47.06,
+              "verdict": "TP"
+            },
+            {
+              "id": "NEG_01_SameDomainIndependent",
+              "type": "Same Domain Independent (Raft vs Paxos)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_02_SameTopicDifferentAuthors",
+              "type": "Same Topic Independent (Both about Raft)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_03_CrossDomainOrthogonal",
+              "type": "Cross Domain (Distributed Systems vs Biology)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_04_DifferentDiscipline",
+              "type": "Different Discipline (Quantum Computing vs Economics)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_05_IndependentCodeTheory",
+              "type": "Independent CS Theory (Compilers vs Graphics)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_06_QuotedAcademicCitations",
+              "type": "Cited Quotations & References Section",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            }
+          ]
+        },
+        {
+          "k": 10,
+          "w": 4,
+          "threshold": 30.0,
+          "exclude_quotes": true,
+          "exclude_bibliography": true,
+          "tp": 5,
+          "fp": 0,
+          "tn": 6,
+          "fn": 1,
+          "FPR": 0.0,
+          "FNR": 0.1667,
+          "precision": 1.0,
+          "recall": 0.8333,
+          "specificity": 1.0,
+          "accuracy": 0.9167,
+          "f1_score": 0.9091,
+          "pair_details": [
+            {
+              "id": "POS_01_Verbatim",
+              "type": "Verbatim Duplicate",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 100.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_02_HighOverlap",
+              "type": "High Overlap (80%)",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 81.82,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_03_HomoglyphCheat",
+              "type": "Homoglyph Obfuscated",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 100.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_04_ZeroWidthInjection",
+              "type": "Zero-Width Space Injection",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 100.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_05_CollageSpliced",
+              "type": "Spliced / Patchwork Plagiarism",
+              "actual": 1,
+              "predicted": 0,
+              "similarity_score": 25.0,
+              "verdict": "FN"
+            },
+            {
+              "id": "POS_06_LightParaphrase",
+              "type": "Light Synonym Paraphrase",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 44.44,
+              "verdict": "TP"
+            },
+            {
+              "id": "NEG_01_SameDomainIndependent",
+              "type": "Same Domain Independent (Raft vs Paxos)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_02_SameTopicDifferentAuthors",
+              "type": "Same Topic Independent (Both about Raft)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_03_CrossDomainOrthogonal",
+              "type": "Cross Domain (Distributed Systems vs Biology)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_04_DifferentDiscipline",
+              "type": "Different Discipline (Quantum Computing vs Economics)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_05_IndependentCodeTheory",
+              "type": "Independent CS Theory (Compilers vs Graphics)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_06_QuotedAcademicCitations",
+              "type": "Cited Quotations & References Section",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            }
+          ]
+        },
+        {
+          "k": 10,
+          "w": 8,
+          "threshold": 30.0,
+          "exclude_quotes": true,
+          "exclude_bibliography": true,
+          "tp": 6,
+          "fp": 0,
+          "tn": 6,
+          "fn": 0,
+          "FPR": 0.0,
+          "FNR": 0.0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "specificity": 1.0,
+          "accuracy": 1.0,
+          "f1_score": 1.0,
+          "pair_details": [
+            {
+              "id": "POS_01_Verbatim",
+              "type": "Verbatim Duplicate",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 100.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_02_HighOverlap",
+              "type": "High Overlap (80%)",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 80.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_03_HomoglyphCheat",
+              "type": "Homoglyph Obfuscated",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 100.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_04_ZeroWidthInjection",
+              "type": "Zero-Width Space Injection",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 100.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_05_CollageSpliced",
+              "type": "Spliced / Patchwork Plagiarism",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 33.33,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_06_LightParaphrase",
+              "type": "Light Synonym Paraphrase",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 40.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "NEG_01_SameDomainIndependent",
+              "type": "Same Domain Independent (Raft vs Paxos)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_02_SameTopicDifferentAuthors",
+              "type": "Same Topic Independent (Both about Raft)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_03_CrossDomainOrthogonal",
+              "type": "Cross Domain (Distributed Systems vs Biology)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_04_DifferentDiscipline",
+              "type": "Different Discipline (Quantum Computing vs Economics)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_05_IndependentCodeTheory",
+              "type": "Independent CS Theory (Compilers vs Graphics)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_06_QuotedAcademicCitations",
+              "type": "Cited Quotations & References Section",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            }
+          ]
+        },
+        {
+          "k": 10,
+          "w": 12,
+          "threshold": 30.0,
+          "exclude_quotes": true,
+          "exclude_bibliography": true,
+          "tp": 4,
+          "fp": 0,
+          "tn": 6,
+          "fn": 2,
+          "FPR": 0.0,
+          "FNR": 0.3333,
+          "precision": 1.0,
+          "recall": 0.6667,
+          "specificity": 1.0,
+          "accuracy": 0.8333,
+          "f1_score": 0.8,
+          "pair_details": [
+            {
+              "id": "POS_01_Verbatim",
+              "type": "Verbatim Duplicate",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 100.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_02_HighOverlap",
+              "type": "High Overlap (80%)",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 66.67,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_03_HomoglyphCheat",
+              "type": "Homoglyph Obfuscated",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 100.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_04_ZeroWidthInjection",
+              "type": "Zero-Width Space Injection",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 100.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_05_CollageSpliced",
+              "type": "Spliced / Patchwork Plagiarism",
+              "actual": 1,
+              "predicted": 0,
+              "similarity_score": 25.0,
+              "verdict": "FN"
+            },
+            {
+              "id": "POS_06_LightParaphrase",
+              "type": "Light Synonym Paraphrase",
+              "actual": 1,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "FN"
+            },
+            {
+              "id": "NEG_01_SameDomainIndependent",
+              "type": "Same Domain Independent (Raft vs Paxos)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_02_SameTopicDifferentAuthors",
+              "type": "Same Topic Independent (Both about Raft)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_03_CrossDomainOrthogonal",
+              "type": "Cross Domain (Distributed Systems vs Biology)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_04_DifferentDiscipline",
+              "type": "Different Discipline (Quantum Computing vs Economics)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_05_IndependentCodeTheory",
+              "type": "Independent CS Theory (Compilers vs Graphics)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_06_QuotedAcademicCitations",
+              "type": "Cited Quotations & References Section",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            }
+          ]
+        }
+      ],
+      "threshold_sensitivity": [
+        {
+          "k": 5,
+          "w": 4,
+          "threshold": 15.0,
+          "exclude_quotes": true,
+          "exclude_bibliography": true,
+          "tp": 6,
+          "fp": 0,
+          "tn": 6,
+          "fn": 0,
+          "FPR": 0.0,
+          "FNR": 0.0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "specificity": 1.0,
+          "accuracy": 1.0,
+          "f1_score": 1.0,
+          "pair_details": [
+            {
+              "id": "POS_01_Verbatim",
+              "type": "Verbatim Duplicate",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 100.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_02_HighOverlap",
+              "type": "High Overlap (80%)",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 90.91,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_03_HomoglyphCheat",
+              "type": "Homoglyph Obfuscated",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 100.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_04_ZeroWidthInjection",
+              "type": "Zero-Width Space Injection",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 100.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_05_CollageSpliced",
+              "type": "Spliced / Patchwork Plagiarism",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 53.33,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_06_LightParaphrase",
+              "type": "Light Synonym Paraphrase",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 66.67,
+              "verdict": "TP"
+            },
+            {
+              "id": "NEG_01_SameDomainIndependent",
+              "type": "Same Domain Independent (Raft vs Paxos)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_02_SameTopicDifferentAuthors",
+              "type": "Same Topic Independent (Both about Raft)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_03_CrossDomainOrthogonal",
+              "type": "Cross Domain (Distributed Systems vs Biology)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_04_DifferentDiscipline",
+              "type": "Different Discipline (Quantum Computing vs Economics)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_05_IndependentCodeTheory",
+              "type": "Independent CS Theory (Compilers vs Graphics)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_06_QuotedAcademicCitations",
+              "type": "Cited Quotations & References Section",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            }
+          ]
+        },
+        {
+          "k": 5,
+          "w": 4,
+          "threshold": 25.0,
+          "exclude_quotes": true,
+          "exclude_bibliography": true,
+          "tp": 6,
+          "fp": 0,
+          "tn": 6,
+          "fn": 0,
+          "FPR": 0.0,
+          "FNR": 0.0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "specificity": 1.0,
+          "accuracy": 1.0,
+          "f1_score": 1.0,
+          "pair_details": [
+            {
+              "id": "POS_01_Verbatim",
+              "type": "Verbatim Duplicate",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 100.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_02_HighOverlap",
+              "type": "High Overlap (80%)",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 90.91,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_03_HomoglyphCheat",
+              "type": "Homoglyph Obfuscated",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 100.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_04_ZeroWidthInjection",
+              "type": "Zero-Width Space Injection",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 100.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_05_CollageSpliced",
+              "type": "Spliced / Patchwork Plagiarism",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 53.33,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_06_LightParaphrase",
+              "type": "Light Synonym Paraphrase",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 66.67,
+              "verdict": "TP"
+            },
+            {
+              "id": "NEG_01_SameDomainIndependent",
+              "type": "Same Domain Independent (Raft vs Paxos)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_02_SameTopicDifferentAuthors",
+              "type": "Same Topic Independent (Both about Raft)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_03_CrossDomainOrthogonal",
+              "type": "Cross Domain (Distributed Systems vs Biology)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_04_DifferentDiscipline",
+              "type": "Different Discipline (Quantum Computing vs Economics)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_05_IndependentCodeTheory",
+              "type": "Independent CS Theory (Compilers vs Graphics)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_06_QuotedAcademicCitations",
+              "type": "Cited Quotations & References Section",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            }
+          ]
+        },
+        {
+          "k": 5,
+          "w": 4,
+          "threshold": 40.0,
+          "exclude_quotes": true,
+          "exclude_bibliography": true,
+          "tp": 6,
+          "fp": 0,
+          "tn": 6,
+          "fn": 0,
+          "FPR": 0.0,
+          "FNR": 0.0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "specificity": 1.0,
+          "accuracy": 1.0,
+          "f1_score": 1.0,
+          "pair_details": [
+            {
+              "id": "POS_01_Verbatim",
+              "type": "Verbatim Duplicate",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 100.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_02_HighOverlap",
+              "type": "High Overlap (80%)",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 90.91,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_03_HomoglyphCheat",
+              "type": "Homoglyph Obfuscated",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 100.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_04_ZeroWidthInjection",
+              "type": "Zero-Width Space Injection",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 100.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_05_CollageSpliced",
+              "type": "Spliced / Patchwork Plagiarism",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 53.33,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_06_LightParaphrase",
+              "type": "Light Synonym Paraphrase",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 66.67,
+              "verdict": "TP"
+            },
+            {
+              "id": "NEG_01_SameDomainIndependent",
+              "type": "Same Domain Independent (Raft vs Paxos)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_02_SameTopicDifferentAuthors",
+              "type": "Same Topic Independent (Both about Raft)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_03_CrossDomainOrthogonal",
+              "type": "Cross Domain (Distributed Systems vs Biology)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_04_DifferentDiscipline",
+              "type": "Different Discipline (Quantum Computing vs Economics)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_05_IndependentCodeTheory",
+              "type": "Independent CS Theory (Compilers vs Graphics)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_06_QuotedAcademicCitations",
+              "type": "Cited Quotations & References Section",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            }
+          ]
+        },
+        {
+          "k": 5,
+          "w": 4,
+          "threshold": 50.0,
+          "exclude_quotes": true,
+          "exclude_bibliography": true,
+          "tp": 6,
+          "fp": 0,
+          "tn": 6,
+          "fn": 0,
+          "FPR": 0.0,
+          "FNR": 0.0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "specificity": 1.0,
+          "accuracy": 1.0,
+          "f1_score": 1.0,
+          "pair_details": [
+            {
+              "id": "POS_01_Verbatim",
+              "type": "Verbatim Duplicate",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 100.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_02_HighOverlap",
+              "type": "High Overlap (80%)",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 90.91,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_03_HomoglyphCheat",
+              "type": "Homoglyph Obfuscated",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 100.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_04_ZeroWidthInjection",
+              "type": "Zero-Width Space Injection",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 100.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_05_CollageSpliced",
+              "type": "Spliced / Patchwork Plagiarism",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 53.33,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_06_LightParaphrase",
+              "type": "Light Synonym Paraphrase",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 66.67,
+              "verdict": "TP"
+            },
+            {
+              "id": "NEG_01_SameDomainIndependent",
+              "type": "Same Domain Independent (Raft vs Paxos)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_02_SameTopicDifferentAuthors",
+              "type": "Same Topic Independent (Both about Raft)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_03_CrossDomainOrthogonal",
+              "type": "Cross Domain (Distributed Systems vs Biology)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_04_DifferentDiscipline",
+              "type": "Different Discipline (Quantum Computing vs Economics)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_05_IndependentCodeTheory",
+              "type": "Independent CS Theory (Compilers vs Graphics)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_06_QuotedAcademicCitations",
+              "type": "Cited Quotations & References Section",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            }
+          ]
+        },
+        {
+          "k": 5,
+          "w": 4,
+          "threshold": 60.0,
+          "exclude_quotes": true,
+          "exclude_bibliography": true,
+          "tp": 5,
+          "fp": 0,
+          "tn": 6,
+          "fn": 1,
+          "FPR": 0.0,
+          "FNR": 0.1667,
+          "precision": 1.0,
+          "recall": 0.8333,
+          "specificity": 1.0,
+          "accuracy": 0.9167,
+          "f1_score": 0.9091,
+          "pair_details": [
+            {
+              "id": "POS_01_Verbatim",
+              "type": "Verbatim Duplicate",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 100.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_02_HighOverlap",
+              "type": "High Overlap (80%)",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 90.91,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_03_HomoglyphCheat",
+              "type": "Homoglyph Obfuscated",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 100.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_04_ZeroWidthInjection",
+              "type": "Zero-Width Space Injection",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 100.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_05_CollageSpliced",
+              "type": "Spliced / Patchwork Plagiarism",
+              "actual": 1,
+              "predicted": 0,
+              "similarity_score": 53.33,
+              "verdict": "FN"
+            },
+            {
+              "id": "POS_06_LightParaphrase",
+              "type": "Light Synonym Paraphrase",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 66.67,
+              "verdict": "TP"
+            },
+            {
+              "id": "NEG_01_SameDomainIndependent",
+              "type": "Same Domain Independent (Raft vs Paxos)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_02_SameTopicDifferentAuthors",
+              "type": "Same Topic Independent (Both about Raft)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_03_CrossDomainOrthogonal",
+              "type": "Cross Domain (Distributed Systems vs Biology)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_04_DifferentDiscipline",
+              "type": "Different Discipline (Quantum Computing vs Economics)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_05_IndependentCodeTheory",
+              "type": "Independent CS Theory (Compilers vs Graphics)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_06_QuotedAcademicCitations",
+              "type": "Cited Quotations & References Section",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            }
+          ]
+        },
+        {
+          "k": 5,
+          "w": 4,
+          "threshold": 75.0,
+          "exclude_quotes": true,
+          "exclude_bibliography": true,
+          "tp": 4,
+          "fp": 0,
+          "tn": 6,
+          "fn": 2,
+          "FPR": 0.0,
+          "FNR": 0.3333,
+          "precision": 1.0,
+          "recall": 0.6667,
+          "specificity": 1.0,
+          "accuracy": 0.8333,
+          "f1_score": 0.8,
+          "pair_details": [
+            {
+              "id": "POS_01_Verbatim",
+              "type": "Verbatim Duplicate",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 100.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_02_HighOverlap",
+              "type": "High Overlap (80%)",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 90.91,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_03_HomoglyphCheat",
+              "type": "Homoglyph Obfuscated",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 100.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_04_ZeroWidthInjection",
+              "type": "Zero-Width Space Injection",
+              "actual": 1,
+              "predicted": 1,
+              "similarity_score": 100.0,
+              "verdict": "TP"
+            },
+            {
+              "id": "POS_05_CollageSpliced",
+              "type": "Spliced / Patchwork Plagiarism",
+              "actual": 1,
+              "predicted": 0,
+              "similarity_score": 53.33,
+              "verdict": "FN"
+            },
+            {
+              "id": "POS_06_LightParaphrase",
+              "type": "Light Synonym Paraphrase",
+              "actual": 1,
+              "predicted": 0,
+              "similarity_score": 66.67,
+              "verdict": "FN"
+            },
+            {
+              "id": "NEG_01_SameDomainIndependent",
+              "type": "Same Domain Independent (Raft vs Paxos)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_02_SameTopicDifferentAuthors",
+              "type": "Same Topic Independent (Both about Raft)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_03_CrossDomainOrthogonal",
+              "type": "Cross Domain (Distributed Systems vs Biology)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_04_DifferentDiscipline",
+              "type": "Different Discipline (Quantum Computing vs Economics)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_05_IndependentCodeTheory",
+              "type": "Independent CS Theory (Compilers vs Graphics)",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            },
+            {
+              "id": "NEG_06_QuotedAcademicCitations",
+              "type": "Cited Quotations & References Section",
+              "actual": 0,
+              "predicted": 0,
+              "similarity_score": 0.0,
+              "verdict": "TN"
+            }
+          ]
+        }
+      ],
+      "exclusions_impact": {
+        "quoted_pair_score_without_exclusions": 66.67,
+        "quoted_pair_score_with_exclusions": 0.0,
+        "false_positive_eliminated": true
+      }
+    }
+  }
+}

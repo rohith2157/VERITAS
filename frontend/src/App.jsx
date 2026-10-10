@@ -5,7 +5,7 @@ const OperationsDashboard = lazy(() => import('./components/dashboard/Operations
 import UniversalStudio from './components/studio/UniversalStudio';
 const ClassroomPortal = lazy(() => import('./components/classroom/ClassroomPortal'));
 const DemoBench = lazy(() => import('./components/DemoBench'));
-const DeveloperWorkstation = lazy(() => import('./components/dev/DeveloperWorkstation'));
+import DeveloperWorkstation from './components/dev/DeveloperWorkstation';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState(() => {
