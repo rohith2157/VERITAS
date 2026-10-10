@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { ArrowLeft, ArrowRight, ShieldCheck, Cpu, Database, Network, ExternalLink } from 'lucide-react';
 
 /**
- * SplitLine: exact Dala rotating line reveal animation
+ * SplitLine: exact Veritas rotating line reveal animation
  * animate-from="preset: 'splitTextRotateIn', rotate: 7, delay: ..., duration: 0.8"
  */
 function SplitLine({ children, inView, delay = 0, style = {}, align = 'start' }) {
@@ -22,7 +22,7 @@ function SplitLine({ children, inView, delay = 0, style = {}, align = 'start' })
   );
 }
 
-export default function DalaManifestoPage({ onOpenStudio, onOpenClassroom, onOpenDemoBench, scrollProgress }) {
+export default function VeritasManifestoPage({ onOpenStudio, onOpenClassroom, onOpenDemoBench, scrollProgress }) {
   const [activeTeamSlide, setActiveTeamSlide] = useState(0);
 
   // Section visibility tracking for splitTextRotateIn
@@ -431,7 +431,7 @@ export default function DalaManifestoPage({ onOpenStudio, onOpenClassroom, onOpe
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 16, marginTop: 24 }}>
             {forensicFeatures.slice(0, 2).map((feat, i) => (
-              <div key={i} className="dala-surface" style={{ padding: 20 }}>
+              <div key={i} className="veritas-surface" style={{ padding: 20 }}>
                 <span style={{ fontSize: 10, fontWeight: 600, color: 'var(--color-saffron-spark)', letterSpacing: '0.04em' }}>
                   {feat.badge}
                 </span>
@@ -496,7 +496,7 @@ export default function DalaManifestoPage({ onOpenStudio, onOpenClassroom, onOpe
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 16, marginTop: 24 }}>
             {forensicFeatures.slice(2, 4).map((feat, i) => (
-              <div key={i} className="dala-surface" style={{ padding: 20 }}>
+              <div key={i} className="veritas-surface" style={{ padding: 20 }}>
                 <span style={{ fontSize: 10, fontWeight: 600, color: 'var(--color-electric-iris)', letterSpacing: '0.04em' }}>
                   {feat.badge}
                 </span>
@@ -512,7 +512,7 @@ export default function DalaManifestoPage({ onOpenStudio, onOpenClassroom, onOpe
         </div>
       </section>
 
-      {/* ==================== 6. OUR TEAM (EXACT DALA SLIDER) ==================== */}
+      {/* ==================== 6. OUR TEAM (EXACT VERITAS SLIDER) ==================== */}
       <section
         ref={sectionRefs.team}
         className="section js-section js-team-section mb-1"
@@ -670,7 +670,7 @@ export default function DalaManifestoPage({ onOpenStudio, onOpenClassroom, onOpe
           {partners.map((partner) => (
             <div
               key={partner.id}
-              className="investor dala-surface"
+              className="investor veritas-surface"
               style={{
                 display: 'flex',
                 alignItems: 'center',

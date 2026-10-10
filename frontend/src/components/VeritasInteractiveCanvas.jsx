@@ -2,8 +2,8 @@ import React, { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 
 /**
- * Authentic Dala 3D Particle Morphing Canvas
- * High-density WebGL particle constellation matching dala.craftedbygc.com:
+ * Authentic Veritas 3D Particle Morphing Canvas
+ * High-density WebGL particle constellation matching veritas.craftedbygc.com:
  * 
  * 1. Brain (Hero / Stage 0):
  *    - Right-aligned (x ≈ 2.70, left boundary > 0.4, zero overlap with left 40% text)
@@ -22,7 +22,7 @@ import * as THREE from 'three';
  *    Stage 3: Verification Core -> Stage 4: Nebula -> Stage 5: Sculpture
  * 4. Dual theme: void black #000000 (AdditiveBlending) vs light #f8f9fc (NormalBlending)
  */
-export default function DalaInteractiveCanvas({ theme = 'dark', scrollProgress }) {
+export default function VeritasInteractiveCanvas({ theme = 'dark', scrollProgress }) {
   const mountRef = useRef(null);
   const sceneRef = useRef(null);
   const materialRef = useRef(null);

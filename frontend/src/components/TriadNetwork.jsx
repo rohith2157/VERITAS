@@ -11,7 +11,7 @@ export default function TriadNetwork({ serverStatus }) {
       tech: 'React 19 + HTML5 Canvas',
       port: ':5173',
       color: '#38bdf8',
-      role: 'Dala Dark-Stage Interface',
+      role: 'Veritas Dark-Stage Interface',
       desc: 'Renders the void canvas, interactive chromatic particle constellation, side-by-side diffing, and submission telemetry without page reload.',
       tags: ['HTML5 Canvas', 'Inter Typography', 'Vite Dev', 'Async Streaming']
     },

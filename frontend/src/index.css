@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;400;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 @import './variables.css';
 
-/* ==================== DALA THEME TOKENS (LIGHT & DARK) ==================== */
+/* ==================== VERITAS THEME TOKENS (LIGHT & DARK) ==================== */
 :root {
   --color-void: #000000;
   --color-bone-white: #ffffff;
@@ -101,7 +101,7 @@
   --canvas-bg: #f8f9fc;
 }
 
-/* Base resets bridging with Dala standard */
+/* Base resets bridging with Veritas standard */
 html {
   background-color: #000000;
 }
@@ -2896,7 +2896,7 @@ body {
 }
 
 .standard-page section>ol>li>ol>li>ol>li:after {
-    background-image: url(/images/dala-bullet.svg);
+    background-image: url(/images/veritas-bullet.svg);
     background-repeat: no-repeat;
     background-size: 100% 95%;
     content: "";
@@ -2920,7 +2920,7 @@ body {
 }
 
 .standard-page ul li:before {
-    background-image: url(/images/dala-bullet.svg);
+    background-image: url(/images/veritas-bullet.svg);
     background-repeat: no-repeat;
     background-size: 100% 95%;
     content: "";
@@ -8100,7 +8100,7 @@ body {
 }
 
 /* ==================== VERITAS STUDIO & DEMO COMPONENTS ==================== */
-.dala-surface {
+.veritas-surface {
   background: var(--bg-card);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-card);
@@ -8110,7 +8110,7 @@ body {
   transition: background-color 0.25s ease, border-color 0.25s ease;
 }
 
-.dala-void-panel {
+.veritas-void-panel {
   background: transparent;
   padding: 16px 0;
 }
@@ -8233,7 +8233,7 @@ textarea:focus-visible,
   }
 }
 
-/* ==================== DALA EXACT DESIGN FOLDER PARITY RULES ==================== */
+/* ==================== VERITAS EXACT DESIGN FOLDER PARITY RULES ==================== */
 .landing__title {
   font-family: var(--font-ppneuemontreal, 'PPNeueMontreal', sans-serif) !important;
   font-size: var(--text-heading-lg, 78px) !important;

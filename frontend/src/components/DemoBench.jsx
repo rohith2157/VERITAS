@@ -136,7 +136,7 @@ export default function DemoBench() {
   return (
     <div style={{ maxWidth: 'var(--page-max-width)', margin: '40px auto', padding: '0 24px' }}>
       
-      {/* Header in Dala Style */}
+      {/* Header in Veritas Style */}
       <div style={{ marginBottom: 36, borderBottom: '1px solid var(--border-subtle)', paddingBottom: 24 }}>
         <span className="eyebrow-accent">
           Instant Validation
@@ -154,7 +154,7 @@ export default function DemoBench() {
         {scenarios.map(s => (
           <div
             key={s.id}
-            className="dala-surface"
+            className="veritas-surface"
             style={{
               display: 'flex',
               flexDirection: 'column',
@@ -196,7 +196,7 @@ export default function DemoBench() {
 
       {/* Live Demo Output Card */}
       {demoOutput && (
-        <div className="dala-surface" style={{ marginBottom: 40 }}>
+        <div className="veritas-surface" style={{ marginBottom: 40 }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16, borderBottom: '1px solid var(--border-subtle)', paddingBottom: 14 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
               <CheckCircle size={18} color="#34d399" />

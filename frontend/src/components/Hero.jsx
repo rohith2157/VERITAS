@@ -92,7 +92,7 @@ export default function Hero({ onExploreStudio, onOpenDemoBench }) {
           </div>
         </div>
 
-        {/* Right Column: Signature Dala Particle Brain */}
+        {/* Right Column: Signature Veritas Particle Brain */}
         <div style={{
           position: 'relative',
           display: 'flex',

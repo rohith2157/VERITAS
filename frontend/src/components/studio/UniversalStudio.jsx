@@ -206,7 +206,7 @@ def compute_fact(num):
   return (
     <div style={{ maxWidth: 'var(--page-max-width)', margin: '40px auto', padding: '0 24px' }}>
       
-      {/* Studio Header & Sub-Tabs in Dala Monolithic Rhythm */}
+      {/* Studio Header & Sub-Tabs in Veritas Monolithic Rhythm */}
       <div style={{
         display: 'flex',
         justifyContent: 'space-between',
@@ -266,7 +266,7 @@ def compute_fact(num):
       {subTab === '1to1' && (
         <div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: 24, marginBottom: 24 }}>
-            <div className="dala-surface">
+            <div className="veritas-surface">
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
                 <span style={{ fontWeight: 400, fontSize: 16, color: 'var(--color-bone-white)' }}>Primary Submission (Document A)</span>
                 <span style={{ fontSize: 12, color: 'var(--color-ash-gray)' }}>{textA.length} characters</span>
@@ -281,7 +281,7 @@ def compute_fact(num):
               />
             </div>
 
-            <div className="dala-surface">
+            <div className="veritas-surface">
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
                 <span style={{ fontWeight: 400, fontSize: 16, color: 'var(--color-bone-white)' }}>Comparison Source (Document B)</span>
                 <span style={{ fontSize: 12, color: 'var(--color-ash-gray)' }}>{textB.length} characters</span>
@@ -298,7 +298,7 @@ def compute_fact(num):
           </div>
 
           {/* Options & Action Bar */}
-          <div className="dala-surface" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 32, padding: '20px 28px', flexWrap: 'wrap', gap: 16 }}>
+          <div className="veritas-surface" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 32, padding: '20px 28px', flexWrap: 'wrap', gap: 16 }}>
             <div style={{ display: 'flex', gap: 24, flexWrap: 'wrap' }}>
               <label style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, color: 'var(--color-silver-mist)', cursor: 'pointer' }}>
                 <input
@@ -333,7 +333,7 @@ def compute_fact(num):
 
           {/* 1-to-1 Results Dossier */}
           {diffResult && (
-            <div className="dala-surface" style={{ marginBottom: 40 }}>
+            <div className="veritas-surface" style={{ marginBottom: 40 }}>
               <div style={{
                 display: 'flex',
                 justifyContent: 'space-between',
@@ -435,7 +435,7 @@ def compute_fact(num):
       {/* ==================== SUB-TAB 2: COHORT MATRIX ==================== */}
       {subTab === 'matrix' && (
         <div>
-          <div className="dala-surface" style={{ marginBottom: 32 }}>
+          <div className="veritas-surface" style={{ marginBottom: 32 }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24, flexWrap: 'wrap', gap: 16 }}>
               <div>
                 <span className="eyebrow-accent">Peer Collusion Matrix</span>
@@ -476,7 +476,7 @@ def compute_fact(num):
 
           {/* Matrix Results */}
           {matrixResult && (
-            <div className="dala-surface" style={{ marginBottom: 40 }}>
+            <div className="veritas-surface" style={{ marginBottom: 40 }}>
               <div style={{ marginBottom: 20 }}>
                 <span className="eyebrow-accent">Calculated Graph</span>
                 <h3 className="heading-sm" style={{ margin: 0 }}>N×N Pairwise Collusion Heatmap</h3>
@@ -558,7 +558,7 @@ def compute_fact(num):
       {/* ==================== SUB-TAB 3: AI FORENSICS ==================== */}
       {subTab === 'ai' && (
         <div>
-          <div className="dala-surface" style={{ marginBottom: 32 }}>
+          <div className="veritas-surface" style={{ marginBottom: 32 }}>
             <span className="eyebrow-accent">Language Predictability</span>
             <h3 className="heading-sm" style={{ marginBottom: 8 }}>AI Writing Forensics (Perplexity & Burstiness)</h3>
             <p style={{ fontSize: 13, color: 'var(--color-silver-mist)', marginBottom: 16 }}>
@@ -585,7 +585,7 @@ def compute_fact(num):
           </div>
 
           {aiResult && (
-            <div className="dala-surface" style={{ marginBottom: 40 }}>
+            <div className="veritas-surface" style={{ marginBottom: 40 }}>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 20, marginBottom: 28 }}>
                 <div style={{ background: 'rgba(255, 255, 255, 0.03)', padding: 24, borderRadius: 16, border: '1px solid rgba(255, 255, 255, 0.06)', textAlign: 'center' }}>
                   <div style={{ fontSize: 12, color: 'var(--color-ash-gray)', textTransform: 'uppercase', letterSpacing: '0.025em' }}>AI Probability Score</div>
@@ -645,7 +645,7 @@ def compute_fact(num):
       {subTab === 'code' && (
         <div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: 24, marginBottom: 24 }}>
-            <div className="dala-surface">
+            <div className="veritas-surface">
               <span className="eyebrow-accent" style={{ marginBottom: 4 }}>Original Script</span>
               <h3 style={{ fontSize: 16, fontWeight: 400, marginBottom: 12 }}>Source Code A</h3>
               <textarea
@@ -657,7 +657,7 @@ def compute_fact(num):
               />
             </div>
 
-            <div className="dala-surface">
+            <div className="veritas-surface">
               <span className="eyebrow-accent" style={{ marginBottom: 4 }}>Modified / Renamed Identifiers</span>
               <h3 style={{ fontSize: 16, fontWeight: 400, marginBottom: 12 }}>Source Code B</h3>
               <textarea
@@ -682,7 +682,7 @@ def compute_fact(num):
           </div>
 
           {codeResult && (
-            <div className="dala-surface" style={{ marginBottom: 40 }}>
+            <div className="veritas-surface" style={{ marginBottom: 40 }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20, flexWrap: 'wrap', gap: 16 }}>
                 <div>
                   <span className="eyebrow-accent">Syntactic Equivalence</span>

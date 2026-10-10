@@ -135,25 +135,25 @@ export default function Navbar({ activeTab, setActiveTab, serverStatus, theme = 
             }}
             aria-label="Veritas Home"
           >
-            {/* Geometric Faceted Mosaic Mark with Dala gradient */}
+            {/* Geometric Faceted Mosaic Mark with Veritas gradient */}
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
               <defs>
-                <linearGradient id="dala-nav-grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                <linearGradient id="veritas-nav-grad1" x1="0%" y1="0%" x2="100%" y2="100%">
                   <stop offset="0%" stopColor="#8052ff" />
                   <stop offset="100%" stopColor="#15846e" />
                 </linearGradient>
-                <linearGradient id="dala-nav-grad2" x1="0%" y1="0%" x2="100%" y2="0%">
+                <linearGradient id="veritas-nav-grad2" x1="0%" y1="0%" x2="100%" y2="0%">
                   <stop offset="0%" stopColor="#8052ff" />
                   <stop offset="100%" stopColor="#9e7bff" />
                 </linearGradient>
-                <linearGradient id="dala-nav-grad3" x1="0%" y1="100%" x2="100%" y2="0%">
+                <linearGradient id="veritas-nav-grad3" x1="0%" y1="100%" x2="100%" y2="0%">
                   <stop offset="0%" stopColor="#15846e" />
                   <stop offset="100%" stopColor="#2ecba4" />
                 </linearGradient>
               </defs>
-              <polygon points="12,2 21.5,7.5 12,13 2.5,7.5" fill="url(#dala-nav-grad2)" fillOpacity="0.95" />
-              <polygon points="12,13 21.5,7.5 21.5,18.5 12,24" fill="url(#dala-nav-grad1)" />
-              <polygon points="2.5,7.5 12,13 12,24 2.5,18.5" fill="url(#dala-nav-grad3)" fillOpacity="0.9" />
+              <polygon points="12,2 21.5,7.5 12,13 2.5,7.5" fill="url(#veritas-nav-grad2)" fillOpacity="0.95" />
+              <polygon points="12,13 21.5,7.5 21.5,18.5 12,24" fill="url(#veritas-nav-grad1)" />
+              <polygon points="2.5,7.5 12,13 12,24 2.5,18.5" fill="url(#veritas-nav-grad3)" fillOpacity="0.9" />
               <line x1="12" y1="2" x2="12" y2="13" stroke="rgba(255,255,255,0.3)" strokeWidth="0.75" />
               <line x1="12" y1="13" x2="21.5" y2="7.5" stroke="rgba(255,255,255,0.2)" strokeWidth="0.75" />
               <line x1="12" y1="13" x2="2.5" y2="7.5" stroke="rgba(255,255,255,0.2)" strokeWidth="0.75" />

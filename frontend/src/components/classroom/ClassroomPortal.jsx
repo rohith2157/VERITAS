@@ -114,7 +114,7 @@ export default function ClassroomPortal() {
   return (
     <div style={{ maxWidth: 'var(--page-max-width)', margin: '40px auto', padding: '0 24px' }}>
       
-      {/* Header in Dala Style */}
+      {/* Header in Veritas Style */}
       <div style={{
         display: 'flex',
         justifyContent: 'space-between',
@@ -163,7 +163,7 @@ export default function ClassroomPortal() {
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 24, marginBottom: 32 }}>
         
         {/* Left: Classroom & Assignment Selector */}
-        <div className="dala-surface">
+        <div className="veritas-surface">
           <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 12 }}>
             <span style={{ fontSize: 13, fontWeight: 600, color: 'var(--color-electric-iris)', textTransform: 'uppercase' }}>
               Enrolled Course
@@ -207,7 +207,7 @@ export default function ClassroomPortal() {
         </div>
 
         {/* Right: Active Rubric Rules Configurator */}
-        <div className="dala-surface">
+        <div className="veritas-surface">
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16, flexWrap: 'wrap', gap: 10 }}>
             <div>
               <span className="eyebrow-accent" style={{ marginBottom: 4 }}>
@@ -252,7 +252,7 @@ export default function ClassroomPortal() {
       </div>
 
       {/* Submissions & Gradebook Table */}
-      <div className="dala-surface" style={{ marginBottom: 40 }}>
+      <div className="veritas-surface" style={{ marginBottom: 40 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
           <div>
             <span className="eyebrow-accent" style={{ marginBottom: 4 }}>Live Cohort Roster</span>
@@ -311,7 +311,7 @@ export default function ClassroomPortal() {
         </div>
       </div>
 
-      {/* Add Submission Modal in Dala Dark Velvet */}
+      {/* Add Submission Modal in Veritas Dark Velvet */}
       {showAddModal && (
         <div style={{
           position: 'fixed',
@@ -324,7 +324,7 @@ export default function ClassroomPortal() {
           zIndex: 200,
           padding: 20
         }}>
-          <div className="dala-surface" style={{ width: 620, maxWidth: '100%', border: '1px solid rgba(255, 255, 255, 0.15)' }}>
+          <div className="veritas-surface" style={{ width: 620, maxWidth: '100%', border: '1px solid rgba(255, 255, 255, 0.15)' }}>
             <span className="eyebrow-accent" style={{ marginBottom: 4 }}>New Submission</span>
             <h3 className="heading-sm" style={{ marginBottom: 20 }}>Submit Student Assignment</h3>
             <form onSubmit={handleAddSubmission}>

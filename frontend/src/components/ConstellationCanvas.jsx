@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 
 /**
- * Dala Signature Constellation Canvas
+ * Veritas Signature Constellation Canvas
  * Renders thousands of tiny chromatic triangular glyphs forming an organic
  * brain/neural cloud floating against pure black void (#000000).
  */
@@ -25,7 +25,7 @@ export default function ConstellationCanvas({ height = 620, interactive = true }
     };
     window.addEventListener('resize', handleResize);
 
-    // Dala Palette
+    // Veritas Palette
     const colors = [
       '#8052ff', // Electric Iris
       '#ffb829', // Saffron Spark
