@@ -11,8 +11,9 @@ import json
 from core.similarity import compare_documents_1to1
 from core.matrix import compute_cohort_matrix
 from core.extractor import extract_text_from_file
-from core.ast_code import compare_code_files
+from core.ast_code import compare_code_files, normalize_python_code
 from core.ai_forensics import analyze_ai_writing
+from core.evasion import sanitize_and_audit
 
 router = APIRouter(prefix="/api/v1", tags=["Comparison & Forensics"])
 
@@ -27,6 +28,9 @@ class Compare1to1Request(BaseModel):
     title_b: Optional[str] = "Document B"
     k: Optional[int] = 5
     w: Optional[int] = 4
+    k_gram_size: Optional[int] = None
+    window_size: Optional[int] = None
+    sanitize_homoglyphs: Optional[bool] = True
     exclude_quotes: Optional[bool] = True
     exclude_bibliography: Optional[bool] = True
 
@@ -76,6 +80,17 @@ class CodeCompareRequest(BaseModel):
     language: Optional[str] = "python"
 
 
+class AstNormalizeRequest(BaseModel):
+    code_a: Optional[str] = ""
+    code_b: Optional[str] = ""
+    code: Optional[str] = ""
+    language: Optional[str] = "python"
+
+
+class SanitizeRequest(BaseModel):
+    text: str
+
+
 # --- Endpoints ---
 
 
@@ -86,13 +101,15 @@ async def api_compare_one_to_one(payload: Compare1to1Request):
     Returns Jaccard, Containment, matched passage coordinates, and integrity flags.
     """
     try:
+        k_val = payload.k_gram_size if payload.k_gram_size is not None else (payload.k or 5)
+        w_val = payload.window_size if payload.window_size is not None else (payload.w or 4)
         result = compare_documents_1to1(
             text_a=payload.text_a,
             text_b=payload.text_b,
             title_a=payload.title_a,
             title_b=payload.title_b,
-            k=payload.k,
-            w=payload.w,
+            k=k_val,
+            w=w_val,
             exclude_quotes=payload.exclude_quotes,
             exclude_bibliography=payload.exclude_bibliography,
         )
@@ -240,6 +257,61 @@ async def api_detect_code_ast(payload: CodeCompareRequest):
     AST-based structural comparison for Python, Java, and C++.
     """
     return compare_code_files(payload.code_a, payload.code_b, lang=payload.language)
+
+
+@router.post("/ast/normalize")
+async def api_ast_normalize(payload: AstNormalizeRequest):
+    """
+    AST Code Structural Normalization & Clone Detection
+    Direct endpoint for Developer Workstation API Wire Playground.
+    """
+    code_a = payload.code_a or payload.code or ""
+    code_b = payload.code_b or ""
+    lang = payload.language or "python"
+
+    if code_b:
+        comp = compare_code_files(code_a, code_b, lang=lang)
+        norm_a, meta_a = normalize_python_code(code_a) if lang == "python" else (code_a, {})
+        norm_b, meta_b = normalize_python_code(code_b) if lang == "python" else (code_b, {})
+        return {
+            "status": "success",
+            "language": lang,
+            "ast_equivalence_percentage": comp.get("structural_similarity", 100.0),
+            "jaccard_similarity": comp.get("jaccard_similarity", 100.0),
+            "is_code_clone": comp.get("is_code_clone", True),
+            "structural_verdict": "IDENTICAL CODE CLONE DETECTED (Variable Renaming Evasion)" if comp.get("is_code_clone") else "DIVERGENT CODE STRUCTURE",
+            "normalized_code_a": norm_a,
+            "normalized_code_b": norm_b,
+            "meta": {"doc_a": meta_a, "doc_b": meta_b}
+        }
+    else:
+        norm, meta = normalize_python_code(code_a)
+        return {
+            "status": "success",
+            "language": lang,
+            "normalized_code": norm,
+            "meta": meta
+        }
+
+
+@router.post("/sanitize/homoglyphs")
+async def api_sanitize_homoglyphs(payload: SanitizeRequest):
+    """
+    Cyrillic Homoglyph & Zero-Width Sanitizer
+    Direct endpoint for Developer Workstation API Wire Playground.
+    """
+    normalized_text, audit = sanitize_and_audit(payload.text)
+    evasion_types = [f["type"] for f in audit.get("flags", [])]
+    return {
+        "status": "success",
+        "sanitized_text": normalized_text,
+        "homoglyphs_detected_count": audit.get("homoglyph_count", 0),
+        "zero_width_spaces_stripped_count": audit.get("invisible_char_count", 0),
+        "integrity_score": audit.get("integrity_score", 100),
+        "threat_level": "HIGH ADVERSARIAL EVASION INTENT" if audit.get("is_suspicious") else "CLEAN",
+        "evasion_types_found": evasion_types,
+        "audit_report": audit
+    }
 
 
 @router.post("/extract-text")
