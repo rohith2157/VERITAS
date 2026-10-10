@@ -504,3 +504,4 @@ export default function OperationsDashboard({ onOpenStudio, onOpenClassroom, onO
     </div>
   );
 }
+

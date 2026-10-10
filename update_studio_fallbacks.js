@@ -117,3 +117,4 @@ db = db.replace(
 
 fs.writeFileSync('frontend/src/components/DemoBench.jsx', db, 'utf8');
 console.log('Updated DemoBench.jsx fallbacks');
+

@@ -21,3 +21,4 @@ if (!html.includes('section-name="dashboard"')) {
 
 fs.writeFileSync('frontend/index.html', html, 'utf8');
 console.log('Successfully updated index.html with React root and Dashboard navigation');
+
