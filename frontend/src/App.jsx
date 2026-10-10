@@ -95,7 +95,6 @@ export default function App() {
       document.removeEventListener('click', handleGlobalClicks);
       document.removeEventListener('keydown', handleGlobalKeyDown);
     };
-    };
   }, []);
 
   // When on manifesto, the real Veritas engine and DOM run unobstructed
