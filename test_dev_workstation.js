@@ -135,26 +135,47 @@ async function run() {
   await send('Page.enable');
   await sleep(1500);
 
-  // Navigate explicitly to #dev
-  console.log('[Setup] Navigating to #dev portal view...');
+  // Open Portal & Navigate to Developer tab
+  console.log('[Setup] Clicking "Launch Portal" to open portal deck...');
   await evaluate(`
-    window.location.hash = '#dev';
-    window.dispatchEvent(new Event('hashchange'));
+    const launchBtn = document.querySelector('a[href="#dashboard"]');
+    if (launchBtn) launchBtn.click();
+    else {
+      window.location.hash = '#dashboard';
+      window.dispatchEvent(new Event('hashchange'));
+    }
   `);
-  await sleep(2000);
+  await sleep(1200);
+
+  console.log('[Setup] Clicking "Developer" navigation tab in portal header...');
+  await evaluate(`
+    const devBtn = Array.from(document.querySelectorAll('button')).find(b => b.textContent.trim() === 'Developer');
+    if (devBtn) devBtn.click();
+    else {
+      window.location.hash = '#dev';
+      window.dispatchEvent(new Event('hashchange'));
+    }
+  `);
+
+  console.log('[Setup] Waiting for Developer Workstation component to mount...');
+  for (let i = 0; i < 20; i++) {
+    const hasDev = await evaluate(`document.body.innerText.includes('Developer Workstation')`);
+    if (hasDev) {
+      console.log(`[Setup] Developer Workstation mounted successfully in ${i * 500}ms!`);
+      break;
+    }
+    await sleep(500);
+  }
 
   console.log('\n--- 1. VERIFYING DEVELOPER WORKSTATION HEADER & CLUSTER MONITORS ---');
-  const hashVal = await evaluate(`window.location.hash`);
-  console.log(`[Check 1.0] Current window.location.hash: "${hashVal}"`);
-
   const pageTitle = await evaluate(`
     (() => {
       const headings = Array.from(document.querySelectorAll('h1, h2'));
       const devH = headings.find(h => h.textContent.includes('Developer Workstation'));
-      return devH ? devH.textContent : (headings.map(h => h.textContent).join(' | '));
+      return devH ? devH.textContent : 'none';
     })()
   `);
-  console.log(`[Check 1.1] Workstation Headings: "${pageTitle}"`);
+  console.log(`[Check 1.1] Workstation Heading: "${pageTitle}"`);
   if (!pageTitle.includes('Developer Workstation')) {
     throw new Error('Header does not contain "Developer Workstation"');
   }

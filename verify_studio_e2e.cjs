@@ -84,11 +84,19 @@ async function run() {
   };
 
   console.log('[E2E Studio] Waiting for Studio UI to initialize...');
-  await sleep(2000);
+  await sleep(1000);
 
-  // Navigate explicitly to #studio if not there
-  await evalJs("window.location.hash = 'studio'");
-  await sleep(1500);
+  // Navigate explicitly to #studio if not there and wait for mount
+  let studioLoaded = false;
+  for (let i = 0; i < 20; i++) {
+    const hasStudio = await evalJs("!!document.getElementById('tab-btn-1to1')");
+    if (hasStudio) { studioLoaded = true; break; }
+    await evalJs("window.location.hash = 'studio'");
+    await evalJs("document.querySelector('a[href=\"#studio\"], [data-tab=\"studio\"], button:has-text(\"Studio\")')?.click()");
+    await sleep(500);
+  }
+  console.log('[E2E Studio] Studio mounted in DOM:', studioLoaded);
+  await sleep(1000);
 
   const testReport = {
     timestamp: new Date().toISOString(),

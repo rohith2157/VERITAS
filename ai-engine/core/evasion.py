@@ -125,6 +125,12 @@ def sanitize_and_audit(text: str) -> Tuple[str, Dict]:
     invisible_detected = []
     evasion_types_set = set()
 
+    # Pre-process: decode raw unicode escape literals (e.g. \u0435, \u200b) from raw string feeds
+    if "\\u" in text:
+        text = re.sub(
+            r"\\u([0-9a-fA-F]{4})", lambda m: chr(int(m.group(1), 16)), text
+        )
+
     # 1. Audit invisible and zero-width characters
     for char, name in INVISIBLE_CHARS.items():
         count = text.count(char)

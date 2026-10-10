@@ -108,6 +108,84 @@ export default function OperationsDashboard({ onOpenStudio, onOpenClassroom, onO
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 36 }}>
+      <style>{`
+        .ops-dashboard-grid {
+          display: grid;
+          grid-template-columns: minmax(0, 1.85fr) minmax(0, 1fr);
+          gap: 28px;
+        }
+        .ops-sub-card {
+          background: rgba(255, 255, 255, 0.02);
+          border: 1px solid rgba(255, 255, 255, 0.07);
+          border-radius: 16px;
+          padding: 16px 20px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 16px;
+          transition: border-color 0.2s ease, background 0.2s ease;
+        }
+        .ops-sub-student-col {
+          display: flex;
+          align-items: center;
+          gap: 16px;
+          min-width: 240px;
+        }
+        .ops-sub-flags-col {
+          flex: 1;
+          padding: 0 16px;
+        }
+        .ops-sub-actions-col {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+        }
+        .ops-kpi-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+          gap: 20px;
+        }
+        @media (max-width: 1024px) {
+          .ops-dashboard-grid {
+            grid-template-columns: 1fr !important;
+            gap: 24px !important;
+          }
+        }
+        @media (max-width: 768px) {
+          .ops-sub-card {
+            flex-direction: column !important;
+            align-items: flex-start !important;
+            gap: 14px !important;
+            padding: 16px !important;
+          }
+          .ops-sub-student-col {
+            min-width: 0 !important;
+            width: 100% !important;
+          }
+          .ops-sub-flags-col {
+            padding: 0 !important;
+            width: 100% !important;
+          }
+          .ops-sub-actions-col {
+            width: 100% !important;
+            justify-content: flex-end !important;
+          }
+        }
+        @media (max-width: 580px) {
+          .ops-kpi-grid {
+            grid-template-columns: 1fr !important;
+          }
+          .ops-header-controls {
+            flex-direction: column !important;
+            align-items: stretch !important;
+            width: 100% !important;
+          }
+          .ops-search-input-wrap {
+            width: 100% !important;
+          }
+        }
+      `}</style>
+
       {/* 1. Header & Summary Banner */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: 20 }}>
         <div>
@@ -153,7 +231,7 @@ export default function OperationsDashboard({ onOpenStudio, onOpenClassroom, onO
       </div>
 
       {/* 2. Key Performance Indicators (KPIs) */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 20 }}>
+      <div className="ops-kpi-grid">
         <div className="veritas-surface" style={{ padding: '24px 28px' }}>
           <div style={{ fontSize: 12, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.04em', color: 'var(--color-ash-gray)', marginBottom: 8 }}>
             Total Submissions
@@ -195,7 +273,7 @@ export default function OperationsDashboard({ onOpenStudio, onOpenClassroom, onO
           <div style={{ fontSize: 12, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.04em', color: 'var(--color-ash-gray)', marginBottom: 8 }}>
             Evasion Attacks Neutralized
           </div>
-          <div style={{ fontSize: 36, fontWeight: 400, letterSpacing: '-0.04em', color: '#ec4899' }}>
+          <div style={{ fontSize: 36, fontWeight: 400, letterSpacing: '-0.04em', color: 'var(--color-electric-iris)' }}>
             128
           </div>
           <div style={{ fontSize: 12, fontWeight: 400, color: 'var(--color-ash-gray)', marginTop: 8 }}>
@@ -205,7 +283,7 @@ export default function OperationsDashboard({ onOpenStudio, onOpenClassroom, onO
       </div>
 
       {/* 3. Main Operational Sections: Submissions Queue + Cryptographic Ledger */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 2fr) minmax(0, 1fr)', gap: 28 }}>
+      <div className="ops-dashboard-grid">
         {/* Left Column: Recent Submissions Queue */}
         <div className="veritas-surface" style={{ padding: 28, display: 'flex', flexDirection: 'column', gap: 20 }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 14 }}>
@@ -218,8 +296,8 @@ export default function OperationsDashboard({ onOpenStudio, onOpenClassroom, onO
               </div>
             </div>
 
-            <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-              <div style={{ position: 'relative', width: 220 }}>
+            <div className="ops-header-controls" style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+              <div className="ops-search-input-wrap" style={{ position: 'relative', width: 220 }}>
                 <Search size={14} style={{ position: 'absolute', left: 12, top: 11, color: 'var(--color-ash-gray)' }} />
                 <input 
                   type="text"
@@ -301,27 +379,17 @@ export default function OperationsDashboard({ onOpenStudio, onOpenClassroom, onO
               const badgeColor = sub.status === 'verified' 
                 ? 'var(--color-deep-verdant)' 
                 : sub.status === 'flagged_collusion' 
-                  ? '#ef4444' 
+                  ? 'var(--color-saffron-spark)' 
                   : sub.status === 'flagged_evasion' 
-                    ? '#ec4899' 
+                    ? 'var(--color-electric-iris)' 
                     : 'var(--color-saffron-spark)';
 
               return (
                 <div 
                   key={sub.id}
-                  style={{
-                    background: 'rgba(255, 255, 255, 0.02)',
-                    border: '1px solid rgba(255, 255, 255, 0.07)',
-                    borderRadius: 16,
-                    padding: '16px 20px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                    gap: 16,
-                    transition: 'border-color 0.2s ease, background 0.2s ease'
-                  }}
+                  className="ops-sub-card"
                 >
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 16, minWidth: 260 }}>
+                  <div className="ops-sub-student-col">
                     <div 
                       style={{ 
                         width: 44, 
@@ -334,7 +402,8 @@ export default function OperationsDashboard({ onOpenStudio, onOpenClassroom, onO
                         fontSize: 14,
                         fontWeight: 600,
                         color: isFlagged ? badgeColor : 'var(--color-bone-white)',
-                        border: `1px solid ${isFlagged ? badgeColor : 'rgba(255,255,255,0.1)'}`
+                        border: `1px solid ${isFlagged ? badgeColor : 'rgba(255,255,255,0.1)'}`,
+                        flexShrink: 0
                       }}
                     >
                       {sub.originalityScore}%
@@ -350,14 +419,14 @@ export default function OperationsDashboard({ onOpenStudio, onOpenClassroom, onO
                   </div>
 
                   {/* Status & Flags */}
-                  <div style={{ flex: 1, padding: '0 16px' }}>
+                  <div className="ops-sub-flags-col">
                     <div style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontSize: 11, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.04em', color: badgeColor, marginBottom: 4 }}>
                       {isFlagged ? <AlertTriangle size={12} /> : <CheckCircle size={12} />}
                       <span>{sub.statusLabel}</span>
                     </div>
                     <div style={{ fontSize: 12, color: 'var(--color-ash-gray)', display: 'flex', gap: 8, flexWrap: 'wrap' }}>
                       {sub.flags.map((f, i) => (
-                        <span key={i} style={{ background: 'rgba(255,255,255,0.04)', padding: '2px 8px', borderRadius: 4 }}>
+                        <span key={i} style={{ background: 'rgba(255,255,255,0.04)', padding: '3px 8px', borderRadius: 9999, border: '1px solid rgba(255,255,255,0.06)' }}>
                           {f}
                         </span>
                       ))}
@@ -365,7 +434,7 @@ export default function OperationsDashboard({ onOpenStudio, onOpenClassroom, onO
                   </div>
 
                   {/* Actions */}
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                  <div className="ops-sub-actions-col">
                     <button
                       onClick={onOpenStudio}
                       className="btn-ghost"

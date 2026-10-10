@@ -25,9 +25,11 @@ class PythonAstNormalizer(ast.NodeTransformer):
         self.var_map: Dict[str, str] = {}
         self.func_map: Dict[str, str] = {}
         self.class_map: Dict[str, str] = {}
+        self.attr_map: Dict[str, str] = {}
         self.var_counter = 0
         self.func_counter = 0
         self.class_counter = 0
+        self.attr_counter = 0
         self.node_count = 0
 
     def visit(self, node):

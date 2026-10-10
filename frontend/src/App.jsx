@@ -2,13 +2,21 @@ import React, { useState, useEffect, Suspense, lazy } from 'react';
 import { ArrowLeft, Sun, Moon } from 'lucide-react';
 
 const OperationsDashboard = lazy(() => import('./components/dashboard/OperationsDashboard'));
-const UniversalStudio = lazy(() => import('./components/studio/UniversalStudio'));
+import UniversalStudio from './components/studio/UniversalStudio';
 const ClassroomPortal = lazy(() => import('./components/classroom/ClassroomPortal'));
 const DemoBench = lazy(() => import('./components/DemoBench'));
 const DeveloperWorkstation = lazy(() => import('./components/dev/DeveloperWorkstation'));
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState('manifesto'); // 'manifesto', 'dashboard', 'studio', 'classroom', 'demobench', 'dev'
+  const [activeTab, setActiveTab] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const hash = window.location.hash.replace('#', '');
+      if (['dashboard', 'studio', 'classroom', 'demobench', 'dev'].includes(hash)) {
+        return hash;
+      }
+    }
+    return 'manifesto';
+  });
   const [theme, setTheme] = useState(() => {
     return localStorage.getItem('veritas_theme') || 'dark';
   });
@@ -92,35 +100,100 @@ export default function App() {
         zIndex: 99999,
         background: 'var(--bg-main, #000000)',
         color: 'var(--color-bone-white, #ffffff)',
+        fontFamily: "var(--font-ppneuemontreal, 'PPNeueMontreal', -apple-system, BlinkMacSystemFont, sans-serif)",
         overflowY: 'auto',
         display: 'flex',
         flexDirection: 'column'
       }}
     >
+      <style>{`
+        .portal-header {
+          position: sticky;
+          top: 0;
+          z-index: 100;
+          background: var(--bg-nav, rgba(0,0,0,0.85));
+          backdrop-filter: blur(16px);
+          -webkit-backdrop-filter: blur(16px);
+          border-bottom: 1px solid var(--border-subtle, rgba(255,255,255,0.08));
+          padding: 14px 32px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 16px;
+        }
+        .portal-header-brand {
+          display: flex;
+          align-items: center;
+          gap: 18px;
+          flex-shrink: 0;
+        }
+        .portal-nav-tabs {
+          display: flex;
+          align-items: center;
+          gap: 20px;
+          overflow-x: auto;
+          scrollbar-width: none;
+          -webkit-overflow-scrolling: touch;
+        }
+        .portal-nav-tabs::-webkit-scrollbar {
+          display: none;
+        }
+        .portal-tab-btn {
+          font-family: var(--font-ppneuemontreal, 'PPNeueMontreal', -apple-system, sans-serif);
+          font-size: 13px;
+          font-weight: 600;
+          text-transform: uppercase;
+          letter-spacing: 0.35px;
+          padding: 6px 0;
+          background: none;
+          border: none;
+          outline: none;
+          cursor: pointer;
+          white-space: nowrap;
+          transition: color 0.2s ease, border-color 0.2s ease;
+        }
+        @media (max-width: 860px) {
+          .portal-header {
+            padding: 12px 20px;
+            flex-direction: column;
+            align-items: stretch;
+            gap: 12px;
+          }
+          .portal-header-brand {
+            justify-content: space-between;
+            width: 100%;
+          }
+          .portal-nav-tabs {
+            gap: 16px;
+            width: 100%;
+            padding-bottom: 2px;
+          }
+        }
+        @media (max-width: 480px) {
+          .portal-header {
+            padding: 10px 14px;
+          }
+          .portal-brand-title {
+            font-size: 13px !important;
+          }
+          .portal-tab-btn {
+            font-size: 12px;
+            letter-spacing: 0.2px;
+          }
+          .portal-main-container {
+            padding: 16px !important;
+          }
+        }
+      `}</style>
+
       {/* Top Portal Navigation Bar */}
-      <header
-        style={{
-          position: 'sticky',
-          top: 0,
-          zIndex: 100,
-          background: 'var(--bg-nav, rgba(0,0,0,0.85))',
-          backdropFilter: 'blur(16px)',
-          WebkitBackdropFilter: 'blur(16px)',
-          borderBottom: '1px solid var(--border-subtle, rgba(255,255,255,0.08))',
-          padding: '14px 32px',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          flexWrap: 'wrap',
-          gap: 16
-        }}
-      >
-        <div style={{ display: 'flex', alignItems: 'center', gap: 20 }}>
+      <header className="portal-header">
+        <div className="portal-header-brand">
           <button
             id="veritas-back-to-manifesto"
             onClick={() => {
               setActiveTab('manifesto');
-              window.location.hash = 'landing';
+              window.location.hash = 'manifesto';
             }}
             className="btn-ghost"
             style={{
@@ -145,26 +218,19 @@ export default function App() {
 
           <div style={{ width: 1, height: 20, background: 'var(--border-subtle)' }} />
 
-          <span style={{ fontSize: 16, fontWeight: 400, letterSpacing: '-0.3px', color: 'var(--color-bone-white)' }}>
+          <span className="portal-brand-title" style={{ fontSize: 16, fontWeight: 400, letterSpacing: '-0.3px', color: 'var(--color-bone-white)' }}>
             VERITAS INTEGRITY PORTAL
           </span>
         </div>
 
         {/* View Switcher Tabs */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 20, flexWrap: 'wrap' }}>
+        <div className="portal-nav-tabs">
           <button
             onClick={() => { setActiveTab('dashboard'); window.location.hash = 'dashboard'; }}
-            className="btn-ghost"
+            className="portal-tab-btn"
             style={{
-              fontSize: 13,
-              fontWeight: 600,
-              textTransform: 'uppercase',
-              letterSpacing: '0.35px',
               color: activeTab === 'dashboard' ? 'var(--color-bone-white)' : 'var(--color-ash-gray)',
-              borderBottom: activeTab === 'dashboard' ? '2px solid var(--color-electric-iris)' : '2px solid transparent',
-              padding: '4px 0',
-              background: 'none',
-              cursor: 'pointer'
+              borderBottom: activeTab === 'dashboard' ? '2px solid var(--color-electric-iris)' : '2px solid transparent'
             }}
           >
             Dashboard
@@ -172,17 +238,10 @@ export default function App() {
 
           <button
             onClick={() => { setActiveTab('studio'); window.location.hash = 'studio'; }}
-            className="btn-ghost"
+            className="portal-tab-btn"
             style={{
-              fontSize: 13,
-              fontWeight: 600,
-              textTransform: 'uppercase',
-              letterSpacing: '0.35px',
               color: activeTab === 'studio' ? 'var(--color-bone-white)' : 'var(--color-ash-gray)',
-              borderBottom: activeTab === 'studio' ? '2px solid var(--color-electric-iris)' : '2px solid transparent',
-              padding: '4px 0',
-              background: 'none',
-              cursor: 'pointer'
+              borderBottom: activeTab === 'studio' ? '2px solid var(--color-electric-iris)' : '2px solid transparent'
             }}
           >
             Studio
@@ -190,17 +249,10 @@ export default function App() {
 
           <button
             onClick={() => { setActiveTab('classroom'); window.location.hash = 'classroom'; }}
-            className="btn-ghost"
+            className="portal-tab-btn"
             style={{
-              fontSize: 13,
-              fontWeight: 600,
-              textTransform: 'uppercase',
-              letterSpacing: '0.35px',
               color: activeTab === 'classroom' ? 'var(--color-bone-white)' : 'var(--color-ash-gray)',
-              borderBottom: activeTab === 'classroom' ? '2px solid var(--color-electric-iris)' : '2px solid transparent',
-              padding: '4px 0',
-              background: 'none',
-              cursor: 'pointer'
+              borderBottom: activeTab === 'classroom' ? '2px solid var(--color-electric-iris)' : '2px solid transparent'
             }}
           >
             Classroom
@@ -208,17 +260,10 @@ export default function App() {
 
           <button
             onClick={() => { setActiveTab('demobench'); window.location.hash = 'demobench'; }}
-            className="btn-ghost"
+            className="portal-tab-btn"
             style={{
-              fontSize: 13,
-              fontWeight: 600,
-              textTransform: 'uppercase',
-              letterSpacing: '0.35px',
               color: activeTab === 'demobench' ? 'var(--color-bone-white)' : 'var(--color-ash-gray)',
-              borderBottom: activeTab === 'demobench' ? '2px solid var(--color-electric-iris)' : '2px solid transparent',
-              padding: '4px 0',
-              background: 'none',
-              cursor: 'pointer'
+              borderBottom: activeTab === 'demobench' ? '2px solid var(--color-electric-iris)' : '2px solid transparent'
             }}
           >
             Demo Bench
@@ -226,17 +271,10 @@ export default function App() {
 
           <button
             onClick={() => { setActiveTab('dev'); window.location.hash = 'dev'; }}
-            className="btn-ghost"
+            className="portal-tab-btn"
             style={{
-              fontSize: 13,
-              fontWeight: 600,
-              textTransform: 'uppercase',
-              letterSpacing: '0.35px',
               color: activeTab === 'dev' ? 'var(--color-bone-white)' : 'var(--color-ash-gray)',
-              borderBottom: activeTab === 'dev' ? '2px solid var(--color-electric-iris)' : '2px solid transparent',
-              padding: '4px 0',
-              background: 'none',
-              cursor: 'pointer'
+              borderBottom: activeTab === 'dev' ? '2px solid var(--color-electric-iris)' : '2px solid transparent'
             }}
           >
             Developer
@@ -246,7 +284,7 @@ export default function App() {
             onClick={toggleTheme}
             className="btn-ghost"
             style={{
-              padding: '8px',
+              padding: '6px',
               borderRadius: '50%',
               display: 'flex',
               alignItems: 'center',
@@ -254,7 +292,8 @@ export default function App() {
               cursor: 'pointer',
               background: 'none',
               border: 'none',
-              color: 'var(--color-ash-gray)'
+              color: 'var(--color-ash-gray)',
+              flexShrink: 0
             }}
             title={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
             aria-label="Toggle Theme"
@@ -269,7 +308,7 @@ export default function App() {
       </header>
 
       {/* Main Portal View */}
-      <main style={{ flex: 1, padding: '32px', maxWidth: 'var(--page-max-width, 1440px)', margin: '0 auto', width: '100%', boxSizing: 'border-box' }}>
+      <main className="portal-main-container" style={{ flex: 1, padding: '32px', maxWidth: 'var(--page-max-width, 1440px)', margin: '0 auto', width: '100%', boxSizing: 'border-box' }}>
         <Suspense fallback={
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '60vh', color: 'var(--color-ash-gray)', fontSize: 13, textTransform: 'uppercase', letterSpacing: '0.04em' }}>
             <span style={{ display: 'inline-block', width: 8, height: 8, borderRadius: '50%', background: 'var(--color-electric-iris)', marginRight: 10, animation: 'pulse 1.2s infinite' }} />
