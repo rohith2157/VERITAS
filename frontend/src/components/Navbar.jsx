@@ -15,9 +15,11 @@ export default function Navbar({ activeTab, setActiveTab, serverStatus, theme = 
 
   const navLinks = [
     { id: 'manifesto', label: 'MANIFESTO' },
+    { id: 'dashboard', label: 'DASHBOARD' },
     { id: 'studio', label: 'STUDIO' },
     { id: 'classroom', label: 'CLASSROOM' },
     { id: 'demobench', label: 'BENCHMARK' },
+    { id: 'dev', label: 'DEV' },
   ];
 
   return (
@@ -183,7 +185,10 @@ export default function Navbar({ activeTab, setActiveTab, serverStatus, theme = 
                 return (
                   <button
                     key={link.id}
-                    onClick={() => setActiveTab(link.id)}
+                    onClick={() => {
+                      if (setActiveTab) setActiveTab(link.id);
+                      if (typeof window !== 'undefined') window.location.hash = link.id;
+                    }}
                     className={`veritas-nav-link ${isActive ? 'is-active' : ''}`}
                     aria-current={isActive ? 'page' : undefined}
                   >

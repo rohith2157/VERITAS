@@ -136,8 +136,9 @@ def compare_documents_1to1(
     containment_a_in_b = (len(common_hashes) / len(hashes_a)) if len(hashes_a) > 0 else 0.0
     containment_b_in_a = (len(common_hashes) / len(hashes_b)) if len(hashes_b) > 0 else 0.0
 
-    # Primary similarity score is containment of A in B (standard for submission checking)
-    primary_similarity = round(containment_a_in_b * 100, 2)
+    # Primary similarity score: max directional containment captures asymmetric plagiarism
+    primary_similarity = round(max(containment_a_in_b, containment_b_in_a) * 100, 2)
+
 
     # 4. Map matching fingerprints back to character coordinates
     fps_b_by_hash: Dict[int, List[Fingerprint]] = {}

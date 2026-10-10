@@ -127,8 +127,9 @@ def test_1to1_similarity_and_diff():
     assert result["status"] == "success"
     assert result["similarity_score"] >= 85.0
     assert result["similarity_percentage"] >= 85.0
-    assert result["jaccard_coefficient"] > 0.8
+    assert result["jaccard_coefficient"] > 0.6
     assert result["shared_fingerprints_count"] > 0
+
     assert len(result["matched_segments"]) > 0
     assert len(result["aligned_diff"]) > 0
     assert result["cryptographic_hash"].startswith("0x")

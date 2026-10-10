@@ -80,6 +80,14 @@ class PythonAstNormalizer(ast.NodeTransformer):
             node.name = self.class_map[node.name]
         return self.generic_visit(node)
 
+    def visit_Attribute(self, node):
+        if not node.attr.startswith("__"):
+            if node.attr not in self.attr_map:
+                self.attr_counter += 1
+                self.attr_map[node.attr] = f"ATTR_{self.attr_counter}"
+            node.attr = self.attr_map[node.attr]
+        return self.generic_visit(node)
+
     def visit_AnnAssign(self, node):
         # Convert annotated assignment into a normal assignment
         if node.value is not None:
@@ -118,9 +126,11 @@ def normalize_python_code(source_code: str) -> Tuple[str, Dict]:
             "variables_renamed": normalizer.var_counter,
             "functions_renamed": normalizer.func_counter,
             "classes_renamed": normalizer.class_counter,
+            "attributes_renamed": normalizer.attr_counter,
             "var_map": normalizer.var_map,
             "func_map": normalizer.func_map,
             "class_map": normalizer.class_map,
+            "attr_map": normalizer.attr_map,
         }
     except Exception as e:
         # Fallback to regex-based structural normalization if code has syntax errors
