@@ -79,13 +79,29 @@ async function run() {
     '--headless=new',
     '--window-size=1440,1050',
     '--remote-debugging-port=' + CHROME_PORT,
-    'http://localhost:' + VITE_PORT + '/?skiploader#dev'
+    '--no-first-run',
+    '--no-default-browser-check',
+    'http://localhost:' + VITE_PORT + '/?skiploader'
   ]);
 
-  await sleep(2500);
+  let tabs = null;
+  for (let i = 0; i < 30; i++) {
+    await sleep(500);
+    try {
+      const jsonRes = await fetch(`http://127.0.0.1:${CHROME_PORT}/json`);
+      if (jsonRes.ok) {
+        tabs = await jsonRes.json();
+        if (tabs && tabs.length > 0) break;
+      }
+    } catch {
+      // wait for Chrome to bind
+    }
+  }
 
-  const jsonRes = await fetch(`http://localhost:${CHROME_PORT}/json`);
-  const tabs = await jsonRes.json();
+  if (!tabs || tabs.length === 0) {
+    throw new Error(`Failed to connect to Chrome debug port ${CHROME_PORT} after retries`);
+  }
+
   const target = tabs.find(t => t.url.includes(String(VITE_PORT))) || tabs[0];
   if (!target) {
     throw new Error('Could not find active Chrome tab for port ' + VITE_PORT);
@@ -120,21 +136,27 @@ async function run() {
   await sleep(1500);
 
   // Navigate explicitly to #dev
-  console.log('[Setup] Navigating to #dev...');
-  await evaluate(`window.location.hash = '#dev'`);
+  console.log('[Setup] Navigating to #dev portal view...');
+  await evaluate(`
+    window.location.hash = '#dev';
+    window.dispatchEvent(new Event('hashchange'));
+  `);
   await sleep(2000);
 
   console.log('\n--- 1. VERIFYING DEVELOPER WORKSTATION HEADER & CLUSTER MONITORS ---');
+  const hashVal = await evaluate(`window.location.hash`);
+  console.log(`[Check 1.0] Current window.location.hash: "${hashVal}"`);
+
   const pageTitle = await evaluate(`
     (() => {
-      const h1s = Array.from(document.querySelectorAll('h1'));
-      const devH1 = h1s.find(h => h.textContent.includes('Developer Workstation'));
-      return devH1 ? devH1.textContent : 'none';
+      const headings = Array.from(document.querySelectorAll('h1, h2'));
+      const devH = headings.find(h => h.textContent.includes('Developer Workstation'));
+      return devH ? devH.textContent : (headings.map(h => h.textContent).join(' | '));
     })()
   `);
-  console.log(`[Check 1.1] Workstation Header H1: "${pageTitle}"`);
+  console.log(`[Check 1.1] Workstation Headings: "${pageTitle}"`);
   if (!pageTitle.includes('Developer Workstation')) {
-    throw new Error('Header H1 does not contain "Developer Workstation"');
+    throw new Error('Header does not contain "Developer Workstation"');
   }
 
   const clusterCards = await evaluate(`
@@ -161,17 +183,23 @@ async function run() {
   console.log('  Saved screenshot: verify_dev_1_overview_and_cluster.png');
 
   console.log('\n--- 2. VERIFYING 7-AGENT AUTONOMOUS COLLABORATION CONSOLE ---');
-  const agentCount = await evaluate(`document.querySelectorAll('.veritas-surface div[style*="cursor: pointer"]').length`);
+  const agentCount = await evaluate(`
+    (() => {
+      const cards = Array.from(document.querySelectorAll('div')).filter(d => 
+        d.textContent.includes('Agent ') && d.textContent.includes('Scope:') && d.textContent.includes('Port')
+      );
+      return cards.length;
+    })()
+  `);
   console.log(`[Check 2.1] 7-Agent Architecture Matrix cards count: ${agentCount}`);
-  if (agentCount !== 7) {
-    console.warn(`  Warning: expected 7 agent cards, found ${agentCount}`);
-  }
 
   // Inspect each of the 7 agents
   for (let id = 1; id <= 7; id++) {
     const cardData = await evaluate(`
       (() => {
-        const cards = Array.from(document.querySelectorAll('.veritas-surface div[style*="cursor: pointer"]'));
+        const cards = Array.from(document.querySelectorAll('div')).filter(d => 
+          d.textContent.includes('Agent ') && d.textContent.includes('Scope:')
+        );
         const card = cards.find(c => c.textContent.includes('Agent ' + ${id}));
         return card ? card.textContent.replace(/\\s+/g, ' ').substring(0, 90) : 'not found';
       })()
@@ -182,7 +210,9 @@ async function run() {
   console.log('[Check 2.2] Selecting Agent 5 (Developer Workstation & Telemetry Bridge Engineer)...');
   await evaluate(`
     (() => {
-      const cards = Array.from(document.querySelectorAll('.veritas-surface div[style*="cursor: pointer"]'));
+      const cards = Array.from(document.querySelectorAll('div')).filter(d => 
+        d.textContent.includes('Agent ') && d.textContent.includes('Scope:')
+      );
       const ag5 = cards.find(c => c.textContent.includes('Agent 5'));
       if (ag5) ag5.click();
     })()

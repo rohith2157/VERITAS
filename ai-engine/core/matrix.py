@@ -4,10 +4,13 @@ Computes NxN similarity heatmaps, discovers collusion rings, and detects
 original vs. copycat submitters based on submission timestamps.
 """
 
+import time
+from datetime import datetime
 from typing import Dict, List, Optional
 from core.evasion import sanitize_and_audit
 from core.winnowing import generate_fingerprints, Fingerprint
 from core.similarity import get_color_tier
+
 
 
 def compute_cohort_matrix(
@@ -71,10 +74,12 @@ def compute_cohort_matrix(
             }
         )
 
+    start_time = time.perf_counter()
     # 2. Compute pairwise similarity matrix
     # matrix[i][j] represents containment of document i in document j
     matrix = [[0.0 for _ in range(n)] for _ in range(n)]
     pairs = []
+    collusion_pairs = []
 
     for i in range(n):
         hashes_i = processed_docs[i]["hashes"]
@@ -107,12 +112,39 @@ def compute_cohort_matrix(
                     ts_i = processed_docs[i]["timestamp"]
                     ts_j = processed_docs[j]["timestamp"]
                     suspected_origin = None
+                    earlier_author = None
+                    direction = "Collusion pair"
+                    time_delta_minutes = 0
+
                     if ts_i and ts_j:
-                        suspected_origin = (
-                            processed_docs[i]["name"]
-                            if ts_i <= ts_j
-                            else processed_docs[j]["name"]
-                        )
+                        try:
+                            dt_i = datetime.fromisoformat(ts_i.replace("Z", "+00:00"))
+                            dt_j = datetime.fromisoformat(ts_j.replace("Z", "+00:00"))
+                            time_delta_minutes = int(abs((dt_j - dt_i).total_seconds()) // 60)
+                            if dt_i <= dt_j:
+                                suspected_origin = processed_docs[i]["name"]
+                                earlier_author = f"{processed_docs[i]['id']} ({processed_docs[i]['name']})"
+                                direction = f"{processed_docs[j]['id']} likely derived from {processed_docs[i]['id']} (Patient Zero)"
+                            else:
+                                suspected_origin = processed_docs[j]["name"]
+                                earlier_author = f"{processed_docs[j]['id']} ({processed_docs[j]['name']})"
+                                direction = f"{processed_docs[i]['id']} likely derived from {processed_docs[j]['id']} (Patient Zero)"
+                        except Exception:
+                            suspected_origin = processed_docs[i]["name"] if ts_i <= ts_j else processed_docs[j]["name"]
+                            earlier_author = f"{processed_docs[i]['id']} ({processed_docs[i]['name']})" if ts_i <= ts_j else f"{processed_docs[j]['id']} ({processed_docs[j]['name']})"
+                    else:
+                        earlier_author = f"{processed_docs[i]['id']} ({processed_docs[i]['name']})"
+
+                    collusion_pairs.append(
+                        {
+                            "doc_a": f"{processed_docs[i]['id']} ({processed_docs[i]['name']})",
+                            "doc_b": f"{processed_docs[j]['id']} ({processed_docs[j]['name']})",
+                            "similarity_score": max_score,
+                            "earlier_author": earlier_author,
+                            "time_delta_minutes": time_delta_minutes,
+                            "direction": direction,
+                        }
+                    )
 
                     pairs.append(
                         {
@@ -128,11 +160,13 @@ def compute_cohort_matrix(
                             ),
                             "color_tier": get_color_tier(max_score),
                             "suspected_original_submitter": suspected_origin,
+                            "time_delta_minutes": time_delta_minutes,
                         }
                     )
 
     # Sort pairs by highest similarity descending
     pairs.sort(key=lambda x: x["similarity_score"], reverse=True)
+    collusion_pairs.sort(key=lambda x: x["similarity_score"], reverse=True)
 
     # 3. Graph clustering to identify Collusion Rings (connected components)
     adjacency: Dict[str, set] = {doc["id"]: set() for doc in processed_docs}
@@ -167,7 +201,7 @@ def compute_cohort_matrix(
 
             if len(cluster_members) > 1:
                 # Sort cluster members by timestamp to find patient zero
-                if all(m["timestamp"] for m in cluster_members):
+                if all(m.get("timestamp") for m in cluster_members):
                     cluster_members.sort(key=lambda x: x["timestamp"])
 
                 clusters.append(
@@ -184,13 +218,17 @@ def compute_cohort_matrix(
     # 4. Compile high-level stats
     all_scores = [p["similarity_score"] for p in pairs]
     avg_collusion = round(sum(all_scores) / len(all_scores), 2) if all_scores else 0.0
+    latency_ms = round((time.perf_counter() - start_time) * 1000, 2)
 
     return {
+        "status": "success",
         "cohort_size": n,
+        "execution_time_ms": latency_ms,
         "document_headers": [
             {"id": d["id"], "name": d["name"]} for d in processed_docs
         ],
         "similarity_matrix": matrix,
+        "collusion_pairs": collusion_pairs,
         "flagged_pairs": pairs,
         "collusion_clusters": clusters,
         "summary": {
@@ -202,3 +240,4 @@ def compute_cohort_matrix(
             "collusion_threshold_applied": collusion_threshold,
         },
     }
+

@@ -21,19 +21,22 @@ public class ClassroomService {
     private final SubmissionRepository submissionRepository;
     private final AiEngineClient aiEngineClient;
     private final RubricService rubricService;
+    private final AuditLedgerService auditLedgerService;
 
     public ClassroomService(ClassroomRepository classroomRepository,
                             AssignmentRepository assignmentRepository,
                             RubricRuleRepository rubricRuleRepository,
                             SubmissionRepository submissionRepository,
                             AiEngineClient aiEngineClient,
-                            RubricService rubricService) {
+                            RubricService rubricService,
+                            AuditLedgerService auditLedgerService) {
         this.classroomRepository = classroomRepository;
         this.assignmentRepository = assignmentRepository;
         this.rubricRuleRepository = rubricRuleRepository;
         this.submissionRepository = submissionRepository;
         this.aiEngineClient = aiEngineClient;
         this.rubricService = rubricService;
+        this.auditLedgerService = auditLedgerService;
     }
 
     public Classroom createClassroom(String name, String subject, String teacherName) {
@@ -55,9 +58,10 @@ public class ClassroomService {
         Assignment saved = assignmentRepository.save(assignment);
 
         // Seed standard default rubrics
-        rubricRuleRepository.save(new RubricRule(saved.getId(), 0.0, 15.0, 0.0, false, "Acceptable similarity (No penalty)"));
-        rubricRuleRepository.save(new RubricRule(saved.getId(), 15.0, 30.0, 15.0, false, "Moderate similarity (15 marks deducted)"));
-        rubricRuleRepository.save(new RubricRule(saved.getId(), 30.0, 100.0, 100.0, true, "Critical collusion / plagiarism (0 marks & flagged)"));
+        rubricRuleRepository.save(new RubricRule(saved.getId(), 0.0, 15.0, 0.0, false, "High Originality (0 penalty applied)"));
+        rubricRuleRepository.save(new RubricRule(saved.getId(), 15.0, 35.0, 15.0, false, "Moderate Paraphrasing (15 marks deducted)"));
+        rubricRuleRepository.save(new RubricRule(saved.getId(), 35.0, 60.0, 25.0, false, "Adversarial Evasion / High Overlap (25 marks deducted)"));
+        rubricRuleRepository.save(new RubricRule(saved.getId(), 60.0, 100.0, 50.0, true, "Critical Collusion / Plagiarism (Flagged for Review)"));
 
         return saved;
     }
@@ -80,11 +84,27 @@ public class ClassroomService {
 
     public Submission submitAssignment(Long assignmentId, String studentName, String studentEmail, String filename, String rawText) {
         Submission submission = new Submission(assignmentId, studentName, studentEmail, filename, rawText);
-        return submissionRepository.save(submission);
+        Submission saved = submissionRepository.save(submission);
+        auditLedgerService.sealSubmission(saved);
+        return submissionRepository.save(saved);
     }
 
     public List<Submission> getSubmissions(Long assignmentId) {
         return submissionRepository.findByAssignmentId(assignmentId);
+    }
+
+    public Optional<Submission> getSubmissionById(Long id) {
+        return submissionRepository.findById(id);
+    }
+
+    public Map<String, Object> verifySubmissionIntegrity(Long submissionId) {
+        return submissionRepository.findById(submissionId)
+                .map(auditLedgerService::verifyIntegrity)
+                .orElse(Map.of("error", "Submission not found with ID: " + submissionId));
+    }
+
+    public List<Map<String, Object>> getLedgerBlocks() {
+        return auditLedgerService.getRecentLedgerBlocks();
     }
 
     /**
@@ -145,6 +165,8 @@ public class ClassroomService {
             sub.setPenaltyReason(gradeRes.getPenaltyReason());
             sub.setStatus(gradeRes.getStatus());
 
+            // Reseal with cryptographic audit ledger
+            auditLedgerService.sealSubmission(sub);
             submissionRepository.save(sub);
         }
 
@@ -155,7 +177,7 @@ public class ClassroomService {
         response.put("assignment", assignment);
         response.put("evaluated_submissions", submissions);
         response.put("cohort_matrix_analysis", aiResult);
+        response.put("status", "BATCH EVALUATION COMPLETE (DETERMINISTIC WINNOWING & RUBRIC ENGINE)");
         return response;
     }
 }
-

@@ -102,5 +102,20 @@ public class ClassroomController {
         RubricRule saved = classroomService.addRubricRule(rule);
         return ResponseEntity.ok(saved);
     }
+
+    @GetMapping("/ledger/blocks")
+    public ResponseEntity<List<Map<String, Object>>> getLedgerBlocks() {
+        return ResponseEntity.ok(classroomService.getLedgerBlocks());
+    }
+
+    @GetMapping("/submissions/{submissionId}/ledger")
+    public ResponseEntity<Map<String, Object>> getSubmissionLedger(@PathVariable Long submissionId) {
+        return ResponseEntity.ok(classroomService.verifySubmissionIntegrity(submissionId));
+    }
+
+    @GetMapping("/submissions/{submissionId}/verify")
+    public ResponseEntity<Map<String, Object>> verifySubmission(@PathVariable Long submissionId) {
+        return ResponseEntity.ok(classroomService.verifySubmissionIntegrity(submissionId));
+    }
 }
 

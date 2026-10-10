@@ -4,7 +4,11 @@ Calculates Jaccard & Containment metrics, merges contiguous matching spans,
 and outputs character-level highlight segments for split-screen comparison.
 """
 
+import time
+import hashlib
 from typing import Dict, List, Tuple, Optional
+import diff_match_patch as dmp_module
+
 from core.evasion import sanitize_and_audit
 from core.winnowing import generate_fingerprints, Fingerprint
 
@@ -52,6 +56,35 @@ def merge_contiguous_spans(matches: List[Dict], max_gap: int = 40) -> List[Dict]
     return merged
 
 
+def generate_aligned_diff(text_a: str, text_b: str) -> List[Dict]:
+    """
+    Generates word- and phrase-level aligned diff blocks between text A and text B
+    for split-screen visual diff rendering.
+    """
+    try:
+        dmp = dmp_module.diff_match_patch()
+        diffs = dmp.diff_main(text_a, text_b)
+        dmp.diff_cleanupSemantic(diffs)
+
+        aligned = []
+        for op, chunk in diffs:
+            if op == 0:
+                aligned.append({"type": "match", "text": chunk})
+            elif op == -1:
+                aligned.append({"type": "modified", "text_a": chunk, "text_b": ""})
+            elif op == 1:
+                if aligned and aligned[-1]["type"] == "modified" and not aligned[-1]["text_b"]:
+                    aligned[-1]["text_b"] = chunk
+                else:
+                    aligned.append({"type": "modified", "text_a": "", "text_b": chunk})
+        return aligned
+    except Exception:
+        return [
+            {"type": "match", "text": text_a if text_a == text_b else ""},
+            {"type": "modified", "text_a": text_a, "text_b": text_b} if text_a != text_b else None
+        ]
+
+
 def compare_documents_1to1(
     text_a: str,
     text_b: str,
@@ -60,7 +93,8 @@ def compare_documents_1to1(
     k: int = 5,
     w: int = 4,
     exclude_quotes: bool = True,
-    exclude_bibliography: bool = True
+    exclude_bibliography: bool = True,
+    sanitize_homoglyphs: bool = True,
 ) -> Dict:
     """
     Executes a high-precision 1-to-1 comparison between two documents.
@@ -68,13 +102,20 @@ def compare_documents_1to1(
     - Overall similarity percentage (Jaccard and Containment)
     - Matched segment coordinates (start and end offsets for both documents)
     - Integrity audit reports for both documents (homoglyphs, invisible chars)
-    - Matched text snippets
+    - Aligned semantic diff blocks
+    - Cryptographic verification hash
     """
-    # 1. Audit and sanitize both documents against adversarial tricks
-    clean_a, audit_a = sanitize_and_audit(text_a)
-    clean_b, audit_b = sanitize_and_audit(text_b)
+    start_time = time.perf_counter()
 
-    # 2. Extract winnowing fingerprints
+    # 1. Audit and sanitize both documents against adversarial tricks
+    if sanitize_homoglyphs:
+        clean_a, audit_a = sanitize_and_audit(text_a)
+        clean_b, audit_b = sanitize_and_audit(text_b)
+    else:
+        clean_a, audit_a = text_a, {"integrity_score": 100, "is_suspicious": False, "flags": []}
+        clean_b, audit_b = text_b, {"integrity_score": 100, "is_suspicious": False, "flags": []}
+
+    # 2. Extract winnowing fingerprints using Karp-Rabin rolling hash
     fps_a, tokens_a, exclusions_a = generate_fingerprints(
         clean_a, k=k, w=w, exclude_quotes=exclude_quotes, exclude_bibliography=exclude_bibliography
     )
@@ -99,7 +140,6 @@ def compare_documents_1to1(
     primary_similarity = round(containment_a_in_b * 100, 2)
 
     # 4. Map matching fingerprints back to character coordinates
-    # Index Doc B fingerprints by hash for O(1) lookup
     fps_b_by_hash: Dict[int, List[Fingerprint]] = {}
     for fp in fps_b:
         fps_b_by_hash.setdefault(fp.hash_val, []).append(fp)
@@ -127,16 +167,41 @@ def compare_documents_1to1(
 
     color_tier = get_color_tier(primary_similarity)
 
+    # 5. Semantic Aligned Diff
+    aligned_diff = generate_aligned_diff(text_a, text_b)
+
+    # 6. Evasion statistics
+    homoglyphs_detected = audit_a.get("homoglyphs_detected_count", 0) + audit_b.get("homoglyphs_detected_count", 0)
+    zero_width_detected = audit_a.get("zero_width_spaces_stripped_count", 0) + audit_b.get("zero_width_spaces_stripped_count", 0)
+    evasion_sanitized_count = homoglyphs_detected + zero_width_detected
+
+    # 7. Cryptographic hash for audit trail verification
+    hash_seed = f"{len(common_hashes)}:{total_unique_hashes}:{sorted(list(common_hashes))[:15]}"
+    crypto_hash = "0x" + hashlib.sha256(hash_seed.encode("utf-8")).hexdigest()[:32]
+
+    latency_ms = round((time.perf_counter() - start_time) * 1000, 2)
+
     return {
+        "status": "success",
         "title_a": title_a,
         "title_b": title_b,
         "similarity_score": primary_similarity,
+        "similarity_percentage": primary_similarity,
+        "shared_fingerprints_count": len(common_hashes),
+        "total_unique_fingerprints": total_unique_hashes,
+        "jaccard_coefficient": round(jaccard_similarity, 3),
         "jaccard_score": round(jaccard_similarity * 100, 2),
         "containment_a_in_b": round(containment_a_in_b * 100, 2),
         "containment_b_in_a": round(containment_b_in_a * 100, 2),
+        "homoglyphs_detected": homoglyphs_detected,
+        "zero_width_spaces_detected": zero_width_detected,
+        "evasion_sanitized_count": evasion_sanitized_count,
+        "execution_time_ms": latency_ms,
+        "cryptographic_hash": crypto_hash,
         "color_tier": color_tier,
         "total_matches_found": len(highlight_segments),
         "matched_segments": highlight_segments,
+        "aligned_diff": aligned_diff,
         "document_stats": {
             "doc_a": {
                 "char_count": len(text_a),
@@ -156,4 +221,5 @@ def compare_documents_1to1(
             "doc_b": exclusions_b
         }
     }
+
 

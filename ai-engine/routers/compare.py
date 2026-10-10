@@ -112,8 +112,10 @@ async def api_compare_one_to_one(payload: Compare1to1Request):
             w=w_val,
             exclude_quotes=payload.exclude_quotes,
             exclude_bibliography=payload.exclude_bibliography,
+            sanitize_homoglyphs=payload.sanitize_homoglyphs if payload.sanitize_homoglyphs is not None else True,
         )
         return result
+
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Comparison failed: {str(e)}")
 
@@ -270,27 +272,20 @@ async def api_ast_normalize(payload: AstNormalizeRequest):
     lang = payload.language or "python"
 
     if code_b:
-        comp = compare_code_files(code_a, code_b, lang=lang)
-        norm_a, meta_a = normalize_python_code(code_a) if lang == "python" else (code_a, {})
-        norm_b, meta_b = normalize_python_code(code_b) if lang == "python" else (code_b, {})
-        return {
-            "status": "success",
-            "language": lang,
-            "ast_equivalence_percentage": comp.get("structural_similarity", 100.0),
-            "jaccard_similarity": comp.get("jaccard_similarity", 100.0),
-            "is_code_clone": comp.get("is_code_clone", True),
-            "structural_verdict": "IDENTICAL CODE CLONE DETECTED (Variable Renaming Evasion)" if comp.get("is_code_clone") else "DIVERGENT CODE STRUCTURE",
-            "normalized_code_a": norm_a,
-            "normalized_code_b": norm_b,
-            "meta": {"doc_a": meta_a, "doc_b": meta_b}
-        }
+        return compare_code_files(code_a, code_b, lang=lang)
     else:
-        norm, meta = normalize_python_code(code_a)
+        if lang.lower() == "python":
+            norm, meta = normalize_python_code(code_a)
+        else:
+            from core.ast_code import normalize_java_code
+            norm, meta = normalize_java_code(code_a)
         return {
             "status": "success",
             "language": lang,
+            "ast_equivalence_percentage": 100.0,
+            "ast_nodes_count": meta.get("node_count", len(code_a.split())),
             "normalized_code": norm,
-            "meta": meta
+            "meta": meta,
         }
 
 
@@ -301,17 +296,17 @@ async def api_sanitize_homoglyphs(payload: SanitizeRequest):
     Direct endpoint for Developer Workstation API Wire Playground.
     """
     normalized_text, audit = sanitize_and_audit(payload.text)
-    evasion_types = [f["type"] for f in audit.get("flags", [])]
     return {
         "status": "success",
         "sanitized_text": normalized_text,
-        "homoglyphs_detected_count": audit.get("homoglyph_count", 0),
-        "zero_width_spaces_stripped_count": audit.get("invisible_char_count", 0),
+        "homoglyphs_detected_count": audit.get("homoglyphs_detected_count", 0),
+        "zero_width_spaces_stripped_count": audit.get("zero_width_spaces_stripped_count", 0),
+        "evasion_types_found": audit.get("evasion_types_found", []),
+        "threat_level": audit.get("threat_level", "CLEAN"),
         "integrity_score": audit.get("integrity_score", 100),
-        "threat_level": "HIGH ADVERSARIAL EVASION INTENT" if audit.get("is_suspicious") else "CLEAN",
-        "evasion_types_found": evasion_types,
-        "audit_report": audit
+        "audit_report": audit,
     }
+
 
 
 @router.post("/extract-text")

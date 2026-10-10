@@ -158,8 +158,11 @@ def analyze_ai_writing(text: str) -> Dict:
         )
 
     return {
+        "status": "success",
         "ai_probability": ai_probability,
         "verdict": verdict,
+        "perplexity_score": perplexity,
+        "burstiness_score": cv,
         "metrics": {
             "burstiness_std_dev": std_dev,
             "coefficient_of_variation": cv,
@@ -171,3 +174,4 @@ def analyze_ai_writing(text: str) -> Dict:
         },
         "sentence_analysis": sentence_records,
     }
+
