@@ -384,7 +384,7 @@ def compute_fact(num):
   const run1to1Diff = async () => {
     setLoading(true);
     try {
-      const res = await fetch('http://localhost:8080/api/studio/compare-1to1', {
+      const res = await fetch('http://localhost:8000/api/v1/compare/one-to-one', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -396,12 +396,12 @@ def compute_fact(num):
           exclude_bibliography: excludeBiblio
         })
       });
-      if (!res.ok) throw new Error('Gateway returned ' + res.status);
+      if (!res.ok) throw new Error('AI Engine returned ' + res.status);
       const data = await res.json();
       setDiffResult(data);
     } catch (e) {
       try {
-        const fallback = await fetch('http://localhost:8000/api/v1/compare/one-to-one', {
+        const fallback = await fetch('http://localhost:8080/api/studio/compare-1to1', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -413,7 +413,7 @@ def compute_fact(num):
             exclude_bibliography: excludeBiblio
           })
         });
-        if (!fallback.ok) throw new Error('AI Engine returned ' + fallback.status);
+        if (!fallback.ok) throw new Error('Gateway returned ' + fallback.status);
         const fbData = await fallback.json();
         setDiffResult(fbData);
       } catch (err) {
@@ -495,7 +495,7 @@ def compute_fact(num):
   const runCohortMatrix = async () => {
     setLoading(true);
     try {
-      const res = await fetch('http://localhost:8080/api/studio/cohort-matrix', {
+      const res = await fetch('http://localhost:8000/api/v1/compare/many-to-many', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -503,12 +503,12 @@ def compute_fact(num):
           collusion_threshold: 25.0
         })
       });
-      if (!res.ok) throw new Error('Gateway error');
+      if (!res.ok) throw new Error('Engine error');
       const data = await res.json();
       setMatrixResult(data);
     } catch (e) {
       try {
-        const fallback = await fetch('http://localhost:8000/api/v1/compare/many-to-many', {
+        const fallback = await fetch('http://localhost:8080/api/studio/cohort-matrix', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -516,7 +516,7 @@ def compute_fact(num):
             collusion_threshold: 25.0
           })
         });
-        if (!fallback.ok) throw new Error('Engine error');
+        if (!fallback.ok) throw new Error('Gateway error');
         setMatrixResult(await fallback.json());
       } catch (err) {
         // High-fidelity fallback N×N cohort matrix dataset
@@ -593,22 +593,22 @@ def compute_fact(num):
   const runAiForensics = async () => {
     setLoading(true);
     try {
-      const res = await fetch('http://localhost:8080/api/studio/ai-forensics', {
+      const res = await fetch('http://localhost:8000/api/v1/detect/ai-forensics', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ text: aiText })
       });
-      if (!res.ok) throw new Error('Gateway error');
+      if (!res.ok) throw new Error('Engine error');
       const data = await res.json();
       setAiResult(data);
     } catch (e) {
       try {
-        const fallback = await fetch('http://localhost:8000/api/v1/detect/ai-forensics', {
+        const fallback = await fetch('http://localhost:8080/api/studio/ai-forensics', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ text: aiText })
         });
-        if (!fallback.ok) throw new Error('Engine error');
+        if (!fallback.ok) throw new Error('Gateway error');
         setAiResult(await fallback.json());
       } catch (err) {
         // High-fidelity client-side calculation for AI writing forensics
@@ -676,22 +676,22 @@ def compute_fact(num):
   const runCodeAst = async () => {
     setLoading(true);
     try {
-      const res = await fetch('http://localhost:8080/api/studio/code-ast', {
+      const res = await fetch('http://localhost:8000/api/v1/detect/code-ast', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ code_a: codeA, code_b: codeB, language: "python" })
       });
-      if (!res.ok) throw new Error('Gateway error');
+      if (!res.ok) throw new Error('Engine error');
       const data = await res.json();
       setCodeResult(data);
     } catch (e) {
       try {
-        const fallback = await fetch('http://localhost:8000/api/v1/detect/code-ast', {
+        const fallback = await fetch('http://localhost:8080/api/studio/code-ast', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ code_a: codeA, code_b: codeB, language: "python" })
         });
-        if (!fallback.ok) throw new Error('Engine error');
+        if (!fallback.ok) throw new Error('Gateway error');
         setCodeResult(await fallback.json());
       } catch (err) {
         // High-fidelity fallback dataset for AST code clone inspection

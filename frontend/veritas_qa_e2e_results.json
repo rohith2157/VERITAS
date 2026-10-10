@@ -1,404 +1,154 @@
 {
-  "timestamp": "2026-10-10T17:05:04Z",
-  "build_benchmarks": {
+  "timestamp": "2026-10-10T17:18:28Z",
+  "production_build": {
     "success": true,
-    "vite_built_line": "\u001b[32m\u00e2\u0153\u201c built in 9.96s\u001b[39m",
-    "wall_clock_seconds": 24.526,
+    "vite_built_summary": "\u001b[32m\u00e2\u0153\u201c built in 1.17s\u001b[39m",
+    "vite_build_seconds": null,
+    "total_cli_seconds": 3.198,
     "under_2_seconds": false,
-    "output_summary": "\n> veritas-platform@1.0.0 build\n> vite build\n\n\u001b[36mvite v8.3.3 \u001b[32mbuilding client environment for production...\u001b[36m\u001b[39m\ntransforming...\n\u00e2\u0153\u201c 84 modules transformed.\nrendering chunks...\ndist/index.html                                50.99 kB\ndist/assets/index-CA3Fo-Xx.css                 99.79 kB\ndist/assets/play-P5Z_pRZv.js                    0.22 kB\ndist/assets/circle-check-big-z9TWncwU.js        0.25 kB\ndist/assets/activity-BY22n2-C.js                0.26 kB\ndist/assets/DemoBench-8BdDTNEM.js               7.52 kB\ndist/assets/jsx-runtime-CGviJFyC.js            11.76 kB\ndist/assets/ClassroomPortal-9Snv-1Ph.js        17.27 kB\ndist/assets/OperationsDashboard-ChWaUE7Z.js    18.59 kB\ndist/assets/DeveloperWorkstation-PwZ35c0J.js   28.67 kB\ndist/assets/index-DOxxULed.js                 282.16 kB\n\n\u001b[32m\u00e2\u0153\u201c built in 9.96s\u001b[39m\n\u001b[33m\u001b[33m[PLUGIN_TIMINGS] \u001b[0mJavaScript callbacks ran for 8.0s of this 9.8s build (81%).\nThe slowest callbacks, timed inside each callback (the wait before a callback starts is excluded, the time it awaits is included):\n  - plugin vite:prepare-out-dir renderStart (23%, 2.2s, 1 call)\n  - plugin vite:css-post transform (13%, 1.3s, 3 calls)\nAdditional callback time came from the callbacks below and from callbacks under 1s.\n1 callback is listed without a time. Its calls overlapped, so the time inside one call includes work from other calls. To find its cost, profile the build with `node --cpu-prof`:\n  - plugin vite:css transform (3 calls)\nSee https://rolldown.rs/reference/InputOptions.checks#bundlertimings for more details.\n\u001b[39m\n"
+    "bundle_errors": 0
   },
-  "webgl_landing": {
-    "canvasFound": true,
+  "webgl_manifesto_landing": {
+    "canvasPresent": true,
     "canvasWidth": 1440,
     "canvasHeight": 900,
-    "webglContextAcquired": false,
-    "renderer": "Three.js Software/Default",
+    "webgl2Context": true,
+    "renderer": "WebKit WebGL",
+    "glVersion": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
     "headline": "Unlock collective truth.",
-    "hasLaunchPortalBtn": true,
-    "totalSections": 9
+    "launchPortalLinkFound": true,
+    "manifestoFound": true,
+    "teamFound": true,
+    "investorsFound": true
   },
-  "views": {
+  "portal_views": {
     "#dashboard": {
       "hash": "#dashboard",
-      "portalHeaderRendered": true,
-      "hasBackToManifesto": true,
-      "activeTabTitle": "DASHBOARD",
-      "mainLength": 2056,
-      "textSnippet": "INSTITUTIONAL INTEGRITY CONTROL DECK Operations & Forensic Ledger  Real-time correlation across multi-engine winnowing hashes, AST syntactic code clon",
-      "hasTargetKeyword": true,
-      "interactiveElementsCount": 14
+      "portalHeaderPresent": true,
+      "backButtonPresent": true,
+      "activeTabName": "DASHBOARD",
+      "mainContentLength": 2056,
+      "textHeadline": "Operations & Forensic Ledger",
+      "keywordMatched": true,
+      "interactiveElements": 14
     },
     "#studio": {
       "hash": "#studio",
-      "portalHeaderRendered": true,
-      "hasBackToManifesto": true,
-      "activeTabTitle": "STUDIO",
-      "mainLength": 1983,
-      "textSnippet": "INTERACTIVE VERIFICATION STUDIO Universal Verification Studio & Diff Inspector  Synchronized dual-pane line offset tracking, Winnowing token diffs, ad",
-      "hasTargetKeyword": true,
-      "interactiveElementsCount": 13
+      "portalHeaderPresent": true,
+      "backButtonPresent": true,
+      "activeTabName": "STUDIO",
+      "mainContentLength": 1987,
+      "textHeadline": "Universal Verification Studio & Diff Inspector",
+      "keywordMatched": true,
+      "interactiveElements": 13
     },
     "#classroom": {
       "hash": "#classroom",
-      "portalHeaderRendered": true,
-      "hasBackToManifesto": true,
-      "activeTabTitle": "CLASSROOM",
-      "mainLength": 1987,
-      "textSnippet": "ACADEMIC ORCHESTRATION Classroom & Automated Rubric Gateway  Spring Boot enterprise microservice managing student cohorts, collusion matrices, and det",
-      "hasTargetKeyword": true,
-      "interactiveElementsCount": 7
+      "portalHeaderPresent": true,
+      "backButtonPresent": true,
+      "activeTabName": "CLASSROOM",
+      "mainContentLength": 1987,
+      "textHeadline": "Classroom & Automated Rubric Gateway",
+      "keywordMatched": true,
+      "interactiveElements": 7
     },
     "#demobench": {
       "hash": "#demobench",
-      "portalHeaderRendered": true,
-      "hasBackToManifesto": true,
-      "activeTabTitle": "DEMO BENCH",
-      "mainLength": 928,
-      "textSnippet": "Instant Validation Presentation Demo Bench  Four pre-configured live forensic tests ready for instant execution in front of professors or reviewers.  ",
-      "hasTargetKeyword": true,
-      "interactiveElementsCount": 4
+      "portalHeaderPresent": true,
+      "backButtonPresent": true,
+      "activeTabName": "DEMO BENCH",
+      "mainContentLength": 928,
+      "textHeadline": "Presentation Demo Bench",
+      "keywordMatched": true,
+      "interactiveElements": 4
     },
     "#dev": {
       "hash": "#dev",
-      "portalHeaderRendered": true,
-      "hasBackToManifesto": true,
-      "activeTabTitle": "DEVELOPER",
-      "mainLength": 4064,
-      "textSnippet": "VERITAS DEVELOPER WORKSTATION & MULTI-SERVICE TELEMETRY Developer Workstation  Direct inspectability into the distributed microservices architecture: ",
-      "hasTargetKeyword": true,
-      "interactiveElementsCount": 12
+      "portalHeaderPresent": true,
+      "backButtonPresent": true,
+      "activeTabName": "DEVELOPER",
+      "mainContentLength": 4064,
+      "textHeadline": "Developer Workstation",
+      "keywordMatched": true,
+      "interactiveElements": 12
     }
   },
   "bidirectional_navigation": {
-    "launch_click_succeeded": true,
+    "launch_click_triggered": true,
     "hash_after_launch": "#dashboard",
-    "portal_header_present": true,
-    "back_click_succeeded": true,
+    "portal_view_opened": true,
+    "back_click_triggered": true,
     "hash_after_back": "#manifesto",
-    "manifesto_restored": true,
-    "verified": true
+    "manifesto_view_restored": true,
+    "bidirectional_flow_passed": true
   },
   "keyboard_accessibility": {
-    "launch_button_tab_focusable": false,
-    "enter_key_triggers_portal": false,
-    "back_button_tab_focusable": false,
-    "enter_key_triggers_manifesto": true,
-    "tab_switcher_keyboard_cycle": [
+    "tab_focused_launch_cta": false,
+    "enter_activated_portal": false,
+    "back_button_focused": false,
+    "enter_restored_manifesto": true,
+    "tab_cycle_passed": false,
+    "keyboard_a11y_passed": false
+  },
+  "browser_console": {
+    "unhandled_exceptions": [],
+    "console_errors": [
       {
-        "tab": "Studio",
-        "hash": "#studio"
+        "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+        "location": {
+          "url": "http://localhost:8080/api/classrooms",
+          "lineNumber": 0,
+          "columnNumber": 0
+        }
       },
       {
-        "tab": "Classroom",
-        "hash": "#classroom"
+        "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+        "location": {
+          "url": "http://localhost:8080/api/studio/health",
+          "lineNumber": 0,
+          "columnNumber": 0
+        }
       },
       {
-        "tab": "Demo Bench",
-        "hash": "#demobench"
+        "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+        "location": {
+          "url": "http://localhost:8080/api/classrooms",
+          "lineNumber": 0,
+          "columnNumber": 0
+        }
       },
       {
-        "tab": "Developer",
-        "hash": "#dev"
-      },
-      {
-        "tab": "Dashboard",
-        "hash": "#dashboard"
+        "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+        "location": {
+          "url": "http://localhost:8080/api/studio/health",
+          "lineNumber": 0,
+          "columnNumber": 0
+        }
       }
     ],
-    "verified": false
+    "console_warnings": []
   },
-  "console_errors": [
-    {
-      "type": "error",
-      "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED",
-      "location": {
-        "url": "http://localhost:8080/api/studio/compare-1to1",
-        "lineNumber": 0,
-        "columnNumber": 0
-      }
-    },
-    {
-      "type": "error",
-      "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED",
-      "location": {
-        "url": "http://localhost:8080/api/classrooms",
-        "lineNumber": 0,
-        "columnNumber": 0
-      }
-    },
-    {
-      "type": "error",
-      "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED",
-      "location": {
-        "url": "http://localhost:8080/api/studio/health",
-        "lineNumber": 0,
-        "columnNumber": 0
-      }
-    },
-    {
-      "type": "error",
-      "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED",
-      "location": {
-        "url": "http://localhost:8080/api/studio/compare-1to1",
-        "lineNumber": 0,
-        "columnNumber": 0
-      }
-    },
-    {
-      "type": "error",
-      "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED",
-      "location": {
-        "url": "http://localhost:8080/api/classrooms",
-        "lineNumber": 0,
-        "columnNumber": 0
-      }
-    },
-    {
-      "type": "error",
-      "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED",
-      "location": {
-        "url": "http://localhost:8080/api/studio/health",
-        "lineNumber": 0,
-        "columnNumber": 0
-      }
-    }
-  ],
-  "console_warnings": [],
-  "network_errors_404": [],
-  "fonts_verified": {
+  "network_audit": {
+    "failed_404s": [],
+    "total_requests": 78
+  },
+  "font_verification": {
     "readyStatus": "loaded",
     "totalFonts": 46,
-    "fonts": [
-      {
-        "family": "PPNeueMontreal",
-        "status": "loaded",
-        "loaded": true
-      },
-      {
-        "family": "PPNeueMontreal",
-        "status": "loaded",
-        "loaded": true
-      },
-      {
-        "family": "PPNeueMontreal",
-        "status": "loaded",
-        "loaded": true
-      },
-      {
-        "family": "Inter",
-        "status": "unloaded",
-        "loaded": true
-      },
-      {
-        "family": "Inter",
-        "status": "unloaded",
-        "loaded": true
-      },
-      {
-        "family": "Inter",
-        "status": "unloaded",
-        "loaded": true
-      },
-      {
-        "family": "Inter",
-        "status": "unloaded",
-        "loaded": true
-      },
-      {
-        "family": "Inter",
-        "status": "unloaded",
-        "loaded": true
-      },
-      {
-        "family": "Inter",
-        "status": "unloaded",
-        "loaded": true
-      },
-      {
-        "family": "Inter",
-        "status": "unloaded",
-        "loaded": true
-      },
-      {
-        "family": "Inter",
-        "status": "unloaded",
-        "loaded": true
-      },
-      {
-        "family": "Inter",
-        "status": "unloaded",
-        "loaded": true
-      },
-      {
-        "family": "Inter",
-        "status": "unloaded",
-        "loaded": true
-      },
-      {
-        "family": "Inter",
-        "status": "unloaded",
-        "loaded": true
-      },
-      {
-        "family": "Inter",
-        "status": "unloaded",
-        "loaded": true
-      },
-      {
-        "family": "Inter",
-        "status": "unloaded",
-        "loaded": true
-      },
-      {
-        "family": "Inter",
-        "status": "unloaded",
-        "loaded": true
-      },
-      {
-        "family": "Inter",
-        "status": "unloaded",
-        "loaded": true
-      },
-      {
-        "family": "Inter",
-        "status": "unloaded",
-        "loaded": true
-      },
-      {
-        "family": "Inter",
-        "status": "unloaded",
-        "loaded": true
-      },
-      {
-        "family": "Inter",
-        "status": "unloaded",
-        "loaded": true
-      },
-      {
-        "family": "Inter",
-        "status": "unloaded",
-        "loaded": true
-      },
-      {
-        "family": "Inter",
-        "status": "unloaded",
-        "loaded": true
-      },
-      {
-        "family": "Inter",
-        "status": "unloaded",
-        "loaded": true
-      },
-      {
-        "family": "Inter",
-        "status": "unloaded",
-        "loaded": true
-      },
-      {
-        "family": "Inter",
-        "status": "unloaded",
-        "loaded": true
-      },
-      {
-        "family": "Inter",
-        "status": "unloaded",
-        "loaded": true
-      },
-      {
-        "family": "Inter",
-        "status": "unloaded",
-        "loaded": true
-      },
-      {
-        "family": "Inter",
-        "status": "unloaded",
-        "loaded": true
-      },
-      {
-        "family": "Inter",
-        "status": "unloaded",
-        "loaded": true
-      },
-      {
-        "family": "Inter",
-        "status": "unloaded",
-        "loaded": true
-      },
-      {
-        "family": "JetBrains Mono",
-        "status": "unloaded",
-        "loaded": true
-      },
-      {
-        "family": "JetBrains Mono",
-        "status": "unloaded",
-        "loaded": true
-      },
-      {
-        "family": "JetBrains Mono",
-        "status": "unloaded",
-        "loaded": true
-      },
-      {
-        "family": "JetBrains Mono",
-        "status": "unloaded",
-        "loaded": true
-      },
-      {
-        "family": "JetBrains Mono",
-        "status": "unloaded",
-        "loaded": true
-      },
-      {
-        "family": "JetBrains Mono",
-        "status": "loaded",
-        "loaded": true
-      },
-      {
-        "family": "JetBrains Mono",
-        "status": "unloaded",
-        "loaded": true
-      },
-      {
-        "family": "JetBrains Mono",
-        "status": "unloaded",
-        "loaded": true
-      },
-      {
-        "family": "JetBrains Mono",
-        "status": "unloaded",
-        "loaded": true
-      },
-      {
-        "family": "JetBrains Mono",
-        "status": "unloaded",
-        "loaded": true
-      },
-      {
-        "family": "JetBrains Mono",
-        "status": "unloaded",
-        "loaded": true
-      },
-      {
-        "family": "JetBrains Mono",
-        "status": "loaded",
-        "loaded": true
-      },
-      {
-        "family": "PPNeueMontreal",
-        "status": "loaded",
-        "loaded": true
-      },
-      {
-        "family": "PPNeueMontreal",
-        "status": "loaded",
-        "loaded": true
-      },
-      {
-        "family": "PPNeueMontreal",
-        "status": "loaded",
-        "loaded": true
-      }
+    "allLoaded": false,
+    "families": [
+      "PPNeueMontreal",
+      "Inter",
+      "JetBrains Mono"
     ]
-  }
+  },
+  "screenshots_generated": [
+    "screenshot_manifesto_landing.png",
+    "screenshot_view_dashboard.png",
+    "screenshot_view_studio.png",
+    "screenshot_view_classroom.png",
+    "screenshot_view_demobench.png",
+    "screenshot_view_dev.png",
+    "screenshot_portal_keyboard_focused.png"
+  ]
 }

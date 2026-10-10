@@ -108,9 +108,12 @@ async function run() {
   await evalJs("document.getElementById('tab-btn-1to1')?.click()");
   await sleep(600);
   await evalJs("document.getElementById('btn-execute-1to1')?.click()");
-  await sleep(1500);
-
-  const tab1Score = await evalJs("document.getElementById('diff-similarity-score')?.innerText");
+  let tab1Score = null;
+  for (let i = 0; i < 15; i++) {
+    tab1Score = await evalJs("document.getElementById('diff-similarity-score')?.innerText");
+    if (tab1Score) break;
+    await sleep(300);
+  }
   const leftPaneExists = await evalJs("!!document.getElementById('diff-pane-left')");
   const rightPaneExists = await evalJs("!!document.getElementById('diff-pane-right')");
   const lineCount = await evalJs("document.querySelectorAll('#diff-pane-left > div').length");

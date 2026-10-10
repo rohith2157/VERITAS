@@ -385,16 +385,17 @@ async function run() {
   // Select AST pipeline and edit the payload
   await evaluate(`
     (() => {
-      const tab = Array.from(document.querySelectorAll('button')).find(b => b.textContent.includes('AST Code'));
+      const tabs = Array.from(document.querySelectorAll('button'));
+      const tab = tabs.find(b => b.textContent.includes('AST Code Structural Normalization'));
       if (tab) tab.click();
     })()
   `);
-  await sleep(500);
+  await sleep(800);
 
   const originalPayloadLength = await evaluate(`document.querySelector('textarea') ? document.querySelector('textarea').value.length : 0`);
   console.log(`[Check 5.1] Original AST payload length: ${originalPayloadLength} chars`);
 
-  // Modify payload in textarea
+  // Modify payload in textarea using React property descriptor
   const customPayload = JSON.stringify({
     code_a: "def solve(data): return [x * 2 for x in data]",
     code_b: "def s(d): return [item * 2 for item in d]",
@@ -405,13 +406,14 @@ async function run() {
     (() => {
       const ta = document.querySelector('textarea');
       if (ta) {
-        ta.value = ${JSON.stringify(customPayload)};
+        const protoSetter = Object.getOwnPropertyDescriptor(window.HTMLTextAreaElement.prototype, 'value').set;
+        protoSetter.call(ta, ${JSON.stringify(customPayload)});
         ta.dispatchEvent(new Event('input', { bubbles: true }));
         ta.dispatchEvent(new Event('change', { bubbles: true }));
       }
     })()
   `);
-  await sleep(400);
+  await sleep(600);
 
   // Send modified request
   await evaluate(`
@@ -437,7 +439,7 @@ async function run() {
       if (btn) btn.click();
     })()
   `);
-  await sleep(400);
+  await sleep(600);
 
   const resetLength = await evaluate(`document.querySelector('textarea') ? document.querySelector('textarea').value.length : 0`);
   console.log(`[Check 5.3] Reset default payload length: ${resetLength} chars (Matches original: ${resetLength === originalPayloadLength})`);

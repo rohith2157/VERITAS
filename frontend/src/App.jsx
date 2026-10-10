@@ -78,11 +78,23 @@ export default function App() {
       }
     };
 
+    const handleGlobalKeyDown = (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        const target = e.target.closest('[data-tab], [href^="#"]');
+        if (target) {
+          handleGlobalClicks(e);
+        }
+      }
+    };
+
     document.addEventListener('click', handleGlobalClicks);
+    document.addEventListener('keydown', handleGlobalKeyDown);
 
     return () => {
       window.removeEventListener('hashchange', handleHash);
       document.removeEventListener('click', handleGlobalClicks);
+      document.removeEventListener('keydown', handleGlobalKeyDown);
+    };
     };
   }, []);
 
