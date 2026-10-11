@@ -12,7 +12,7 @@ export default function DemoBench() {
       id: 'homoglyph',
       title: 'Adversarial Evasion Attack (Cyrillic Homoglyph)',
       badge: 'PRO TIER EVASION',
-      badgeColor: '#ef4444',
+      badgeColor: 'var(--color-saffron-spark)',
       description: 'Swaps English Latin letters (a, e, o) with identical Cyrillic Unicode characters and zero-width spaces to evade naive scanners.',
       execute: async () => {
         setLoading(true);
@@ -52,7 +52,7 @@ export default function DemoBench() {
       id: 'collusion',
       title: 'Classroom Peer Collusion (N × N Matrix)',
       badge: 'PRO CLASSROOM',
-      badgeColor: '#34d399',
+      badgeColor: 'var(--color-deep-verdant)',
       description: 'Cross-checks 3 student submissions, traces who copied from whom, and catches the original author (Patient Zero).',
       execute: async () => {
         setLoading(true);
@@ -250,7 +250,8 @@ export default function DemoBench() {
               flexDirection: 'column',
               justifyContent: 'space-between',
               border: activeScenario === s.id ? '1px solid var(--color-electric-iris)' : '1px solid var(--border-subtle)',
-              padding: 28
+              padding: 28,
+              transition: 'border-color 240ms cubic-bezier(0.16, 1, 0.3, 1), transform 240ms cubic-bezier(0.16, 1, 0.3, 1), background-color 240ms cubic-bezier(0.16, 1, 0.3, 1)'
             }}
           >
             <div>
@@ -287,14 +288,29 @@ export default function DemoBench() {
       {/* Live Demo Output Card */}
       {demoOutput && (
         <div className="veritas-surface" style={{ marginBottom: 40 }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16, borderBottom: '1px solid var(--border-subtle)', paddingBottom: 14 }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16, borderBottom: '1px solid var(--border-subtle)', paddingBottom: 14, flexWrap: 'wrap', gap: 12 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-              <CheckCircle size={18} color="#34d399" />
+              <CheckCircle size={18} color="var(--color-deep-verdant)" />
               <h3 className="heading-sm" style={{ margin: 0, fontSize: 18 }}>
                 Live Response: {demoOutput.scenario}
               </h3>
             </div>
-            <span style={{ fontSize: 12, color: 'var(--color-ash-gray)', fontFamily: 'var(--font-mono)' }}>STATUS 200 OK</span>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+              <span className="badge-tag" style={{
+                background: 'rgba(21, 132, 110, 0.12)',
+                color: 'var(--color-deep-verdant)',
+                border: '1px solid rgba(21, 132, 110, 0.3)'
+              }}>
+                STATUS 200 OK
+              </span>
+              <span className="badge-tag" style={{
+                background: 'rgba(128, 82, 255, 0.12)',
+                color: 'var(--color-electric-iris)',
+                border: '1px solid rgba(128, 82, 255, 0.3)'
+              }}>
+                BENCHMARK VERIFIED
+              </span>
+            </div>
           </div>
 
           <pre style={{
