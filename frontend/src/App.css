@@ -182,3 +182,80 @@
     border-right-color: var(--border);
   }
 }
+
+/* ==================== VERITAS HIGH-END VELVET UTILITIES ==================== */
+.card-velvet {
+  background: rgba(10, 10, 14, 0.72);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 24px;
+  padding: 24px 32px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 1px 1px rgba(255, 255, 255, 0.08);
+  transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.card-velvet:hover {
+  border-color: rgba(128, 82, 255, 0.3);
+  box-shadow: 0 24px 60px -12px rgba(0, 0, 0, 0.9), 0 0 24px -4px rgba(128, 82, 255, 0.2);
+}
+
+.badge-velvet-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 9999px;
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  font-family: var(--font-ppneuemontreal);
+}
+
+.badge-velvet-iris {
+  background: rgba(128, 82, 255, 0.15);
+  color: var(--color-electric-iris);
+  border: 1px solid rgba(128, 82, 255, 0.35);
+}
+
+.badge-velvet-spark {
+  background: rgba(255, 184, 41, 0.15);
+  color: var(--color-saffron-spark);
+  border: 1px solid rgba(255, 184, 41, 0.35);
+}
+
+.badge-velvet-verdant {
+  background: rgba(21, 132, 110, 0.15);
+  color: var(--color-deep-verdant);
+  border: 1px solid rgba(21, 132, 110, 0.35);
+}
+
+.btn-velvet-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: var(--color-electric-iris);
+  color: #ffffff;
+  padding: 12px 24px;
+  border-radius: 9999px;
+  font-family: var(--font-ppneuemontreal);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.025em;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(128, 82, 255, 0.4);
+  transition: all 0.24s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-velvet-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 28px rgba(128, 82, 255, 0.6);
+  filter: brightness(1.08);
+}
+
+.btn-velvet-primary:active {
+  transform: translateY(0);
+}
