@@ -19,6 +19,7 @@ export default function DeveloperWorkstation() {
 
   // Microservice Cluster Real-Time Health State
   const [clusterStatus, setClusterStatus] = useState({
+    postgres: { status: 'READY', latency: 2, mode: 'PORT :2157', online: false, checkedAt: 'Initial' },
     spring: { status: 'READY', latency: 14, mode: 'PORT :8080', online: false, checkedAt: 'Initial' },
     fastapi: { status: 'READY', latency: 9, mode: 'PORT :8000', online: false, checkedAt: 'Initial' },
     react: { status: 'LIVE', latency: 1, mode: 'PORT :5173', online: true, checkedAt: 'Active Session' }
@@ -119,7 +120,7 @@ export default function DeveloperWorkstation() {
       name: 'Winnowing Document Similarity',
       tag: 'Operator 1',
       method: 'POST',
-      url: 'http://localhost:8000/api/v1/compare/one-to-one',
+      url: '/api/v1/compare/one-to-one',
       defaultBody: JSON.stringify({
         text_a: "Distributed consensus algorithms ensure that a cluster of nodes can agree on values despite network partitions. Raft decomposes leader election and log replication.",
         text_b: "Distributed consensus algorithms ensure that a cluster of nodes can agree on values despite network partitions. Raft decomposes leader election and log replication carefully.",
@@ -142,7 +143,7 @@ export default function DeveloperWorkstation() {
       name: 'Cohort Collusion Matrix & Patient Zero',
       tag: 'Operator 2',
       method: 'POST',
-      url: 'http://localhost:8000/api/v1/compare/many-to-many',
+      url: '/api/v1/compare/many-to-many',
       defaultBody: JSON.stringify({
         documents: [
           { id: "s1", name: "Arjun Patel", timestamp: "2026-10-01T09:00:00", text: "Distributed consensus algorithms ensure node clusters reach agreement despite network partitions. Raft simplifies leader election." },
@@ -171,7 +172,7 @@ export default function DeveloperWorkstation() {
       name: 'AST Code Structural Normalization',
       tag: 'Forensics',
       method: 'POST',
-      url: 'http://localhost:8000/api/v1/ast/normalize',
+      url: '/api/v1/ast/normalize',
       defaultBody: JSON.stringify({
         code_a: "def factorial(n):\n    if n <= 1:\n        return 1\n    return n * factorial(n - 1)",
         code_b: "def f(x):\n    # Obfuscated variable names\n    if x <= 1:\n        return 1\n    return x * f(x - 1)",
@@ -190,7 +191,7 @@ export default function DeveloperWorkstation() {
       name: 'Cyrillic Homoglyph & Zero-Width Sanitizer',
       tag: 'Anti-Evasion',
       method: 'POST',
-      url: 'http://localhost:8000/api/v1/sanitize/homoglyphs',
+      url: '/api/v1/sanitize/homoglyphs',
       defaultBody: JSON.stringify({
         text: "This is a comp\u0430ny r\u0435s\u0435arch document with inv\u200Bisible z\u0435ro-width spaces."
       }, null, 2),
@@ -203,17 +204,36 @@ export default function DeveloperWorkstation() {
         threat_level: "HIGH ADVERSARIAL EVASION INTENT"
       }
     },
+    postgres_graph: {
+      name: 'PostgreSQL Recursive CTE Collusion Graph',
+      tag: 'PostgreSQL :2157',
+      method: 'GET',
+      url: '/api/graph/collusion-chains',
+      defaultBody: '',
+      simulatedResponse: {
+        status: "success",
+        totalChains: 4,
+        chains: [
+          { sourceAuthor: "Arjun Patel", targetAuthor: "Rohan Gupta", depth: 1, confidence: 94.5, path: "Arjun Patel -> Rohan Gupta" },
+          { sourceAuthor: "Arjun Patel", targetAuthor: "David Kim", depth: 2, confidence: 89.2, path: "Arjun Patel -> Rohan Gupta -> David Kim" },
+          { sourceAuthor: "Arjun Patel", targetAuthor: "Elena Rostova", depth: 1, confidence: 88.0, path: "Arjun Patel -> Elena Rostova" },
+          { sourceAuthor: "Elena Rostova", targetAuthor: "Marcus Vance", depth: 1, confidence: 82.5, path: "Elena Rostova -> Marcus Vance" }
+        ],
+        graphEngine: "PostgreSQL Recursive CTE (Cycle Breaking)",
+        databasePort: 2157
+      }
+    },
     spring_classroom: {
       name: 'Spring Boot 3 Classroom Gateway',
       tag: 'Enterprise',
       method: 'GET',
-      url: 'http://localhost:8080/api/classrooms',
+      url: '/api/classrooms',
       defaultBody: '',
       simulatedResponse: [
         {
           id: 1,
           name: "CS 401: Distributed Systems & Cryptographic Protocols",
-          instructor: "Dr. Alistair Vance",
+          instructor: "Dr. Evelyn Chen",
           semester: "Fall 2026",
           studentCount: 42,
           activeAssignmentsCount: 3,
@@ -225,7 +245,7 @@ export default function DeveloperWorkstation() {
       name: 'SBERT Semantic High-Dim Vectors',
       tag: 'SBERT 384-D',
       method: 'POST',
-      url: 'http://localhost:8000/api/v1/semantic/compare',
+      url: '/api/v1/semantic/compare',
       defaultBody: JSON.stringify({
         text_a: "Raft decomposes consensus into leader election, log replication, and safety guarantees.",
         text_b: "The Raft protocol partitions cluster agreement into electing leaders, appending state logs, and enforcing invariant safety.",
@@ -244,7 +264,7 @@ export default function DeveloperWorkstation() {
       name: 'FAISS IVF-Flat SDMA Dynamic Search',
       tag: 'SDMA Slab',
       method: 'POST',
-      url: 'http://localhost:8000/api/v1/vector/ivf-sdma/search',
+      url: '/api/v1/vector/ivf-sdma/search',
       defaultBody: JSON.stringify({
         query_text: "distributed consensus algorithms with fault tolerance",
         k: 3
@@ -267,7 +287,7 @@ export default function DeveloperWorkstation() {
       name: 'Stylometric Writeprint & Yule\'s K',
       tag: 'Bio-NLP',
       method: 'POST',
-      url: 'http://localhost:8000/api/v1/forensics/stylometry',
+      url: '/api/v1/forensics/stylometry',
       defaultBody: JSON.stringify({
         text: "Notwithstanding the intricate nuances of Byzantine fault-tolerant architectures, one must scrupulously evaluate the mathematical underpinnings of Lamport timestamps; furthermore, the epoch-based state transitions exhibited by Paxos demonstrate an exquisite degree of rigor.",
         baseline_author: "Arjun Patel",
@@ -288,7 +308,7 @@ export default function DeveloperWorkstation() {
       name: 'UGC 2018 Statutory Classifier',
       tag: 'Statutory',
       method: 'POST',
-      url: 'http://localhost:8080/api/classrooms/ugc2018/evaluate',
+      url: '/api/classrooms/ugc2018/evaluate',
       defaultBody: JSON.stringify({
         similarityScore: 48.5
       }, null, 2),
@@ -307,7 +327,7 @@ export default function DeveloperWorkstation() {
       name: 'DPDP Act 2023 Age-Gating & Section 12',
       tag: 'Privacy',
       method: 'POST',
-      url: 'http://localhost:8000/api/v1/compliance/dpdp-2023/verify',
+      url: '/api/v1/compliance/dpdp-2023/verify',
       defaultBody: JSON.stringify({
         student_age: 16,
         parent_consent_token: "CONSENT-PARENT-VTS-994821",
@@ -326,7 +346,7 @@ export default function DeveloperWorkstation() {
       name: 'Merkle Tree O(log N) Proof Verifier',
       tag: 'SHA-256',
       method: 'POST',
-      url: 'http://localhost:8080/api/classrooms/ledger/merkle/verify',
+      url: '/api/classrooms/ledger/merkle/verify',
       defaultBody: JSON.stringify({
         leafHash: "0x4a8f9b2d8819c3017e120d91ff02a418582ef88211de4a8f9b2d8819c3017e12",
         expectedRoot: "0x9e120d91ff02a4184a8f9b2d8819c3017e120d91ff02a418582ef88211de9b33",
@@ -349,13 +369,28 @@ export default function DeveloperWorkstation() {
     setPingingCluster(true);
     const now = new Date().toLocaleTimeString();
 
-    // 1. Spring Boot check (:8080)
+    // 1. PostgreSQL Universal Graph (:2157)
+    let pgRes = { status: 'READY (SIMULATED)', latency: 2, mode: 'PORT :2157', online: false, checkedAt: now };
+    try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 1200);
+      const start = performance.now();
+      const res = await fetch('/api/graph/nodes', { method: 'GET', signal: controller.signal });
+      clearTimeout(timeoutId);
+      if (res.ok) {
+        pgRes = { status: 'LIVE', latency: Math.round(performance.now() - start), mode: 'PORT :2157', online: true, checkedAt: now };
+      }
+    } catch {
+      // Offline fallback
+    }
+
+    // 2. Spring Boot check (:8080)
     let springRes = { status: 'READY (SIMULATED)', latency: 14, mode: 'PORT :8080', online: false, checkedAt: now };
     try {
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 1200);
       const start = performance.now();
-      const res = await fetch('http://localhost:8080/api/studio/health', { method: 'GET', signal: controller.signal });
+      const res = await fetch('/api/studio/health', { method: 'GET', signal: controller.signal });
       clearTimeout(timeoutId);
       if (res.ok) {
         springRes = { status: 'LIVE', latency: Math.round(performance.now() - start), mode: 'PORT :8080', online: true, checkedAt: now };
@@ -364,13 +399,13 @@ export default function DeveloperWorkstation() {
       // Offline fallback
     }
 
-    // 2. Python FastAPI check (:8000)
+    // 3. Python FastAPI check (:8000)
     let fastRes = { status: 'READY (SIMULATED)', latency: 9, mode: 'PORT :8000', online: false, checkedAt: now };
     try {
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 1200);
       const start = performance.now();
-      const res = await fetch('http://localhost:8000/health', { method: 'GET', signal: controller.signal });
+      const res = await fetch('/health', { method: 'GET', signal: controller.signal });
       clearTimeout(timeoutId);
       if (res.ok) {
         fastRes = { status: 'LIVE', latency: Math.round(performance.now() - start), mode: 'PORT :8000', online: true, checkedAt: now };
@@ -380,6 +415,7 @@ export default function DeveloperWorkstation() {
     }
 
     setClusterStatus({
+      postgres: pgRes,
       spring: springRes,
       fastapi: fastRes,
       react: { status: 'LIVE', latency: 1, mode: 'PORT :5173', online: true, checkedAt: now }
@@ -441,7 +477,9 @@ export default function DeveloperWorkstation() {
 
   const copyCurl = () => {
     const config = pipelineConfigs[activePipeline];
-    let cmd = `curl -X ${config.method} "${config.url}"`;
+    const targetPort = config.url.startsWith('/api/v1') ? '8000' : '8080';
+    const fullUrl = config.url.startsWith('http') ? config.url : `http://localhost:${targetPort}${config.url}`;
+    let cmd = `curl -X ${config.method} "${fullUrl}"`;
     if (config.method !== 'GET' && requestPayload) {
       const sanitized = requestPayload.replace(/'/g, "\\'").replace(/\n/g, ' ');
       cmd += ` -H "Content-Type: application/json" -d '${sanitized}'`;
@@ -532,7 +570,7 @@ export default function DeveloperWorkstation() {
           Developer Workstation
         </h1>
         <p style={{ fontSize: 16, fontWeight: 200, color: 'var(--color-ash-gray)', marginTop: 8, maxWidth: 820 }}>
-          Direct inspectability into the distributed microservices architecture: Spring Boot 3 enterprise orchestrator (:8080), Python FastAPI algorithmic forensics core (:8000), and React 19 presentation layer (:5173).
+          Direct inspectability into the distributed microservices architecture: PostgreSQL universal graph database (:2157), Spring Boot 3 enterprise orchestrator (:8080), Python FastAPI algorithmic forensics core (:8000), and React 19 presentation layer (:5173).
         </p>
       </div>
 
@@ -567,7 +605,38 @@ export default function DeveloperWorkstation() {
           </button>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 16 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 16 }}>
+          {/* PostgreSQL Universal Graph */}
+          <div className="veritas-surface" style={{ padding: '20px 24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, fontWeight: 600, color: 'var(--color-bone-white)' }}>
+                <span style={{ 
+                  width: 8, 
+                  height: 8, 
+                  borderRadius: '50%', 
+                  background: clusterStatus.postgres?.online ? 'var(--color-deep-verdant)' : 'var(--color-electric-iris)' 
+                }} />
+                <span>PostgreSQL 18 Universal Graph</span>
+              </div>
+              <div style={{ fontSize: 12, color: 'var(--color-ash-gray)', marginTop: 4 }}>
+                Port :2157 • Recursive CTE • Graph
+              </div>
+              <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.4)', marginTop: 2, fontFamily: 'monospace' }}>
+                Ping: {clusterStatus.postgres?.latency || 2}ms • Checked: {clusterStatus.postgres?.checkedAt || 'Initial'}
+              </div>
+            </div>
+            <span style={{ 
+              fontSize: 11, 
+              fontWeight: 600, 
+              color: clusterStatus.postgres?.online ? 'var(--color-deep-verdant)' : 'var(--color-electric-iris)', 
+              background: clusterStatus.postgres?.online ? 'rgba(21,132,110,0.15)' : 'rgba(128,82,255,0.15)', 
+              padding: '4px 8px', 
+              borderRadius: 6 
+            }}>
+              {clusterStatus.postgres?.status || 'READY'}
+            </span>
+          </div>
+
           {/* Spring Boot */}
           <div className="veritas-surface" style={{ padding: '20px 24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
             <div>

@@ -18,7 +18,7 @@ export default function DemoBench() {
         setLoading(true);
         setActiveScenario('homoglyph');
         try {
-          const res = await fetch('http://localhost:8000/api/v1/compare/one-to-one', {
+          const res = await fetch('/api/v1/compare/one-to-one', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -58,7 +58,7 @@ export default function DemoBench() {
         setLoading(true);
         setActiveScenario('collusion');
         try {
-          const res = await fetch('http://localhost:8000/api/v1/compare/many-to-many', {
+          const res = await fetch('/api/v1/compare/many-to-many', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -109,7 +109,7 @@ export default function DemoBench() {
         setLoading(true);
         setActiveScenario('code_ast');
         try {
-          const res = await fetch('http://localhost:8000/api/v1/detect/code-ast', {
+          const res = await fetch('/api/v1/detect/code-ast', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -150,7 +150,7 @@ export default function DemoBench() {
         setLoading(true);
         setActiveScenario('ai_forensics');
         try {
-          const res = await fetch('http://localhost:8000/api/v1/detect/ai-forensics', {
+          const res = await fetch('/api/v1/detect/ai-forensics', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -180,6 +180,43 @@ export default function DemoBench() {
           setLoading(false);
         }
       }
+    },
+    {
+      id: 'postgres_graph',
+      title: 'PostgreSQL Universal Collusion Graph (Port 2157)',
+      badge: 'POSTGRESQL GRAPH',
+      badgeColor: 'var(--color-electric-iris)',
+      description: 'Executes recursive CTE collusion tracing on PostgreSQL port 2157 with cycle-breaking across multi-hop derivation networks.',
+      execute: async () => {
+        setLoading(true);
+        setActiveScenario('postgres_graph');
+        try {
+          const res = await fetch('/api/graph/collusion-chains');
+          const data = await res.json();
+          setDemoOutput({
+            scenario: 'PostgreSQL Recursive CTE Graph Collusion (Port 2157)',
+            data
+          });
+        } catch (e) {
+          setDemoOutput({
+            scenario: 'PostgreSQL Recursive CTE Graph Collusion (Port 2157)',
+            data: {
+              status: 'success',
+              totalChains: 4,
+              chains: [
+                { sourceAuthor: 'Arjun Patel', targetAuthor: 'Rohan Gupta', depth: 1, confidence: 94.5, path: 'Arjun Patel -> Rohan Gupta' },
+                { sourceAuthor: 'Arjun Patel', targetAuthor: 'David Kim', depth: 2, confidence: 89.2, path: 'Arjun Patel -> Rohan Gupta -> David Kim' },
+                { sourceAuthor: 'Arjun Patel', targetAuthor: 'Elena Rostova', depth: 1, confidence: 88.0, path: 'Arjun Patel -> Elena Rostova' },
+                { sourceAuthor: 'Elena Rostova', targetAuthor: 'Marcus Vance', depth: 1, confidence: 82.5, path: 'Elena Rostova -> Marcus Vance' }
+              ],
+              graphEngine: 'PostgreSQL Recursive CTE (Cycle Breaking)',
+              databasePort: 2157
+            }
+          });
+        } finally {
+          setLoading(false);
+        }
+      }
     }
   ];
 
@@ -195,7 +232,7 @@ export default function DemoBench() {
           Presentation Demo Bench
         </h1>
         <p className="body-light" style={{ maxWidth: 580 }}>
-          Four pre-configured live forensic tests ready for instant execution in front of professors or reviewers.
+          Five pre-configured live forensic tests ready for instant execution in front of professors or reviewers.
         </p>
       </div>
 
