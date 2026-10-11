@@ -26,3 +26,4 @@ Write-Host " Spring Boot REST API:   http://localhost:8080" -ForegroundColor Whi
 Write-Host " Python AI Engine API:   http://localhost:8000" -ForegroundColor White
 Write-Host " PostgreSQL Graph DB:    localhost:2157/veritasdb" -ForegroundColor White
 Write-Host "==========================================================" -ForegroundColor Cyan
+

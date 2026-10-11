@@ -18,3 +18,4 @@ INSERT INTO graph_edges (edge_id, source_node, target_node, relationship, weight
 ('bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb', '22222222-2222-2222-2222-222222222222', '44444444-4444-4444-4444-444444444444', 'DERIVED_FROM', 64.0, 42, '{"shared_tokens": 89, "algorithm": "jaccard_token"}'),
 ('cccccccc-cccc-cccc-cccc-cccccccccccc', '11111111-1111-1111-1111-111111111111', '33333333-3333-3333-3333-333333333333', 'AST_CLONE', 34.0, 48, '{"ast_nodes_matched": 48, "algorithm": "ast_tree_diff"}')
 ON CONFLICT (edge_id) DO NOTHING;
+

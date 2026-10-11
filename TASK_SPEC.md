@@ -1,70 +1,64 @@
 # Task Specification (`TASK_SPEC.md`)
-## Task 2: Universal Database Graph Setup, Real Academic Team, Real PDF Processing & Guided Portal Workflow
+## Task 3: Enterprise Graph REST Gateway, Live Classroom-Studio Binding, Dynamic Collusion Visualizer & Full E2E Verification
 
 ### 1. Task Identification
-- **Task ID**: `TASK-002-CORE`
-- **Feature Name**: Veritas Universal Database, Authentic Academic Consortia, Real PDF Ingestion & 5-Step Guided Portal Workflow
-- **Assigned Agents**: 
-  - Agent 1: Universal Graph & Database Architect
-  - Agent 2: Authentic Academic Team & Partner Specialist
-  - Agent 3: Real PDF & Document Forensics Engine
-  - Agent 4: Guided Workflow Hub & Void UI/UX Specialist
-- **Execution Mode**: Autonomous Agentic Engineering Bounded Loop
+- **Task ID**: `TASK-003-ENTERPRISE-INTEGRATION`
+- **Feature Name**: Full-Stack Dynamic Data Binding, PostgreSQL Graph REST API, Universal Studio Live Forensics, and E2E Verification
+- **Assigned 5 Agents**:
+  - **Agent 1: Graph Engine & Database Architect** (`com.veritas.backend.controller.GraphController`)
+  - **Agent 2: Classroom & Submission Gateway Specialist** (`ClassroomPortal.jsx` dynamic API binding)
+  - **Agent 3: Forensics Studio & AI Bridge Engineer** (`UniversalStudio.jsx` live API comparison)
+  - **Agent 4: Interactive Workflow & Dynamic Graph Visualizer** (`PortalWorkflowHub.jsx` live CTE graph)
+  - **Agent 5: Systems QA & Verification Auditor** (`verify_full_system.ps1` & `VERIFICATION_REPORT.md`)
+- **Execution Mode**: Autonomous Agentic Engineering Bounded Loop (`/agentic-engineering`)
 - **Iteration Limit**: 3 iterations per wave
-- **Verification Commands**: 
-  - `npm run build` (frontend SLA < 2.0s)
-  - `.\mvnw.cmd compile` (backend compile exit code 0)
-  - `python -m pytest tests/` or python syntax validation
+- **Verification Commands**:
+  - `.\mvnw.cmd compile` (Spring Boot exit code 0)
+  - `npm run build` (Vite build SLA < 2.0s)
+  - `python -m pytest tests/` (FastAPI test suite exit code 0)
+  - `psql` query on `view_collusion_chains`
 
 ---
 
-### 2. Core Pillars of Execution
+### 2. Five Engineering Roles & Scopes
 
-#### Pillar 1: Universal PostgreSQL & Graph Database Architecture
-- Provide `backend/src/main/resources/schema-postgresql.sql` with full relational + graph tables:
-  - `users` (id, email, full_name, role: STUDENT/INSTRUCTOR/AUDITOR, institution, created_at)
-  - `classrooms`, `assignments`, `submissions`
-  - `graph_collusion_nodes` & `graph_collusion_edges` (multi-hop graph relationships)
-  - Recursive CTE graph queries for student collusion tracing and Patient Zero attribution.
-- Configure `pom.xml` with `org.postgresql:postgresql` runtime dependency and dual-profile (`dev` = H2, `prod` = PostgreSQL).
+#### Agent 1: Graph Engine & Database Architect
+- Create `backend/src/main/java/com/veritas/backend/controller/GraphController.java`.
+- Expose REST endpoints:
+  - `GET /api/graph/collusion-chains`: Queries PostgreSQL `view_collusion_chains` and returns multi-hop chains with patient zero, hops, similarity, and time delta.
+  - `GET /api/graph/nodes`: Queries `graph_nodes` and `graph_edges` returning nodes and relationships for visual topology.
+- Compile cleanly via `./mvnw.cmd compile`.
 
-#### Pillar 2: Authentic Team & Research Partners
-- In `frontend/index.html` and `frontend/src/components/VeritasManifestoPage.jsx`:
-  - Replace placeholder template names ("Haroun Hickman, Poppy Reid, Joel Kang") with real Veritas Academic Integrity & Forensics leadership:
-    - **Dr. Evelyn Chen** — Chief Forensics Scientist & AST Parsing Architect (Stanford AI Lab)
-    - **Prof. Rajesh Mukhopadhyay** — Academic Integrity Ombudsman & UGC Statutory Regulations Fellow
-    - **Marcus Vance** — Cryptographic Ledger Principal (MIT Cryptography Group)
-    - **Elena Rostova** — Lead Stylometry & NLP Forensics Specialist (PhD Cambridge)
-  - Replace generic investor logos with real academic integrity research partners:
-    - UGC Academic Integrity & Statutory Accreditation Forum
-    - IEEE Computational Forensics & Ethical AI Society
-    - National Academic Depository (NAD) Cryptographic Ledger Consortium
-    - Higher Education Code Originality Benchmark Alliance
-    - International Center for Academic Integrity (ICAI)
+#### Agent 2: Classroom & Submission Gateway Specialist
+- Inspect `frontend/src/components/classroom/ClassroomPortal.jsx`.
+- Wire live `useEffect` to fetch classrooms from `/api/classrooms` and submissions from `/api/classrooms/assignments/1/submissions`.
+- Ensure new submission form posts to `/api/classrooms/assignments/1/submit`.
+- Keep graceful fallback so if the backend is booting, UI renders domain data without crashing.
 
-#### Pillar 3: Real PDF & Multi-Document Ingestion (Zero Simulation)
-- In `ai-engine/core/extractor.py`: Real PDF binary text extraction, token extraction, and metadata parsing.
-- In `frontend/src/components/studio/UniversalStudio.jsx` & `ClassroomPortal.jsx`:
-  - Real browser-based file dropzone supporting `.pdf`, `.docx`, `.py`, `.java`, `.txt`.
-  - Live client-side PDF text extraction using standard `FileReader` and text streaming, sending real content to backend endpoints.
+#### Agent 3: Forensics Studio & AI Bridge Engineer
+- Inspect `frontend/src/components/studio/UniversalStudio.jsx`.
+- Connect the primary "Run Comparison" button to call `POST /api/studio/compare-1to1` (or `/api/v1/compare/one-to-one`).
+- Connect AI Forensics tab to `POST /api/studio/ai-forensics`.
+- Ensure client-side winnowing fallback remains seamless when offline.
 
-#### Pillar 4: Systematic 5-Step Guided Portal Workflow & UI/UX Redesign
-- Create `frontend/src/components/dashboard/PortalWorkflowHub.jsx`:
-  - 5-Step Systematic User Flow:
-    1. **Ingest Document**: Upload raw PDF/text/code file.
-    2. **Multi-Engine Forensics**: Winnowing + AST Clone + Stylometric Writeprint + AI Perplexity.
-    3. **Cohort Collusion Graph**: Interactive visual network of peer collusion and Patient Zero.
-    4. **Statutory UGC 2018 Rating**: Real-time legal classification (Level 0–3) and penalty calculation.
-    5. **Cryptographic Certificate**: Verified SHA-256 Merkle seal and certificate export.
-- Integrated seamlessly with `App.jsx`, `Navbar.jsx`, `CommandPalette.jsx` (`Ctrl+K`), and `ToastContext.jsx`.
+#### Agent 4: Interactive Workflow & Dynamic Graph Visualizer
+- Inspect `frontend/src/components/dashboard/PortalWorkflowHub.jsx`.
+- In Step 3 (Collusion Graph), add live data hook fetching `/api/graph/collusion-chains`.
+- Render the SVG topology dynamically from the fetched graph data with interactive node selection.
+
+#### Agent 5: Systems QA & Verification Auditor
+- Run comprehensive build and test verification:
+  - Spring Boot compile: `.\mvnw.cmd compile`
+  - React frontend build: `npm run build` (verify SLA < 2.0s)
+  - Database connectivity test: verify port 2157
+- Log exact timestamped commands, exit codes, and commit hashes in `VERIFICATION_REPORT.md` and `SUMMARY.md`.
 
 ---
 
 ### 3. Acceptance Criteria
-- [ ] PostgreSQL schema with recursive graph edges created.
-- [ ] `pom.xml` includes PostgreSQL dependency and compiles cleanly.
-- [ ] Team section features real academic integrity researchers and research partners.
-- [ ] Real file upload (PDF/DOCX/TXT/Code) supported in frontend with live extraction.
-- [ ] 5-Step Guided Workflow Hub operational after clicking "Launch Portal".
+- [ ] `GraphController.java` implemented and compiled with exit code 0.
+- [ ] `ClassroomPortal.jsx` fetches live classroom and submission data.
+- [ ] `UniversalStudio.jsx` communicates with backend comparison endpoints.
+- [ ] `PortalWorkflowHub.jsx` SVG graph reflects PostgreSQL collusion chains.
 - [ ] `npm run build` passes in under 2.0s with zero errors.
 - [ ] Every minor passing change micro-committed to Git.

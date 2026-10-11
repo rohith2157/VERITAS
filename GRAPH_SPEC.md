@@ -1,37 +1,40 @@
 # Task Graph Specification (`GRAPH_SPEC.md`)
-## Task 2: Veritas Universal Database Graph, Authentic Academic Consortia, Real Document Forensics & Guided Portal Workflow
+## Task 3: 5-Agent Autonomous Collaboration Graph
 
 ```mermaid
 flowchart TD
-    W1A["TASK-201: PostgreSQL Graph Schema & Recursive CTE View"] --> W2A["TASK-203: Spring Boot JPA & Rest Gateway Integration"]
-    W1B["TASK-202: Authentic Academic Leadership & Research Partners"] --> W3A["TASK-205: 5-Step Guided Portal Workflow Hub"]
-    W1C["TASK-204: Universal Text Extractor & Multi-Format Ingest"] --> W3A
-    W2A --> W3A
-    W3A --> W4A["TASK-206: Interactive Collusion Graph & SVG Topology"]
-    W4A --> W5A["TASK-207: Full-Stack Verification & Build SLA (< 2.0s)"]
-    W5A --> GATE{"Deterministic Verification Gate"}
-    GATE -->|Exit Code 0| SHIP["Production Ready & Git Micro-Commits"]
-    GATE -->|Exit Code != 0| REVERT["Bounded Loop Clean Revert"]
+    subgraph Wave1["Wave 1: Core Backend & Data Services"]
+        A1["Agent 1: Graph Engine Architect<br/>GraphController.java & PostgreSQL REST"]
+    end
+
+    subgraph Wave2["Wave 2: Frontend Data Binding & Forensics Integration"]
+        A2["Agent 2: Classroom Gateway<br/>ClassroomPortal.jsx live REST binding"]
+        A3["Agent 3: Forensics Studio Bridge<br/>UniversalStudio.jsx live API comparison"]
+        A4["Agent 4: Interactive Graph Visualizer<br/>PortalWorkflowHub.jsx dynamic CTE visualizer"]
+    end
+
+    subgraph Wave3["Wave 3: Deterministic E2E Verification"]
+        A5["Agent 5: Systems QA & Verification Auditor<br/>mvn compile + npm build + DB verify"]
+    end
+
+    A1 --> A4
+    A1 --> A2
+    A1 --> A3
+    A2 --> A5
+    A3 --> A5
+    A4 --> A5
+    A5 --> GATE{"DO-178C Verification Gate"}
+    GATE -->|Exit Code 0| SHIP["Production Commit & Deploy"]
 ```
 
 ---
 
-## 1. Concurrent Dependency Waves
+## 1. 5-Agent Allocation Matrix
 
-| Wave | Task ID | Assigned Agent | Objectives | Target Artifacts | Verification Command |
-| :---: | :--- | :--- | :--- | :--- | :--- |
-| **Wave 1** | `TASK-201` | Universal Graph & DB Architect | Schema, tables, recursive CTE view on port 2157 | `schema-postgresql.sql`, `seed-graph-data.sql` | `psql -c "SELECT * FROM view_collusion_chains"` |
-| **Wave 1** | `TASK-202` | Authentic Leadership Specialist | Replace placeholder names with real academic consortia | `VeritasManifestoPage.jsx`, `index.html` | `npm run build` |
-| **Wave 1** | `TASK-204` | Forensics Extractor Specialist | Real PDF/DOCX parsing (zero simulation) | `extractor.py`, `PortalWorkflowHub.jsx` | `python -c "import pypdf; print('OK')"` |
-| **Wave 2** | `TASK-203` | Backend Integration Architect | Live Spring Boot REST APIs with PostgreSQL | `DataInitializer.java`, `application.properties` | `.\mvnw.cmd compile` |
-| **Wave 3** | `TASK-205` | Guided Portal Workflow Specialist | 5-Step guided investigation pipeline | `PortalWorkflowHub.jsx`, `App.jsx`, `CommandPalette.jsx` | `npm run build` |
-| **Wave 4** | `TASK-206` | Interactive UI/UX Specialist | Topological collusion graph SVG & live DB badge | `PortalWorkflowHub.jsx`, `OperationsDashboard.jsx` | `npm run build` |
-| **Wave 5** | `TASK-207` | Systems QA & Benchmarker | E2E integration test, build time SLA < 2.0s | `dist/`, `VERIFICATION_REPORT.md` | `npm run build` |
-
----
-
-## 2. Partitioning & Isolation Protocol
-- All database modifications run on PostgreSQL cluster (port 2157, `veritasdb`).
-- All backend REST interactions run on Spring Boot (port 8080).
-- All AI forensics and extraction run on Python FastAPI (port 8000).
-- Frontend builds and proxies run via Vite (port 5173).
+| Agent | Role | Domain | Primary Deliverables | Verification Target |
+| :---: | :--- | :--- | :--- | :--- |
+| **Agent 1** | Graph Engine Architect | Spring Boot & PostgreSQL | `GraphController.java` (`/api/graph/collusion-chains`, `/api/graph/nodes`) | `.\mvnw.cmd compile` |
+| **Agent 2** | Classroom Gateway Specialist | React & Spring Boot REST | Dynamic classroom/assignment/submission state in `ClassroomPortal.jsx` | `npm run build` |
+| **Agent 3** | Forensics Studio Bridge | React & FastAPI Forensics | Live 1-to-1 diff & AI forensics hook in `UniversalStudio.jsx` | `npm run build` |
+| **Agent 4** | Interactive Graph Visualizer | React & SVG Topology | Dynamic CTE graph rendering & node selection in `PortalWorkflowHub.jsx` | `npm run build` |
+| **Agent 5** | Systems QA Auditor | Cross-Stack QA | Comprehensive verification report & Git micro-commits | Exit code 0 across all gates |
