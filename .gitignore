@@ -1,0 +1,68 @@
+# ==========================================
+# Veritas Platform Master Git Ignore Rules
+# ==========================================
+
+# Video & Large Media Binaries
+*.mp4
+*.mov
+*.avi
+*.mkv
+*.webm
+
+# Generated Test Captures & Audit Screenshots
+audit_screenshots/
+*.png
+!frontend/public/**/*.png
+!frontend/src/**/*.png
+!design/**/*.png
+test_*.png
+verify_*.png
+view_*.png
+asscroll_step_*.png
+
+# Node & Frontend Build Artifacts
+node_modules/
+dist/
+dist-ssr/
+*.local
+.npm/
+.eslintcache
+.vite/
+
+# Python Virtual Environments & Caches
+venv/
+.venv/
+env/
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.coverage
+htmlcov/
+*.egg-info/
+
+# Java / Spring Boot Build Outputs
+target/
+*.class
+*.jar
+*.war
+*.ear
+.mvn/wrapper/maven-wrapper.jar
+
+# Logs & Temporary Scratch Files
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# OS & Editor Files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+*.sublime-project
+*.sublime-workspace
