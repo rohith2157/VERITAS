@@ -874,17 +874,22 @@ export default function DeveloperWorkstation() {
           <button
             onClick={copyCurl}
             className="btn-ghost"
+            aria-live="polite"
             style={{
-              padding: '6px 12px',
+              minWidth: 108,
+              justifyContent: 'center',
+              padding: '6px 14px',
               borderRadius: 8,
               fontSize: 12,
+              fontWeight: 600,
               display: 'inline-flex',
               alignItems: 'center',
               gap: 6,
               cursor: 'pointer',
-              border: '1px solid rgba(255, 255, 255, 0.12)',
-              background: copiedCurl ? 'rgba(21,132,110,0.2)' : 'transparent',
-              color: copiedCurl ? 'var(--color-deep-verdant)' : 'var(--color-bone-white)'
+              border: copiedCurl ? '1px solid rgba(21, 132, 110, 0.4)' : '1px solid rgba(255, 255, 255, 0.12)',
+              background: copiedCurl ? 'rgba(21, 132, 110, 0.15)' : 'transparent',
+              color: copiedCurl ? 'var(--color-deep-verdant)' : 'var(--color-bone-white)',
+              transition: 'all 0.2s cubic-bezier(0.16, 1, 0.3, 1)'
             }}
           >
             {copiedCurl ? <Check size={13} /> : <Copy size={13} />}
@@ -988,17 +993,21 @@ export default function DeveloperWorkstation() {
                 <button
                   onClick={copyJsonResponse}
                   className="btn-ghost"
+                  aria-live="polite"
                   style={{
+                    minWidth: 66,
+                    justifyContent: 'center',
                     padding: '3px 8px',
                     borderRadius: 4,
                     fontSize: 11,
                     display: 'inline-flex',
                     alignItems: 'center',
                     gap: 4,
-                    background: 'rgba(255,255,255,0.05)',
-                    border: '1px solid rgba(255,255,255,0.1)',
+                    background: copiedJson ? 'rgba(21, 132, 110, 0.15)' : 'rgba(255, 255, 255, 0.05)',
+                    border: copiedJson ? '1px solid rgba(21, 132, 110, 0.4)' : '1px solid rgba(255, 255, 255, 0.1)',
                     color: copiedJson ? 'var(--color-deep-verdant)' : 'var(--color-ash-gray)',
-                    cursor: 'pointer'
+                    cursor: 'pointer',
+                    transition: 'all 0.2s cubic-bezier(0.16, 1, 0.3, 1)'
                   }}
                 >
                   {copiedJson ? <Check size={11} /> : <FileJson size={11} />}
