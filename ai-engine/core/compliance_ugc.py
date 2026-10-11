@@ -15,13 +15,28 @@ from typing import Dict, List, Any, Optional
 
 
 GENERIC_ACADEMIC_TERMS = {
-    "distributed systems", "machine learning", "artificial intelligence",
-    "deep neural networks", "natural language processing", "computer science",
-    "data structures and algorithms", "operating systems", "relational database",
-    "concurrency control", "byzantine fault tolerance", "consensus protocol",
-    "university grants commission", "higher educational institutions",
-    "abstract", "introduction", "methodology", "results and discussion",
-    "conclusion", "future work", "references", "table of contents"
+    "distributed systems",
+    "machine learning",
+    "artificial intelligence",
+    "deep neural networks",
+    "natural language processing",
+    "computer science",
+    "data structures and algorithms",
+    "operating systems",
+    "relational database",
+    "concurrency control",
+    "byzantine fault tolerance",
+    "consensus protocol",
+    "university grants commission",
+    "higher educational institutions",
+    "abstract",
+    "introduction",
+    "methodology",
+    "results and discussion",
+    "conclusion",
+    "future work",
+    "references",
+    "table of contents",
 }
 
 
@@ -44,14 +59,20 @@ def apply_ugc_exclusions(text: str) -> Dict[str, Any]:
     clean_text = re.sub(r'["“][^"”]{10,500}["”]', quote_replacer, text)
 
     # 2. Filter out References / Bibliography sections
-    biblio_match = re.search(r'\b(references|bibliography|works cited)\b.*$', clean_text, re.IGNORECASE | re.DOTALL)
+    biblio_match = re.search(
+        r"\b(references|bibliography|works cited)\b.*$",
+        clean_text,
+        re.IGNORECASE | re.DOTALL,
+    )
     if biblio_match:
-        excluded_segments.append({"type": "BIBLIOGRAPHY_SECTION", "snippet": biblio_match.group(0)[:150]})
-        clean_text = clean_text[:biblio_match.start()]
+        excluded_segments.append(
+            {"type": "BIBLIOGRAPHY_SECTION", "snippet": biblio_match.group(0)[:150]}
+        )
+        clean_text = clean_text[: biblio_match.start()]
 
     # 3. Filter generic statutory / domain terms
     for term in GENERIC_ACADEMIC_TERMS:
-        if re.search(rf'\b{re.escape(term)}\b', clean_text, re.IGNORECASE):
+        if re.search(rf"\b{re.escape(term)}\b", clean_text, re.IGNORECASE):
             excluded_segments.append({"type": "GENERIC_DOMAIN_TERM", "term": term})
 
     return {
@@ -59,13 +80,13 @@ def apply_ugc_exclusions(text: str) -> Dict[str, Any]:
         "effective_evaluated_char_count": len(clean_text),
         "excluded_segments_count": len(excluded_segments),
         "excluded_segments": excluded_segments[:10],
-        "filtered_text": clean_text
+        "filtered_text": clean_text,
     }
 
 
 def classify_ugc_2018_level(
     similarity_percentage: float,
-    user_role: str = "STUDENT"  # "STUDENT", "RESEARCHER", or "FACULTY"
+    user_role: str = "STUDENT",  # "STUDENT", "RESEARCHER", or "FACULTY"
 ) -> Dict[str, Any]:
     """
     Classifies submission into the legally binding UGC 2018 Tier structure.
@@ -87,40 +108,48 @@ def classify_ugc_2018_level(
     elif sim <= 60.0:
         level = "Level 2"
         severity = "HIGH"
-        penalty_student = "Debarred from submitting a revised script for a strict period of 1 year."
+        penalty_student = (
+            "Debarred from submitting a revised script for a strict period of 1 year."
+        )
         penalty_faculty = "Required to withdraw manuscript; Denied one annual increment; Disallowed co-guidance for 2 years."
         hearing_required = True
     else:
         level = "Level 3"
         severity = "CRITICAL"
-        penalty_student = "Registration for the academic degree / research programme cancelled."
+        penalty_student = (
+            "Registration for the academic degree / research programme cancelled."
+        )
         penalty_faculty = "Required to withdraw manuscript; Denied two consecutive increments; Disallowed supervision for 3 years."
         hearing_required = True
 
-    active_penalty = penalty_faculty if user_role.upper() == "FACULTY" else penalty_student
+    active_penalty = (
+        penalty_faculty if user_role.upper() == "FACULTY" else penalty_student
+    )
 
     return {
         "ugc_level": level,
         "similarity_index": sim,
         "severity": severity,
         "statutory_threshold": (
-            "Up to 10%" if level == "Level 0" else (
-                "10% - 40%" if level == "Level 1" else (
-                    "40% - 60%" if level == "Level 2" else "Above 60%"
-                )
+            "Up to 10%"
+            if level == "Level 0"
+            else (
+                "10% - 40%"
+                if level == "Level 1"
+                else ("40% - 60%" if level == "Level 2" else "Above 60%")
             )
         ),
         "mandated_disciplinary_penalty": active_penalty,
         "penalties_by_role": {
             "student_researcher": penalty_student,
-            "faculty_staff": penalty_faculty
+            "faculty_staff": penalty_faculty,
         },
         "regulatory_governance": {
             "statute": "UGC Regulations 2018 (Promotion of Academic Integrity)",
             "investigating_body": "Departmental Academic Integrity Panel (DAIP)",
             "adjudicating_body": "Institutional Academic Integrity Panel (IAIP)",
-            "formal_hearing_required": hearing_required
-        }
+            "formal_hearing_required": hearing_required,
+        },
     }
 
 
@@ -129,7 +158,7 @@ def generate_daip_iaip_report(
     course_name: str,
     raw_similarity: float,
     after_exclusions_similarity: float,
-    user_role: str = "STUDENT"
+    user_role: str = "STUDENT",
 ) -> Dict[str, Any]:
     """
     Generates formal DAIP & IAIP investigative report dossiers for tribunal hearing.
@@ -138,20 +167,20 @@ def generate_daip_iaip_report(
 
     return {
         "dossier_id": f"DAIP-{abs(hash(student_name + course_name)) % 100000:05d}",
-        "subject": {
-            "name": student_name,
-            "role": user_role,
-            "course": course_name
-        },
+        "subject": {"name": student_name, "role": user_role, "course": course_name},
         "forensic_metrics": {
             "gross_similarity_index": round(raw_similarity, 2),
-            "net_similarity_after_ugc_exclusions": round(after_exclusions_similarity, 2),
-            "excluded_percentage": round(max(0.0, raw_similarity - after_exclusions_similarity), 2)
+            "net_similarity_after_ugc_exclusions": round(
+                after_exclusions_similarity, 2
+            ),
+            "excluded_percentage": round(
+                max(0.0, raw_similarity - after_exclusions_similarity), 2
+            ),
         },
         "statutory_ruling": ugc_ruling,
         "recommendation": (
-            "DAIP Recommendation: File closed with no penalty." if ugc_ruling["ugc_level"] == "Level 0"
+            "DAIP Recommendation: File closed with no penalty."
+            if ugc_ruling["ugc_level"] == "Level 0"
             else f"DAIP Recommendation: Escalate to IAIP for enforcement of {ugc_ruling['ugc_level']} statutory penalty."
-        )
+        ),
     }
-
