@@ -184,6 +184,23 @@ export default function OperationsDashboard({ onOpenStudio, onOpenClassroom, onO
             width: 100% !important;
           }
         }
+        .ops-search-input {
+          width: 100%;
+          background: rgba(255, 255, 255, 0.04);
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          border-radius: 9999px;
+          padding: 8px 12px 8px 34px;
+          color: var(--color-bone-white);
+          font-size: 13px;
+          outline: none;
+          box-sizing: border-box;
+          transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+        }
+        .ops-search-input:focus {
+          background: rgba(255, 255, 255, 0.07);
+          border-color: var(--color-electric-iris);
+          box-shadow: 0 0 0 2px rgba(128, 82, 255, 0.25);
+        }
       `}</style>
 
       {/* 1. Header & Summary Banner */}
@@ -319,23 +336,14 @@ export default function OperationsDashboard({ onOpenStudio, onOpenClassroom, onO
 
             <div className="ops-header-controls" style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
               <div className="ops-search-input-wrap" style={{ position: 'relative', width: 220 }}>
-                <Search size={14} style={{ position: 'absolute', left: 12, top: 11, color: 'var(--color-ash-gray)' }} />
+                <Search size={14} style={{ position: 'absolute', left: 12, top: 11, color: 'var(--color-ash-gray)', pointerEvents: 'none' }} />
                 <input 
                   type="text"
                   placeholder="Filter student or course..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  style={{
-                    width: '100%',
-                    background: 'rgba(255, 255, 255, 0.05)',
-                    border: '1px solid rgba(255, 255, 255, 0.1)',
-                    borderRadius: 9999,
-                    padding: '8px 12px 8px 34px',
-                    color: 'var(--color-bone-white)',
-                    fontSize: 13,
-                    outline: 'none',
-                    boxSizing: 'border-box'
-                  }}
+                  className="ops-search-input"
+                  aria-label="Filter submissions by student or course"
                 />
               </div>
 
