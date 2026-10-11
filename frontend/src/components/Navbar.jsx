@@ -56,7 +56,7 @@ export default function Navbar({ activeTab, setActiveTab, serverStatus, theme = 
           cursor: pointer;
           font-size: 13px;
           font-weight: 600;
-          letter-spacing: 0.35px;
+          letter-spacing: var(--letter-spacing-display-caps, 0.04em);
           text-transform: uppercase;
           font-family: var(--font-ppneuemontreal, 'PPNeueMontreal', -apple-system, sans-serif);
           color: var(--color-ash-gray);
@@ -258,6 +258,34 @@ export default function Navbar({ activeTab, setActiveTab, serverStatus, theme = 
             >
               Veritas
             </span>
+
+            <div
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: 5,
+                padding: '3px 8px',
+                borderRadius: 9999,
+                background: 'rgba(21, 132, 110, 0.12)',
+                border: '1px solid rgba(21, 132, 110, 0.28)',
+                fontSize: 10,
+                fontWeight: 600,
+                letterSpacing: '0.04em',
+                color: 'var(--color-deep-verdant)',
+                marginLeft: 4,
+              }}
+              title="Cluster Live: Spring Boot :8080 | FastAPI :8000"
+            >
+              <span
+                style={{
+                  width: 5,
+                  height: 5,
+                  borderRadius: '50%',
+                  backgroundColor: 'var(--color-deep-verdant)',
+                }}
+              />
+              <span style={{ textTransform: 'uppercase' }}>Cluster Live</span>
+            </div>
           </div>
 
           {/* Center / Right Section: Navigation Text Links + Minimalist Theme Toggle + Signature Pill Button */}
