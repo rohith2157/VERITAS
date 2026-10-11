@@ -1124,3 +1124,4 @@ export default function PortalWorkflowHub({ onNavigateToStudio, onNavigateToClas
     </div>
   );
 }
+
