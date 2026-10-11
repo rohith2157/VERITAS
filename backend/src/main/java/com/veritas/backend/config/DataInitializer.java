@@ -35,7 +35,7 @@ public class DataInitializer implements CommandLineRunner {
         Classroom classroom = classroomService.createClassroom(
                 "CS 401: Distributed Systems & Cryptographic Protocols",
                 "Computer Science",
-                "Dr. Alistair Vance"
+                "Dr. Evelyn Chen"
         );
         classroom.setJoinCode("CS-401-FALL");
 
