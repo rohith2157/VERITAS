@@ -235,21 +235,32 @@ export default function UniversalStudio() {
   const leftPaneRef = useRef(null);
   const rightPaneRef = useRef(null);
   const isSyncingScroll = useRef(false);
+  const scrollRafId = useRef(null);
 
   const handleLeftScroll = () => {
     if (!syncScroll || isSyncingScroll.current || !leftPaneRef.current || !rightPaneRef.current) return;
     isSyncingScroll.current = true;
-    rightPaneRef.current.scrollTop = leftPaneRef.current.scrollTop;
-    rightPaneRef.current.scrollLeft = leftPaneRef.current.scrollLeft;
-    setTimeout(() => { isSyncingScroll.current = false; }, 50);
+    if (scrollRafId.current) cancelAnimationFrame(scrollRafId.current);
+    scrollRafId.current = requestAnimationFrame(() => {
+      if (rightPaneRef.current && leftPaneRef.current) {
+        rightPaneRef.current.scrollTop = leftPaneRef.current.scrollTop;
+        rightPaneRef.current.scrollLeft = leftPaneRef.current.scrollLeft;
+      }
+      isSyncingScroll.current = false;
+    });
   };
 
   const handleRightScroll = () => {
     if (!syncScroll || isSyncingScroll.current || !leftPaneRef.current || !rightPaneRef.current) return;
     isSyncingScroll.current = true;
-    leftPaneRef.current.scrollTop = rightPaneRef.current.scrollTop;
-    leftPaneRef.current.scrollLeft = rightPaneRef.current.scrollLeft;
-    setTimeout(() => { isSyncingScroll.current = false; }, 50);
+    if (scrollRafId.current) cancelAnimationFrame(scrollRafId.current);
+    scrollRafId.current = requestAnimationFrame(() => {
+      if (leftPaneRef.current && rightPaneRef.current) {
+        leftPaneRef.current.scrollTop = rightPaneRef.current.scrollTop;
+        leftPaneRef.current.scrollLeft = rightPaneRef.current.scrollLeft;
+      }
+      isSyncingScroll.current = false;
+    });
   };
 
   // ==================== SUB-TAB 1: 1-TO-1 SPLIT DIFF STATE ====================
