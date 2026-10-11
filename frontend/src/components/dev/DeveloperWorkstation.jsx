@@ -447,39 +447,42 @@ export default function DeveloperWorkstation() {
       cmd += ` -H "Content-Type: application/json" -d '${sanitized}'`;
     }
 
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(cmd).catch(() => fallbackCopy(cmd));
-    } else {
-      fallbackCopy(cmd);
-    }
+    copyToClipboard(cmd);
     setCopiedCurl(true);
     setTimeout(() => setCopiedCurl(false), 2000);
   };
 
   const copyJsonResponse = () => {
     const jsonStr = JSON.stringify(responsePayload, null, 2);
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(jsonStr).catch(() => fallbackCopy(jsonStr));
-    } else {
-      fallbackCopy(jsonStr);
-    }
+    copyToClipboard(jsonStr);
     setCopiedJson(true);
     setTimeout(() => setCopiedJson(false), 2000);
   };
 
-  const fallbackCopy = (text) => {
-    const el = document.createElement('textarea');
-    el.value = text;
-    el.style.position = 'fixed';
-    el.style.opacity = '0';
-    document.body.appendChild(el);
-    el.select();
-    try {
-      document.execCommand('copy');
-    } catch {
-      // ignore
+  const copyToClipboard = (text) => {
+    if (typeof navigator !== 'undefined' && navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).catch(() => fallbackClipboard(text));
+    } else {
+      fallbackClipboard(text);
     }
-    document.body.removeChild(el);
+  };
+
+  const fallbackClipboard = (text) => {
+    try {
+      const el = document.createElement('textarea');
+      el.value = text;
+      el.setAttribute('readonly', '');
+      el.style.position = 'fixed';
+      el.style.left = '-9999px';
+      document.body.appendChild(el);
+      el.select();
+      if (document.execCommand) {
+        document.execCommand('copy');
+      }
+      document.body.removeChild(el);
+    } catch {
+      // safely ignore
+    }
   };
 
   const triggerHandshake = () => {
