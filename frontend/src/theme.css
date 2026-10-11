@@ -10,6 +10,10 @@
 
   /* Typography */
   --font-ppneuemontreal: 'PPNeueMontreal', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-feature-settings: "ss01" on;
+  --font-weight-body-airy: 200;
+  --font-weight-sculptural: 400;
+  --font-weight-nav-label: 600;
 
   /* Typography — Scale */
   --text-caption: 12px;
