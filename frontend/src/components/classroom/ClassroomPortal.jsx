@@ -118,6 +118,18 @@ export default function ClassroomPortal() {
   const [merkleModalSub, setMerkleModalSub] = useState(null);
   const [merkleVerification, setMerkleVerification] = useState(null);
 
+  // Keyboard Escape listener for accessible modal dismissal
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        if (showAddModal) setShowAddModal(false);
+        if (merkleModalSub) setMerkleModalSub(null);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [showAddModal, merkleModalSub]);
+
   // UGC 2018 Statutory Plagiarism Regulations Helper
   const getUgc2018Details = (score = 0) => {
     if (score <= 10.0) {
@@ -587,16 +599,23 @@ export default function ClassroomPortal() {
 
       {/* Add Submission Modal in Veritas Dark Velvet */}
       {showAddModal && (
-        <div style={{
-          position: 'fixed',
-          inset: 0,
-          background: 'rgba(0, 0, 0, 0.85)',
-          backdropFilter: 'blur(16px)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          zIndex: 9999
-        }}>
+        <div
+          onClick={(e) => {
+            if (e.target === e.currentTarget) setShowAddModal(false);
+          }}
+          style={{
+            position: 'fixed',
+            inset: 0,
+            background: 'rgba(0, 0, 0, 0.85)',
+            backdropFilter: 'blur(16px)',
+            WebkitBackdropFilter: 'blur(16px)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 9999,
+            padding: 16,
+          }}
+        >
           <div className="veritas-surface" style={{ width: 620, maxWidth: '100%', border: '1px solid rgba(255, 255, 255, 0.15)' }}>
             <h2 style={{ fontSize: 20, color: 'var(--color-bone-white)', marginBottom: 20 }}>
               Enroll New Submission: {selectedAssignment?.title}
@@ -675,16 +694,23 @@ export default function ClassroomPortal() {
 
       {/* Merkle Tree Proof Audit Modal */}
       {merkleModalSub && (
-        <div style={{
-          position: 'fixed',
-          inset: 0,
-          background: 'rgba(0, 0, 0, 0.85)',
-          backdropFilter: 'blur(16px)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          zIndex: 9999
-        }}>
+        <div
+          onClick={(e) => {
+            if (e.target === e.currentTarget) setMerkleModalSub(null);
+          }}
+          style={{
+            position: 'fixed',
+            inset: 0,
+            background: 'rgba(0, 0, 0, 0.85)',
+            backdropFilter: 'blur(16px)',
+            WebkitBackdropFilter: 'blur(16px)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 9999,
+            padding: 16,
+          }}
+        >
           <div className="veritas-surface" style={{ width: 680, maxWidth: '95%', border: '1px solid rgba(128, 82, 255, 0.4)', padding: 28 }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 16 }}>
               <div>
