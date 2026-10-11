@@ -616,8 +616,14 @@ export default function ClassroomPortal() {
             padding: 16,
           }}
         >
-          <div className="veritas-surface" style={{ width: 620, maxWidth: '100%', border: '1px solid rgba(255, 255, 255, 0.15)' }}>
-            <h2 style={{ fontSize: 20, color: 'var(--color-bone-white)', marginBottom: 20 }}>
+          <div
+            className="veritas-surface"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="enroll-modal-title"
+            style={{ width: 620, maxWidth: '100%', border: '1px solid rgba(255, 255, 255, 0.15)' }}
+          >
+            <h2 id="enroll-modal-title" style={{ fontSize: 20, color: 'var(--color-bone-white)', marginBottom: 20 }}>
               Enroll New Submission: {selectedAssignment?.title}
             </h2>
 
@@ -711,13 +717,19 @@ export default function ClassroomPortal() {
             padding: 16,
           }}
         >
-          <div className="veritas-surface" style={{ width: 680, maxWidth: '95%', border: '1px solid rgba(128, 82, 255, 0.4)', padding: 28 }}>
+          <div
+            className="veritas-surface"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="merkle-modal-title"
+            style={{ width: 680, maxWidth: '95%', border: '1px solid rgba(128, 82, 255, 0.4)', padding: 28 }}
+          >
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 16 }}>
               <div>
                 <span className="badge-tag badge-flash" style={{ marginBottom: 6 }}>
                   EVIDENTIARY MERKLE TREE LEDGER
                 </span>
-                <h3 style={{ fontSize: 20, color: '#ffffff', margin: '4px 0 0 0', fontWeight: 500 }}>
+                <h3 id="merkle-modal-title" style={{ fontSize: 20, color: '#ffffff', margin: '4px 0 0 0', fontWeight: 500 }}>
                   Cryptographic Seal &amp; Proof: {merkleModalSub.studentName}
                 </h3>
                 <div style={{ fontSize: 12, color: 'var(--color-ash-gray)', marginTop: 4 }}>
@@ -726,6 +738,7 @@ export default function ClassroomPortal() {
               </div>
               <button
                 onClick={() => setMerkleModalSub(null)}
+                aria-label="Close modal"
                 style={{ background: 'none', border: 'none', color: 'var(--color-ash-gray)', fontSize: 20, cursor: 'pointer', padding: 4 }}
               >
                 ✕
