@@ -227,7 +227,7 @@ function computeStylometryMetrics(text = '') {
 };
 }
 
-// Client-side Karp-Rabin winnowing fingerprint algorithm for offline comparison
+// ponytail: Client-side Karp-Rabin winnowing algorithm provides deterministic offline fallback when API gateway is unreachable
 function computeClientWinnowing(rawA = '', rawB = '', evasionA = {}, evasionB = {}) {
   const textA = evasionA?.sanitizedText || rawA;
   const textB = evasionB?.sanitizedText || rawB;
