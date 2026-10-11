@@ -2,6 +2,11 @@
 # Veritas Platform Master Git Ignore Rules
 # ==========================================
 
+# Archives & Backups
+archive/
+*.bak
+*.react-backup.html
+
 # Video & Large Media Binaries
 *.mp4
 *.mov
