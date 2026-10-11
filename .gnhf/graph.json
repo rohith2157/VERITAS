@@ -1,0 +1,96 @@
+{
+  "name": "Veritas AI Plagiarism System Architecture Pipeline",
+  "version": "1.0.0",
+  "description": "Multi-wave DAG task graph orchestrating the 19 formal sections of the AI Plagiarism System Architecture Guide across 7 specialized agents.",
+  "nodes": [
+    {
+      "id": "TASK-ARCH-001",
+      "name": "Architecture Guide Formalization",
+      "objective": "Extract and formalize all 19 sections of the architecture guide into markdown.",
+      "agentRole": "Enterprise Core Architect",
+      "wave": 1,
+      "isConcurrent": false,
+      "dependencies": [],
+      "taskSpec": ".gnhf/tasks/TASK-ARCH-001.md",
+      "status": "COMPLETED",
+      "exitCode": 0,
+      "commitHash": "f18f550"
+    },
+    {
+      "id": "TASK-AI-002",
+      "name": "AI Forensics Core Implementation",
+      "objective": "Build SBERT 384-D vectors, FAISS SDMA indexing, Stylometric Writeprints, and DPDP Act 2023.",
+      "agentRole": "Algorithmic Forensics & AST Engine Specialist",
+      "wave": 2,
+      "isConcurrent": true,
+      "dependencies": ["TASK-ARCH-001"],
+      "taskSpec": ".gnhf/tasks/TASK-AI-002.md",
+      "status": "COMPLETED",
+      "exitCode": 0,
+      "commitHash": "4ccf7b6"
+    },
+    {
+      "id": "TASK-JAVA-003",
+      "name": "Cryptographic Ledger & UGC 2018 Engine",
+      "objective": "Build 4-leaf SHA-256 Merkle Tree ledger, O(log N) proof verifier, and UGC 2018 classifier.",
+      "agentRole": "Enterprise Core & Academic Ledger Architect",
+      "wave": 2,
+      "isConcurrent": true,
+      "dependencies": ["TASK-ARCH-001"],
+      "taskSpec": ".gnhf/tasks/TASK-JAVA-003.md",
+      "status": "COMPLETED",
+      "exitCode": 0,
+      "commitHash": "08b4d3d"
+    },
+    {
+      "id": "GATE-CORE-001",
+      "type": "approval_gate",
+      "name": "Core Forensics & Cryptography Verification Gate",
+      "objective": "Verify Pytest unit tests in ai-engine and Maven unit tests in backend pass green.",
+      "dependencies": ["TASK-AI-002", "TASK-JAVA-003"],
+      "status": "APPROVED",
+      "verifiedCommands": [
+        "pytest tests/test_enterprise_architecture.py",
+        "./mvnw.cmd test"
+      ]
+    },
+    {
+      "id": "TASK-UI-004",
+      "name": "Void Client Studio & Classroom Integration",
+      "objective": "Integrate Stylometry Sub-Tab 5, Merkle Ledger Sub-Tab 6, and UGC 2018 Badges in React 19.",
+      "agentRole": "Interactive Verification Studio & Diff Inspector Specialist",
+      "wave": 3,
+      "isConcurrent": false,
+      "dependencies": ["GATE-CORE-001"],
+      "taskSpec": ".gnhf/tasks/TASK-UI-004.md",
+      "status": "COMPLETED",
+      "exitCode": 0,
+      "commitHash": "36b7722"
+    },
+    {
+      "id": "TASK-E2E-005",
+      "name": "Live Microservice E2E Certification",
+      "objective": "Certify 8/8 live microservice endpoints and verify production build in under 2 seconds.",
+      "agentRole": "Systems QA Benchmarker",
+      "wave": 4,
+      "isConcurrent": false,
+      "dependencies": ["TASK-UI-004"],
+      "taskSpec": ".gnhf/tasks/TASK-E2E-005.md",
+      "status": "COMPLETED",
+      "exitCode": 0,
+      "commitHash": "c77c08d"
+    },
+    {
+      "id": "GATE-FINAL-002",
+      "type": "approval_gate",
+      "name": "Production Certification & Evidentiary Seal Gate",
+      "objective": "Verify 100% test pass rate and produce cryptographic audit report.",
+      "dependencies": ["TASK-E2E-005"],
+      "status": "APPROVED",
+      "verifiedCommands": [
+        "node scripts/verify_all_live_endpoints.cjs",
+        "npm run build"
+      ]
+    }
+  ]
+}
