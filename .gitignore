@@ -4,8 +4,13 @@
 
 # Archives & Backups
 archive/
+data/postgres_data/
 *.bak
 *.react-backup.html
+*.pw
+.pgpass*
+
+
 
 # Video & Large Media Binaries
 *.mp4
