@@ -10,6 +10,7 @@ import uvicorn
 import os
 
 from routers.compare import router as compare_router
+from routers.enterprise_architecture import router as enterprise_arch_router
 
 app = FastAPI(
     title="Veritas AI & Similarity Engine",
@@ -28,6 +29,7 @@ app.add_middleware(
 
 # Register routes
 app.include_router(compare_router)
+app.include_router(enterprise_arch_router)
 
 
 @app.get("/", tags=["Health"])
