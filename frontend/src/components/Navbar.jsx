@@ -332,13 +332,23 @@ export default function Navbar({ activeTab, setActiveTab, serverStatus, theme = 
                 onClick={() => setActiveTab('studio')}
                 className="btn t-16 t-14@xs t-16@sm t-ls-0.025 t-600 t-uppercase"
                 style={{
-                  padding: '10px 22px',
+                  height: 42,
+                  padding: '0 24px',
                   fontSize: 13,
-                  borderRadius: 24,
+                  fontWeight: 600,
+                  letterSpacing: 'var(--letter-spacing-display-caps, 0.04em)',
+                  borderRadius: 'var(--radius-button-pill, 24px)',
+                  backgroundColor: 'var(--color-electric-iris)',
+                  color: 'var(--color-bone-white)',
                   border: 'none',
                   cursor: 'pointer',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  transition: 'transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s ease',
+                  boxShadow: 'var(--shadow-velvet-sm)',
                 }}
-                aria-label="Request Access"
+                aria-label="Request Access to Verification Studio"
               >
                 <span className="btn__text">REQUEST ACCESS</span>
                 <div className="btn__hover" />
