@@ -21,7 +21,8 @@ import {
   GitCompare,
   Activity,
   Key,
-  Database
+  Database,
+  UploadCloud
 } from 'lucide-react';
 
 // ==================== HOMOGLYPH & INVISIBLE UNICODE MAPS ====================
@@ -1199,9 +1200,41 @@ def compute_fact(num):
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: 24, marginBottom: 20 }}>
             <div className="veritas-surface" style={{ padding: 24 }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
-                <span style={{ fontWeight: 600, fontSize: 14, color: 'var(--color-bone-white)' }}>
-                  Primary Submission (Document A)
-                </span>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                  <span style={{ fontWeight: 600, fontSize: 14, color: 'var(--color-bone-white)' }}>
+                    Primary Submission (Document A)
+                  </span>
+                  <label style={{
+                    cursor: 'pointer',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: 4,
+                    fontSize: 11,
+                    fontWeight: 600,
+                    padding: '3px 8px',
+                    borderRadius: 12,
+                    background: 'rgba(128, 82, 255, 0.15)',
+                    border: '1px solid rgba(128, 82, 255, 0.3)',
+                    color: 'var(--color-electric-iris)',
+                    textTransform: 'uppercase'
+                  }}>
+                    <UploadCloud size={12} />
+                    <span>Upload A</span>
+                    <input
+                      type="file"
+                      accept=".pdf,.docx,.txt,.py,.java,.cpp,.c,.md"
+                      style={{ display: 'none' }}
+                      onChange={(e) => {
+                        const file = e.target.files?.[0];
+                        if (file) {
+                          const reader = new FileReader();
+                          reader.onload = (evt) => setTextA(evt.target.result || '');
+                          reader.readAsText(file);
+                        }
+                      }}
+                    />
+                  </label>
+                </div>
                 <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
                   {evasionA.isSuspicious && (
                     <span style={{
@@ -1225,16 +1258,48 @@ def compute_fact(num):
                 rows={7}
                 value={textA}
                 onChange={e => setTextA(e.target.value)}
-                placeholder="Paste primary document here..."
+                placeholder="Paste primary document here or click Upload A..."
                 style={{ fontSize: 13, lineHeight: 1.6, fontFamily: 'var(--font-mono, monospace)' }}
               />
             </div>
 
             <div className="veritas-surface" style={{ padding: 24 }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
-                <span style={{ fontWeight: 600, fontSize: 14, color: 'var(--color-bone-white)' }}>
-                  Comparison Source (Document B)
-                </span>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                  <span style={{ fontWeight: 600, fontSize: 14, color: 'var(--color-bone-white)' }}>
+                    Comparison Source (Document B)
+                  </span>
+                  <label style={{
+                    cursor: 'pointer',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: 4,
+                    fontSize: 11,
+                    fontWeight: 600,
+                    padding: '3px 8px',
+                    borderRadius: 12,
+                    background: 'rgba(255, 184, 41, 0.15)',
+                    border: '1px solid rgba(255, 184, 41, 0.3)',
+                    color: 'var(--color-saffron-spark)',
+                    textTransform: 'uppercase'
+                  }}>
+                    <UploadCloud size={12} />
+                    <span>Upload B</span>
+                    <input
+                      type="file"
+                      accept=".pdf,.docx,.txt,.py,.java,.cpp,.c,.md"
+                      style={{ display: 'none' }}
+                      onChange={(e) => {
+                        const file = e.target.files?.[0];
+                        if (file) {
+                          const reader = new FileReader();
+                          reader.onload = (evt) => setTextB(evt.target.result || '');
+                          reader.readAsText(file);
+                        }
+                      }}
+                    />
+                  </label>
+                </div>
                 <span style={{ fontSize: 12, color: 'var(--color-ash-gray)' }}>{textB.length} chars</span>
               </div>
               <textarea
@@ -1243,7 +1308,7 @@ def compute_fact(num):
                 rows={7}
                 value={textB}
                 onChange={e => setTextB(e.target.value)}
-                placeholder="Paste reference or peer document here..."
+                placeholder="Paste reference document here or click Upload B..."
                 style={{ fontSize: 13, lineHeight: 1.6, fontFamily: 'var(--font-mono, monospace)' }}
               />
             </div>

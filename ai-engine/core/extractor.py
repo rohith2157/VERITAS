@@ -34,23 +34,31 @@ def extract_text_from_pdf(content: bytes) -> str:
 
 
 def extract_text_from_docx(content: bytes) -> str:
-    """Extracts text from Word .docx documents (paragraphs and tables) using python-docx."""
+    """Extracts text from Word .docx documents using stdlib zipfile and XML parser (zero extra dependencies)."""
+    try:
+        import zipfile
+        import xml.etree.ElementTree as ET
+
+        with zipfile.ZipFile(io.BytesIO(content)) as docx_zip:
+            if "word/document.xml" in docx_zip.namelist():
+                xml_content = docx_zip.read("word/document.xml")
+                tree = ET.fromstring(xml_content)
+                namespaces = {"w": "http://schemas.openxmlformats.org/wordprocessingml/2006/main"}
+                paragraphs = []
+                for p in tree.iterfind(".//w:p", namespaces):
+                    texts = [node.text for node in p.iterfind(".//w:t", namespaces) if node.text]
+                    if texts:
+                        paragraphs.append("".join(texts))
+                if paragraphs:
+                    return "\n\n".join(paragraphs)
+    except Exception:
+        pass
+
+    # Optional fallback to python-docx if installed
     try:
         from docx import Document
-
         doc = Document(io.BytesIO(content))
-        paragraphs = [p.text for p in doc.paragraphs if p.text.strip()]
-
-        # Also extract table text
-        for table in doc.tables:
-            for row in table.rows:
-                row_text = " | ".join(
-                    cell.text.strip() for cell in row.cells if cell.text.strip()
-                )
-                if row_text:
-                    paragraphs.append(row_text)
-
-        return "\n\n".join(paragraphs)
+        return "\n\n".join(p.text for p in doc.paragraphs if p.text.strip())
     except Exception as e:
         raise ValueError(f"Failed to parse DOCX document: {str(e)}")
 

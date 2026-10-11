@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useCallback } from 'react';
-import { CheckCircle, AlertTriangle, Info, XCircle, X } from 'lucide-react';
+import { CheckCircle, AlertTriangle, Info, AlertCircle, X } from 'lucide-react';
 
 const ToastContext = createContext(null);
 
@@ -51,7 +51,7 @@ export function ToastProvider({ children }) {
             IconComponent = AlertTriangle;
           } else if (toast.type === 'error') {
             accentColor = '#ef4444';
-            IconComponent = XCircle;
+            IconComponent = AlertCircle;
           } else {
             accentColor = 'var(--color-electric-iris)';
             IconComponent = Info;

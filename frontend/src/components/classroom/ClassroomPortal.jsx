@@ -677,6 +677,36 @@ export default function ClassroomPortal() {
               </div>
 
               <div>
+                <label style={{ fontSize: 12, color: 'var(--color-ash-gray)', textTransform: 'uppercase', marginBottom: 4, display: 'block' }}>
+                  Upload Document File (.pdf, .docx, .txt, .py, .java)
+                </label>
+                <input
+                  type="file"
+                  accept=".pdf,.docx,.txt,.py,.java,.cpp,.c,.md"
+                  onChange={(e) => {
+                    const file = e.target.files?.[0];
+                    if (file) {
+                      setNewFilename(file.name);
+                      const reader = new FileReader();
+                      reader.onload = (evt) => setNewEssayText(evt.target.result || '');
+                      reader.readAsText(file);
+                    }
+                  }}
+                  style={{
+                    width: '100%',
+                    padding: '8px 12px',
+                    background: 'rgba(255, 255, 255, 0.04)',
+                    border: '1px dashed rgba(128, 82, 255, 0.4)',
+                    borderRadius: 8,
+                    color: 'var(--color-silver-mist)',
+                    fontSize: 12,
+                    cursor: 'pointer',
+                    boxSizing: 'border-box'
+                  }}
+                />
+              </div>
+
+              <div>
                 <label style={{ fontSize: 12, color: 'var(--color-ash-gray)', textTransform: 'uppercase', marginBottom: 4, display: 'block' }}>File / Source Name</label>
                 <input
                   type="text"
