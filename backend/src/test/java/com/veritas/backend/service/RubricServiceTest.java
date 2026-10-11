@@ -48,5 +48,43 @@ public class RubricServiceTest {
         assertEquals(100.0, res.getDeductedMarks());
         assertEquals("FLAGGED_FOR_REVIEW", res.getStatus());
     }
+
+    @Test
+    public void testUgc2018Level0SafeHarbor() {
+        RubricService.Ugc2018Result res = rubricService.evaluateUgc2018(7.5);
+        assertEquals("Level 0", res.getLevel());
+        assertFalse(res.isRequiresTribunalHearing());
+        assertTrue(res.getStudentPenalty().contains("no formal penalty"));
+        assertTrue(res.getDaipRecommendation().contains("DISMISSED_NO_ACTION"));
+        assertEquals(4, res.getStatutoryExclusions().size());
+    }
+
+    @Test
+    public void testUgc2018Level1RevisionRequired() {
+        RubricService.Ugc2018Result res = rubricService.evaluateUgc2018(25.0);
+        assertEquals("Level 1", res.getLevel());
+        assertTrue(res.isRequiresTribunalHearing());
+        assertTrue(res.getStudentPenalty().contains("not exceeding 6 months"));
+        assertTrue(res.getFacultyPenalty().contains("withdraw the manuscript"));
+    }
+
+    @Test
+    public void testUgc2018Level2OneYearDebarment() {
+        RubricService.Ugc2018Result res = rubricService.evaluateUgc2018(52.0);
+        assertEquals("Level 2", res.getLevel());
+        assertTrue(res.isRequiresTribunalHearing());
+        assertTrue(res.getStudentPenalty().contains("strict period of one year"));
+        assertTrue(res.getFacultyPenalty().contains("denial of one annual increment"));
+    }
+
+    @Test
+    public void testUgc2018Level3PermanentExpulsion() {
+        RubricService.Ugc2018Result res = rubricService.evaluateUgc2018(84.0);
+        assertEquals("Level 3", res.getLevel());
+        assertTrue(res.isRequiresTribunalHearing());
+        assertTrue(res.getStudentPenalty().contains("permanently cancelled"));
+        assertTrue(res.getFacultyPenalty().contains("denial of two successive annual increments"));
+        assertTrue(res.getIaipRecommendation().contains("PROGRAMME_REGISTRATION_PERMANENTLY_CANCELLED"));
+    }
 }
 

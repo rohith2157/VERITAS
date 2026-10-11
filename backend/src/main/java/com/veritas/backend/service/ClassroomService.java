@@ -103,6 +103,20 @@ public class ClassroomService {
                 .orElse(Map.of("error", "Submission not found with ID: " + submissionId));
     }
 
+    public Map<String, Object> getSubmissionMerkleTree(Long submissionId) {
+        return submissionRepository.findById(submissionId)
+                .map(auditLedgerService::generateSubmissionMerkleTree)
+                .orElse(Map.of("error", "Submission not found with ID: " + submissionId));
+    }
+
+    public boolean verifyMerkleProof(String leafHash, List<Map<String, Object>> proof, String expectedRoot) {
+        return auditLedgerService.verifyMerkleProof(leafHash, proof, expectedRoot);
+    }
+
+    public RubricService.Ugc2018Result evaluateUgc2018(Double similarityScore) {
+        return rubricService.evaluateUgc2018(similarityScore);
+    }
+
     public List<Map<String, Object>> getLedgerBlocks() {
         return auditLedgerService.getRecentLedgerBlocks();
     }

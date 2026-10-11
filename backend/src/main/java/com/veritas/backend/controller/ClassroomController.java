@@ -117,5 +117,35 @@ public class ClassroomController {
     public ResponseEntity<Map<String, Object>> verifySubmission(@PathVariable Long submissionId) {
         return ResponseEntity.ok(classroomService.verifySubmissionIntegrity(submissionId));
     }
+
+    @GetMapping("/submissions/{submissionId}/merkle")
+    public ResponseEntity<Map<String, Object>> getSubmissionMerkleTree(@PathVariable Long submissionId) {
+        return ResponseEntity.ok(classroomService.getSubmissionMerkleTree(submissionId));
+    }
+
+    @PostMapping("/ledger/merkle/verify")
+    public ResponseEntity<Map<String, Object>> verifyMerkleProof(@RequestBody Map<String, Object> payload) {
+        String leafHash = (String) payload.get("leafHash");
+        List<Map<String, Object>> proof = (List<Map<String, Object>>) payload.get("proof");
+        String expectedRoot = (String) payload.get("expectedRoot");
+
+        boolean isValid = classroomService.verifyMerkleProof(leafHash, proof, expectedRoot);
+        Map<String, Object> result = new HashMap<>();
+        result.put("isProofValid", isValid);
+        result.put("leafHash", leafHash);
+        result.put("expectedRoot", expectedRoot);
+        result.put("verifiedAt", java.time.LocalDateTime.now().toString());
+        result.put("cryptographicStandard", "SHA-256 Binary Merkle Tree (O(log N) Verification)");
+
+        return ResponseEntity.ok(result);
+    }
+
+    @PostMapping("/ugc2018/evaluate")
+    public ResponseEntity<RubricService.Ugc2018Result> evaluateUgc2018(@RequestBody Map<String, Object> payload) {
+        Double similarityScore = payload.get("similarityScore") != null
+                ? Double.valueOf(payload.get("similarityScore").toString())
+                : 0.0;
+        return ResponseEntity.ok(classroomService.evaluateUgc2018(similarityScore));
+    }
 }
 
