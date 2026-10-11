@@ -1298,15 +1298,15 @@ def compute_fact(num):
           {/* ==================== ADVERSARIAL HOMOGLYPH EVASION BANNER ==================== */}
           {(evasionA.isSuspicious || evasionB.isSuspicious) && (
             <div id="homoglyph-evasion-alert" style={{
-              background: 'rgba(239, 68, 68, 0.08)',
-              border: '1px solid rgba(239, 68, 68, 0.45)',
+              background: 'rgba(255, 184, 41, 0.06)',
+              border: '1px solid rgba(255, 184, 41, 0.35)',
               borderRadius: 16,
               padding: 20,
               marginBottom: 28,
               boxShadow: 'var(--shadow-velvet-sm)'
             }}>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 12 }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 10, color: '#f87171', fontWeight: 600, fontSize: 15 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 10, color: 'var(--color-saffron-spark)', fontWeight: 600, fontSize: 15 }}>
                   <AlertTriangle size={20} />
                   <span>Adversarial Integrity Evasion Detected! (Homoglyphs & Zero-Width Injection)</span>
                 </div>
@@ -1316,21 +1316,23 @@ def compute_fact(num):
                     if (evasionB.isSuspicious) setTextB(evasionB.sanitizedText);
                   }}
                   style={{
-                    background: 'rgba(239, 68, 68, 0.2)',
-                    border: '1px solid rgba(239, 68, 68, 0.6)',
-                    color: '#ffffff',
-                    padding: '6px 14px',
-                    borderRadius: 16,
+                    background: 'var(--color-saffron-spark)',
+                    border: 'none',
+                    color: '#000000',
+                    padding: '8px 18px',
+                    borderRadius: 20,
                     fontSize: 12,
                     fontWeight: 600,
-                    cursor: 'pointer'
+                    letterSpacing: '0.02em',
+                    cursor: 'pointer',
+                    transition: 'transform 0.15s ease'
                   }}
                 >
                   Neutralize & Sanitize to Latin Characters
                 </button>
               </div>
 
-              <p style={{ fontSize: 13, color: '#fca5a5', marginTop: 8, marginBottom: 14 }}>
+              <p style={{ fontSize: 13, color: 'var(--color-silver-mist)', marginTop: 8, marginBottom: 14 }}>
                 The submission contains foreign Unicode lookalikes (Cyrillic / Greek) and invisible zero-width spaces designed to break shingle tokenization while appearing identical to human eyes. Veritas Winnowing normalizes these characters prior to hashing.
               </p>
 
