@@ -224,6 +224,268 @@ function computeStylometryMetrics(text = '') {
     totalSentences: sentences.length,
     avgSentenceLength: Math.round(meanLen * 10) / 10,
     burstinessStdDev: Math.round(burstinessStdDev * 100) / 100
+};
+}
+
+// Client-side Karp-Rabin winnowing fingerprint algorithm for offline comparison
+function computeClientWinnowing(rawA = '', rawB = '', evasionA = {}, evasionB = {}) {
+  const textA = evasionA?.sanitizedText || rawA;
+  const textB = evasionB?.sanitizedText || rawB;
+
+  const wordsA = textA.toLowerCase().match(/\b\w+\b/g) || [];
+  const wordsB = textB.toLowerCase().match(/\b\w+\b/g) || [];
+
+  const k = Math.min(4, Math.max(1, Math.min(wordsA.length, wordsB.length)));
+  const w = 4;
+
+  const hashShingle = (words, start, len) => {
+    let h = 0;
+    for (let i = 0; i < len; i++) {
+      const word = words[start + i];
+      for (let j = 0; j < word.length; j++) {
+        h = (h * 31 + word.charCodeAt(j)) & 0x7fffffff;
+      }
+    }
+    return h;
+  };
+
+  const getFingerprints = (words) => {
+    if (words.length < k) {
+      return new Set(words.map(wd => hashShingle([wd], 0, 1)));
+    }
+    const hashes = [];
+    for (let i = 0; i <= words.length - k; i++) {
+      hashes.push(hashShingle(words, i, k));
+    }
+    const fingerprints = new Set();
+    if (hashes.length < w) {
+      hashes.forEach(h => fingerprints.add(h));
+    } else {
+      for (let i = 0; i <= hashes.length - w; i++) {
+        let minHash = hashes[i];
+        for (let j = 1; j < w; j++) {
+          if (hashes[i + j] < minHash) minHash = hashes[i + j];
+        }
+        fingerprints.add(minHash);
+      }
+    }
+    return fingerprints;
+  };
+
+  const fpA = getFingerprints(wordsA);
+  const fpB = getFingerprints(wordsB);
+
+  let sharedCount = 0;
+  for (const h of fpA) {
+    if (fpB.has(h)) sharedCount++;
+  }
+  const unionSize = new Set([...fpA, ...fpB]).size;
+
+  const jaccard = unionSize > 0 ? (sharedCount / unionSize) * 100 : (wordsA.length === 0 && wordsB.length === 0 ? 100 : 0);
+  const containmentA = fpA.size > 0 ? (sharedCount / fpA.size) * 100 : 0;
+  const containmentB = fpB.size > 0 ? (sharedCount / fpB.size) * 100 : 0;
+
+  let simScore = Math.max(containmentA, jaccard);
+  if (simScore === 0 && wordsA.length > 0 && wordsB.length > 0) {
+    const setB = new Set(wordsB);
+    const overlap = wordsA.filter(wd => setB.has(wd)).length;
+    simScore = (overlap / Math.max(wordsA.length, wordsB.length)) * 100;
+  }
+  simScore = Math.round(simScore * 10) / 10;
+  const jaccardScore = Math.round(jaccard * 10) / 10;
+
+  const isHigh = simScore >= 80;
+  const isMed = simScore >= 50;
+
+  return {
+    title_a: "Student Submission",
+    title_b: "Reference / Peer Source",
+    similarity_score: simScore,
+    jaccard_score: jaccardScore,
+    containment_a_in_b: Math.round(containmentA * 10) / 10,
+    containment_b_in_a: Math.round(containmentB * 10) / 10,
+    shared_fingerprints_count: sharedCount,
+    total_unique_fingerprints: unionSize || 1,
+    color_tier: {
+      hex: isHigh ? '#ef4444' : (isMed ? '#ffb829' : '#15846e'),
+      label: isHigh ? 'CRITICAL COLLUSION' : (isMed ? 'SUSPECTED MATCH' : 'CLEAN INTEGRITY')
+    },
+    total_matches_found: sharedCount > 0 ? Math.max(1, Math.floor(sharedCount / 2)) : 0,
+    matched_segments: [
+      {
+        start_a: 0,
+        end_a: Math.min(textA.length, 112),
+        start_b: 0,
+        end_b: Math.min(textB.length, 112),
+        snippet_a: textA.substring(0, Math.min(textA.length, 112)),
+        snippet_b: textB.substring(0, Math.min(textB.length, 112))
+      }
+    ],
+    document_stats: {
+      doc_a: {
+        char_count: rawA.length,
+        word_count: wordsA.length,
+        fingerprint_count: fpA.size,
+        integrity: {
+          is_suspicious: evasionA?.isSuspicious || false,
+          homoglyph_count: evasionA?.homoglyphs?.length || 0,
+          invisible_char_count: evasionA?.invisibleChars?.length || 0,
+          flags: evasionA?.isSuspicious ? [
+            ...(evasionA.homoglyphs?.length > 0 ? [{
+              type: "HOMOGLYPH_EVASION",
+              severity: "CRITICAL",
+              description: `Detected ${evasionA.homoglyphs.length} Cyrillic/Greek homoglyphs disguised as Latin script.`
+            }] : []),
+            ...(evasionA.invisibleChars?.length > 0 ? [{
+              type: "INVISIBLE_CHAR_INJECTION",
+              severity: "HIGH",
+              description: `Detected ${evasionA.invisibleChars.length} zero-width / invisible characters injected to break n-gram shingles.`
+            }] : [])
+          ] : []
+        }
+      },
+      doc_b: {
+        char_count: rawB.length,
+        word_count: wordsB.length,
+        fingerprint_count: fpB.size,
+        integrity: {
+          is_suspicious: evasionB?.isSuspicious || false,
+          flags: []
+        }
+      }
+    }
+  };
+}
+
+// Client-side Python AST structural normalizer & clone detector
+function normalizeCodeAST(code = '') {
+  const lines = code.split(/\r?\n/).map(line => {
+    const commentIdx = line.indexOf('#');
+    const stripped = commentIdx >= 0 ? line.slice(0, commentIdx) : line;
+    return stripped.trimEnd();
+  }).filter(line => line.trim().length > 0);
+
+  const cleanCode = lines.join('\n');
+
+  const fnMatches = [...cleanCode.matchAll(/\bdef\s+([a-zA-Z_]\w*)\s*\(([^)]*)\)/g)];
+  const forMatches = [...cleanCode.matchAll(/\bfor\s+([a-zA-Z_]\w*)\s+in\b/g)];
+  const assignMatches = [...cleanCode.matchAll(/\b([a-zA-Z_]\w*)\s*=[^=]/g)];
+
+  const idMap = new Map();
+  let funcCounter = 1;
+  let varCounter = 1;
+
+  fnMatches.forEach(m => {
+    const fnName = m[1];
+    if (!idMap.has(fnName)) {
+      idMap.set(fnName, { canonical: 'FUNC_' + (funcCounter++), role: 'Function Identifier' });
+    }
+    const params = m[2].split(',').map(p => p.trim()).filter(Boolean);
+    params.forEach(p => {
+      const pName = p.split('=')[0].trim();
+      if (pName && !idMap.has(pName)) {
+        idMap.set(pName, { canonical: 'VAR_' + (varCounter++), role: 'Function Parameter' });
+      }
+    });
+  });
+
+  forMatches.forEach(m => {
+    const iterVar = m[1];
+    if (!idMap.has(iterVar)) {
+      idMap.set(iterVar, { canonical: 'VAR_' + (varCounter++), role: 'For-Loop Iterator' });
+    }
+  });
+
+  assignMatches.forEach(m => {
+    const vName = m[1];
+    if (!idMap.has(vName)) {
+      idMap.set(vName, { canonical: 'VAR_' + (varCounter++), role: 'Accumulator / Local Variable' });
+    }
+  });
+
+  const pythonKeywords = new Set([
+    'def', 'return', 'if', 'else', 'elif', 'for', 'in', 'range', 'len', 'while',
+    'break', 'continue', 'pass', 'and', 'or', 'not', 'is', 'None', 'True', 'False',
+    'import', 'from', 'as', 'try', 'except', 'finally', 'with', 'lambda', 'class'
+  ]);
+
+  let normalized = cleanCode;
+  for (const [id, info] of idMap.entries()) {
+    if (!pythonKeywords.has(id)) {
+      const regex = new RegExp('\\b' + id + '\\b', 'g');
+      normalized = normalized.replace(regex, info.canonical);
+    }
+  }
+
+  return { cleanCode, normalized, idMap, lineCount: lines.length };
+}
+
+function computeClientASTDiff(codeA, codeB) {
+  const normA = normalizeCodeAST(codeA);
+  const normB = normalizeCodeAST(codeB);
+
+  const mappings = [];
+  const entriesA = Array.from(normA.idMap.entries());
+  const entriesB = Array.from(normB.idMap.entries());
+
+  const maxLen = Math.max(entriesA.length, entriesB.length);
+  for (let i = 0; i < maxLen; i++) {
+    const itemA = entriesA[i];
+    const itemB = entriesB[i];
+    if (itemA && itemB) {
+      mappings.push({
+        original: itemA[0],
+        renamed: itemB[0],
+        role: itemA[1].role || 'Local Identifier',
+        canonical: itemA[1].canonical || ('VAR_' + (i + 1)),
+        match: '100%'
+      });
+    } else if (itemA) {
+      mappings.push({
+        original: itemA[0],
+        renamed: '—',
+        role: itemA[1].role,
+        canonical: itemA[1].canonical,
+        match: '0%'
+      });
+    } else if (itemB) {
+      mappings.push({
+        original: '—',
+        renamed: itemB[0],
+        role: itemB[1].role,
+        canonical: itemB[1].canonical,
+        match: '0%'
+      });
+    }
+  }
+
+  const tokensA = normA.normalized.match(/\w+|[^\w\s]/g) || [];
+  const tokensB = normB.normalized.match(/\w+|[^\w\s]/g) || [];
+
+  const setA = new Set(tokensA);
+  const setB = new Set(tokensB);
+  let inter = 0;
+  for (const t of setA) if (setB.has(t)) inter++;
+  const union = new Set([...setA, ...setB]).size;
+  const tokenJaccard = union > 0 ? (inter / union) * 100 : 100;
+
+  const isExactStructure = normA.normalized.replace(/\s+/g, '') === normB.normalized.replace(/\s+/g, '');
+  const structuralScore = isExactStructure ? 100.0 : Math.round(tokenJaccard * 10) / 10;
+  const isClone = structuralScore >= 80.0;
+
+  return {
+    language: 'python',
+    structural_similarity: structuralScore,
+    jaccard_similarity: Math.round(tokenJaccard * 10) / 10,
+    is_code_clone: isClone,
+    ast_nodes_count: tokensA.length,
+    ast_equivalence_percentage: structuralScore,
+    structural_verdict: isClone
+      ? 'IDENTICAL CODE CLONE DETECTED (Variable Renaming & Comment Obfuscation Neutralized)'
+      : 'STRUCTURAL VARIANCE DETECTED (Distinct Control Flow or Syntax Geometry)',
+    variable_mappings: mappings,
+    normalized_code_a: normA.normalized,
+    normalized_code_b: normB.normalized
   };
 }
 
@@ -516,7 +778,7 @@ def compute_fact(num):
   const run1to1Diff = async () => {
     setLoading(true);
     try {
-      const res = await fetch('http://localhost:8000/api/v1/compare/one-to-one', {
+      const res = await fetch('/api/v1/compare/one-to-one', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -533,7 +795,7 @@ def compute_fact(num):
       setDiffResult(data);
     } catch (e) {
       try {
-        const fallback = await fetch('http://localhost:8080/api/studio/compare-1to1', {
+        const fallback = await fetch('/api/studio/compare-1to1', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -549,75 +811,9 @@ def compute_fact(num):
         const fbData = await fallback.json();
         setDiffResult(fbData);
       } catch (err) {
-        // High-fidelity client-side offline dataset calculation
-        const isHomoglyphTest = evasionA.isSuspicious || evasionB.isSuspicious;
-        const score = isHomoglyphTest ? 96.8 : 91.4;
-        setDiffResult({
-          title_a: "Student Submission",
-          title_b: "Reference / Peer Source",
-          similarity_score: score,
-          jaccard_score: isHomoglyphTest ? 92.5 : 84.2,
-          containment_a_in_b: score,
-          containment_b_in_a: score - 2.1,
-          shared_fingerprints_count: 128,
-          total_unique_fingerprints: 140,
-          color_tier: {
-            hex: score >= 80 ? '#ef4444' : (score >= 50 ? '#ffb829' : '#15846e'),
-            label: score >= 80 ? 'CRITICAL COLLUSION' : (score >= 50 ? 'SUSPECTED MATCH' : 'CLEAN INTEGRITY')
-          },
-          total_matches_found: 3,
-          matched_segments: [
-            {
-              start_a: 0,
-              end_a: 112,
-              start_b: 0,
-              end_b: 112,
-              snippet_a: textA.substring(0, 112),
-              snippet_b: textB.substring(0, 112)
-            },
-            {
-              start_a: 113,
-              end_a: 208,
-              start_b: 113,
-              end_b: 208,
-              snippet_a: textA.substring(113, 208),
-              snippet_b: textB.substring(113, 208)
-            }
-          ],
-          document_stats: {
-            doc_a: {
-              char_count: textA.length,
-              word_count: (textA.match(/\S+/g) || []).length,
-              fingerprint_count: 142,
-              integrity: {
-                is_suspicious: evasionA.isSuspicious,
-                homoglyph_count: evasionA.homoglyphs.length,
-                invisible_char_count: evasionA.invisibleChars.length,
-                flags: evasionA.isSuspicious ? [
-                  ...(evasionA.homoglyphs.length > 0 ? [{
-                    type: "HOMOGLYPH_EVASION",
-                    severity: "CRITICAL",
-                    description: `Detected ${evasionA.homoglyphs.length} Cyrillic/Greek homoglyphs disguised as Latin script.`
-                  }] : []),
-                  ...(evasionA.invisibleChars.length > 0 ? [{
-                    type: "INVISIBLE_CHAR_INJECTION",
-                    severity: "HIGH",
-                    description: `Detected ${evasionA.invisibleChars.length} zero-width / invisible characters injected to break n-gram shingles.`
-                  }] : [])
-                ] : []
-              }
-            },
-            doc_b: {
-              char_count: textB.length,
-              word_count: (textB.match(/\S+/g) || []).length,
-              fingerprint_count: 138,
-              integrity: {
-                is_suspicious: evasionB.isSuspicious,
-                flags: []
-              }
-            }
-          }
-        });
+        // High-fidelity client-side Karp-Rabin winnowing calculation
+        const result = computeClientWinnowing(textA, textB, evasionA, evasionB);
+        setDiffResult(result);
       }
     } finally {
       setLoading(false);
@@ -627,7 +823,7 @@ def compute_fact(num):
   const runCohortMatrix = async () => {
     setLoading(true);
     try {
-      const res = await fetch('http://localhost:8000/api/v1/compare/many-to-many', {
+      const res = await fetch('/api/v1/compare/many-to-many', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -640,7 +836,7 @@ def compute_fact(num):
       setMatrixResult(data);
     } catch (e) {
       try {
-        const fallback = await fetch('http://localhost:8080/api/studio/cohort-matrix', {
+        const fallback = await fetch('/api/studio/cohort-matrix', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -725,7 +921,7 @@ def compute_fact(num):
   const runAiForensics = async () => {
     setLoading(true);
     try {
-      const res = await fetch('http://localhost:8000/api/v1/detect/ai-forensics', {
+      const res = await fetch('/api/v1/detect/ai-forensics', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ text: aiText })
@@ -735,7 +931,7 @@ def compute_fact(num):
       setAiResult(data);
     } catch (e) {
       try {
-        const fallback = await fetch('http://localhost:8080/api/studio/ai-forensics', {
+        const fallback = await fetch('/api/studio/ai-forensics', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ text: aiText })
@@ -808,7 +1004,7 @@ def compute_fact(num):
   const runCodeAst = async () => {
     setLoading(true);
     try {
-      const res = await fetch('http://localhost:8000/api/v1/detect/code-ast', {
+      const res = await fetch('/api/v1/detect/code-ast', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ code_a: codeA, code_b: codeB, language: "python" })
@@ -818,7 +1014,7 @@ def compute_fact(num):
       setCodeResult(data);
     } catch (e) {
       try {
-        const fallback = await fetch('http://localhost:8080/api/studio/code-ast', {
+        const fallback = await fetch('/api/studio/code-ast', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ code_a: codeA, code_b: codeB, language: "python" })
@@ -826,36 +1022,9 @@ def compute_fact(num):
         if (!fallback.ok) throw new Error('Gateway error');
         setCodeResult(await fallback.json());
       } catch (err) {
-        // High-fidelity fallback dataset for AST code clone inspection
-        const isBubble = codeA.includes('bubble_sort') || codeA.includes('swap');
-        setCodeResult({
-          language: "python",
-          structural_similarity: 100.0,
-          jaccard_similarity: 98.4,
-          is_code_clone: true,
-          ast_nodes_count: isBubble ? 38 : 24,
-          ast_equivalence_percentage: 100.0,
-          structural_verdict: "IDENTICAL CODE CLONE DETECTED (Variable Renaming & Comment Obfuscation Neutralized)",
-          variable_mappings: isBubble ? [
-            { original: "bubble_sort", renamed: "sort_array", role: "Function Identifier", canonical: "FUNC_1", match: "100%" },
-            { original: "items", renamed: "arr", role: "Parameter Identifier", canonical: "VAR_1", match: "100%" },
-            { original: "n", renamed: "length", role: "Loop Limit Bound", canonical: "VAR_2", match: "100%" },
-            { original: "i", renamed: "pass_num", role: "Outer Loop Iterator", canonical: "VAR_3", match: "100%" },
-            { original: "j", renamed: "idx", role: "Inner Loop Iterator", canonical: "VAR_4", match: "100%" },
-            { original: "temp", renamed: "swap_val", role: "Swap Accumulator", canonical: "VAR_5", match: "100%" }
-          ] : [
-            { original: "calculate_factorial", renamed: "compute_fact", role: "Function Identifier", canonical: "FUNC_1", match: "100%" },
-            { original: "n", renamed: "num", role: "Function Parameter", canonical: "VAR_1", match: "100%" },
-            { original: "total", renamed: "res", role: "Accumulator Variable", canonical: "VAR_2", match: "100%" },
-            { original: "i", renamed: "count", role: "For-Loop Iterator", canonical: "VAR_3", match: "100%" }
-          ],
-          normalized_code_a: isBubble
-            ? "def FUNC_1(VAR_1):\n    VAR_2 = len(VAR_1)\n    for VAR_3 in range(VAR_2):\n        for VAR_4 in range(0, VAR_2 - VAR_3 - 1):\n            if VAR_1[VAR_4] > VAR_1[VAR_4 + 1]:\n                VAR_5 = VAR_1[VAR_4]\n                VAR_1[VAR_4] = VAR_1[VAR_4 + 1]\n                VAR_1[VAR_4 + 1] = VAR_5\n    return VAR_1"
-            : "def FUNC_1(VAR_1):\n    VAR_2 = 1\n    for VAR_3 in range(1, VAR_1 + 1):\n        VAR_2 = VAR_2 * VAR_3\n    return VAR_2",
-          normalized_code_b: isBubble
-            ? "def FUNC_1(VAR_1):\n    VAR_2 = len(VAR_1)\n    for VAR_3 in range(VAR_2):\n        for VAR_4 in range(0, VAR_2 - VAR_3 - 1):\n            if VAR_1[VAR_4] > VAR_1[VAR_4 + 1]:\n                VAR_5 = VAR_1[VAR_4]\n                VAR_1[VAR_4] = VAR_1[VAR_4 + 1]\n                VAR_1[VAR_4 + 1] = VAR_5\n    return VAR_1"
-            : "def FUNC_1(VAR_1):\n    VAR_2 = 1\n    for VAR_3 in range(1, VAR_1 + 1):\n        VAR_2 = VAR_2 * VAR_3\n    return VAR_2"
-        });
+        // High-fidelity client-side fallback for AST code clone inspection
+        const result = computeClientASTDiff(codeA, codeB);
+        setCodeResult(result);
       }
     } finally {
       setLoading(false);
@@ -865,7 +1034,7 @@ def compute_fact(num):
   const runStylometryAnalysis = async () => {
     setLoading(true);
     try {
-      const res = await fetch('http://localhost:8000/api/v1/forensics/stylometry', {
+      const res = await fetch('/api/v1/forensics/stylometry', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

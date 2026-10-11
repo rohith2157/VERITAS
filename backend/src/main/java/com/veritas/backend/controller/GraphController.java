@@ -29,9 +29,10 @@ public class GraphController {
     private final JdbcTemplate jdbcTemplate;
     private final ObjectMapper objectMapper;
 
-    public GraphController(JdbcTemplate jdbcTemplate, ObjectMapper objectMapper) {
+    public GraphController(JdbcTemplate jdbcTemplate, 
+                           @org.springframework.beans.factory.annotation.Autowired(required = false) ObjectMapper objectMapper) {
         this.jdbcTemplate = jdbcTemplate;
-        this.objectMapper = objectMapper;
+        this.objectMapper = objectMapper != null ? objectMapper : new ObjectMapper();
     }
 
     /**
