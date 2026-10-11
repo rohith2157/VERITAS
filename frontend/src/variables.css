@@ -74,8 +74,23 @@
   --radius-cards: 24px;
   --radius-buttons: 24px;
 
-  /* Surfaces */
+  /* Surfaces & Glows */
   --surface-void-canvas: #000000;
   --surface-deep-verdant-tint: #15846e;
   --surface-electric-iris: #8052ff;
+  --glow-electric-iris: 0 0 32px -4px rgba(128, 82, 255, 0.45);
+  --glow-saffron-spark: 0 0 24px -4px rgba(255, 184, 41, 0.4);
+  --glow-deep-verdant: 0 0 24px -4px rgba(21, 132, 110, 0.4);
+
+  /* Shadows & Borders */
+  --shadow-velvet: 0 20px 50px rgba(0, 0, 0, 0.8), 0 1px 1px rgba(255, 255, 255, 0.08);
+  --shadow-card-hover: 0 24px 60px -12px rgba(0, 0, 0, 0.9), 0 0 0 1px rgba(128, 82, 255, 0.3);
+  --border-subtle: 1px solid rgba(255, 255, 255, 0.08);
+  --border-glass: 1px solid rgba(255, 255, 255, 0.12);
+  --border-focus: 1px solid rgba(128, 82, 255, 0.6);
+
+  /* Transitions & Easing */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-smooth: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-fast: all 0.16s ease-out;
 }
