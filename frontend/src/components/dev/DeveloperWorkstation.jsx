@@ -675,7 +675,17 @@ export default function DeveloperWorkstation() {
           {agents.map(ag => (
             <div 
               key={ag.id}
+              role="button"
+              tabIndex={0}
+              aria-pressed={selectedAgent === ag.id}
+              aria-label={`Select Agent ${ag.id}: ${ag.role}`}
               onClick={() => setSelectedAgent(ag.id)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  setSelectedAgent(ag.id);
+                }
+              }}
               style={{
                 background: selectedAgent === ag.id ? 'rgba(128, 82, 255, 0.08)' : 'rgba(255, 255, 255, 0.02)',
                 border: `1px solid ${selectedAgent === ag.id ? 'var(--color-electric-iris)' : 'rgba(255, 255, 255, 0.08)'}`,
@@ -686,7 +696,8 @@ export default function DeveloperWorkstation() {
                 display: 'flex',
                 flexDirection: 'column',
                 gap: 8,
-                position: 'relative'
+                position: 'relative',
+                outline: 'none'
               }}
             >
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
