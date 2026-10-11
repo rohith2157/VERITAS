@@ -193,10 +193,31 @@ export default function OperationsDashboard({ onOpenStudio, onOpenClassroom, onO
             <Activity size={14} />
             <span>INSTITUTIONAL INTEGRITY CONTROL DECK</span>
           </div>
-          <h1 style={{ fontSize: 32, fontWeight: 400, letterSpacing: '-0.03em', margin: 0, color: 'var(--color-bone-white)' }}>
+          <h1
+            style={{
+              fontSize: 'var(--font-size-display-md, clamp(28px, 4vw, 36px))',
+              fontWeight: 400,
+              letterSpacing: 'var(--letter-spacing-headline, -0.035em)',
+              lineHeight: 'var(--line-height-display, 1.05)',
+              margin: 0,
+              color: 'var(--color-bone-white)',
+              fontFamily: "var(--font-ppneuemontreal, 'PPNeueMontreal', -apple-system, sans-serif)",
+              fontFeatureSettings: '"ss01" on',
+            }}
+          >
             Operations &amp; Forensic Ledger
           </h1>
-          <p style={{ fontSize: 16, fontWeight: 200, color: 'var(--color-ash-gray)', marginTop: 8, maxWidth: 640 }}>
+          <p
+            style={{
+              fontSize: 'var(--font-size-body-lg, 16px)',
+              fontWeight: 300,
+              letterSpacing: 'var(--letter-spacing-body, -0.01em)',
+              lineHeight: 1.5,
+              color: 'var(--color-ash-gray)',
+              marginTop: 8,
+              maxWidth: 640,
+            }}
+          >
             Real-time correlation across multi-engine winnowing hashes, AST syntactic code clones, and adversarial evasion vectors.
           </p>
         </div>
