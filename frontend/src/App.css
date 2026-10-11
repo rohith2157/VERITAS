@@ -259,3 +259,54 @@
 .btn-velvet-primary:active {
   transform: translateY(0);
 }
+
+/* ==================== VERITAS MICRO-ANIMATIONS ==================== */
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 12px 0 rgba(128, 82, 255, 0.4);
+    opacity: 1;
+  }
+  50% {
+    box-shadow: 0 0 24px 6px rgba(128, 82, 255, 0.7);
+    opacity: 0.85;
+  }
+}
+
+@keyframes pingDot {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(21, 132, 110, 0.7);
+  }
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 8px rgba(21, 132, 110, 0);
+  }
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(21, 132, 110, 0);
+  }
+}
+
+@keyframes shimmerSlide {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.animate-pulse-iris {
+  animation: pulseGlow 2.8s infinite ease-in-out;
+}
+
+.animate-ping-dot {
+  animation: pingDot 2s infinite cubic-bezier(0, 0, 0.2, 1);
+}
+
+.skeleton-shimmer {
+  background: linear-gradient(90deg, rgba(255,255,255,0.03) 25%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.03) 75%);
+  background-size: 200% 100%;
+  animation: shimmerSlide 1.8s infinite;
+  border-radius: 8px;
+}
