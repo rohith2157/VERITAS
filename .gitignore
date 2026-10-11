@@ -11,6 +11,8 @@
 
 # Generated Test Captures & Audit Screenshots
 audit_screenshots/
+frontend/audit_agent3/
+frontend/e2e_artifacts/
 *.png
 !frontend/public/**/*.png
 !frontend/src/**/*.png
@@ -19,6 +21,18 @@ test_*.png
 verify_*.png
 view_*.png
 asscroll_step_*.png
+veritas_*.png
+audit_*.png
+screenshot*.png
+final_*.png
+real_*.png
+
+# Large 3D textures & position binaries
+*.exr
+
+# Backups & Temp files
+*.bak
+*.react-backup.html
 
 # Node & Frontend Build Artifacts
 node_modules/
