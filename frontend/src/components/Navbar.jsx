@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Sun, Moon } from 'lucide-react';
+import { Sun, Moon, Menu, X } from 'lucide-react';
 
 export default function Navbar({ activeTab, setActiveTab, serverStatus, theme = 'dark', toggleTheme }) {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -12,6 +13,16 @@ export default function Navbar({ activeTab, setActiveTab, serverStatus, theme = 
     handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape' && mobileMenuOpen) {
+        setMobileMenuOpen(false);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [mobileMenuOpen]);
 
   const navLinks = [
     { id: 'manifesto', label: 'MANIFESTO' },
@@ -31,8 +42,13 @@ export default function Navbar({ activeTab, setActiveTab, serverStatus, theme = 
           left: 0;
           right: 0;
           z-index: 1000;
-          padding: 18px 40px;
-          transition: background-color 0.3s ease, backdrop-filter 0.3s ease, border-color 0.3s ease;
+          padding: 16px 40px;
+          backdrop-filter: blur(24px);
+          -webkit-backdrop-filter: blur(24px);
+          background: rgba(0, 0, 0, 0.75);
+          border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+          transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .veritas-nav-link {
           background: none;
@@ -46,13 +62,14 @@ export default function Navbar({ activeTab, setActiveTab, serverStatus, theme = 
           color: var(--color-ash-gray);
           padding: 6px 0;
           position: relative;
-          transition: color 0.2s ease;
+          transition: color 0.2s ease, transform 0.2s ease;
           display: inline-flex;
           align-items: center;
           text-decoration: none;
         }
         .veritas-nav-link:hover {
           color: var(--color-bone-white) !important;
+          transform: translateY(-1px);
         }
         .veritas-nav-link.is-active {
           color: var(--color-bone-white) !important;
@@ -94,6 +111,73 @@ export default function Navbar({ activeTab, setActiveTab, serverStatus, theme = 
           .veritas-nav-links {
             display: none !important;
           }
+          .veritas-mobile-toggle {
+            display: flex !important;
+          }
+        }
+        .veritas-mobile-toggle {
+          display: none;
+          background: transparent;
+          border: 1px solid rgba(255, 255, 255, 0.12);
+          color: var(--color-bone-white);
+          cursor: pointer;
+          padding: 6px;
+          border-radius: 8px;
+          align-items: center;
+          justify-content: center;
+          transition: border-color 0.2s ease, background 0.2s ease;
+        }
+        .veritas-mobile-toggle:hover {
+          border-color: rgba(255, 255, 255, 0.3);
+          background: rgba(255, 255, 255, 0.05);
+        }
+        .veritas-mobile-drawer {
+          position: fixed;
+          top: 68px;
+          left: 0;
+          right: 0;
+          background: rgba(0, 0, 0, 0.95);
+          backdrop-filter: blur(24px);
+          -webkit-backdrop-filter: blur(24px);
+          border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+          padding: 24px 32px 32px;
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+          z-index: 999;
+          box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8);
+          animation: veritas-drawer-slide 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        @keyframes veritas-drawer-slide {
+          from {
+            opacity: 0;
+            transform: translateY(-10px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        .veritas-mobile-drawer-link {
+          background: none;
+          border: none;
+          text-align: left;
+          font-size: 14px;
+          font-weight: 600;
+          letter-spacing: 0.5px;
+          text-transform: uppercase;
+          color: var(--color-ash-gray);
+          padding: 12px 0;
+          cursor: pointer;
+          border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          transition: color 0.2s ease;
+        }
+        .veritas-mobile-drawer-link:hover,
+        .veritas-mobile-drawer-link.is-active {
+          color: var(--color-bone-white);
         }
       `}</style>
 
@@ -200,7 +284,7 @@ export default function Navbar({ activeTab, setActiveTab, serverStatus, theme = 
             </nav>
 
             {/* Far Right Action Elements */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
               {/* Minimalist Dark/Light Mode Switcher */}
               <button
                 onClick={toggleTheme}
@@ -231,10 +315,57 @@ export default function Navbar({ activeTab, setActiveTab, serverStatus, theme = 
                 <span className="btn__text">REQUEST ACCESS</span>
                 <div className="btn__hover" />
               </button>
+
+              {/* Mobile Drawer Hamburger Button */}
+              <button
+                className="veritas-mobile-toggle"
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                aria-label={mobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+                aria-expanded={mobileMenuOpen}
+              >
+                {mobileMenuOpen ? <X size={18} /> : <Menu size={18} />}
+              </button>
             </div>
           </div>
         </div>
       </header>
+
+      {/* Accessible Mobile Drawer Overlay */}
+      {mobileMenuOpen && (
+        <nav
+          className="veritas-mobile-drawer"
+          role="navigation"
+          aria-label="Mobile Navigation"
+        >
+          {navLinks.map((link) => {
+            const isActive = activeTab === link.id;
+            return (
+              <button
+                key={link.id}
+                onClick={() => {
+                  if (setActiveTab) setActiveTab(link.id);
+                  if (typeof window !== 'undefined') window.location.hash = link.id;
+                  setMobileMenuOpen(false);
+                }}
+                className={`veritas-mobile-drawer-link ${isActive ? 'is-active' : ''}`}
+                aria-current={isActive ? 'page' : undefined}
+              >
+                <span>{link.label}</span>
+                {isActive && (
+                  <span
+                    style={{
+                      width: 6,
+                      height: 6,
+                      borderRadius: '50%',
+                      backgroundColor: 'var(--color-electric-iris)',
+                    }}
+                  />
+                )}
+              </button>
+            );
+          })}
+        </nav>
+      )}
     </>
   );
 }
