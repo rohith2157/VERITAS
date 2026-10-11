@@ -271,10 +271,10 @@ export default function OperationsDashboard({ onOpenStudio, onOpenClassroom, onO
       {/* 2. Key Performance Indicators (KPIs) */}
       <div className="ops-kpi-grid">
         <div className="veritas-surface" style={{ padding: '24px 28px' }}>
-          <div style={{ fontSize: 12, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.04em', color: 'var(--color-ash-gray)', marginBottom: 8 }}>
+          <div style={{ fontSize: 11, fontWeight: 600, textTransform: 'uppercase', letterSpacing: 'var(--letter-spacing-display-caps, 0.04em)', color: 'var(--color-ash-gray)', marginBottom: 8 }}>
             Total Submissions
           </div>
-          <div style={{ fontSize: 36, fontWeight: 400, letterSpacing: '-0.04em', color: 'var(--color-bone-white)' }}>
+          <div style={{ fontSize: 'var(--font-size-metric-display, clamp(34px, 3.5vw, 42px))', fontWeight: 400, letterSpacing: 'var(--letter-spacing-metric, -0.04em)', lineHeight: 1.05, color: 'var(--color-bone-white)', fontFamily: "var(--font-ppneuemontreal, 'PPNeueMontreal', -apple-system, sans-serif)", fontFeatureSettings: '"ss01" on' }}>
             14,892
           </div>
           <div style={{ fontSize: 12, fontWeight: 400, color: 'var(--color-deep-verdant)', marginTop: 8, display: 'flex', alignItems: 'center', gap: 6 }}>
@@ -284,10 +284,10 @@ export default function OperationsDashboard({ onOpenStudio, onOpenClassroom, onO
         </div>
 
         <div className="veritas-surface" style={{ padding: '24px 28px' }}>
-          <div style={{ fontSize: 12, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.04em', color: 'var(--color-ash-gray)', marginBottom: 8 }}>
+          <div style={{ fontSize: 11, fontWeight: 600, textTransform: 'uppercase', letterSpacing: 'var(--letter-spacing-display-caps, 0.04em)', color: 'var(--color-ash-gray)', marginBottom: 8 }}>
             Mean Originality Index
           </div>
-          <div style={{ fontSize: 36, fontWeight: 400, letterSpacing: '-0.04em', color: 'var(--color-electric-iris)' }}>
+          <div style={{ fontSize: 'var(--font-size-metric-display, clamp(34px, 3.5vw, 42px))', fontWeight: 400, letterSpacing: 'var(--letter-spacing-metric, -0.04em)', lineHeight: 1.05, color: 'var(--color-electric-iris)', fontFamily: "var(--font-ppneuemontreal, 'PPNeueMontreal', -apple-system, sans-serif)", fontFeatureSettings: '"ss01" on' }}>
             91.6%
           </div>
           <div style={{ fontSize: 12, fontWeight: 400, color: 'var(--color-ash-gray)', marginTop: 8 }}>
@@ -296,10 +296,10 @@ export default function OperationsDashboard({ onOpenStudio, onOpenClassroom, onO
         </div>
 
         <div className="veritas-surface" style={{ padding: '24px 28px' }}>
-          <div style={{ fontSize: 12, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.04em', color: 'var(--color-ash-gray)', marginBottom: 8 }}>
+          <div style={{ fontSize: 11, fontWeight: 600, textTransform: 'uppercase', letterSpacing: 'var(--letter-spacing-display-caps, 0.04em)', color: 'var(--color-ash-gray)', marginBottom: 8 }}>
             Flagged for Faculty Review
           </div>
-          <div style={{ fontSize: 36, fontWeight: 400, letterSpacing: '-0.04em', color: 'var(--color-saffron-spark)' }}>
+          <div style={{ fontSize: 'var(--font-size-metric-display, clamp(34px, 3.5vw, 42px))', fontWeight: 400, letterSpacing: 'var(--letter-spacing-metric, -0.04em)', lineHeight: 1.05, color: 'var(--color-saffron-spark)', fontFamily: "var(--font-ppneuemontreal, 'PPNeueMontreal', -apple-system, sans-serif)", fontFeatureSettings: '"ss01" on' }}>
             47
           </div>
           <div style={{ fontSize: 12, fontWeight: 400, color: 'var(--color-saffron-spark)', marginTop: 8 }}>
@@ -308,10 +308,10 @@ export default function OperationsDashboard({ onOpenStudio, onOpenClassroom, onO
         </div>
 
         <div className="veritas-surface" style={{ padding: '24px 28px' }}>
-          <div style={{ fontSize: 12, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.04em', color: 'var(--color-ash-gray)', marginBottom: 8 }}>
+          <div style={{ fontSize: 11, fontWeight: 600, textTransform: 'uppercase', letterSpacing: 'var(--letter-spacing-display-caps, 0.04em)', color: 'var(--color-ash-gray)', marginBottom: 8 }}>
             Evasion Attacks Neutralized
           </div>
-          <div style={{ fontSize: 36, fontWeight: 400, letterSpacing: '-0.04em', color: 'var(--color-electric-iris)' }}>
+          <div style={{ fontSize: 'var(--font-size-metric-display, clamp(34px, 3.5vw, 42px))', fontWeight: 400, letterSpacing: 'var(--letter-spacing-metric, -0.04em)', lineHeight: 1.05, color: 'var(--color-electric-iris)', fontFamily: "var(--font-ppneuemontreal, 'PPNeueMontreal', -apple-system, sans-serif)", fontFeatureSettings: '"ss01" on' }}>
             128
           </div>
           <div style={{ fontSize: 12, fontWeight: 400, color: 'var(--color-ash-gray)', marginTop: 8 }}>
