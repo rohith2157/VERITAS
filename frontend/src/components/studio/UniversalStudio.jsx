@@ -1518,7 +1518,7 @@ def compute_fact(num):
                             borderLeft: row.status === 'match' ? '3px solid var(--color-saffron-spark)' : (row.status === 'modified' ? '3px solid #ef4444' : '3px solid transparent')
                           }}
                         >
-                          <span style={{ width: 36, color: 'var(--color-ash-gray)', userSelect: 'none', fontSize: 11 }}>
+                          <span aria-hidden="true" style={{ width: 36, color: 'var(--color-ash-gray)', userSelect: 'none', fontSize: 11 }}>
                             L{String(row.lineNum).padStart(2, '0')}
                           </span>
                           <span style={{ flex: 1, whiteSpace: 'pre-wrap', wordBreak: 'break-word', color: 'var(--color-bone-white)' }}>
@@ -1622,7 +1622,7 @@ def compute_fact(num):
                             borderLeft: row.status === 'match' ? '3px solid var(--color-saffron-spark)' : (row.status === 'modified' ? '3px solid var(--color-deep-verdant)' : '3px solid transparent')
                           }}
                         >
-                          <span style={{ width: 36, color: 'var(--color-ash-gray)', userSelect: 'none', fontSize: 11 }}>
+                          <span aria-hidden="true" style={{ width: 36, color: 'var(--color-ash-gray)', userSelect: 'none', fontSize: 11 }}>
                             L{String(row.lineNum).padStart(2, '0')}
                           </span>
                           <span style={{ flex: 1, whiteSpace: 'pre-wrap', wordBreak: 'break-word', color: 'var(--color-bone-white)' }}>
