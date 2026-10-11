@@ -747,10 +747,10 @@ export default function ClassroomPortal() {
 
             {/* Apex Merkle Root Card */}
             <div style={{
-              background: 'linear-gradient(135deg, rgba(128, 82, 255, 0.15), rgba(0, 0, 0, 0.7))',
-              border: '1px solid var(--color-electric-iris, #8052ff)',
+              background: 'rgba(255, 255, 255, 0.02)',
+              border: '1px solid rgba(128, 82, 255, 0.35)',
               borderRadius: 12,
-              padding: 16,
+              padding: 18,
               marginBottom: 16
             }}>
               <div style={{ fontSize: 11, textTransform: 'uppercase', color: 'var(--color-electric-iris)', fontWeight: 600 }}>
