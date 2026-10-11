@@ -1401,7 +1401,7 @@ def compute_fact(num):
                     fontSize: 44,
                     fontWeight: 400,
                     letterSpacing: -1.5,
-                    color: diffResult.similarity_score >= 80 ? '#ef4444' : (diffResult.similarity_score >= 50 ? 'var(--color-saffron-spark)' : '#10b981')
+                    color: diffResult.similarity_score >= 80 ? '#ef4444' : (diffResult.similarity_score >= 50 ? 'var(--color-saffron-spark)' : 'var(--color-deep-verdant)')
                   }}>
                     {diffResult.similarity_score}%
                   </div>
@@ -1439,7 +1439,7 @@ def compute_fact(num):
                 </div>
                 <div style={{ background: 'rgba(255, 255, 255, 0.02)', border: '1px solid rgba(255, 255, 255, 0.06)', borderRadius: 12, padding: 14 }}>
                   <div style={{ fontSize: 11, color: 'var(--color-ash-gray)', textTransform: 'uppercase' }}>Evasion Injections</div>
-                  <div style={{ fontSize: 24, fontWeight: 400, color: evasionA.isSuspicious ? '#ef4444' : '#10b981', marginTop: 4 }}>
+                  <div style={{ fontSize: 24, fontWeight: 400, color: evasionA.isSuspicious ? '#ef4444' : 'var(--color-deep-verdant)', marginTop: 4 }}>
                     {evasionA.totalThreatCount} found
                   </div>
                 </div>
@@ -1616,8 +1616,8 @@ def compute_fact(num):
                           style={{
                             display: 'flex',
                             padding: '3px 14px',
-                            background: row.status === 'match' ? 'rgba(255, 184, 41, 0.08)' : (row.status === 'modified' ? 'rgba(16, 185, 129, 0.06)' : 'transparent'),
-                            borderLeft: row.status === 'match' ? '3px solid var(--color-saffron-spark)' : (row.status === 'modified' ? '3px solid #10b981' : '3px solid transparent')
+                            background: row.status === 'match' ? 'rgba(255, 184, 41, 0.08)' : (row.status === 'modified' ? 'rgba(21, 132, 110, 0.08)' : 'transparent'),
+                            borderLeft: row.status === 'match' ? '3px solid var(--color-saffron-spark)' : (row.status === 'modified' ? '3px solid var(--color-deep-verdant)' : '3px solid transparent')
                           }}
                         >
                           <span style={{ width: 36, color: 'var(--color-ash-gray)', userSelect: 'none', fontSize: 11 }}>
@@ -1628,8 +1628,8 @@ def compute_fact(num):
                               <span
                                 key={tIdx}
                                 style={{
-                                  background: tok.type === 'inserted' ? 'rgba(16, 185, 129, 0.25)' : (row.status === 'match' ? 'rgba(255, 184, 41, 0.12)' : 'transparent'),
-                                  color: tok.type === 'inserted' ? '#6ee7b7' : 'inherit',
+                                  background: tok.type === 'inserted' ? 'rgba(21, 132, 110, 0.25)' : (row.status === 'match' ? 'rgba(255, 184, 41, 0.12)' : 'transparent'),
+                                  color: tok.type === 'inserted' ? 'var(--color-deep-verdant)' : 'inherit',
                                   borderRadius: 2
                                 }}
                               >
@@ -1807,7 +1807,7 @@ def compute_fact(num):
                             if (!isSelf) {
                               if (val >= 50) { bg = 'rgba(239, 68, 68, 0.3)'; textColor = '#fca5a5'; }
                               else if (val >= 25) { bg = 'rgba(255, 184, 41, 0.25)'; textColor = '#fde68a'; }
-                              else if (val > 0) { bg = 'rgba(21, 132, 110, 0.25)'; textColor = '#6ee7b7'; }
+                              else if (val > 0) { bg = 'rgba(21, 132, 110, 0.25)'; textColor = 'var(--color-deep-verdant)'; }
                             }
                             return (
                               <td
@@ -1904,7 +1904,7 @@ def compute_fact(num):
                 </button>
                 <button
                   onClick={() => loadAiPreset('human')}
-                  style={{ background: 'rgba(16, 185, 129, 0.12)', border: '1px solid rgba(16, 185, 129, 0.3)', color: '#6ee7b7', padding: '5px 12px', borderRadius: 14, fontSize: 12, cursor: 'pointer' }}
+                  style={{ background: 'rgba(21, 132, 110, 0.15)', border: '1px solid rgba(21, 132, 110, 0.35)', color: 'var(--color-deep-verdant)', padding: '5px 12px', borderRadius: 14, fontSize: 12, cursor: 'pointer' }}
                 >
                   Human Essay Sample
                 </button>
@@ -1973,7 +1973,7 @@ def compute_fact(num):
                   <div id="ai-probability-score" style={{
                     fontSize: 46,
                     fontWeight: 400,
-                    color: aiResult.ai_probability > 60 ? '#ef4444' : (aiResult.ai_probability > 30 ? 'var(--color-saffron-spark)' : '#10b981'),
+                    color: aiResult.ai_probability > 60 ? '#ef4444' : (aiResult.ai_probability > 30 ? 'var(--color-saffron-spark)' : 'var(--color-deep-verdant)'),
                     margin: '6px 0'
                   }}>
                     {aiResult.ai_probability}%
@@ -2078,14 +2078,14 @@ def compute_fact(num):
                     style={{
                       padding: 14,
                       borderRadius: 12,
-                      background: s.classification === 'AI' ? 'rgba(239, 68, 68, 0.08)' : (s.classification === 'MIXED' ? 'rgba(255, 184, 41, 0.08)' : 'rgba(16, 185, 129, 0.08)'),
-                      borderLeft: `4px solid ${s.classification === 'AI' ? '#ef4444' : (s.classification === 'MIXED' ? 'var(--color-saffron-spark)' : '#10b981')}`,
+                      background: s.classification === 'AI' ? 'rgba(239, 68, 68, 0.08)' : (s.classification === 'MIXED' ? 'rgba(255, 184, 41, 0.08)' : 'rgba(21, 132, 110, 0.12)'),
+                      borderLeft: `4px solid ${s.classification === 'AI' ? '#ef4444' : (s.classification === 'MIXED' ? 'var(--color-saffron-spark)' : 'var(--color-deep-verdant)')}`,
                       fontSize: 13,
                       lineHeight: 1.5
                     }}
                   >
                     <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4 }}>
-                      <span style={{ fontWeight: 600, color: s.classification === 'AI' ? '#fca5a5' : (s.classification === 'MIXED' ? '#fde68a' : '#6ee7b7') }}>
+                      <span style={{ fontWeight: 600, color: s.classification === 'AI' ? '#fca5a5' : (s.classification === 'MIXED' ? '#fde68a' : 'var(--color-deep-verdant)') }}>
                         Sentence #{idx + 1} — [{s.classification} • {s.ai_probability}% AI Probability]
                       </span>
                       <span style={{ fontSize: 11, color: 'var(--color-ash-gray)' }}>
@@ -2223,7 +2223,7 @@ def compute_fact(num):
                     fontSize: 46,
                     fontWeight: 400,
                     letterSpacing: -1.5,
-                    color: codeResult.structural_similarity >= 80 ? '#ef4444' : '#10b981'
+                    color: codeResult.structural_similarity >= 80 ? '#ef4444' : 'var(--color-deep-verdant)'
                   }}>
                     {codeResult.structural_similarity || codeResult.ast_equivalence_percentage}%
                   </div>
@@ -2231,7 +2231,7 @@ def compute_fact(num):
                     fontSize: 12,
                     fontWeight: 600,
                     textTransform: 'uppercase',
-                    color: codeResult.structural_similarity >= 80 ? '#ef4444' : '#10b981'
+                    color: codeResult.structural_similarity >= 80 ? '#ef4444' : 'var(--color-deep-verdant)'
                   }}>
                     {codeResult.structural_verdict?.includes('CLONE') || codeResult.is_code_clone ? '⚠️ IDENTICAL CODE CLONE DETECTED' : 'UNIQUE LOGIC STRUCTURE'}
                   </div>
@@ -2300,7 +2300,7 @@ def compute_fact(num):
                             <td style={{ fontFamily: 'var(--font-mono)', color: 'var(--color-electric-iris)', fontWeight: 600 }}>
                               <code>{m.canonical}</code>
                             </td>
-                            <td style={{ color: '#6ee7b7', fontWeight: 600 }}>
+                            <td style={{ color: 'var(--color-deep-verdant)', fontWeight: 600 }}>
                               {m.match || "100%"}
                             </td>
                           </tr>
@@ -2426,7 +2426,7 @@ def compute_fact(num):
                   <div><strong style={{ color: '#ffffff' }}>Target Author:</strong> {stylometryBaseline.author}</div>
                   <div><strong style={{ color: 'var(--color-saffron-spark)' }}>Historical Yule's K:</strong> {stylometryBaseline.historical_yules_k} (Moderate Lexical Repetition)</div>
                   <div><strong style={{ color: 'var(--color-electric-iris)' }}>Historical Type-Token Ratio:</strong> {stylometryBaseline.historical_ttr}</div>
-                  <div><strong style={{ color: '#6ee7b7' }}>Historical Sentence Cadence:</strong> {stylometryBaseline.historical_avg_sentence_len} words/sentence (Burstiness: {stylometryBaseline.historical_burstiness})</div>
+                  <div><strong style={{ color: 'var(--color-deep-verdant)' }}>Historical Sentence Cadence:</strong> {stylometryBaseline.historical_avg_sentence_len} words/sentence (Burstiness: {stylometryBaseline.historical_burstiness})</div>
                 </div>
               </div>
             </div>
@@ -2471,9 +2471,9 @@ def compute_fact(num):
                 gap: 16
               }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
-                  {stylometryResult.anomaly_detected ? <AlertTriangle size={28} color="#ef4444" /> : <ShieldCheck size={28} color="#10b981" />}
+                  {stylometryResult.anomaly_detected ? <AlertTriangle size={28} color="#ef4444" /> : <ShieldCheck size={28} color="var(--color-deep-verdant)" />}
                   <div>
-                    <h4 style={{ margin: 0, fontSize: 16, color: stylometryResult.anomaly_detected ? '#fca5a5' : '#6ee7b7', fontWeight: 600 }}>
+                    <h4 style={{ margin: 0, fontSize: 16, color: stylometryResult.anomaly_detected ? '#fca5a5' : 'var(--color-deep-verdant)', fontWeight: 600 }}>
                       {stylometryResult.verdict}
                     </h4>
                     <p style={{ margin: '4px 0 0', fontSize: 13, color: 'var(--color-silver-mist)' }}>
@@ -2536,7 +2536,7 @@ def compute_fact(num):
                   <div style={{ fontSize: 11, textTransform: 'uppercase', color: 'var(--color-ash-gray)', fontWeight: 600 }}>
                     Sentence Burstiness (σ)
                   </div>
-                  <div id="stat-burstiness" style={{ fontSize: 32, fontWeight: 400, color: '#6ee7b7', margin: '6px 0' }}>
+                  <div id="stat-burstiness" style={{ fontSize: 32, fontWeight: 400, color: 'var(--color-deep-verdant)', margin: '6px 0' }}>
                     {stylometryResult.sentence_burstiness}
                   </div>
                   <div style={{ fontSize: 11.5, color: 'var(--color-silver-mist)' }}>
@@ -2669,7 +2669,7 @@ def compute_fact(num):
                     <div style={{ fontSize: 11, color: 'var(--color-ash-gray)', fontWeight: 600, textTransform: 'uppercase' }}>
                       Intermediate Node H₀,₁ = SHA256(H₀ + H₁)
                     </div>
-                    <div style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: '#6ee7b7', wordBreak: 'break-all', marginTop: 4 }}>
+                    <div style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--color-deep-verdant)', wordBreak: 'break-all', marginTop: 4 }}>
                       0x{merkleTreeData.intermediates[0]}
                     </div>
                   </div>
@@ -2677,7 +2677,7 @@ def compute_fact(num):
                     <div style={{ fontSize: 11, color: 'var(--color-ash-gray)', fontWeight: 600, textTransform: 'uppercase' }}>
                       Intermediate Node H₂,₃ = SHA256(H₂ + H₃)
                     </div>
-                    <div style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: '#6ee7b7', wordBreak: 'break-all', marginTop: 4 }}>
+                    <div style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--color-deep-verdant)', wordBreak: 'break-all', marginTop: 4 }}>
                       0x{merkleTreeData.intermediates[1]}
                     </div>
                   </div>
@@ -2793,9 +2793,9 @@ def compute_fact(num):
                       alignItems: 'center',
                       gap: 12
                     }}>
-                      {merkleVerificationResult.isProofValid ? <CheckCircle2 size={24} color="#10b981" /> : <AlertTriangle size={24} color="#ef4444" />}
+                      {merkleVerificationResult.isProofValid ? <CheckCircle2 size={24} color="var(--color-deep-verdant)" /> : <AlertTriangle size={24} color="#ef4444" />}
                       <div>
-                        <div id="merkle-verification-status" style={{ fontSize: 14, fontWeight: 600, color: merkleVerificationResult.isProofValid ? '#6ee7b7' : '#fca5a5' }}>
+                        <div id="merkle-verification-status" style={{ fontSize: 14, fontWeight: 600, color: merkleVerificationResult.isProofValid ? 'var(--color-deep-verdant)' : '#fca5a5' }}>
                           {merkleVerificationResult.isProofValid
                             ? "CRYPTOGRAPHIC PROOF VERIFIED: Mathematical Root Match (Tamper-Free)"
                             : "CRYPTOGRAPHIC PROOF FAILED: Root Mismatch (Evidence Tampered)"}
