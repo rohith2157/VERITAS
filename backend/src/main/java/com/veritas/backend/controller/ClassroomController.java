@@ -5,6 +5,7 @@ import com.veritas.backend.model.Classroom;
 import com.veritas.backend.model.RubricRule;
 import com.veritas.backend.model.Submission;
 import com.veritas.backend.service.ClassroomService;
+import com.veritas.backend.service.RubricService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
