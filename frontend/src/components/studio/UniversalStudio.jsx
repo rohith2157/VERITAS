@@ -1078,7 +1078,7 @@ def compute_fact(num):
   const runMerkleTreeComputation = async () => {
     setLoading(true);
     try {
-      const res = await fetch('http://localhost:8080/api/classrooms/submissions/101/merkle');
+      const res = await fetch('/api/classrooms/submissions/101/merkle');
       if (!res.ok) throw new Error('Gateway returned ' + res.status);
       const data = await res.json();
       setMerkleTreeData(data);
@@ -1142,7 +1142,7 @@ def compute_fact(num):
       const proof = merkleTreeData.proofs[merkleSelectedLeaf];
       const expectedRoot = merkleTreeData.merkleRoot;
 
-      const res = await fetch('http://localhost:8080/api/classrooms/ledger/merkle/verify', {
+      const res = await fetch('/api/classrooms/ledger/merkle/verify', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ leafHash, proof, expectedRoot })
