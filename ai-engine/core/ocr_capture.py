@@ -56,3 +56,4 @@ def process_document_ocr(
         "evasion_thwarted": is_image or (is_pdf and "FLATTENED" in detected_format),
         "status": "SUCCESS"
     }
+

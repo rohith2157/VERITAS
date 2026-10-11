@@ -205,3 +205,4 @@ class IVFFlatIndexSDMA:
 
 # Global singleton instance
 global_vector_index = IVFFlatIndexSDMA()
+

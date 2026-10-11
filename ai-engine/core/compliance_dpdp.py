@@ -103,3 +103,4 @@ class DPDPComplianceManager:
 
 # Global compliance manager singleton
 global_dpdp_manager = DPDPComplianceManager()
+

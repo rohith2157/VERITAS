@@ -154,3 +154,4 @@ def generate_daip_iaip_report(
             else f"DAIP Recommendation: Escalate to IAIP for enforcement of {ugc_ruling['ugc_level']} statutory penalty."
         )
     }
+

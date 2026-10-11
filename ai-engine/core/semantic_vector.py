@@ -159,3 +159,4 @@ def semantic_document_compare(
         "vector_dimension": EMBEDDING_DIM,
         "model_architecture": "Sentence-BERT (SBERT) Mean-Pooled Subword Attention"
     }
+
