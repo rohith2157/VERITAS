@@ -1,6 +1,8 @@
 package com.veritas.backend.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.databind.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -21,6 +23,8 @@ import java.util.Map;
 @RequestMapping("/api/graph")
 @CrossOrigin(origins = "*")
 public class GraphController {
+
+    private static final Logger log = LoggerFactory.getLogger(GraphController.class);
 
     private final JdbcTemplate jdbcTemplate;
     private final ObjectMapper objectMapper;
@@ -43,9 +47,14 @@ public class GraphController {
                 "JOIN graph_nodes n2 ON c.derived_copy_node = n2.node_id;";
         try {
             List<Map<String, Object>> chains = jdbcTemplate.queryForList(sql);
+            if (chains == null || chains.isEmpty()) {
+                log.info("Collusion view returned 0 rows. Serving fallback collusion dataset.");
+                return ResponseEntity.ok(getFallbackCollusionChains());
+            }
+            log.info("Retrieved {} collusion chain records from database.", chains.size());
             return ResponseEntity.ok(chains);
         } catch (Exception ex) {
-            System.err.println("Database query failed for collusion-chains: " + ex.getMessage());
+            log.warn("Database query failed for collusion-chains (db offline or starting up): {}. Serving fallback dataset.", ex.getMessage());
             return ResponseEntity.ok(getFallbackCollusionChains());
         }
     }
@@ -59,19 +68,27 @@ public class GraphController {
             List<Map<String, Object>> nodes = jdbcTemplate.queryForList("SELECT * FROM graph_nodes;");
             List<Map<String, Object>> edges = jdbcTemplate.queryForList("SELECT * FROM graph_edges;");
 
+            if (nodes == null || nodes.isEmpty()) {
+                log.info("Graph nodes query returned 0 rows. Serving fallback topology dataset.");
+                return ResponseEntity.ok(getFallbackGraphData());
+            }
+
             for (Map<String, Object> node : nodes) {
                 parseJsonField(node, "properties");
             }
-            for (Map<String, Object> edge : edges) {
-                parseJsonField(edge, "metadata");
+            if (edges != null) {
+                for (Map<String, Object> edge : edges) {
+                    parseJsonField(edge, "metadata");
+                }
             }
 
             Map<String, Object> response = new HashMap<>();
             response.put("nodes", nodes);
-            response.put("edges", edges);
+            response.put("edges", edges != null ? edges : List.of());
+            log.info("Retrieved {} graph nodes and {} graph edges from database.", nodes.size(), edges != null ? edges.size() : 0);
             return ResponseEntity.ok(response);
         } catch (Exception ex) {
-            System.err.println("Database query failed for graph nodes: " + ex.getMessage());
+            log.warn("Database query failed for graph nodes (db offline or starting up): {}. Serving fallback dataset.", ex.getMessage());
             return ResponseEntity.ok(getFallbackGraphData());
         }
     }

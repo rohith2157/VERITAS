@@ -79,9 +79,11 @@ const GRAPH_NODES_DATA = {
     trustScore: '0.98 (Verified)',
     trustValue: 0.98,
     similarity: '6.2% (Baseline)',
+    overlapPercent: '6.2%',
     originality: '94% Original Originator',
     hopLevel: 0,
     status: 'Verified Original Provenance',
+    description: 'Earliest immutable block seal in cohort. Root origin of Raft consensus cluster election logic. Conclusively establishes patient zero provenance.',
     details: 'Earliest immutable block seal in cohort. Root origin of Raft consensus cluster election logic. Conclusively establishes patient zero provenance.'
   },
   rohan: {
@@ -94,9 +96,11 @@ const GRAPH_NODES_DATA = {
     trustScore: '0.41 (Compromised)',
     trustValue: 0.41,
     similarity: '82.0% Direct Overlap',
+    overlapPercent: '82.0%',
     originality: '18% Originality',
     hopLevel: 1,
     status: 'Direct Collusion Detected',
+    description: 'Cloned term safety logic from Arjun Patel with +16m delay. 142 shared Winnowing k-gram fingerprints.',
     details: 'Cloned term safety logic from Arjun Patel with +16m delay. 142 shared Winnowing k-gram fingerprints.'
   },
   david: {
@@ -109,9 +113,11 @@ const GRAPH_NODES_DATA = {
     trustScore: '0.22 (Critical Risk)',
     trustValue: 0.22,
     similarity: '64.0% Derived Copy',
+    overlapPercent: '64.0%',
     originality: '36% Originality',
     hopLevel: 2,
     status: 'Recursive Transitive Derivation',
+    description: 'Derived copy from Rohan Gupta via recursive CTE traversal (+58m cumulative delay from Patient Zero). High synthetic similarity.',
     details: 'Derived copy from Rohan Gupta via recursive CTE traversal (+58m cumulative delay from Patient Zero). High synthetic similarity.'
   },
   elena: {
@@ -124,9 +130,11 @@ const GRAPH_NODES_DATA = {
     trustScore: '0.88 (Flagged Anomaly)',
     trustValue: 0.88,
     similarity: '34.0% AST Match',
+    overlapPercent: '34.0%',
     originality: '66% Originality',
     hopLevel: 1,
     status: 'Adversarial Evasion Neutralized',
+    description: 'AST structural syntax clone of Arjun Patel with 14 Cyrillic homoglyphs and zero-width spaces normalized by NFKD pipeline.',
     details: 'AST structural syntax clone of Arjun Patel with 14 Cyrillic homoglyphs and zero-width spaces normalized by NFKD pipeline.'
   }
 };
@@ -825,8 +833,24 @@ export default function PortalWorkflowHub({ onNavigateToStudio, onNavigateToClas
                 <text x="250" y="145" fill="var(--color-electric-iris)" fontSize="10" fontFamily="monospace" textAnchor="middle">34% AST Clone (+48m)</text>
 
                 {/* Node 1: Arjun Patel (Patient Zero) */}
-                <g>
-                  <circle cx="110" cy="85" r="32" fill="rgba(21, 132, 110, 0.25)" stroke="var(--color-deep-verdant)" strokeWidth="2" />
+                <g
+                  onClick={() => setSelectedGraphNode(GRAPH_NODES_DATA.arjun)}
+                  style={{ cursor: 'pointer' }}
+                >
+                  {selectedGraphNode?.id === GRAPH_NODES_DATA.arjun.id && (
+                    <>
+                      <circle cx="110" cy="85" r="40" fill="none" stroke="var(--color-deep-verdant)" strokeWidth="2.5" strokeDasharray="4 2" />
+                      <circle cx="110" cy="85" r="44" fill="none" stroke="var(--color-deep-verdant)" strokeWidth="1" opacity="0.4" />
+                    </>
+                  )}
+                  <circle
+                    cx="110"
+                    cy="85"
+                    r="32"
+                    fill={selectedGraphNode?.id === GRAPH_NODES_DATA.arjun.id ? 'rgba(21, 132, 110, 0.45)' : 'rgba(21, 132, 110, 0.25)'}
+                    stroke="var(--color-deep-verdant)"
+                    strokeWidth={selectedGraphNode?.id === GRAPH_NODES_DATA.arjun.id ? '3.5' : '2'}
+                  />
                   <circle cx="110" cy="85" r="10" fill="var(--color-deep-verdant)" />
                   <text x="110" y="128" fill="var(--color-bone-white)" fontSize="12" fontWeight="600" textAnchor="middle">Arjun Patel</text>
                   <text x="110" y="141" fill="var(--color-deep-verdant)" fontSize="10" fontWeight="600" textAnchor="middle">PATIENT ZERO</text>
@@ -834,8 +858,24 @@ export default function PortalWorkflowHub({ onNavigateToStudio, onNavigateToClas
                 </g>
 
                 {/* Node 2: Rohan Gupta (Colluder Hop 1) */}
-                <g>
-                  <circle cx="410" cy="55" r="28" fill="rgba(255, 184, 41, 0.2)" stroke="var(--color-saffron-spark)" strokeWidth="2" />
+                <g
+                  onClick={() => setSelectedGraphNode(GRAPH_NODES_DATA.rohan)}
+                  style={{ cursor: 'pointer' }}
+                >
+                  {selectedGraphNode?.id === GRAPH_NODES_DATA.rohan.id && (
+                    <>
+                      <circle cx="410" cy="55" r="36" fill="none" stroke="var(--color-saffron-spark)" strokeWidth="2.5" strokeDasharray="4 2" />
+                      <circle cx="410" cy="55" r="40" fill="none" stroke="var(--color-saffron-spark)" strokeWidth="1" opacity="0.4" />
+                    </>
+                  )}
+                  <circle
+                    cx="410"
+                    cy="55"
+                    r="28"
+                    fill={selectedGraphNode?.id === GRAPH_NODES_DATA.rohan.id ? 'rgba(255, 184, 41, 0.4)' : 'rgba(255, 184, 41, 0.2)'}
+                    stroke="var(--color-saffron-spark)"
+                    strokeWidth={selectedGraphNode?.id === GRAPH_NODES_DATA.rohan.id ? '3.5' : '2'}
+                  />
                   <circle cx="410" cy="55" r="9" fill="var(--color-saffron-spark)" />
                   <text x="410" y="96" fill="var(--color-bone-white)" fontSize="12" fontWeight="600" textAnchor="middle">Rohan Gupta</text>
                   <text x="410" y="109" fill="var(--color-saffron-spark)" fontSize="10" textAnchor="middle">HOP 1: COLLUSION</text>
@@ -843,8 +883,24 @@ export default function PortalWorkflowHub({ onNavigateToStudio, onNavigateToClas
                 </g>
 
                 {/* Node 3: David Chen (Derived Hop 2) */}
-                <g>
-                  <circle cx="660" cy="85" r="28" fill="rgba(255, 85, 85, 0.2)" stroke="#ff5555" strokeWidth="2" />
+                <g
+                  onClick={() => setSelectedGraphNode(GRAPH_NODES_DATA.david)}
+                  style={{ cursor: 'pointer' }}
+                >
+                  {selectedGraphNode?.id === GRAPH_NODES_DATA.david.id && (
+                    <>
+                      <circle cx="660" cy="85" r="36" fill="none" stroke="#ff5555" strokeWidth="2.5" strokeDasharray="4 2" />
+                      <circle cx="660" cy="85" r="40" fill="none" stroke="#ff5555" strokeWidth="1" opacity="0.4" />
+                    </>
+                  )}
+                  <circle
+                    cx="660"
+                    cy="85"
+                    r="28"
+                    fill={selectedGraphNode?.id === GRAPH_NODES_DATA.david.id ? 'rgba(255, 85, 85, 0.4)' : 'rgba(255, 85, 85, 0.2)'}
+                    stroke="#ff5555"
+                    strokeWidth={selectedGraphNode?.id === GRAPH_NODES_DATA.david.id ? '3.5' : '2'}
+                  />
                   <circle cx="660" cy="85" r="9" fill="#ff5555" />
                   <text x="660" y="128" fill="var(--color-bone-white)" fontSize="12" fontWeight="600" textAnchor="middle">David Chen</text>
                   <text x="660" y="141" fill="#ff7777" fontSize="10" textAnchor="middle">HOP 2: RECURSIVE</text>
@@ -852,8 +908,24 @@ export default function PortalWorkflowHub({ onNavigateToStudio, onNavigateToClas
                 </g>
 
                 {/* Node 4: Elena Rostova (Evasion Suspect) */}
-                <g>
-                  <circle cx="410" cy="120" r="24" fill="rgba(128, 82, 255, 0.2)" stroke="var(--color-electric-iris)" strokeWidth="2" />
+                <g
+                  onClick={() => setSelectedGraphNode(GRAPH_NODES_DATA.elena)}
+                  style={{ cursor: 'pointer' }}
+                >
+                  {selectedGraphNode?.id === GRAPH_NODES_DATA.elena.id && (
+                    <>
+                      <circle cx="410" cy="120" r="32" fill="none" stroke="var(--color-electric-iris)" strokeWidth="2.5" strokeDasharray="4 2" />
+                      <circle cx="410" cy="120" r="36" fill="none" stroke="var(--color-electric-iris)" strokeWidth="1" opacity="0.4" />
+                    </>
+                  )}
+                  <circle
+                    cx="410"
+                    cy="120"
+                    r="24"
+                    fill={selectedGraphNode?.id === GRAPH_NODES_DATA.elena.id ? 'rgba(128, 82, 255, 0.4)' : 'rgba(128, 82, 255, 0.2)'}
+                    stroke="var(--color-electric-iris)"
+                    strokeWidth={selectedGraphNode?.id === GRAPH_NODES_DATA.elena.id ? '3.5' : '2'}
+                  />
                   <circle cx="410" cy="120" r="8" fill="var(--color-electric-iris)" />
                   <text x="410" y="156" fill="var(--color-bone-white)" fontSize="11" fontWeight="600" textAnchor="middle">Elena Rostova</text>
                   <text x="410" y="168" fill="var(--color-electric-iris)" fontSize="9" textAnchor="middle">AST CLONE (EVASION)</text>
@@ -861,90 +933,218 @@ export default function PortalWorkflowHub({ onNavigateToStudio, onNavigateToClas
               </svg>
             </div>
 
-            {/* Peer Graph Network Visualizer */}
+            {/* Detailed Provenance Inspector Card */}
+            {selectedGraphNode && (
+              <div style={{
+                background: 'rgba(255, 255, 255, 0.03)',
+                border: '1px solid rgba(255, 255, 255, 0.12)',
+                borderRadius: 20,
+                padding: 24,
+                marginBottom: 24,
+                boxShadow: '0 8px 32px rgba(0, 0, 0, 0.4)'
+              }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20, flexWrap: 'wrap', gap: 12 }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                    <div style={{
+                      width: 36,
+                      height: 36,
+                      borderRadius: 10,
+                      background: 'rgba(128, 82, 255, 0.15)',
+                      border: '1px solid var(--color-electric-iris)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center'
+                    }}>
+                      <Eye size={18} color="var(--color-electric-iris)" />
+                    </div>
+                    <div>
+                      <div style={{ fontSize: 11, fontWeight: 600, color: 'var(--color-electric-iris)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                        Provenance Node Inspector
+                      </div>
+                      <div style={{ fontSize: 18, fontWeight: 600, color: 'var(--color-bone-white)' }}>
+                        {selectedGraphNode.name}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                    <span style={{
+                      fontSize: 11,
+                      fontFamily: 'monospace',
+                      padding: '4px 10px',
+                      borderRadius: 9999,
+                      background: 'rgba(255, 255, 255, 0.06)',
+                      color: 'var(--color-silver-mist)',
+                      border: '1px solid var(--border-subtle)'
+                    }}>
+                      Node: {selectedGraphNode.id.slice(0, 8)}...
+                    </span>
+                    <span style={{
+                      fontSize: 11,
+                      fontWeight: 600,
+                      padding: '4px 12px',
+                      borderRadius: 9999,
+                      background: selectedGraphNode.hopLevel === 0 ? 'rgba(21, 132, 110, 0.2)' : selectedGraphNode.id === GRAPH_NODES_DATA.david.id ? 'rgba(239, 68, 68, 0.2)' : 'rgba(255, 184, 41, 0.2)',
+                      color: selectedGraphNode.hopLevel === 0 ? 'var(--color-deep-verdant)' : selectedGraphNode.id === GRAPH_NODES_DATA.david.id ? '#ff7777' : 'var(--color-saffron-spark)',
+                      border: `1px solid ${selectedGraphNode.hopLevel === 0 ? 'var(--color-deep-verdant)' : selectedGraphNode.id === GRAPH_NODES_DATA.david.id ? '#ff5555' : 'var(--color-saffron-spark)'}`
+                    }}>
+                      {selectedGraphNode.status || selectedGraphNode.role}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Key Node Attributes Grid: Name, Role, Timestamp, Trust Score, Overlap % */}
+                <div style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+                  gap: 14,
+                  marginBottom: 16
+                }}>
+                  {/* Name */}
+                  <div style={{ background: 'rgba(0, 0, 0, 0.3)', padding: 14, borderRadius: 12, border: '1px solid rgba(255, 255, 255, 0.06)' }}>
+                    <div style={{ fontSize: 11, color: 'var(--color-ash-gray)', textTransform: 'uppercase', marginBottom: 4 }}>Name</div>
+                    <div style={{ fontSize: 14, fontWeight: 600, color: 'var(--color-bone-white)' }}>{selectedGraphNode.name}</div>
+                    <div style={{ fontSize: 11, color: 'var(--color-silver-mist)', marginTop: 2 }}>{selectedGraphNode.email}</div>
+                  </div>
+
+                  {/* Role */}
+                  <div style={{ background: 'rgba(0, 0, 0, 0.3)', padding: 14, borderRadius: 12, border: '1px solid rgba(255, 255, 255, 0.06)' }}>
+                    <div style={{ fontSize: 11, color: 'var(--color-ash-gray)', textTransform: 'uppercase', marginBottom: 4 }}>Role</div>
+                    <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--color-saffron-spark)' }}>{selectedGraphNode.role}</div>
+                    <div style={{ fontSize: 11, color: 'var(--color-silver-mist)', marginTop: 2 }}>Hop Level: {selectedGraphNode.hopLevel}</div>
+                  </div>
+
+                  {/* Timestamp */}
+                  <div style={{ background: 'rgba(0, 0, 0, 0.3)', padding: 14, borderRadius: 12, border: '1px solid rgba(255, 255, 255, 0.06)' }}>
+                    <div style={{ fontSize: 11, color: 'var(--color-ash-gray)', textTransform: 'uppercase', marginBottom: 4 }}>Timestamp</div>
+                    <div style={{ fontSize: 14, fontWeight: 600, fontFamily: 'monospace', color: 'var(--color-bone-white)' }}>{selectedGraphNode.timestamp}</div>
+                    <div style={{ fontSize: 11, color: 'var(--color-silver-mist)', marginTop: 2 }}>Immutable Block Seal</div>
+                  </div>
+
+                  {/* Trust Score */}
+                  <div style={{ background: 'rgba(0, 0, 0, 0.3)', padding: 14, borderRadius: 12, border: '1px solid rgba(255, 255, 255, 0.06)' }}>
+                    <div style={{ fontSize: 11, color: 'var(--color-ash-gray)', textTransform: 'uppercase', marginBottom: 4 }}>Trust Score</div>
+                    <div style={{ fontSize: 14, fontWeight: 600, color: selectedGraphNode.trustValue >= 0.8 ? 'var(--color-deep-verdant)' : selectedGraphNode.trustValue >= 0.4 ? 'var(--color-saffron-spark)' : '#ef4444' }}>
+                      {selectedGraphNode.trustScore}
+                    </div>
+                    <div style={{
+                      marginTop: 6,
+                      height: 4,
+                      borderRadius: 2,
+                      background: 'rgba(255, 255, 255, 0.1)',
+                      overflow: 'hidden'
+                    }}>
+                      <div style={{
+                        height: '100%',
+                        width: `${Math.round(selectedGraphNode.trustValue * 100)}%`,
+                        background: selectedGraphNode.trustValue >= 0.8 ? 'var(--color-deep-verdant)' : selectedGraphNode.trustValue >= 0.4 ? 'var(--color-saffron-spark)' : '#ef4444'
+                      }} />
+                    </div>
+                  </div>
+
+                  {/* Overlap % */}
+                  <div style={{ background: 'rgba(0, 0, 0, 0.3)', padding: 14, borderRadius: 12, border: '1px solid rgba(255, 255, 255, 0.06)' }}>
+                    <div style={{ fontSize: 11, color: 'var(--color-ash-gray)', textTransform: 'uppercase', marginBottom: 4 }}>Overlap %</div>
+                    <div style={{ fontSize: 14, fontWeight: 600, color: 'var(--color-bone-white)' }}>
+                      {selectedGraphNode.similarity}
+                    </div>
+                    <div style={{ fontSize: 11, color: 'var(--color-silver-mist)', marginTop: 2 }}>{selectedGraphNode.originality}</div>
+                  </div>
+                </div>
+
+                {/* Block Hash */}
+                <div style={{
+                  background: '#040406',
+                  border: '1px solid rgba(255, 255, 255, 0.08)',
+                  borderRadius: 12,
+                  padding: '12px 16px',
+                  marginBottom: 14
+                }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                      <Lock size={12} color="var(--color-deep-verdant)" />
+                      <span style={{ fontSize: 11, fontWeight: 600, color: 'var(--color-deep-verdant)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                        Block Hash
+                      </span>
+                    </div>
+                    <span style={{ fontSize: 10, color: 'var(--color-ash-gray)' }}>SHA-256 Merkle Ledger Record</span>
+                  </div>
+                  <div style={{
+                    fontFamily: 'monospace',
+                    fontSize: 12,
+                    color: 'var(--color-bone-white)',
+                    wordBreak: 'break-all',
+                    letterSpacing: '0.02em'
+                  }}>
+                    {selectedGraphNode.blockHash}
+                  </div>
+                </div>
+
+                {/* Description */}
+                <div style={{
+                  background: 'rgba(255, 255, 255, 0.02)',
+                  border: '1px solid rgba(255, 255, 255, 0.05)',
+                  borderRadius: 12,
+                  padding: '14px 16px'
+                }}>
+                  <div style={{ fontSize: 11, fontWeight: 600, color: 'var(--color-silver-mist)', textTransform: 'uppercase', marginBottom: 6, letterSpacing: '0.05em' }}>
+                    Description
+                  </div>
+                  <div style={{ fontSize: 13, color: 'var(--color-silver-mist)', lineHeight: 1.6, fontWeight: 300 }}>
+                    {selectedGraphNode.description || selectedGraphNode.details}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Peer Graph Network Visualizer Cards */}
             <div style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
               gap: 16,
               marginBottom: 24
             }}>
-              {/* Node 1: Arjun Patel (Patient Zero) */}
-              <div style={{
-                background: 'rgba(21, 132, 110, 0.08)',
-                border: '1px solid var(--color-deep-verdant)',
-                borderRadius: 16,
-                padding: 20
-              }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
-                  <span style={{ fontSize: 11, fontWeight: 600, color: 'var(--color-deep-verdant)', textTransform: 'uppercase' }}>
-                    PATIENT ZERO (SOURCE)
-                  </span>
-                  <span style={{ fontSize: 11, fontFamily: 'monospace', color: 'var(--color-silver-mist)' }}>
-                    10:14:22 UTC
-                  </span>
-                </div>
-                <div style={{ fontSize: 18, fontWeight: 500, color: 'var(--color-bone-white)' }}>
-                  Arjun Patel
-                </div>
-                <div style={{ fontSize: 12, color: 'var(--color-silver-mist)', margin: '4px 0 12px' }}>
-                  CS401 • Raft State Machine
-                </div>
-                <div style={{ fontSize: 12, color: 'var(--color-deep-verdant)', fontWeight: 600 }}>
-                  Originality: 94% (Original Originator)
-                </div>
-              </div>
+              {Object.values(GRAPH_NODES_DATA).map((node) => {
+                const isSelected = selectedGraphNode?.id === node.id;
+                const isPZero = node.hopLevel === 0;
+                const isDavid = node.id === GRAPH_NODES_DATA.david.id;
+                const isElena = node.id === GRAPH_NODES_DATA.elena.id;
+                const themeColor = isPZero ? 'var(--color-deep-verdant)' : isDavid ? '#ff5555' : isElena ? 'var(--color-electric-iris)' : 'var(--color-saffron-spark)';
 
-              {/* Node 2: Rohan Gupta (Colluding Derivative) */}
-              <div style={{
-                background: 'rgba(255, 184, 41, 0.08)',
-                border: '1px solid var(--color-saffron-spark)',
-                borderRadius: 16,
-                padding: 20
-              }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
-                  <span style={{ fontSize: 11, fontWeight: 600, color: 'var(--color-saffron-spark)', textTransform: 'uppercase' }}>
-                    DERIVATIVE COPY (HOP 1)
-                  </span>
-                  <span style={{ fontSize: 11, fontFamily: 'monospace', color: 'var(--color-silver-mist)' }}>
-                    10:42:09 UTC
-                  </span>
-                </div>
-                <div style={{ fontSize: 18, fontWeight: 500, color: 'var(--color-bone-white)' }}>
-                  Rohan Gupta
-                </div>
-                <div style={{ fontSize: 12, color: 'var(--color-silver-mist)', margin: '4px 0 12px' }}>
-                  CS401 • Raft State Machine
-                </div>
-                <div style={{ fontSize: 12, color: 'var(--color-saffron-spark)', fontWeight: 600 }}>
-                  Overlap: 82% with Arjun Patel (Cloned Term Logic)
-                </div>
-              </div>
-
-              {/* Node 3: Elena Rostova (Adversarial Derivative) */}
-              <div style={{
-                background: 'rgba(128, 82, 255, 0.08)',
-                border: '1px solid var(--color-electric-iris)',
-                borderRadius: 16,
-                padding: 20
-              }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
-                  <span style={{ fontSize: 11, fontWeight: 600, color: 'var(--color-electric-iris)', textTransform: 'uppercase' }}>
-                    HOMOGLYPH EVASION (HOP 2)
-                  </span>
-                  <span style={{ fontSize: 11, fontFamily: 'monospace', color: 'var(--color-silver-mist)' }}>
-                    11:15:30 UTC
-                  </span>
-                </div>
-                <div style={{ fontSize: 18, fontWeight: 500, color: 'var(--color-bone-white)' }}>
-                  Elena Rostova
-                </div>
-                <div style={{ fontSize: 12, color: 'var(--color-silver-mist)', margin: '4px 0 12px' }}>
-                  CS401 • Raft State Machine
-                </div>
-                <div style={{ fontSize: 12, color: 'var(--color-electric-iris)', fontWeight: 600 }}>
-                  14 Cyrillic Homoglyphs Neutralized
-                </div>
-              </div>
+                return (
+                  <div
+                    key={node.id}
+                    onClick={() => setSelectedGraphNode(node)}
+                    style={{
+                      background: isSelected ? 'rgba(255, 255, 255, 0.06)' : 'rgba(255, 255, 255, 0.02)',
+                      border: isSelected ? `2px solid ${themeColor}` : '1px solid var(--border-subtle)',
+                      boxShadow: isSelected ? `0 0 16px ${themeColor}33` : 'none',
+                      borderRadius: 16,
+                      padding: 20,
+                      cursor: 'pointer',
+                      transition: 'all 0.2s ease'
+                    }}
+                  >
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
+                      <span style={{ fontSize: 11, fontWeight: 600, color: themeColor, textTransform: 'uppercase' }}>
+                        {node.role}
+                      </span>
+                      <span style={{ fontSize: 11, fontFamily: 'monospace', color: 'var(--color-silver-mist)' }}>
+                        {node.timestamp}
+                      </span>
+                    </div>
+                    <div style={{ fontSize: 18, fontWeight: 500, color: 'var(--color-bone-white)' }}>
+                      {node.name}
+                    </div>
+                    <div style={{ fontSize: 12, color: 'var(--color-silver-mist)', margin: '4px 0 12px' }}>
+                      CS401 • Raft State Machine
+                    </div>
+                    <div style={{ fontSize: 12, color: themeColor, fontWeight: 600 }}>
+                      {isPZero ? node.originality : `${node.similarity} (${node.originality})`}
+                    </div>
+                  </div>
+                );
+              })}
             </div>
 
             <p style={{ fontSize: 13, color: 'var(--color-silver-mist)', margin: 0, fontWeight: 300, lineHeight: 1.6 }}>
