@@ -115,15 +115,22 @@ export default function OperationsDashboard({ onOpenStudio, onOpenClassroom, onO
           gap: 28px;
         }
         .ops-sub-card {
-          background: rgba(255, 255, 255, 0.02);
-          border: 1px solid rgba(255, 255, 255, 0.07);
-          border-radius: 16px;
-          padding: 16px 20px;
+          background: transparent;
+          border: none;
+          border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+          border-radius: 0;
+          padding: 16px 8px;
           display: flex;
           align-items: center;
           justify-content: space-between;
           gap: 16px;
-          transition: border-color 0.2s ease, background 0.2s ease;
+          transition: background-color 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .ops-sub-card:last-child {
+          border-bottom: none;
+        }
+        .ops-sub-card:hover {
+          background: rgba(255, 255, 255, 0.025);
         }
         .ops-sub-student-col {
           display: flex;
@@ -513,18 +520,16 @@ export default function OperationsDashboard({ onOpenStudio, onOpenClassroom, onO
               Submissions are cryptographically hashed using SHA-256 and committed to a tamper-proof distributed institutional ledger.
             </p>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-              {cryptographicBlocks.map(b => (
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
+              {cryptographicBlocks.map((b, idx) => (
                 <div 
                   key={b.height}
                   style={{
-                    padding: '12px 14px',
-                    borderRadius: 10,
-                    background: 'rgba(255, 255, 255, 0.03)',
-                    border: '1px solid rgba(255, 255, 255, 0.06)',
+                    padding: '12px 6px',
+                    borderBottom: idx === cryptographicBlocks.length - 1 ? 'none' : '1px solid rgba(255, 255, 255, 0.06)',
                     display: 'flex',
                     flexDirection: 'column',
-                    gap: 4
+                    gap: 4,
                   }}
                 >
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
