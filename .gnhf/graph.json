@@ -91,6 +91,58 @@
         "node scripts/verify_all_live_endpoints.cjs",
         "npm run build"
       ]
+    },
+    {
+      "id": "TASK-BE-006",
+      "name": "Spring Boot RFC 7807 & Certificate Engine",
+      "objective": "Implement GlobalExceptionHandler with RFC 7807 ProblemDetail and cryptographic forensic certificate API.",
+      "agentRole": "Enterprise Core & Academic Ledger Architect",
+      "wave": 5,
+      "isConcurrent": true,
+      "dependencies": ["GATE-FINAL-002"],
+      "taskSpec": "TASK_SPEC.md",
+      "status": "IN_PROGRESS",
+      "exitCode": null,
+      "commitHash": null
+    },
+    {
+      "id": "TASK-FE-007",
+      "name": "Global Command Palette & Toast Notifications",
+      "objective": "Build keyboard-accessible Ctrl+K command palette and Dala toast notification system.",
+      "agentRole": "Void UI & Dashboard Shell Engineer",
+      "wave": 5,
+      "isConcurrent": true,
+      "dependencies": ["GATE-FINAL-002"],
+      "taskSpec": "TASK_SPEC.md",
+      "status": "PENDING",
+      "exitCode": null,
+      "commitHash": null
+    },
+    {
+      "id": "TASK-FE-008",
+      "name": "Classroom Forensic Certificate Modal Integration",
+      "objective": "Integrate interactive Forensic Certificate viewer in ClassroomPortal with live Merkle verification.",
+      "agentRole": "Interactive Verification Studio & Diff Inspector Specialist",
+      "wave": 6,
+      "isConcurrent": false,
+      "dependencies": ["TASK-BE-006", "TASK-FE-007"],
+      "taskSpec": "TASK_SPEC.md",
+      "status": "PENDING",
+      "exitCode": null,
+      "commitHash": null
+    },
+    {
+      "id": "TASK-E2E-009",
+      "name": "Full Stack Build & Certification Gate",
+      "objective": "Verify production client build <2.0s SLA and zero console errors.",
+      "agentRole": "Systems QA Benchmarker",
+      "wave": 7,
+      "isConcurrent": false,
+      "dependencies": ["TASK-FE-008"],
+      "taskSpec": "TASK_SPEC.md",
+      "status": "PENDING",
+      "exitCode": null,
+      "commitHash": null
     }
   ]
 }
