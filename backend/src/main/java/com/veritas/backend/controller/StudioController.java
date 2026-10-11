@@ -28,6 +28,21 @@ public class StudioController {
         return ResponseEntity.ok(res);
     }
 
+    @GetMapping("/system-metrics")
+    public ResponseEntity<Map<String, Object>> systemMetrics() {
+        Runtime rt = Runtime.getRuntime();
+        Map<String, Object> metrics = new HashMap<>();
+        metrics.put("status", "HEALTHY");
+        metrics.put("allocated_memory_mb", (rt.totalMemory() - rt.freeMemory()) / (1024 * 1024));
+        metrics.put("total_memory_mb", rt.totalMemory() / (1024 * 1024));
+        metrics.put("max_memory_mb", rt.maxMemory() / (1024 * 1024));
+        metrics.put("available_processors", rt.availableProcessors());
+        metrics.put("validator_cluster", "Veritas Cryptographic Ledger Node-US-East");
+        metrics.put("active_services", List.of("Spring Boot 3 REST (:8080)", "Python FastAPI Forensics (:8000)", "React 19 Void Client (:5173)"));
+        metrics.put("timestamp", java.time.Instant.now());
+        return ResponseEntity.ok(metrics);
+    }
+
     @PostMapping("/compare-1to1")
     public ResponseEntity<Map<String, Object>> compare1to1(@RequestBody Map<String, Object> payload) {
         String textA = (String) payload.getOrDefault("text_a", "");
