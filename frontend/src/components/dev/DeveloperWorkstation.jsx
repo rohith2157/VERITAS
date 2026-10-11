@@ -220,6 +220,127 @@ export default function DeveloperWorkstation() {
           meanIntegrityScore: 91.6
         }
       ]
+    },
+    semantic: {
+      name: 'SBERT Semantic High-Dim Vectors',
+      tag: 'SBERT 384-D',
+      method: 'POST',
+      url: 'http://localhost:8000/api/v1/semantic/compare',
+      defaultBody: JSON.stringify({
+        text_a: "Raft decomposes consensus into leader election, log replication, and safety guarantees.",
+        text_b: "The Raft protocol partitions cluster agreement into electing leaders, appending state logs, and enforcing invariant safety.",
+        semantic_weight: 0.55
+      }, null, 2),
+      simulatedResponse: {
+        status: "success",
+        semantic_cosine_similarity: 95.8,
+        winnowing_jaccard_similarity: 54.2,
+        hybrid_score: 77.08,
+        concept_clusters_shared: ["consensus", "leader election", "state machine replication", "safety invariant"],
+        verdict: "DEEP CONCEPTUAL PARAPHRASING DETECTED"
+      }
+    },
+    faiss_sdma: {
+      name: 'FAISS IVF-Flat SDMA Dynamic Search',
+      tag: 'SDMA Slab',
+      method: 'POST',
+      url: 'http://localhost:8000/api/v1/vector/ivf-sdma/search',
+      defaultBody: JSON.stringify({
+        query_text: "distributed consensus algorithms with fault tolerance",
+        k: 3
+      }, null, 2),
+      simulatedResponse: {
+        status: "success",
+        nearest_neighbors: [
+          { doc_id: "doc_101", similarity: 96.2, author: "Arjun Patel" },
+          { doc_id: "doc_102", similarity: 89.4, author: "Rohan Gupta" }
+        ],
+        sdma_stats: {
+          total_vectors: 1250000,
+          voronoi_cells_scanned: 16,
+          tombstone_active_bitmaps: 42,
+          deletion_latency_overhead: "0.00ms (O(1) Bitmap Tombstone vs 7.1x GPU Shift Penalty)"
+        }
+      }
+    },
+    stylometry: {
+      name: 'Stylometric Writeprint & Yule\'s K',
+      tag: 'Bio-NLP',
+      method: 'POST',
+      url: 'http://localhost:8000/api/v1/forensics/stylometry',
+      defaultBody: JSON.stringify({
+        text: "Notwithstanding the intricate nuances of Byzantine fault-tolerant architectures, one must scrupulously evaluate the mathematical underpinnings of Lamport timestamps; furthermore, the epoch-based state transitions exhibited by Paxos demonstrate an exquisite degree of rigor.",
+        baseline_author: "Arjun Patel",
+        baseline_yules_k: 16.4,
+        baseline_avg_sentence_len: 18.2
+      }, null, 2),
+      simulatedResponse: {
+        author: "Arjun Patel",
+        yules_k: 4.8,
+        ttr: 0.88,
+        avg_sentence_length: 34.0,
+        burstiness: 8.4,
+        anomaly_detected: true,
+        verdict: "CONTRACT GHOSTWRITING ANOMALY (Z-Score > 2.8 from Student Baseline)"
+      }
+    },
+    ugc_2018: {
+      name: 'UGC 2018 Statutory Classifier',
+      tag: 'Statutory',
+      method: 'POST',
+      url: 'http://localhost:8080/api/classrooms/ugc2018/evaluate',
+      defaultBody: JSON.stringify({
+        similarityScore: 48.5
+      }, null, 2),
+      simulatedResponse: {
+        level: "Level 2",
+        threshold: "Above 40% to 60%",
+        studentPenalty: "Debarred from submitting a revised script for a strict period of one year.",
+        facultyPenalty: "Withdrawal of manuscript; denial of one annual increment; barred from supervising scholars for two years.",
+        daipRecommendation: "REFERRED_TO_IAIP (Statutory recommendation: 1-year academic debarment)",
+        iaipRecommendation: "ONE_YEAR_SCRIPT_DEBARMENT_IMPOSED",
+        requiresTribunalHearing: true,
+        legalStatute: "UGC (Promotion of Academic Integrity and Prevention of HEIs) Regulations, 2018"
+      }
+    },
+    dpdp_2023: {
+      name: 'DPDP Act 2023 Age-Gating & Section 12',
+      tag: 'Privacy',
+      method: 'POST',
+      url: 'http://localhost:8000/api/v1/compliance/dpdp-2023/verify',
+      defaultBody: JSON.stringify({
+        student_age: 16,
+        parent_consent_token: "CONSENT-PARENT-VTS-994821",
+        disable_behavioral_tracking: true
+      }, null, 2),
+      simulatedResponse: {
+        status: "COMPLIANT",
+        is_minor: true,
+        parental_consent_verified: true,
+        behavioral_profiling_blocked: true,
+        on_premise_storage_enforced: true,
+        legal_framework: "DPDP Act 2023 Section 9 (Processing of Children Data) & Section 12 (Right to Erasure)"
+      }
+    },
+    merkle_proof: {
+      name: 'Merkle Tree O(log N) Proof Verifier',
+      tag: 'SHA-256',
+      method: 'POST',
+      url: 'http://localhost:8080/api/classrooms/ledger/merkle/verify',
+      defaultBody: JSON.stringify({
+        leafHash: "0x4a8f9b2d8819c3017e120d91ff02a418582ef88211de4a8f9b2d8819c3017e12",
+        expectedRoot: "0x9e120d91ff02a4184a8f9b2d8819c3017e120d91ff02a418582ef88211de9b33",
+        proof: [
+          { level: 1, siblingHash: "0x7e120d91ff02a4184a8f9b2d8819c301", direction: "right" },
+          { level: 2, siblingHash: "0x22c4ab99018411de9b33fe14582ef882", direction: "right" }
+        ]
+      }, null, 2),
+      simulatedResponse: {
+        isProofValid: true,
+        expectedRoot: "0x9e120d91ff02a4184a8f9b2d8819c3017e120d91ff02a418582ef88211de9b33",
+        cryptographicStandard: "SHA-256 Binary Merkle Tree (O(log N) Verification)",
+        evidentiaryStatus: "LEGAL TRIBUNAL IMMUTABILITY GUARANTEED"
+      }
     }
   };
 
