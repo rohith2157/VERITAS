@@ -683,14 +683,24 @@ export default function ClassroomPortal() {
                 <input
                   type="file"
                   accept=".pdf,.docx,.txt,.py,.java,.cpp,.c,.md"
-                  onChange={(e) => {
+                  onChange={async (e) => {
                     const file = e.target.files?.[0];
-                    if (file) {
-                      setNewFilename(file.name);
-                      const reader = new FileReader();
-                      reader.onload = (evt) => setNewEssayText(evt.target.result || '');
-                      reader.readAsText(file);
+                    if (!file) return;
+                    setNewFilename(file.name);
+                    if (file.name.endsWith('.pdf') || file.name.endsWith('.docx')) {
+                      try {
+                        const formData = new FormData();
+                        formData.append('file', file);
+                        const res = await fetch('/api/v1/extract-text', { method: 'POST', body: formData });
+                        if (res.ok) {
+                          const json = await res.json();
+                          if (json.text) { setNewEssayText(json.text); return; }
+                        }
+                      } catch (err) { console.warn(err); }
                     }
+                    const reader = new FileReader();
+                    reader.onload = (evt) => setNewEssayText(evt.target.result || '');
+                    reader.readAsText(file);
                   }}
                   style={{
                     width: '100%',

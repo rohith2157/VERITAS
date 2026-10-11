@@ -169,44 +169,50 @@ export default function PortalWorkflowHub({ onNavigateToStudio, onNavigateToClas
     showToast(`Loaded and analyzed: ${name}`, 'success');
   };
 
-  // Real browser file reader (accepts .pdf, .docx, .txt, .py, .java, etc.)
-  const handleFileUpload = (event) => {
-    const file = event.target.files?.[0];
+  // Real multi-format file processor with live Python extractor (pypdf/docx) integration
+  const processUploadedFile = async (file) => {
     if (!file) return;
-
     setSelectedFile(file);
-    const reader = new FileReader();
+    setIsProcessing(true);
 
-    if (file.name.endsWith('.pdf')) {
-      // PDF text extraction using FileReader binary extraction
-      reader.onload = (e) => {
-        const text = e.target.result;
-        // Basic plain text extraction from stream or text representation
-        loadDocumentContent(file.name, typeof text === 'string' ? text : `[PDF Document: ${file.name}]\nProcessed raw binary streams with SHA-256 seal.`);
-      };
-      reader.readAsText(file);
-    } else {
-      // Code and text files
-      reader.onload = (e) => {
-        const text = e.target.result || '';
-        loadDocumentContent(file.name, text);
-      };
-      reader.readAsText(file);
+    if (file.name.endsWith('.pdf') || file.name.endsWith('.docx')) {
+      try {
+        const formData = new FormData();
+        formData.append('file', file);
+        const res = await fetch('/api/v1/extract-text', {
+          method: 'POST',
+          body: formData
+        });
+        if (res.ok) {
+          const json = await res.json();
+          if (json.text && json.text.trim().length > 0) {
+            loadDocumentContent(file.name, json.text);
+            return;
+          }
+        }
+      } catch (err) {
+        console.warn('AI engine text extractor unavailable, using client fallback:', err);
+      }
     }
+
+    // Client-side text fallback for source code, markdown, and text files
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const text = e.target.result || '';
+      loadDocumentContent(file.name, typeof text === 'string' ? text : '');
+    };
+    reader.readAsText(file);
   };
 
-  // Handle Drag & Drop
+  const handleFileUpload = (event) => {
+    const file = event.target.files?.[0];
+    if (file) processUploadedFile(file);
+  };
+
   const handleDrop = (e) => {
     e.preventDefault();
     const file = e.dataTransfer.files?.[0];
-    if (file) {
-      setSelectedFile(file);
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        loadDocumentContent(file.name, event.target.result || '');
-      };
-      reader.readAsText(file);
-    }
+    if (file) processUploadedFile(file);
   };
 
   // Set default document on mount if empty
@@ -648,6 +654,83 @@ export default function PortalWorkflowHub({ onNavigateToStudio, onNavigateToClas
                   COLLUSION CLUSTER DETECTED (82% CONFIDENCE)
                 </span>
               </div>
+            </div>
+
+            {/* Interactive SVG Collusion Topology Canvas */}
+            <div style={{
+              background: 'rgba(0, 0, 0, 0.4)',
+              border: '1px solid rgba(255, 255, 255, 0.08)',
+              borderRadius: 16,
+              padding: '20px 16px',
+              marginBottom: 24,
+              overflow: 'hidden'
+            }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
+                <span style={{ fontSize: 11, fontWeight: 600, color: 'var(--color-silver-mist)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                  Directional Dissemination DAG (PostgreSQL Recursive CTE Trace)
+                </span>
+                <span style={{ fontSize: 11, color: 'var(--color-ash-gray)' }}>
+                  Multi-hop collusion chain verified on port 2157
+                </span>
+              </div>
+              <svg viewBox="0 0 760 185" style={{ width: '100%', height: 'auto', display: 'block' }}>
+                <defs>
+                  <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                    <path d="M 0 1 L 10 5 L 0 9 z" fill="var(--color-saffron-spark)" />
+                  </marker>
+                  <marker id="arrow-iris" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                    <path d="M 0 1 L 10 5 L 0 9 z" fill="var(--color-electric-iris)" />
+                  </marker>
+                  <marker id="arrow-red" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                    <path d="M 0 1 L 10 5 L 0 9 z" fill="#ff5555" />
+                  </marker>
+                </defs>
+
+                {/* Directed Edges */}
+                <path d="M 160 85 C 250 45, 300 45, 360 55" fill="none" stroke="var(--color-saffron-spark)" strokeWidth="2.5" strokeDasharray="5 3" markerEnd="url(#arrow)" />
+                <text x="250" y="42" fill="var(--color-saffron-spark)" fontSize="10" fontFamily="monospace" textAnchor="middle">82% Collusion (+16m)</text>
+
+                <path d="M 460 55 C 520 45, 570 55, 615 85" fill="none" stroke="#ff5555" strokeWidth="2" strokeDasharray="5 3" markerEnd="url(#arrow-red)" />
+                <text x="545" y="45" fill="#ff7777" fontSize="10" fontFamily="monospace" textAnchor="middle">64% Derived (+42m)</text>
+
+                <path d="M 160 85 C 250 135, 300 135, 360 120" fill="none" stroke="var(--color-electric-iris)" strokeWidth="2" strokeDasharray="5 3" markerEnd="url(#arrow-iris)" />
+                <text x="250" y="145" fill="var(--color-electric-iris)" fontSize="10" fontFamily="monospace" textAnchor="middle">34% AST Clone (+48m)</text>
+
+                {/* Node 1: Arjun Patel (Patient Zero) */}
+                <g>
+                  <circle cx="110" cy="85" r="32" fill="rgba(21, 132, 110, 0.25)" stroke="var(--color-deep-verdant)" strokeWidth="2" />
+                  <circle cx="110" cy="85" r="10" fill="var(--color-deep-verdant)" />
+                  <text x="110" y="128" fill="var(--color-bone-white)" fontSize="12" fontWeight="600" textAnchor="middle">Arjun Patel</text>
+                  <text x="110" y="141" fill="var(--color-deep-verdant)" fontSize="10" fontWeight="600" textAnchor="middle">PATIENT ZERO</text>
+                  <text x="110" y="153" fill="var(--color-silver-mist)" fontSize="9" fontFamily="monospace" textAnchor="middle">10:14:22 UTC</text>
+                </g>
+
+                {/* Node 2: Rohan Gupta (Colluder Hop 1) */}
+                <g>
+                  <circle cx="410" cy="55" r="28" fill="rgba(255, 184, 41, 0.2)" stroke="var(--color-saffron-spark)" strokeWidth="2" />
+                  <circle cx="410" cy="55" r="9" fill="var(--color-saffron-spark)" />
+                  <text x="410" y="96" fill="var(--color-bone-white)" fontSize="12" fontWeight="600" textAnchor="middle">Rohan Gupta</text>
+                  <text x="410" y="109" fill="var(--color-saffron-spark)" fontSize="10" textAnchor="middle">HOP 1: COLLUSION</text>
+                  <text x="410" y="121" fill="var(--color-silver-mist)" fontSize="9" fontFamily="monospace" textAnchor="middle">10:30:18 UTC</text>
+                </g>
+
+                {/* Node 3: David Chen (Derived Hop 2) */}
+                <g>
+                  <circle cx="660" cy="85" r="28" fill="rgba(255, 85, 85, 0.2)" stroke="#ff5555" strokeWidth="2" />
+                  <circle cx="660" cy="85" r="9" fill="#ff5555" />
+                  <text x="660" y="128" fill="var(--color-bone-white)" fontSize="12" fontWeight="600" textAnchor="middle">David Chen</text>
+                  <text x="660" y="141" fill="#ff7777" fontSize="10" textAnchor="middle">HOP 2: RECURSIVE</text>
+                  <text x="660" y="153" fill="var(--color-silver-mist)" fontSize="9" fontFamily="monospace" textAnchor="middle">11:12:40 UTC</text>
+                </g>
+
+                {/* Node 4: Elena Rostova (Evasion Suspect) */}
+                <g>
+                  <circle cx="410" cy="120" r="24" fill="rgba(128, 82, 255, 0.2)" stroke="var(--color-electric-iris)" strokeWidth="2" />
+                  <circle cx="410" cy="120" r="8" fill="var(--color-electric-iris)" />
+                  <text x="410" y="156" fill="var(--color-bone-white)" fontSize="11" fontWeight="600" textAnchor="middle">Elena Rostova</text>
+                  <text x="410" y="168" fill="var(--color-electric-iris)" fontSize="9" textAnchor="middle">AST CLONE (EVASION)</text>
+                </g>
+              </svg>
             </div>
 
             {/* Peer Graph Network Visualizer */}

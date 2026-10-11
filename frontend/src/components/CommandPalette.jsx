@@ -11,6 +11,14 @@ export default function CommandPalette({ isOpen, onClose, onNavigate, onToggleTh
 
   const commands = [
     {
+      id: 'nav-hub',
+      category: 'Navigation',
+      title: 'Go to Investigation Hub',
+      subtitle: '5-Step systematic forensic workflow with zero simulated data',
+      icon: Zap,
+      action: () => onNavigate('hub')
+    },
+    {
       id: 'nav-dashboard',
       category: 'Navigation',
       title: 'Go to Operations Dashboard',

@@ -26,9 +26,21 @@ function optimizeLucide() {
   };
 }
 
-// https://vite.dev/config/
 export default defineConfig({
   plugins: [optimizeLucide(), react()],
+  server: {
+    port: 5173,
+    proxy: {
+      '/api/v1': {
+        target: 'http://127.0.0.1:8000',
+        changeOrigin: true
+      },
+      '/api': {
+        target: 'http://127.0.0.1:8080',
+        changeOrigin: true
+      }
+    }
+  },
   build: {
     target: 'esnext',
     emptyOutDir: false,

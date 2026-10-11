@@ -5,10 +5,10 @@ import CommandPalette from './components/CommandPalette';
 import PortalWorkflowHub from './components/dashboard/PortalWorkflowHub';
 
 const OperationsDashboard = lazy(() => import('./components/dashboard/OperationsDashboard'));
-import UniversalStudio from './components/studio/UniversalStudio';
+const UniversalStudio = lazy(() => import('./components/studio/UniversalStudio'));
 const ClassroomPortal = lazy(() => import('./components/classroom/ClassroomPortal'));
 const DemoBench = lazy(() => import('./components/DemoBench'));
-import DeveloperWorkstation from './components/dev/DeveloperWorkstation';
+const DeveloperWorkstation = lazy(() => import('./components/dev/DeveloperWorkstation'));
 
 export default function App() {
   const [activeTab, setActiveTab] = useState(() => {

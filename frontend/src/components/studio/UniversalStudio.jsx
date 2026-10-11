@@ -1224,13 +1224,23 @@ def compute_fact(num):
                       type="file"
                       accept=".pdf,.docx,.txt,.py,.java,.cpp,.c,.md"
                       style={{ display: 'none' }}
-                      onChange={(e) => {
+                      onChange={async (e) => {
                         const file = e.target.files?.[0];
-                        if (file) {
-                          const reader = new FileReader();
-                          reader.onload = (evt) => setTextA(evt.target.result || '');
-                          reader.readAsText(file);
+                        if (!file) return;
+                        if (file.name.endsWith('.pdf') || file.name.endsWith('.docx')) {
+                          try {
+                            const formData = new FormData();
+                            formData.append('file', file);
+                            const res = await fetch('/api/v1/extract-text', { method: 'POST', body: formData });
+                            if (res.ok) {
+                              const json = await res.json();
+                              if (json.text) { setTextA(json.text); return; }
+                            }
+                          } catch (err) { console.warn(err); }
                         }
+                        const reader = new FileReader();
+                        reader.onload = (evt) => setTextA(evt.target.result || '');
+                        reader.readAsText(file);
                       }}
                     />
                   </label>
@@ -1289,13 +1299,23 @@ def compute_fact(num):
                       type="file"
                       accept=".pdf,.docx,.txt,.py,.java,.cpp,.c,.md"
                       style={{ display: 'none' }}
-                      onChange={(e) => {
+                      onChange={async (e) => {
                         const file = e.target.files?.[0];
-                        if (file) {
-                          const reader = new FileReader();
-                          reader.onload = (evt) => setTextB(evt.target.result || '');
-                          reader.readAsText(file);
+                        if (!file) return;
+                        if (file.name.endsWith('.pdf') || file.name.endsWith('.docx')) {
+                          try {
+                            const formData = new FormData();
+                            formData.append('file', file);
+                            const res = await fetch('/api/v1/extract-text', { method: 'POST', body: formData });
+                            if (res.ok) {
+                              const json = await res.json();
+                              if (json.text) { setTextB(json.text); return; }
+                            }
+                          } catch (err) { console.warn(err); }
                         }
+                        const reader = new FileReader();
+                        reader.onload = (evt) => setTextB(evt.target.result || '');
+                        reader.readAsText(file);
                       }}
                     />
                   </label>

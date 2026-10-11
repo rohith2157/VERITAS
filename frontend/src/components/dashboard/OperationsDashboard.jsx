@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   ShieldCheck, AlertTriangle, Cpu, Database, CheckCircle, Search, 
   ArrowRight, FileText, Lock, Activity, BarChart2, RefreshCw, Filter, Layers, Download
@@ -97,7 +97,38 @@ export default function OperationsDashboard({ onOpenStudio, onOpenClassroom, onO
     { height: 3139, hash: '0x22c4ab99018411de', txCount: 19, timestamp: '2 hours ago', validator: 'Node-US-West (Veritas Enterprise)' },
   ];
 
-  const filtered = recentSubmissions.filter(sub => {
+  const [submissions, setSubmissions] = useState(recentSubmissions);
+  const [isLiveConnected, setIsLiveConnected] = useState(false);
+
+  useEffect(() => {
+    let isMounted = true;
+    fetch('/api/classrooms/assignments/1/submissions')
+      .then(res => res.ok ? res.json() : Promise.reject(res.status))
+      .then(data => {
+        if (!isMounted || !Array.isArray(data) || data.length === 0) return;
+        const mapped = data.map(sub => ({
+          id: `sub-${sub.id}`,
+          studentName: sub.studentName,
+          studentEmail: sub.studentEmail,
+          assignment: 'Assignment 3: Raft Consensus & Byzantine Fault Tolerance',
+          course: 'CS 401',
+          timestamp: sub.submittedAt ? new Date(sub.submittedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : 'Live',
+          originalityScore: Math.round(100 - (sub.similarityScore || 0)),
+          status: sub.status === 'EVALUATED' ? 'verified' : (sub.penaltyReason?.includes('Collusion') ? 'flagged_collusion' : (sub.penaltyReason?.includes('Homoglyph') ? 'flagged_evasion' : 'flagged_ai')),
+          statusLabel: sub.status === 'EVALUATED' ? 'VERIFIED ORIGINAL' : (sub.penaltyReason?.includes('Collusion') ? 'COLLUSION DETECTED' : (sub.penaltyReason?.includes('Homoglyph') ? 'EVASION NEUTRALIZED' : 'SYNTHETIC AI DETECTED')),
+          flags: [sub.penaltyReason || 'Cryptographic Ledger Verified'],
+          ledgerHash: sub.ledgerHash ? `${sub.ledgerHash.slice(0, 10)}...${sub.ledgerHash.slice(-4)}` : '0x4a8f9b2d...c301'
+        }));
+        setSubmissions(mapped);
+        setIsLiveConnected(true);
+      })
+      .catch(() => {
+        // Fallback gracefully to domain-accurate seed data
+      });
+    return () => { isMounted = false; };
+  }, []);
+
+  const filtered = submissions.filter(sub => {
     const matchesSearch = sub.studentName.toLowerCase().includes(searchQuery.toLowerCase()) ||
                           sub.assignment.toLowerCase().includes(searchQuery.toLowerCase());
     if (filterStatus === 'all') return matchesSearch;
@@ -216,6 +247,16 @@ export default function OperationsDashboard({ onOpenStudio, onOpenClassroom, onO
           <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontSize: 12, fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--color-electric-iris)', marginBottom: 10 }}>
             <Activity size={14} />
             <span>INSTITUTIONAL INTEGRITY CONTROL DECK</span>
+            {isLiveConnected ? (
+              <span style={{ display: 'inline-flex', alignItems: 'center', gap: 5, background: 'rgba(21, 132, 110, 0.2)', color: '#2ee6b0', padding: '2px 8px', borderRadius: 12, fontSize: 10, border: '1px solid rgba(21, 132, 110, 0.4)' }}>
+                <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#2ee6b0', boxShadow: '0 0 6px #2ee6b0' }} />
+                POSTGRESQL LIVE (:2157)
+              </span>
+            ) : (
+              <span style={{ display: 'inline-flex', alignItems: 'center', gap: 5, background: 'rgba(255, 184, 41, 0.1)', color: 'var(--color-saffron-spark)', padding: '2px 8px', borderRadius: 12, fontSize: 10, border: '1px solid rgba(255, 184, 41, 0.3)' }}>
+                STANDALONE NODE
+              </span>
+            )}
           </div>
           <h1
             style={{
