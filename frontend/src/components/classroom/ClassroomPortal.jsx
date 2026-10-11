@@ -137,7 +137,8 @@ export default function ClassroomPortal() {
         level: "Level 0",
         label: "Level 0: Safe Harbor (≤10%)",
         color: "var(--color-deep-verdant)",
-        bg: "rgba(21, 132, 110, 0.15)",
+        bg: "rgba(21, 132, 110, 0.12)",
+        border: "rgba(21, 132, 110, 0.3)",
         penalty: "Minor similarities; no formal penalty imposed",
         tribunal: "DAIP: Dismissed (No Action)"
       };
@@ -146,7 +147,8 @@ export default function ClassroomPortal() {
         level: "Level 1",
         label: "Level 1: Revision (10-40%)",
         color: "var(--color-saffron-spark)",
-        bg: "rgba(255, 184, 41, 0.15)",
+        bg: "rgba(255, 184, 41, 0.12)",
+        border: "rgba(255, 184, 41, 0.3)",
         penalty: "Submit revised script within 6 months",
         tribunal: "DAIP: Formal Warning & Resubmission"
       };
@@ -155,7 +157,8 @@ export default function ClassroomPortal() {
         level: "Level 2",
         label: "Level 2: Debarred (40-60%)",
         color: "#f87171",
-        bg: "rgba(239, 68, 68, 0.15)",
+        bg: "rgba(239, 68, 68, 0.12)",
+        border: "rgba(239, 68, 68, 0.3)",
         penalty: "Debarred for 1 strict academic year",
         tribunal: "Referred to IAIP: 1-Yr Debarment"
       };
@@ -164,7 +167,8 @@ export default function ClassroomPortal() {
         level: "Level 3",
         label: "Level 3: Expulsion (>60%)",
         color: "#ef4444",
-        bg: "rgba(239, 68, 68, 0.25)",
+        bg: "rgba(239, 68, 68, 0.2)",
+        border: "rgba(239, 68, 68, 0.4)",
         penalty: "Programme registration permanently cancelled",
         tribunal: "Referred to IAIP: Critical Expulsion Hearing"
       };
@@ -546,13 +550,17 @@ export default function ClassroomPortal() {
                     </td>
                     <td style={{ padding: '14px 16px' }}>
                       <div style={{
-                        display: 'inline-block',
-                        padding: '4px 10px',
-                        borderRadius: 6,
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        padding: '3px 10px',
+                        borderRadius: 9999,
                         background: ugc.bg,
                         color: ugc.color,
-                        fontSize: 12,
-                        fontWeight: 600
+                        border: `1px solid ${ugc.border}`,
+                        fontSize: 11,
+                        fontWeight: 600,
+                        letterSpacing: '0.04em',
+                        textTransform: 'uppercase'
                       }}>
                         {ugc.level}
                       </div>
