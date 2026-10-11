@@ -296,6 +296,22 @@ export default function ClassroomPortal() {
 
   return (
     <div style={{ paddingBottom: 60 }}>
+      <style>{`
+        .classroom-table-wrap {
+          overflow-x: auto;
+          border-radius: 12px;
+          border: 1px solid rgba(255, 255, 255, 0.08);
+          background: rgba(0, 0, 0, 0.4);
+        }
+        .classroom-table-row {
+          border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+          transition: background-color 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .classroom-table-row:hover {
+          background-color: rgba(255, 255, 255, 0.03) !important;
+        }
+      `}</style>
+
       {/* Header in Veritas Style */}
       <div style={{ marginBottom: 32 }}>
         <div style={{ fontSize: 13, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--color-electric-iris)', marginBottom: 8, fontWeight: 600 }}>
@@ -513,7 +529,7 @@ export default function ClassroomPortal() {
         )}
 
         {/* Submissions Data Table */}
-        <div style={{ overflowX: 'auto' }}>
+        <div className="classroom-table-wrap">
           <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: 14 }}>
             <thead>
               <tr style={{ borderBottom: '1px solid rgba(255, 255, 255, 0.08)', color: 'var(--color-ash-gray)', fontSize: 12, textTransform: 'uppercase' }}>
@@ -531,7 +547,7 @@ export default function ClassroomPortal() {
                 const ugc = getUgc2018Details(sub.similarityScore);
                 const mockMerkleHash = "0x" + ((sub.id * 123456789).toString(16) + "4a8f9b2d8819c301").substring(0, 16) + "...";
                 return (
-                  <tr key={sub.id} style={{ borderBottom: '1px solid rgba(255, 255, 255, 0.04)' }}>
+                  <tr key={sub.id} className="classroom-table-row">
                     <td style={{ padding: '14px 16px' }}>
                       <div style={{ fontWeight: 500, color: 'var(--color-bone-white)' }}>{sub.studentName}</div>
                       <div style={{ fontSize: 12, color: 'var(--color-ash-gray)' }}>{sub.studentEmail}</div>
