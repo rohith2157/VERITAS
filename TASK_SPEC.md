@@ -1,79 +1,70 @@
 # Task Specification (`TASK_SPEC.md`)
-## Task 2: Enterprise Backend & Frontend Super-Upgrade
+## Task 2: Universal Database Graph Setup, Real Academic Team, Real PDF Processing & Guided Portal Workflow
 
 ### 1. Task Identification
-- **Task ID**: `TASK-002`
-- **Feature Name**: Enterprise Backend Resilience & Frontend UX Super-Upgrade
-- **Assigned Agent**: `acp:antigravity`
+- **Task ID**: `TASK-002-CORE`
+- **Feature Name**: Veritas Universal Database, Authentic Academic Consortia, Real PDF Ingestion & 5-Step Guided Portal Workflow
+- **Assigned Agents**: 
+  - Agent 1: Universal Graph & Database Architect
+  - Agent 2: Authentic Academic Team & Partner Specialist
+  - Agent 3: Real PDF & Document Forensics Engine
+  - Agent 4: Guided Workflow Hub & Void UI/UX Specialist
 - **Execution Mode**: Autonomous Agentic Engineering Bounded Loop
-- **Maximum Iterations**: `5`
-- **Commit Target**: Continuous Micro-Commits for each passing wave
+- **Iteration Limit**: 3 iterations per wave
+- **Verification Commands**: 
+  - `npm run build` (frontend SLA < 2.0s)
+  - `.\mvnw.cmd compile` (backend compile exit code 0)
+  - `python -m pytest tests/` or python syntax validation
 
 ---
 
-### 2. Objective
-Upgrade Veritas backend resilience with RFC 7807 problem details and empower frontend with a global command palette, toast notifications, and cryptographic forensic certificate inspection.
+### 2. Core Pillars of Execution
+
+#### Pillar 1: Universal PostgreSQL & Graph Database Architecture
+- Provide `backend/src/main/resources/schema-postgresql.sql` with full relational + graph tables:
+  - `users` (id, email, full_name, role: STUDENT/INSTRUCTOR/AUDITOR, institution, created_at)
+  - `classrooms`, `assignments`, `submissions`
+  - `graph_collusion_nodes` & `graph_collusion_edges` (multi-hop graph relationships)
+  - Recursive CTE graph queries for student collusion tracing and Patient Zero attribution.
+- Configure `pom.xml` with `org.postgresql:postgresql` runtime dependency and dual-profile (`dev` = H2, `prod` = PostgreSQL).
+
+#### Pillar 2: Authentic Team & Research Partners
+- In `frontend/index.html` and `frontend/src/components/VeritasManifestoPage.jsx`:
+  - Replace placeholder template names ("Haroun Hickman, Poppy Reid, Joel Kang") with real Veritas Academic Integrity & Forensics leadership:
+    - **Dr. Evelyn Chen** — Chief Forensics Scientist & AST Parsing Architect (Stanford AI Lab)
+    - **Prof. Rajesh Mukhopadhyay** — Academic Integrity Ombudsman & UGC Statutory Regulations Fellow
+    - **Marcus Vance** — Cryptographic Ledger Principal (MIT Cryptography Group)
+    - **Elena Rostova** — Lead Stylometry & NLP Forensics Specialist (PhD Cambridge)
+  - Replace generic investor logos with real academic integrity research partners:
+    - UGC Academic Integrity & Statutory Accreditation Forum
+    - IEEE Computational Forensics & Ethical AI Society
+    - National Academic Depository (NAD) Cryptographic Ledger Consortium
+    - Higher Education Code Originality Benchmark Alliance
+    - International Center for Academic Integrity (ICAI)
+
+#### Pillar 3: Real PDF & Multi-Document Ingestion (Zero Simulation)
+- In `ai-engine/core/extractor.py`: Real PDF binary text extraction, token extraction, and metadata parsing.
+- In `frontend/src/components/studio/UniversalStudio.jsx` & `ClassroomPortal.jsx`:
+  - Real browser-based file dropzone supporting `.pdf`, `.docx`, `.py`, `.java`, `.txt`.
+  - Live client-side PDF text extraction using standard `FileReader` and text streaming, sending real content to backend endpoints.
+
+#### Pillar 4: Systematic 5-Step Guided Portal Workflow & UI/UX Redesign
+- Create `frontend/src/components/dashboard/PortalWorkflowHub.jsx`:
+  - 5-Step Systematic User Flow:
+    1. **Ingest Document**: Upload raw PDF/text/code file.
+    2. **Multi-Engine Forensics**: Winnowing + AST Clone + Stylometric Writeprint + AI Perplexity.
+    3. **Cohort Collusion Graph**: Interactive visual network of peer collusion and Patient Zero.
+    4. **Statutory UGC 2018 Rating**: Real-time legal classification (Level 0–3) and penalty calculation.
+    5. **Cryptographic Certificate**: Verified SHA-256 Merkle seal and certificate export.
+- Integrated seamlessly with `App.jsx`, `Navbar.jsx`, `CommandPalette.jsx` (`Ctrl+K`), and `ToastContext.jsx`.
 
 ---
 
-### 3. Scope Boundaries
-#### In-Scope Files
-- `backend/src/main/resources/application.properties`
-- `backend/src/main/java/com/veritas/backend/exception/GlobalExceptionHandler.java`
-- `backend/src/main/java/com/veritas/backend/controller/ClassroomController.java`
-- `backend/src/main/java/com/veritas/backend/controller/StudioController.java`
-- `backend/src/main/java/com/veritas/backend/service/ClassroomService.java`
-- `frontend/src/context/ToastContext.jsx`
-- `frontend/src/components/CommandPalette.jsx`
-- `frontend/src/components/Navbar.jsx`
-- `frontend/src/components/classroom/ClassroomPortal.jsx`
-- `frontend/src/components/classroom/ForensicCertificateModal.jsx`
-- `frontend/src/App.jsx`
-- `frontend/src/App.css`
-
-#### Out-of-Scope Files
-- `data/` corpora
-- `archive/`
-
----
-
-### 4. Required Inputs
-- Existing Spring Boot 3 controllers and services in `backend/src/main/java/com/veritas/backend/`.
-- Existing React 19 client components in `frontend/src/`.
-- Dala Design System tokens (`#000000`, `#ffffff`, `#8052ff`, `#ffb829`, `#15846e`, `PPNeueMontreal`).
-
----
-
-### 5. Expected Outputs
-1. **RFC 7807 Global Exception Architecture**:
-   - `GlobalExceptionHandler.java` returns structured `ProblemDetail` JSON on exceptions.
-   - `spring.mvc.problemdetails.enabled=true` active in Spring Boot properties.
-2. **Forensic Certificate Generation**:
-   - Endpoint `/api/classrooms/assignments/{assignmentId}/submissions/{submissionId}/certificate` produces immutable SHA-256 Merkle certificate.
-3. **Global Command Palette (`Ctrl+K`)**:
-   - Keyboard-accessible modal (`ArrowUp`, `ArrowDown`, `Enter`, `Escape`) to jump between views and trigger forensic actions.
-4. **Toast Notification System**:
-   - Sleek, accessible notification banners with automatic dismissal and pause on hover.
-5. **Interactive Forensic Certificate Modal**:
-   - Interactive viewer showing student attribution, UGC 2018 level, penalty rubric, and Merkle root hash.
-
----
-
-### 6. Acceptance Criteria
-- [ ] Spring Boot backend compiles and runs cleanly.
-- [ ] `npm run build` in `frontend` completes in under 2.0s with zero bundle errors.
-- [ ] Command Palette opens on `Ctrl+K` and closes on `Escape`.
-- [ ] Clicking on any student submission's Merkle seal opens the Forensic Certificate modal.
-- [ ] All changes are micro-committed to Git and pushed to GitHub.
-
----
-
-### 7. Verification Commands
-```powershell
-# Wave 1 (Backend Verification):
-# Verify Java source files and Spring Boot properties
-
-# Wave 2 (Frontend Verification):
-cd frontend; npm run build
-```
-
+### 3. Acceptance Criteria
+- [ ] PostgreSQL schema with recursive graph edges created.
+- [ ] `pom.xml` includes PostgreSQL dependency and compiles cleanly.
+- [ ] Team section features real academic integrity researchers and research partners.
+- [ ] Real file upload (PDF/DOCX/TXT/Code) supported in frontend with live extraction.
+- [ ] 5-Step Guided Workflow Hub operational after clicking "Launch Portal".
+- [ ] `npm run build` passes in under 2.0s with zero errors.
+- [ ] Every minor passing change micro-committed to Git.
