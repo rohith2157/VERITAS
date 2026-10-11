@@ -1072,7 +1072,7 @@ def compute_fact(num):
                   border: isActive ? '1px solid var(--color-electric-iris, #8052ff)' : '1px solid rgba(255, 255, 255, 0.08)',
                   cursor: 'pointer',
                   transition: 'all 0.2s ease',
-                  boxShadow: isActive ? '0 0 16px rgba(128, 82, 255, 0.35)' : 'none'
+                  boxShadow: isActive ? 'var(--shadow-velvet-sm)' : 'none'
                 }}
               >
                 <span>{t.icon}</span>
@@ -1287,7 +1287,7 @@ def compute_fact(num):
                 border: 'none',
                 cursor: 'pointer',
                 transition: 'all 0.2s ease',
-                boxShadow: '0 4px 16px rgba(128, 82, 255, 0.4)'
+                boxShadow: 'var(--shadow-velvet-sm)'
               }}
             >
               <Zap size={15} />
@@ -1303,7 +1303,7 @@ def compute_fact(num):
               borderRadius: 16,
               padding: 20,
               marginBottom: 28,
-              boxShadow: '0 0 24px rgba(239, 68, 68, 0.15)'
+              boxShadow: 'var(--shadow-velvet-sm)'
             }}>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 12 }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 10, color: '#f87171', fontWeight: 600, fontSize: 15 }}>
@@ -1683,7 +1683,7 @@ def compute_fact(num):
                   border: 'none',
                   cursor: 'pointer',
                   transition: 'all 0.2s ease',
-                  boxShadow: '0 4px 16px rgba(128, 82, 255, 0.35)'
+                  boxShadow: 'var(--shadow-velvet-sm)'
                 }}
               >
                 <Zap size={15} />
@@ -1725,7 +1725,7 @@ def compute_fact(num):
                   borderRadius: 16,
                   padding: 20,
                   marginBottom: 24,
-                  boxShadow: '0 0 20px rgba(239, 68, 68, 0.12)'
+                  boxShadow: 'var(--shadow-velvet-sm)'
                 }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 10, color: '#f87171', fontWeight: 600, fontSize: 15 }}>
                     <AlertTriangle size={20} />
@@ -1944,7 +1944,7 @@ def compute_fact(num):
                   color: '#ffffff',
                   border: 'none',
                   cursor: 'pointer',
-                  boxShadow: '0 4px 16px rgba(128, 82, 255, 0.35)'
+                  boxShadow: 'var(--shadow-velvet-sm)'
                 }}
               >
                 <Cpu size={15} />
@@ -2183,7 +2183,7 @@ def compute_fact(num):
                   color: '#ffffff',
                   border: 'none',
                   cursor: 'pointer',
-                  boxShadow: '0 4px 16px rgba(128, 82, 255, 0.35)'
+                  boxShadow: 'var(--shadow-velvet-sm)'
                 }}
               >
                 <Code size={15} />
@@ -2636,7 +2636,7 @@ def compute_fact(num):
                   borderRadius: 14,
                   padding: '20px 24px',
                   marginBottom: 24,
-                  boxShadow: '0 0 24px rgba(128, 82, 255, 0.2)'
+                  boxShadow: 'var(--shadow-velvet-sm)'
                 }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 12 }}>
                     <div>
