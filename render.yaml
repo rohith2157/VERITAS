@@ -13,7 +13,7 @@ services:
     name: veritas-ai-engine
     runtime: python
     plan: free
-    region: oregon
+    region: singapore
     rootDir: ai-engine
     buildCommand: pip install -r requirements.txt
     startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
@@ -32,7 +32,7 @@ services:
     name: veritas-backend
     runtime: docker
     plan: free
-    region: oregon
+    region: singapore
     rootDir: backend
     dockerfilePath: Dockerfile
     healthCheckPath: /api/classrooms
