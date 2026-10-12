@@ -191,83 +191,213 @@ export default function App() {
           .portal-header {
             position: sticky;
             top: 0;
-            z-index: 100;
+            z-index: 1000;
             background: var(--bg-nav, rgba(0,0,0,0.85));
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border-bottom: 1px solid var(--border-subtle, rgba(255,255,255,0.08));
-            padding: 12px 32px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-subtle);
+            padding: 10px 32px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             gap: 16px;
+            transition: background-color 0.25s ease, border-color 0.25s ease;
           }
           .portal-header-brand {
             display: flex;
             align-items: center;
-            gap: 16px;
+            gap: 14px;
             flex-shrink: 0;
           }
-          .portal-nav-tabs {
+          .portal-back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 7px 14px;
+            border-radius: 9999px;
+            border: 1px solid var(--border-subtle);
+            background: rgba(255, 255, 255, 0.04);
+            color: var(--color-bone-white);
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+          }
+          .portal-back-btn:hover {
+            border-color: var(--color-electric-iris);
+            color: var(--color-bone-white);
+            transform: translateX(-2px);
+          }
+          [data-theme="light"] .portal-back-btn {
+            background: rgba(0, 0, 0, 0.04);
+            border-color: rgba(0, 0, 0, 0.1);
+          }
+          .portal-brand-block {
             display: flex;
             align-items: center;
-            gap: 20px;
-            overflow-x: auto;
-            scrollbar-width: none;
-            -webkit-overflow-scrolling: touch;
+            gap: 10px;
           }
-          .portal-nav-tabs::-webkit-scrollbar {
-            display: none;
+          .portal-brand-title {
+            font-family: var(--font-ppneuemontreal, sans-serif);
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            color: var(--color-bone-white);
           }
-          .portal-tab-btn {
-            font-family: var(--font-ppneuemontreal, 'PPNeueMontreal', -apple-system, sans-serif);
+          .portal-brand-tag {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            padding: 2px 7px;
+            border-radius: 6px;
+            background: rgba(128, 82, 255, 0.15);
+            color: var(--color-electric-iris);
+            border: 1px solid rgba(128, 82, 255, 0.3);
+          }
+          .veritas-cluster-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 10px;
+            border-radius: 9999px;
+            background: rgba(21, 132, 110, 0.12);
+            border: 1px solid rgba(21, 132, 110, 0.3);
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            color: var(--color-deep-verdant);
+            text-transform: uppercase;
+          }
+          .veritas-cluster-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background-color: var(--color-deep-verdant);
+            box-shadow: 0 0 8px var(--color-deep-verdant);
+            animation: veritas-nav-pulse 2s infinite;
+          }
+          @keyframes veritas-nav-pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.45; transform: scale(0.8); }
+          }
+          .portal-nav-segmented {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            padding: 4px;
+            border-radius: 9999px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+          }
+          .portal-tab-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 7px 16px;
+            border-radius: 9999px;
+            font-family: var(--font-ppneuemontreal, sans-serif);
             font-size: 13px;
             font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 0.35px;
-            padding: 8px 0;
-            background: none;
+            letter-spacing: 0.025em;
             border: none;
-            outline: none;
             cursor: pointer;
+            background: transparent;
+            color: var(--color-ash-gray);
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
             white-space: nowrap;
-            transition: color 0.2s ease, border-color 0.2s ease;
           }
-          @media (max-width: 960px) {
+          .portal-tab-pill:hover {
+            color: var(--color-bone-white);
+            background: rgba(128, 82, 255, 0.08);
+          }
+          .portal-tab-pill.active {
+            background: var(--color-electric-iris) !important;
+            color: #ffffff !important;
+            box-shadow: 0 2px 12px rgba(128, 82, 255, 0.35);
+          }
+          .portal-header-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-shrink: 0;
+          }
+          .portal-action-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 7px 12px;
+            border-radius: 9999px;
+            border: 1px solid var(--border-subtle);
+            background: rgba(255, 255, 255, 0.04);
+            color: var(--color-silver-mist);
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+          }
+          .portal-action-btn:hover {
+            border-color: var(--color-electric-iris);
+            color: var(--color-bone-white);
+          }
+          [data-theme="light"] .portal-action-btn {
+            background: rgba(0, 0, 0, 0.04);
+            border-color: rgba(0, 0, 0, 0.1);
+          }
+          .portal-theme-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            color: var(--color-ash-gray);
+            transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+            flex-shrink: 0;
+          }
+          .portal-theme-btn:hover {
+            transform: rotate(18deg) scale(1.08);
+            border-color: var(--color-electric-iris);
+          }
+          [data-theme="light"] .portal-theme-btn {
+            border-color: rgba(0, 0, 0, 0.12);
+          }
+          @media (max-width: 1100px) {
+            .veritas-cluster-pill {
+              display: none !important;
+            }
+          }
+          @media (max-width: 900px) {
             .portal-header {
-              padding: 12px 20px;
-              flex-direction: column;
-              align-items: stretch;
-              gap: 12px;
+              padding: 10px 16px;
+              flex-wrap: wrap;
             }
-            .portal-header-brand {
-              justify-content: space-between;
+            .portal-nav-segmented {
+              order: 3;
               width: 100%;
-            }
-            .portal-nav-tabs {
-              gap: 16px;
-              width: 100%;
-              padding-bottom: 2px;
+              justify-content: center;
+              margin-top: 6px;
+              overflow-x: auto;
             }
           }
           @media (max-width: 480px) {
-            .portal-header {
-              padding: 10px 14px;
+            .portal-tab-pill {
+              padding: 6px 10px;
+              font-size: 11px;
             }
             .portal-brand-title {
-              font-size: 13px !important;
-            }
-            .portal-tab-btn {
-              font-size: 12px;
-              letter-spacing: 0.2px;
-            }
-            .portal-main-container {
-              padding: 16px !important;
+              font-size: 14px;
             }
           }
         `}</style>
 
-        {/* Top Portal Navigation Bar */}
+        {/* Top Elevated Portal Navigation Bar */}
         <header className="portal-header">
           <div className="portal-header-brand">
             <button
@@ -276,155 +406,103 @@ export default function App() {
                 setActiveTab('manifesto');
                 window.location.hash = 'manifesto';
               }}
-              className="btn-ghost"
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: 8,
-                fontSize: 13,
-                fontWeight: 600,
-                textTransform: 'uppercase',
-                letterSpacing: '0.025em',
-                color: 'var(--color-bone-white)',
-                cursor: 'pointer',
-                background: 'none',
-                border: 'none',
-                padding: '6px 12px',
-                borderRadius: 20
-              }}
+              className="portal-back-btn"
+              title="Return to Veritas Manifesto"
             >
-              <ArrowLeft size={16} />
-              <span>Back to Manifesto</span>
+              <ArrowLeft size={14} />
+              <span>Manifesto</span>
             </button>
 
-            <div style={{ width: 1, height: 20, background: 'var(--border-subtle)' }} />
+            <div style={{ width: 1, height: 22, background: 'var(--border-subtle)' }} />
 
-            <span className="portal-brand-title" style={{ fontSize: 15, fontWeight: 500, letterSpacing: '-0.3px', color: 'var(--color-bone-white)' }}>
-              VERITAS INTEGRITY PLATFORM
-            </span>
+            <div className="portal-brand-block">
+              <span className="portal-brand-title">VERITAS</span>
+              <span className="portal-brand-tag">INTEGRITY PLATFORM</span>
+            </div>
+
+            <div className="veritas-cluster-pill" title="Spring Boot :8080 | FastAPI :8000 operational">
+              <span className="veritas-cluster-dot"></span>
+              <span>Cluster Live</span>
+            </div>
           </div>
 
-          {/* 3-Pillar View Switcher Tabs & Command Palette Trigger */}
-          <div className="portal-nav-tabs">
+          {/* 3-Pillar Segmented Navigation Capsule */}
+          <nav className="portal-nav-segmented" role="tablist">
             <button
               id="tab-btn-studio"
+              role="tab"
+              aria-selected={activeTab === 'studio'}
               onClick={() => { setActiveTab('studio'); window.location.hash = 'studio'; }}
-              className="portal-tab-btn"
-              style={{
-                color: activeTab === 'studio' ? 'var(--color-bone-white)' : 'var(--color-ash-gray)',
-                borderBottom: activeTab === 'studio' ? '2px solid var(--color-electric-iris)' : '2px solid transparent',
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: 6
-              }}
+              className={`portal-tab-pill ${activeTab === 'studio' ? 'active' : ''}`}
             >
-              <GitCompare size={14} color={activeTab === 'studio' ? 'var(--color-electric-iris)' : 'currentColor'} />
+              <GitCompare size={14} />
               <span>Studio Inspector</span>
             </button>
 
             <button
               id="tab-btn-queue"
+              role="tab"
+              aria-selected={activeTab === 'queue'}
               onClick={() => { setActiveTab('queue'); window.location.hash = 'queue'; }}
-              className="portal-tab-btn"
-              style={{
-                color: activeTab === 'queue' ? 'var(--color-bone-white)' : 'var(--color-ash-gray)',
-                borderBottom: activeTab === 'queue' ? '2px solid var(--color-electric-iris)' : '2px solid transparent',
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: 6
-              }}
+              className={`portal-tab-pill ${activeTab === 'queue' ? 'active' : ''}`}
             >
-              <Users size={14} color={activeTab === 'queue' ? 'var(--color-electric-iris)' : 'currentColor'} />
+              <Users size={14} />
               <span>Evaluation Queue</span>
             </button>
 
             <button
               id="tab-btn-ledger"
+              role="tab"
+              aria-selected={activeTab === 'ledger'}
               onClick={() => { setActiveTab('ledger'); window.location.hash = 'ledger'; }}
-              className="portal-tab-btn"
-              style={{
-                color: activeTab === 'ledger' ? 'var(--color-bone-white)' : 'var(--color-ash-gray)',
-                borderBottom: activeTab === 'ledger' ? '2px solid var(--color-electric-iris)' : '2px solid transparent',
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: 6
-              }}
+              className={`portal-tab-pill ${activeTab === 'ledger' ? 'active' : ''}`}
             >
-              <Lock size={14} color={activeTab === 'ledger' ? 'var(--color-electric-iris)' : 'currentColor'} />
+              <Lock size={14} />
               <span>Cryptographic Ledger</span>
             </button>
+          </nav>
 
-            {/* Quick Developer Tools Modal Trigger */}
+          {/* Action Tools & Theme Controls */}
+          <div className="portal-header-actions">
+            {/* Developer Tools Modal Pill */}
             <button
               id="btn-dev-workstation-pill"
               onClick={() => setIsDevModalOpen(true)}
+              className="portal-action-btn"
               style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: 6,
-                padding: '6px 12px',
-                borderRadius: 16,
-                background: 'rgba(128, 82, 255, 0.1)',
-                border: '1px solid rgba(128, 82, 255, 0.3)',
                 color: 'var(--color-electric-iris)',
-                fontSize: 11,
-                fontWeight: 600,
-                textTransform: 'uppercase',
-                cursor: 'pointer',
-                marginLeft: 8
+                borderColor: 'rgba(128, 82, 255, 0.3)',
+                background: 'rgba(128, 82, 255, 0.1)'
               }}
               title="Open Developer Telemetry & API Playground (Ctrl+Shift+D)"
             >
-              <Terminal size={12} />
-              <span>Dev Tools</span>
+              <Terminal size={13} />
+              <span style={{ fontSize: 11, fontWeight: 600, textTransform: 'uppercase' }}>Dev Tools</span>
             </button>
 
-            {/* Quick Command Palette Button */}
+            {/* Command Palette Trigger Pill */}
             <button
               id="btn-command-palette-pill"
               onClick={() => setIsCommandPaletteOpen(true)}
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: 6,
-                padding: '6px 12px',
-                borderRadius: 16,
-                background: 'rgba(255, 255, 255, 0.05)',
-                border: '1px solid var(--border-subtle)',
-                color: 'var(--color-silver-mist)',
-                fontSize: 12,
-                cursor: 'pointer',
-                marginLeft: 4
-              }}
-              title="Open Command Palette (Ctrl+K)"
+              className="portal-action-btn"
+              title="Open Universal Command Palette (Ctrl+K)"
             >
               <Search size={13} />
-              <span style={{ fontSize: 11, fontFamily: 'monospace', opacity: 0.8 }}>Ctrl+K</span>
+              <span style={{ fontSize: 11, fontFamily: 'monospace', opacity: 0.85 }}>Ctrl+K</span>
             </button>
 
-            {/* Theme Toggle */}
+            {/* Interactive Theme Toggle Button */}
             <button
+              id="btn-portal-theme-toggle"
               onClick={toggleTheme}
-              className="btn-ghost"
-              style={{
-                padding: '6px',
-                borderRadius: '50%',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                cursor: 'pointer',
-                background: 'none',
-                border: 'none',
-                color: 'var(--color-ash-gray)',
-                flexShrink: 0
-              }}
-              title={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+              className="portal-theme-btn"
+              title={theme === 'dark' ? 'Switch to daylight theme' : 'Switch to void dark theme'}
               aria-label="Toggle Theme"
             >
               {theme === 'dark' ? (
-                <Sun size={16} color="var(--color-saffron-spark)" />
+                <Sun size={17} color="var(--color-saffron-spark)" />
               ) : (
-                <Moon size={16} color="var(--color-electric-iris)" />
+                <Moon size={17} color="var(--color-electric-iris)" />
               )}
             </button>
           </div>

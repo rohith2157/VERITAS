@@ -1759,17 +1759,17 @@ def compute_fact(num):
                   display: 'grid',
                   gridTemplateColumns: '1fr 1fr',
                   gap: 12,
-                  background: '#070709',
-                  border: '1px solid rgba(255, 255, 255, 0.12)',
+                  background: 'var(--input-bg, #070709)',
+                  border: '1px solid var(--border-subtle)',
                   borderRadius: 14,
                   overflow: 'hidden'
                 }}>
                   {/* Pane A (Student Submission) */}
-                  <div style={{ display: 'flex', flexDirection: 'column', borderRight: '1px solid rgba(255, 255, 255, 0.08)' }}>
+                  <div style={{ display: 'flex', flexDirection: 'column', borderRight: '1px solid var(--border-subtle)' }}>
                     <div style={{
                       padding: '8px 16px',
-                      background: 'rgba(255, 255, 255, 0.03)',
-                      borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
+                      background: 'var(--bg-card, rgba(255, 255, 255, 0.03))',
+                      borderBottom: '1px solid var(--border-subtle)',
                       fontSize: 12,
                       fontWeight: 600,
                       color: 'var(--color-bone-white)',
@@ -2073,9 +2073,9 @@ def compute_fact(num):
                   <table className="matrix-table" id="cohort-matrix-table">
                     <thead>
                       <tr>
-                        <th style={{ background: '#0a0a0c', color: '#ffffff', textAlign: 'left' }}>Submissions</th>
+                        <th style={{ background: 'var(--bg-card, #0a0a0c)', color: 'var(--color-bone-white, #ffffff)', textAlign: 'left' }}>Submissions</th>
                         {matrixResult.document_headers?.map(h => (
-                          <th key={h.id} style={{ background: '#0a0a0c', color: 'var(--color-silver-mist)', minWidth: 110 }}>
+                          <th key={h.id} style={{ background: 'var(--bg-card, #0a0a0c)', color: 'var(--color-silver-mist)', minWidth: 110 }}>
                             {h.name.split(' ')[0]}
                           </th>
                         ))}
@@ -2084,7 +2084,7 @@ def compute_fact(num):
                     <tbody>
                       {matrixResult.similarity_matrix?.map((row, rIdx) => (
                         <tr key={rIdx}>
-                          <td style={{ fontWeight: 500, color: '#ffffff', textAlign: 'left', background: '#0a0a0c', fontSize: 12 }}>
+                          <td style={{ fontWeight: 500, color: 'var(--color-bone-white, #ffffff)', textAlign: 'left', background: 'var(--bg-card, #0a0a0c)', fontSize: 12 }}>
                             {matrixResult.document_headers[rIdx]?.name}
                           </td>
                           {row.map((val, cIdx) => {
@@ -2534,11 +2534,11 @@ def compute_fact(num):
                   <table className="matrix-table" id="ast-variable-mapping-table">
                     <thead>
                       <tr>
-                        <th style={{ background: '#0a0a0c', color: 'var(--color-bone-white)', textAlign: 'left' }}>Original Identifier (Source A)</th>
-                        <th style={{ background: '#0a0a0c', color: 'var(--color-bone-white)', textAlign: 'left' }}>Renamed Identifier (Source B)</th>
-                        <th style={{ background: '#0a0a0c', color: 'var(--color-silver-mist)' }}>AST Node Role</th>
-                        <th style={{ background: '#0a0a0c', color: 'var(--color-silver-mist)' }}>Canonical Token</th>
-                        <th style={{ background: '#0a0a0c', color: 'var(--color-silver-mist)' }}>Equivalence</th>
+                        <th style={{ background: 'var(--bg-card, #0a0a0c)', color: 'var(--color-bone-white)', textAlign: 'left' }}>Original Identifier (Source A)</th>
+                        <th style={{ background: 'var(--bg-card, #0a0a0c)', color: 'var(--color-bone-white)', textAlign: 'left' }}>Renamed Identifier (Source B)</th>
+                        <th style={{ background: 'var(--bg-card, #0a0a0c)', color: 'var(--color-silver-mist)' }}>AST Node Role</th>
+                        <th style={{ background: 'var(--bg-card, #0a0a0c)', color: 'var(--color-silver-mist)' }}>Canonical Token</th>
+                        <th style={{ background: 'var(--bg-card, #0a0a0c)', color: 'var(--color-silver-mist)' }}>Equivalence</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -2604,8 +2604,8 @@ def compute_fact(num):
                   Canonical AST Representation (Variables & Functions Normalized):
                 </h4>
                 <div style={{
-                  background: '#0a0a0c',
-                  border: '1px solid rgba(255, 255, 255, 0.08)',
+                  background: 'var(--input-bg, #0a0a0c)',
+                  border: '1px solid var(--border-subtle)',
                   padding: 16,
                   borderRadius: 12,
                   fontSize: 12.5,

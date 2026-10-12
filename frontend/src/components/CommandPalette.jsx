@@ -177,10 +177,10 @@ export default function CommandPalette({ isOpen, onClose, onNavigate, onToggleTh
         style={{
           width: '100%',
           maxWidth: 600,
-          background: 'var(--color-void)',
+          background: 'var(--bg-card, #000000)',
           border: '1px solid var(--border-subtle)',
           borderRadius: 20,
-          boxShadow: '0 24px 64px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(128, 82, 255, 0.25)',
+          boxShadow: isDark ? '0 24px 64px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(128, 82, 255, 0.25)' : '0 24px 64px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(109, 40, 217, 0.25)',
           overflow: 'hidden',
           display: 'flex',
           flexDirection: 'column'
@@ -217,7 +217,7 @@ export default function CommandPalette({ isOpen, onClose, onNavigate, onToggleTh
           <span
             style={{
               fontSize: 11,
-              background: 'rgba(255, 255, 255, 0.08)',
+              background: isDark ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.06)',
               padding: '2px 8px',
               borderRadius: 6,
               color: 'var(--color-ash-gray)',
@@ -271,7 +271,7 @@ export default function CommandPalette({ isOpen, onClose, onNavigate, onToggleTh
                         width: 32,
                         height: 32,
                         borderRadius: 8,
-                        background: isSelected ? 'rgba(128, 82, 255, 0.25)' : 'rgba(255, 255, 255, 0.04)',
+                        background: isSelected ? 'rgba(128, 82, 255, 0.25)' : (isDark ? 'rgba(255, 255, 255, 0.04)' : 'rgba(0, 0, 0, 0.04)'),
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',

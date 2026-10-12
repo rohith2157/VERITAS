@@ -8209,6 +8209,28 @@ body {
 .matrix-table th {
   color: var(--color-bone-white);
   font-weight: 600;
+  background: var(--bg-card);
+}
+[data-theme="light"] .matrix-table th {
+  background: #f1f3f7;
+  color: #0a0b10;
+  border-color: rgba(0, 0, 0, 0.08);
+}
+[data-theme="light"] .matrix-table td {
+  border-color: rgba(0, 0, 0, 0.06);
+  color: #374151;
+}
+[data-theme="light"] .veritas-surface {
+  background: rgba(255, 255, 255, 0.94);
+  border-color: rgba(0, 0, 0, 0.08);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+[data-theme="light"] .form-input, 
+[data-theme="light"] .form-textarea, 
+[data-theme="light"] .form-select {
+  background: #ffffff;
+  border-color: rgba(0, 0, 0, 0.16);
+  color: #0a0b10;
 }
 
 .match-highlight {

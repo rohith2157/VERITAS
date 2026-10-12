@@ -619,15 +619,25 @@ export default function ClassroomPortal({ onInspectDiff } = {}) {
         .classroom-table-wrap {
           overflow-x: auto;
           border-radius: 12px;
-          border: 1px solid rgba(255, 255, 255, 0.08);
-          background: rgba(0, 0, 0, 0.4);
+          border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.08));
+          background: var(--bg-card, rgba(0, 0, 0, 0.4));
         }
         .classroom-table-row {
-          border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+          border-bottom: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.04));
           transition: background-color 0.2s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .classroom-table-row:hover {
-          background-color: rgba(255, 255, 255, 0.03) !important;
+          background-color: rgba(128, 82, 255, 0.05) !important;
+        }
+        [data-theme="light"] .classroom-table-wrap {
+          border-color: rgba(0, 0, 0, 0.08);
+          background: #ffffff;
+        }
+        [data-theme="light"] .classroom-table-row {
+          border-bottom-color: rgba(0, 0, 0, 0.06);
+        }
+        [data-theme="light"] .classroom-table-row:hover {
+          background-color: rgba(0, 0, 0, 0.03) !important;
         }
       `}</style>
 
