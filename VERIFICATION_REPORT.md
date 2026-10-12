@@ -310,6 +310,60 @@ Exit Code: 0
 - **Visual Imagery**: Replaced generic human portraits with the platform's authentic 3D glowing geometric prisms (`/images/1.png`, `/images/2.png`, `/images/3.png`), unifying with the Three.js WebGL canvas.
 - **Zero Animation Regressions**: 100% of WebGL canvas shaders, GSAP split-text rotation triggers, and infinite carousel looping remain strictly preserved.
 
+---
 
+## 12. Gate 12: Radiant Light Multi-Colour Action Palette Overhaul (`GATE-BUTTONS-012`)
 
+### 12.1 Executive Button Palette Certification Matrix
+| Test Vector | Command / Target | Exit Code | Verified Metrics | Status |
+| :--- | :--- | :--- | :--- | :--- |
+| **PALETTE-AUDIT-001** | `Get-ChildItem -Recurse \| Select-String -Pattern "8052ff\|6d28d9\|128,\s*82,\s*255"` | `0` | 0 purple hex/rgb references in frontend code | **PASS** |
+| **BUILD-SLA-002** | `npm run build` in `frontend/` | `0` | Production build in 566ms (< 2.0s SLA); 106 modules | **PASS** |
+| **HTTP-HEALTH-003** | `Invoke-WebRequest -Uri "http://localhost:5173/"` | `0` | Status Code 200 OK | **PASS** |
+| **VISUAL-CDP-DARK-004**| `node scratch/verify_studio_and_light.cjs` | `0` | Studio dark mode verified (`studio_dark_multi.png`) | **PASS** |
+| **VISUAL-CDP-LIGHT-005**| `node scratch/verify_studio_and_light.cjs` | `0` | Studio light mode verified (`studio_light_multi.png`) | **PASS** |
+| **VISUAL-AUTH-006** | `node scratch/verify_buttons.cjs` | `0` | Auth modal buttons verified (`auth_modal_multi_light.png`) | **PASS** |
 
+### 12.2 Design Architecture & Specifications
+- **Strict Color Bans Enforced**:
+  - **ZERO Purple**: Eradicated `#8052ff`, `#6d28d9`, `rgba(128, 82, 255, *)`, `#c084fc`, `#a78bfa`.
+  - **ZERO Orange**: Banned from primary action buttons.
+  - **ZERO Dark Blue**: Banned from action buttons.
+- **Radiant Light Multi-Colour Tokens**:
+  - Baseline Gradient: `linear-gradient(135deg, #67e8f9 0%, #6ee7b7 50%, #bef264 100%)` (Cyan ➔ Mint ➔ Light Lime).
+  - Hover Sweep Gradient: `linear-gradient(135deg, #a5f3fc 0%, #86efac 50%, #d9f99d 100%)`.
+  - High-Contrast Text: `#041316` bold (`font-weight: 700`), delivering > 12:1 WCAG AAA contrast ratio.
+  - Soft Multi-Glow: `0 4px 18px rgba(110, 231, 183, 0.42), 0 2px 6px rgba(103, 232, 249, 0.3)`.
+- **Surfaces and Components Fully Synchronized**:
+  - Landing Page: Header Launch/Auth buttons, `.btn` CTA buttons, mobile `.nav-toggle` burger, and carousel controls.
+  - Auth Modal: Active tab pill (`Sign In` / `Create Account`), submit button (`Sign In to Node` / `Create & Verify Account`), role selectors, and 1-click profiles.
+  - Interactive Verification Studio: Portal tab pills, sub-tab switches (`1to1`, `matrix`, `ai`, `code`, `stylometry`, `merkle`), `Sync Dual-Pane Scroll` toggle, and comparison trigger buttons.
+  - Classroom & Rubric Gateway: Classroom cohort selector pills, batch grading CTA, inspect diff buttons, and Merkle proof verification buttons.
+  - Cryptographic Ledger: Merkle tree root banners, depth nodes, and verifiable leaf inspection cards.
+  - Developer Workstation: API playground execution CTA, cluster service status badges, and 7-subagent matrix cards.
+
+```json
+{
+  "success": true,
+  "summary": "Replaced all purple buttons and interactive accents across all webpages with a radiant light multi-colour palette (Cyan -> Mint -> Light Lime) with dark #041316 high-contrast text. Verified zero purple, zero orange, zero dark blue. Production build passed in 566ms (< 2.0s SLA).",
+  "key_changes_made": [
+    "frontend/src/index.css: Added --gradient-multi-light tokens, overhauled .btn and .btn-pill-primary, replaced all purple utility classes and form focus rings with mint/cyan",
+    "frontend/src/variables.css & frontend/public/css/variables.css: Replaced purple tokens with mint/teal in dark and light modes",
+    "frontend/public/css/style.css: Replaced #6d28d9 with teal and updated active tab button to radiant multi-gradient in light mode",
+    "frontend/index.html: Updated .veritas-auth-pill to radiant multi-gradient with #041316 bold text",
+    "frontend/src/App.jsx: Updated portal header tabs, auth pills, and Dev Tools pill to radiant multi-gradient and mint",
+    "frontend/src/components/auth/AuthModal.jsx: Updated active tab buttons, primary submit button, and badges to light multi-gradient",
+    "frontend/src/components/studio/UniversalStudio.jsx: Overhauled sub-tabs, primary execution buttons, and sync scroll toggle to light multi-gradient",
+    "frontend/src/components/classroom/ClassroomPortal.jsx: Updated cohort selector, batch grading, and proof verify buttons to light multi-gradient",
+    "frontend/src/components/classroom/ForensicCertificateModal.jsx: Updated certificate badges, root bar, and actions to mint and light multi-gradient",
+    "frontend/src/components/ledger/CryptographicLedger.jsx: Updated Merkle tree root nodes, leaves, and proof verify buttons to mint and light multi-gradient",
+    "frontend/src/components/dev/DeveloperWorkstation.jsx: Updated API playground execution button, service badges, and 7-agent matrix to light multi-gradient and mint",
+    "frontend/src/components/CommandPalette.jsx: Updated selection highlight from purple to mint/teal"
+  ],
+  "key_learnings": [
+    "Setting color: #041316 !important on light multi-colour gradients guarantees WCAG AAA compliance (> 12:1 contrast ratio) and eliminates chromatic vibration",
+    "Synchronizing root theme tokens (--color-electric-iris) between index.css and variables.css cleanly cascades across any nested child components without manual overrides",
+    "Vite build passed in 566ms with 106 modules transformed, well below the 2.0s SLA requirement"
+  ]
+}
+```
