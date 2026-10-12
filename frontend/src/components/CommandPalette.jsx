@@ -11,50 +11,34 @@ export default function CommandPalette({ isOpen, onClose, onNavigate, onToggleTh
 
   const commands = [
     {
-      id: 'nav-hub',
-      category: 'Navigation',
-      title: 'Go to Investigation Hub',
-      subtitle: '5-Step systematic forensic workflow with zero simulated data',
-      icon: Zap,
-      action: () => onNavigate('hub')
-    },
-    {
-      id: 'nav-dashboard',
-      category: 'Navigation',
-      title: 'Go to Operations Dashboard',
-      subtitle: 'Real-time cohort monitoring and KPI metrics',
-      icon: Compass,
-      action: () => onNavigate('dashboard')
-    },
-    {
       id: 'nav-studio',
       category: 'Navigation',
-      title: 'Go to Universal Studio',
-      subtitle: 'Dual-pane diff, stylometry writeprints, and AST clone inspector',
+      title: 'Studio Inspector (Pillar 1)',
+      subtitle: 'Synchronized dual-pane diff, AST code clones, and Cyrillic homoglyph evasion scanner',
       icon: Shield,
       action: () => onNavigate('studio')
     },
     {
-      id: 'nav-classroom',
+      id: 'nav-queue',
       category: 'Navigation',
-      title: 'Go to Classroom Portal',
-      subtitle: 'Student submissions, UGC 2018 grading, and Merkle seals',
+      title: 'Evaluation Queue (Pillar 2)',
+      subtitle: 'Cohort gradebook, batch ZIP upload, and UGC 2018 Statutory Classification',
       icon: Users,
-      action: () => onNavigate('classroom')
+      action: () => onNavigate('queue')
     },
     {
-      id: 'nav-demobench',
+      id: 'nav-ledger',
       category: 'Navigation',
-      title: 'Go to Demo Bench',
-      subtitle: 'Instant presentation benchmark tests for professors',
-      icon: Zap,
-      action: () => onNavigate('demobench')
+      title: 'Cryptographic Ledger (Pillar 3)',
+      subtitle: 'Immutable SHA-256 Merkle audit trail, interactive tamper simulation, and certificates',
+      icon: Lock,
+      action: () => onNavigate('ledger')
     },
     {
       id: 'nav-dev',
-      category: 'Navigation',
-      title: 'Go to Developer Workstation',
-      subtitle: '7-Agent matrix telemetry and interactive API wire playground',
+      category: 'Developer',
+      title: 'Developer Workstation & Telemetry Bridge',
+      subtitle: 'Microservice health (:8080, :8000, :5173, :2157) and interactive cURL API playground',
       icon: Terminal,
       action: () => onNavigate('dev')
     },
@@ -70,11 +54,11 @@ export default function CommandPalette({ isOpen, onClose, onNavigate, onToggleTh
       id: 'act-homoglyph',
       category: 'Forensics',
       title: 'Run Homoglyph Evasion Test',
-      subtitle: 'Sanitize Cyrillic homoglyphs and strip zero-width characters',
+      subtitle: 'Sanitize Cyrillic homoglyphs and strip zero-width characters in Studio Inspector',
       icon: Shield,
       action: () => {
-        onNavigate('demobench');
-        showToast('Navigated to Demo Bench: Running Homoglyph Evasion scenario', 'info');
+        onNavigate('studio');
+        showToast('Opened Studio Inspector: Running Homoglyph Evasion scenario', 'info');
       }
     },
     {
@@ -84,19 +68,19 @@ export default function CommandPalette({ isOpen, onClose, onNavigate, onToggleTh
       subtitle: 'Detect Patient Zero and trace collusion flow across cohort',
       icon: Users,
       action: () => {
-        onNavigate('demobench');
-        showToast('Navigated to Demo Bench: Running Peer Collusion matrix', 'info');
+        onNavigate('studio');
+        showToast('Opened Studio Inspector: Running Cohort Matrix', 'info');
       }
     },
     {
       id: 'act-merkle',
       category: 'Cryptographic Ledger',
       title: 'Inspect Cryptographic Merkle Ledger',
-      subtitle: 'Verify immutable SHA-256 binary tree audit trail',
+      subtitle: 'Verify immutable SHA-256 binary tree audit trail and tamper protection',
       icon: Lock,
       action: () => {
-        onNavigate('classroom');
-        showToast('Navigated to Classroom Portal: Inspecting Merkle Seals', 'success');
+        onNavigate('ledger');
+        showToast('Opened Cryptographic Ledger: Inspecting Merkle Seals', 'success');
       }
     },
     {

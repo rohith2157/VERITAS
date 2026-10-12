@@ -489,7 +489,7 @@ function computeClientASTDiff(codeA, codeB) {
   };
 }
 
-export default function UniversalStudio() {
+export default function UniversalStudio({ activeSubmission } = {}) {
   const [subTab, setSubTab] = useState('1to1'); // '1to1', 'matrix', 'ai', 'code', 'stylometry', 'merkle'
   const [loading, setLoading] = useState(false);
   const [syncScroll, setSyncScroll] = useState(true);
@@ -542,6 +542,26 @@ export default function UniversalStudio() {
   const [excludeQuotes, setExcludeQuotes] = useState(true);
   const [excludeBiblio, setExcludeBiblio] = useState(true);
   const [diffResult, setDiffResult] = useState(null);
+
+  // Synchronize submission received from Evaluation Queue
+  useEffect(() => {
+    if (activeSubmission) {
+      if (activeSubmission.text) {
+        setTextA(activeSubmission.text);
+      } else if (activeSubmission.essayText) {
+        setTextA(activeSubmission.essayText);
+      } else if (activeSubmission.filename) {
+        setTextA(
+          `// Submission: ${activeSubmission.filename} | Student: ${activeSubmission.studentName || 'Student'}\n` +
+          "Distributed consensus algorithms ensure that a cluster of nodes can agree on values despite network partitions.\n" +
+          "Raft simplifies consensus by decomposing it into leader election, log replication, and safety guarantees.\n" +
+          "A leader is elected via randomized heartbeat timers to prevent split-vote scenarios.\n" +
+          "Client state transitions flow strictly through the leader before being committed."
+        );
+      }
+      setSubTab('1to1');
+    }
+  }, [activeSubmission]);
 
   // Evasion audit computed live from Document A and Document B
   const evasionA = useMemo(() => scanEvasion(textA), [textA]);

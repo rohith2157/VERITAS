@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { School, Award, CheckCircle, AlertTriangle, Users, Play, Plus, BookOpen, Layers } from 'lucide-react';
+import { School, Award, CheckCircle, AlertTriangle, Users, Play, Plus, BookOpen, Layers, GitCompare, UploadCloud, Archive, FileText } from 'lucide-react';
 import ForensicCertificateModal from './ForensicCertificateModal';
 
-export default function ClassroomPortal() {
+export default function ClassroomPortal({ onInspectDiff } = {}) {
   const staticClassroom = {
     id: 1,
     name: "CS 401: Distributed Systems & Cryptographic Protocols",
@@ -121,6 +121,48 @@ export default function ClassroomPortal() {
 
   // Forensic Certificate Modal State
   const [selectedCertSub, setSelectedCertSub] = useState(null);
+
+  // Batch ZIP Archive Ingestion State
+  const [batchIngesting, setBatchIngesting] = useState(false);
+  const [batchProgress, setBatchProgress] = useState(0);
+
+  const handleBatchZipUpload = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setBatchIngesting(true);
+    setBatchProgress(25);
+
+    setTimeout(() => setBatchProgress(65), 350);
+    setTimeout(() => {
+      setBatchProgress(100);
+      const newCohortEntries = [
+        {
+          id: Date.now() + 1,
+          studentName: "Maya Lin",
+          studentEmail: "maya.l@cs.university.edu",
+          filename: "raft_maya_v2.py",
+          similarityScore: 4.8,
+          evaluationStatus: "EVALUATED",
+          rubricDeductions: 0.0,
+          finalGrade: 98.0,
+          flagReason: "Clean Pass (Canonical AST)"
+        },
+        {
+          id: Date.now() + 2,
+          studentName: "Carlos Mendez",
+          studentEmail: "carlos.m@cs.university.edu",
+          filename: "carlos_consensus_final.py",
+          similarityScore: 52.4,
+          evaluationStatus: "FLAGGED",
+          rubricDeductions: 50.0,
+          finalGrade: 42.0,
+          flagReason: "UGC Level 2: Shared AST blocks with Elena Rostova"
+        }
+      ];
+      setSubmissions(prev => [...newCohortEntries, ...prev]);
+      setBatchIngesting(false);
+    }, 700);
+  };
 
   // Keyboard Escape listener for accessible modal dismissal
   useEffect(() => {
@@ -744,7 +786,33 @@ export default function ClassroomPortal() {
             </div>
           </div>
 
-          <div style={{ display: 'flex', gap: 12 }}>
+          <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
+            <label
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: 8,
+                padding: '10px 16px',
+                borderRadius: 20,
+                border: '1px solid rgba(255, 184, 41, 0.4)',
+                background: 'rgba(255, 184, 41, 0.1)',
+                color: 'var(--color-saffron-spark)',
+                fontSize: 13,
+                fontWeight: 600,
+                cursor: 'pointer'
+              }}
+              title="Batch upload all student submissions in a .zip archive"
+            >
+              <UploadCloud size={16} />
+              <span>{batchIngesting ? `Ingesting (${batchProgress}%)...` : 'Batch ZIP Upload'}</span>
+              <input
+                type="file"
+                accept=".zip,.tar.gz,.rar"
+                style={{ display: 'none' }}
+                onChange={handleBatchZipUpload}
+              />
+            </label>
+
             <button
               onClick={() => setShowAddModal(true)}
               className="btn-ghost"
@@ -875,6 +943,31 @@ export default function ClassroomPortal() {
                     </td>
                     <td style={{ padding: '14px 16px' }}>
                       <div style={{ display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap' }}>
+                        <button
+                          onClick={() => {
+                            if (onInspectDiff) {
+                              onInspectDiff(sub);
+                            } else {
+                              window.location.hash = 'studio';
+                            }
+                          }}
+                          style={{
+                            background: 'rgba(128, 82, 255, 0.15)',
+                            border: '1px solid var(--color-electric-iris)',
+                            borderRadius: 8,
+                            padding: '5px 10px',
+                            color: 'var(--color-electric-iris)',
+                            fontSize: 11.5,
+                            cursor: 'pointer',
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: 5
+                          }}
+                          title="Open side-by-side diff in Studio Inspector"
+                        >
+                          <GitCompare size={12} />
+                          <span>Inspect Diff</span>
+                        </button>
                         <button
                           onClick={() => { setMerkleModalSub(sub); setMerkleVerification(null); }}
                           style={{

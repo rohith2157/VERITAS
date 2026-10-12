@@ -1,22 +1,22 @@
 import React, { useState, useEffect, Suspense, lazy } from 'react';
-import { ArrowLeft, Sun, Moon, Search, Command, Zap } from 'lucide-react';
+import { ArrowLeft, Sun, Moon, Search, GitCompare, Users, Lock, Terminal } from 'lucide-react';
 import { ToastProvider } from './context/ToastContext';
 import CommandPalette from './components/CommandPalette';
-import PortalWorkflowHub from './components/dashboard/PortalWorkflowHub';
 
-const OperationsDashboard = lazy(() => import('./components/dashboard/OperationsDashboard'));
 const UniversalStudio = lazy(() => import('./components/studio/UniversalStudio'));
 const ClassroomPortal = lazy(() => import('./components/classroom/ClassroomPortal'));
-const DemoBench = lazy(() => import('./components/DemoBench'));
+const CryptographicLedger = lazy(() => import('./components/ledger/CryptographicLedger'));
 const DeveloperWorkstation = lazy(() => import('./components/dev/DeveloperWorkstation'));
 
 export default function App() {
   const [activeTab, setActiveTab] = useState(() => {
     if (typeof window !== 'undefined') {
       const hash = window.location.hash.replace('#', '');
-      if (['hub', 'dashboard', 'studio', 'classroom', 'demobench', 'dev'].includes(hash)) {
+      if (['studio', 'queue', 'ledger'].includes(hash)) {
         return hash;
       }
+      if (['hub', 'demobench'].includes(hash)) return 'studio';
+      if (['dashboard', 'classroom'].includes(hash)) return 'queue';
     }
     return 'manifesto';
   });
@@ -24,6 +24,8 @@ export default function App() {
     return localStorage.getItem('veritas_theme') || 'dark';
   });
   const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState(false);
+  const [isDevModalOpen, setIsDevModalOpen] = useState(false);
+  const [activeSubmission, setActiveSubmission] = useState(null);
 
   const toggleTheme = () => {
     const next = theme === 'dark' ? 'light' : 'dark';
@@ -35,26 +37,37 @@ export default function App() {
     document.documentElement.setAttribute('data-theme', theme);
   }, [theme]);
 
-  // Global Ctrl+K / Cmd+K Command Palette listener
+  // Global Keyboard Shortcuts (Ctrl+K for Search, Ctrl+Shift+D for Dev Tools, Escape to dismiss)
   useEffect(() => {
     const handleKeyDown = (e) => {
       if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
         e.preventDefault();
         setIsCommandPaletteOpen((prev) => !prev);
+      } else if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key.toLowerCase() === 'd') {
+        e.preventDefault();
+        setIsDevModalOpen((prev) => !prev);
+      } else if (e.key === 'Escape') {
+        if (isDevModalOpen) setIsDevModalOpen(false);
+        if (isCommandPaletteOpen) setIsCommandPaletteOpen(false);
       }
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, []);
+  }, [isDevModalOpen, isCommandPaletteOpen]);
 
   // Synchronize hash and clicks from real Veritas DOM
   useEffect(() => {
     const handleHash = () => {
       const hash = window.location.hash.replace('#', '');
-      if (['hub', 'dashboard', 'studio', 'classroom', 'demobench', 'dev'].includes(hash)) {
+      if (['studio', 'queue', 'ledger'].includes(hash)) {
         setActiveTab(hash);
-      } else if (hash === 'portal') {
-        setActiveTab('hub');
+      } else if (['portal', 'hub', 'demobench'].includes(hash)) {
+        setActiveTab('studio');
+      } else if (['dashboard', 'classroom'].includes(hash)) {
+        setActiveTab('queue');
+      } else if (hash === 'dev') {
+        setActiveTab('studio');
+        setIsDevModalOpen(true);
       } else if (hash === 'landing' || hash === 'manifesto' || hash === '') {
         setActiveTab('manifesto');
       }
@@ -73,32 +86,23 @@ export default function App() {
 
         if (ariaLabel === 'Launch Portal' || ariaLabel === 'Request access' || href === '#portal' || tab === 'portal') {
           e.preventDefault();
-          setActiveTab('hub');
-          window.location.hash = 'hub';
-        } else if (tab === 'hub' || href === '#hub') {
-          e.preventDefault();
-          setActiveTab('hub');
-          window.location.hash = 'hub';
-        } else if (tab === 'dashboard' || href === '#dashboard') {
-          e.preventDefault();
-          setActiveTab('dashboard');
-          window.location.hash = 'dashboard';
-        } else if (tab === 'studio' || href === '#studio' || target.id === 'veritas-request-access') {
+          setActiveTab('studio');
+          window.location.hash = 'studio';
+        } else if (tab === 'studio' || href === '#studio' || target.id === 'veritas-request-access' || tab === 'hub' || href === '#hub' || tab === 'demobench' || href === '#demobench') {
           e.preventDefault();
           setActiveTab('studio');
           window.location.hash = 'studio';
-        } else if (tab === 'classroom' || href === '#classroom') {
+        } else if (tab === 'queue' || href === '#queue' || tab === 'classroom' || href === '#classroom' || tab === 'dashboard' || href === '#dashboard') {
           e.preventDefault();
-          setActiveTab('classroom');
-          window.location.hash = 'classroom';
-        } else if (tab === 'demobench' || href === '#demobench') {
+          setActiveTab('queue');
+          window.location.hash = 'queue';
+        } else if (tab === 'ledger' || href === '#ledger') {
           e.preventDefault();
-          setActiveTab('demobench');
-          window.location.hash = 'demobench';
+          setActiveTab('ledger');
+          window.location.hash = 'ledger';
         } else if (tab === 'dev' || href === '#dev') {
           e.preventDefault();
-          setActiveTab('dev');
-          window.location.hash = 'dev';
+          setIsDevModalOpen(true);
         } else if (href === '#landing' || href === '#manifesto') {
           setActiveTab('manifesto');
         }
@@ -278,80 +282,84 @@ export default function App() {
             </span>
           </div>
 
-          {/* View Switcher Tabs & Command Palette Trigger */}
+          {/* 3-Pillar View Switcher Tabs & Command Palette Trigger */}
           <div className="portal-nav-tabs">
             <button
-              onClick={() => { setActiveTab('hub'); window.location.hash = 'hub'; }}
+              id="tab-btn-studio"
+              onClick={() => { setActiveTab('studio'); window.location.hash = 'studio'; }}
               className="portal-tab-btn"
               style={{
-                color: activeTab === 'hub' ? 'var(--color-bone-white)' : 'var(--color-ash-gray)',
-                borderBottom: activeTab === 'hub' ? '2px solid var(--color-electric-iris)' : '2px solid transparent',
+                color: activeTab === 'studio' ? 'var(--color-bone-white)' : 'var(--color-ash-gray)',
+                borderBottom: activeTab === 'studio' ? '2px solid var(--color-electric-iris)' : '2px solid transparent',
                 display: 'inline-flex',
                 alignItems: 'center',
                 gap: 6
               }}
             >
-              <Zap size={14} color={activeTab === 'hub' ? 'var(--color-electric-iris)' : 'currentColor'} />
-              <span>Investigation Hub</span>
+              <GitCompare size={14} color={activeTab === 'studio' ? 'var(--color-electric-iris)' : 'currentColor'} />
+              <span>Studio Inspector</span>
             </button>
 
             <button
-              onClick={() => { setActiveTab('dashboard'); window.location.hash = 'dashboard'; }}
+              id="tab-btn-queue"
+              onClick={() => { setActiveTab('queue'); window.location.hash = 'queue'; }}
               className="portal-tab-btn"
               style={{
-                color: activeTab === 'dashboard' ? 'var(--color-bone-white)' : 'var(--color-ash-gray)',
-                borderBottom: activeTab === 'dashboard' ? '2px solid var(--color-electric-iris)' : '2px solid transparent'
+                color: activeTab === 'queue' ? 'var(--color-bone-white)' : 'var(--color-ash-gray)',
+                borderBottom: activeTab === 'queue' ? '2px solid var(--color-electric-iris)' : '2px solid transparent',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: 6
               }}
             >
-              Dashboard
+              <Users size={14} color={activeTab === 'queue' ? 'var(--color-electric-iris)' : 'currentColor'} />
+              <span>Evaluation Queue</span>
             </button>
 
             <button
-              onClick={() => { setActiveTab('studio'); window.location.hash = 'studio'; }}
+              id="tab-btn-ledger"
+              onClick={() => { setActiveTab('ledger'); window.location.hash = 'ledger'; }}
               className="portal-tab-btn"
               style={{
-                color: activeTab === 'studio' ? 'var(--color-bone-white)' : 'var(--color-ash-gray)',
-                borderBottom: activeTab === 'studio' ? '2px solid var(--color-electric-iris)' : '2px solid transparent'
+                color: activeTab === 'ledger' ? 'var(--color-bone-white)' : 'var(--color-ash-gray)',
+                borderBottom: activeTab === 'ledger' ? '2px solid var(--color-electric-iris)' : '2px solid transparent',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: 6
               }}
             >
-              Studio
+              <Lock size={14} color={activeTab === 'ledger' ? 'var(--color-electric-iris)' : 'currentColor'} />
+              <span>Cryptographic Ledger</span>
             </button>
 
+            {/* Quick Developer Tools Modal Trigger */}
             <button
-              onClick={() => { setActiveTab('classroom'); window.location.hash = 'classroom'; }}
-              className="portal-tab-btn"
+              id="btn-dev-workstation-pill"
+              onClick={() => setIsDevModalOpen(true)}
               style={{
-                color: activeTab === 'classroom' ? 'var(--color-bone-white)' : 'var(--color-ash-gray)',
-                borderBottom: activeTab === 'classroom' ? '2px solid var(--color-electric-iris)' : '2px solid transparent'
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: 6,
+                padding: '6px 12px',
+                borderRadius: 16,
+                background: 'rgba(128, 82, 255, 0.1)',
+                border: '1px solid rgba(128, 82, 255, 0.3)',
+                color: 'var(--color-electric-iris)',
+                fontSize: 11,
+                fontWeight: 600,
+                textTransform: 'uppercase',
+                cursor: 'pointer',
+                marginLeft: 8
               }}
+              title="Open Developer Telemetry & API Playground (Ctrl+Shift+D)"
             >
-              Classroom
-            </button>
-
-            <button
-              onClick={() => { setActiveTab('demobench'); window.location.hash = 'demobench'; }}
-              className="portal-tab-btn"
-              style={{
-                color: activeTab === 'demobench' ? 'var(--color-bone-white)' : 'var(--color-ash-gray)',
-                borderBottom: activeTab === 'demobench' ? '2px solid var(--color-electric-iris)' : '2px solid transparent'
-              }}
-            >
-              Demo Bench
-            </button>
-
-            <button
-              onClick={() => { setActiveTab('dev'); window.location.hash = 'dev'; }}
-              className="portal-tab-btn"
-              style={{
-                color: activeTab === 'dev' ? 'var(--color-bone-white)' : 'var(--color-ash-gray)',
-                borderBottom: activeTab === 'dev' ? '2px solid var(--color-electric-iris)' : '2px solid transparent'
-              }}
-            >
-              Developer
+              <Terminal size={12} />
+              <span>Dev Tools</span>
             </button>
 
             {/* Quick Command Palette Button */}
             <button
+              id="btn-command-palette-pill"
               onClick={() => setIsCommandPaletteOpen(true)}
               style={{
                 display: 'inline-flex',
@@ -408,27 +416,64 @@ export default function App() {
               Loading Veritas Node...
             </div>
           }>
-            {activeTab === 'hub' && (
-              <PortalWorkflowHub
-                onNavigateToStudio={() => { setActiveTab('studio'); window.location.hash = 'studio'; }}
-                onNavigateToClassroom={() => { setActiveTab('classroom'); window.location.hash = 'classroom'; }}
-                onNavigateToDev={() => { setActiveTab('dev'); window.location.hash = 'dev'; }}
+            {activeTab === 'studio' && <UniversalStudio activeSubmission={activeSubmission} />}
+            {activeTab === 'queue' && (
+              <ClassroomPortal
+                onInspectDiff={(sub) => {
+                  setActiveSubmission(sub);
+                  setActiveTab('studio');
+                  window.location.hash = 'studio';
+                }}
               />
             )}
-            {activeTab === 'dashboard' && (
-              <OperationsDashboard 
-                onOpenStudio={() => { setActiveTab('studio'); window.location.hash = 'studio'; }}
-                onOpenClassroom={() => { setActiveTab('classroom'); window.location.hash = 'classroom'; }}
-                onOpenDemoBench={() => { setActiveTab('demobench'); window.location.hash = 'demobench'; }}
-                onOpenDev={() => { setActiveTab('dev'); window.location.hash = 'dev'; }}
-              />
-            )}
-            {activeTab === 'studio' && <UniversalStudio />}
-            {activeTab === 'classroom' && <ClassroomPortal />}
-            {activeTab === 'demobench' && <DemoBench />}
-            {activeTab === 'dev' && <DeveloperWorkstation />}
+            {activeTab === 'ledger' && <CryptographicLedger />}
           </Suspense>
         </main>
+
+        {/* Developer Workstation Modal Dialog */}
+        {isDevModalOpen && (
+          <div
+            role="dialog"
+            aria-modal="true"
+            aria-label="Developer Telemetry Workstation"
+            onClick={() => setIsDevModalOpen(false)}
+            style={{
+              position: 'fixed',
+              inset: 0,
+              zIndex: 100000,
+              background: 'rgba(0, 0, 0, 0.85)',
+              backdropFilter: 'blur(16px)',
+              WebkitBackdropFilter: 'blur(16px)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              padding: '24px'
+            }}
+          >
+            <div
+              onClick={(e) => e.stopPropagation()}
+              style={{
+                width: '100%',
+                maxWidth: 1320,
+                maxHeight: '90vh',
+                overflowY: 'auto',
+                background: 'var(--bg-main, #000000)',
+                border: '1px solid rgba(128, 82, 255, 0.3)',
+                borderRadius: 24,
+                padding: '32px',
+                boxShadow: '0 32px 80px rgba(0, 0, 0, 0.9)'
+              }}
+            >
+              <Suspense fallback={
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '40vh', color: 'var(--color-ash-gray)' }}>
+                  Loading Developer Node...
+                </div>
+              }>
+                <DeveloperWorkstation onClose={() => setIsDevModalOpen(false)} />
+              </Suspense>
+            </div>
+          </div>
+        )}
 
         {/* Global Command Palette */}
         <CommandPalette

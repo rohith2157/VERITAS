@@ -5,7 +5,7 @@ import {
   Check, FileJson, Share2, Radio, Lock
 } from 'lucide-react';
 
-export default function DeveloperWorkstation() {
+export default function DeveloperWorkstation({ onClose } = {}) {
   const [activePipeline, setActivePipeline] = useState('winnowing'); // 'winnowing', 'matrix', 'ast', 'homoglyph', 'spring_classroom'
   const [requestPayload, setRequestPayload] = useState('');
   const [responsePayload, setResponsePayload] = useState(null);
@@ -561,17 +561,40 @@ export default function DeveloperWorkstation() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 36, paddingBottom: 60 }}>
       {/* 1. Header */}
-      <div>
-        <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontSize: 12, fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--color-electric-iris)', marginBottom: 10 }}>
-          <Terminal size={14} />
-          <span>VERITAS DEVELOPER WORKSTATION &amp; MULTI-SERVICE TELEMETRY</span>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: 16 }}>
+        <div>
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontSize: 12, fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--color-electric-iris)', marginBottom: 10 }}>
+            <Terminal size={14} />
+            <span>VERITAS DEVELOPER WORKSTATION &amp; MULTI-SERVICE TELEMETRY</span>
+          </div>
+          <h1 style={{ fontSize: 32, fontWeight: 400, letterSpacing: '-0.03em', margin: 0, color: 'var(--color-bone-white)' }}>
+            Developer Workstation
+          </h1>
+          <p style={{ fontSize: 15, fontWeight: 200, color: 'var(--color-ash-gray)', marginTop: 8, maxWidth: 820, lineHeight: 1.5 }}>
+            Direct inspectability into the distributed microservices architecture: PostgreSQL (:2157), Spring Boot 3 enterprise orchestrator (:8080), Python FastAPI algorithmic forensics core (:8000), and React 19 presentation layer (:5173).
+          </p>
         </div>
-        <h1 style={{ fontSize: 32, fontWeight: 400, letterSpacing: '-0.03em', margin: 0, color: 'var(--color-bone-white)' }}>
-          Developer Workstation
-        </h1>
-        <p style={{ fontSize: 16, fontWeight: 200, color: 'var(--color-ash-gray)', marginTop: 8, maxWidth: 820 }}>
-          Direct inspectability into the distributed microservices architecture: PostgreSQL universal graph database (:2157), Spring Boot 3 enterprise orchestrator (:8080), Python FastAPI algorithmic forensics core (:8000), and React 19 presentation layer (:5173).
-        </p>
+        {onClose && (
+          <button
+            onClick={onClose}
+            style={{
+              background: 'rgba(255, 255, 255, 0.08)',
+              border: '1px solid rgba(255, 255, 255, 0.15)',
+              borderRadius: '50%',
+              width: 36,
+              height: 36,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              color: 'var(--color-bone-white)',
+              cursor: 'pointer',
+              fontSize: 14
+            }}
+            aria-label="Close Developer Workstation"
+          >
+            ✕
+          </button>
+        )}
       </div>
 
       {/* 2. Microservice Cluster Health Bar */}
