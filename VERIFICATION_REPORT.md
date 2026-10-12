@@ -263,5 +263,30 @@ Exit Code: 0
 ### 9.3 Micro-Commit Ledger (Task 6)
 - `17fb95b`: `feat(portal): consolidate architecture into 3 clean industry pillars`
 
+---
+
+## 10. Gate 10: Universal Finger Touch & Smooth Scroll Certification (`GATE-SCROLL-010`)
+
+### 10.1 Executive Scroll Certification Matrix
+| Test Vector | Command / CDP Target | Exit Code | Verified Metrics | Status |
+| :--- | :--- | :--- | :--- | :--- |
+| **PORTAL-SCROLL-001** | `node scripts/verify_all_touch_scrolling.js` (#studio) | `0` | Studio scrolled 450px down; `touch-action: pan-y` active | **PASS** |
+| **PORTAL-SCROLL-002** | `node scripts/verify_all_touch_scrolling.js` (#diff-panes) | `0` | Dual-pane offset inspector synchronized; `touch-action: pan-y` | **PASS** |
+| **PORTAL-SCROLL-003** | `node scripts/verify_all_touch_scrolling.js` (#queue) | `0` | Cohort gradebook scrolled 400px; `.classroom-table-wrap` `pan-x pan-y` | **PASS** |
+| **PORTAL-SCROLL-004** | `node scripts/verify_all_touch_scrolling.js` (#ledger) | `0` | Ledger explorer scrolled 400px; smooth momentum | **PASS** |
+| **LANDING-SCROLL-005** | `node scripts/verify_all_touch_scrolling.js` (#manifesto) | `0` | ASScroll cleanly reactivated on return to Manifesto; `assEnabled: true` | **PASS** |
+| **BUILD-SLA-006** | `npm run build` in `frontend/` | `0` | Production build in 1.55s (< 2.0s SLA); zero warnings | **PASS** |
+
+### 10.2 Empirical Root Causes & Engineering Mitigations
+1. **ASScroll Global Event Starvation**:
+   - `ASScroll` in `theme.js` intercepts window-level `wheel` and `touchmove` events.
+   - When the user opened the portal, ASScroll continued running in the background and consumed gestures while the portal overlay froze.
+   - **Mitigation**: Implemented intelligent guard in `frontend/index.html` and active-tab lifecycle hook in `App.jsx`. `ass.disable()` is called automatically whenever a portal view is active; `ass.enable()` is called when returning to Manifesto.
+2. **Touch-Action & Gesture Panning**:
+   - Added `touch-action: pan-y; -webkit-overflow-scrolling: touch; overscroll-behavior-y: auto;` to `#veritas-portal-shell`, `#diff-pane-left`, and `#diff-pane-right`.
+   - Added `touch-action: pan-x pan-y; -webkit-overflow-scrolling: touch;` to horizontal tables in `ClassroomPortal.jsx`, `UniversalStudio.jsx`, and `CryptographicLedger.jsx`, preventing tables from locking vertical swipe gestures.
+3. **Modal Dialog Touch Containment**:
+   - Added `maxHeight: '92vh'`, `overflowY: 'auto'`, and `touch-action: pan-y` to `AuthModal.jsx`, `DeveloperWorkstation.jsx`, `ForensicCertificateModal.jsx`, and `CommandPalette.jsx`.
+
 
 
