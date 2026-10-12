@@ -154,11 +154,15 @@ export default function AuthModal() {
         style={{
           width: '100%',
           maxWidth: 480,
+          maxHeight: '92vh',
           background: 'var(--bg-card, #0c0c10)',
           border: '1px solid var(--border-subtle)',
           borderRadius: 24,
           boxShadow: '0 28px 72px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(128, 82, 255, 0.2)',
-          overflow: 'hidden',
+          overflowY: 'auto',
+          overflowX: 'hidden',
+          WebkitOverflowScrolling: 'touch',
+          touchAction: 'pan-y',
           display: 'flex',
           flexDirection: 'column',
           position: 'relative'
@@ -711,3 +715,4 @@ export default function AuthModal() {
     </div>
   );
 }
+

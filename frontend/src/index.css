@@ -8405,3 +8405,45 @@ textarea:focus-visible,
   filter: drop-shadow(0 6px 20px rgba(255, 184, 41, 0.45));
 }
 
+/* ==================== UNIVERSAL TOUCH & SMOOTH SCROLL DISCIPLINE ==================== */
+html, body {
+  -webkit-overflow-scrolling: touch;
+}
+
+#veritas-portal-shell,
+.veritas-portal-shell {
+  -webkit-overflow-scrolling: touch !important;
+  touch-action: pan-y !important;
+  overscroll-behavior-y: auto !important;
+}
+
+.classroom-table-wrap,
+.matrix-table-wrap,
+#diff-pane-left,
+#diff-pane-right {
+  -webkit-overflow-scrolling: touch !important;
+  overscroll-behavior: contain;
+}
+
+/* Custom Sleek Scrollbar for all portal containers */
+#veritas-portal-shell::-webkit-scrollbar,
+#diff-pane-left::-webkit-scrollbar,
+#diff-pane-right::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+#veritas-portal-shell::-webkit-scrollbar-thumb,
+#diff-pane-left::-webkit-scrollbar-thumb,
+#diff-pane-right::-webkit-scrollbar-thumb {
+  background: rgba(128, 82, 255, 0.25);
+  border-radius: 9999px;
+}
+
+#veritas-portal-shell::-webkit-scrollbar-thumb:hover,
+#diff-pane-left::-webkit-scrollbar-thumb:hover,
+#diff-pane-right::-webkit-scrollbar-thumb:hover {
+  background: var(--color-electric-iris, #8052ff);
+}
+
+

@@ -123,7 +123,7 @@ export default function ForensicCertificateModal({ submission, onClose }) {
         </div>
 
         {/* Certificate Body (Scrollable) */}
-        <div style={{ padding: '28px', overflowY: 'auto' }}>
+        <div style={{ padding: '28px', overflowY: 'auto', WebkitOverflowScrolling: 'touch', touchAction: 'pan-y', overscrollBehaviorY: 'auto' }}>
           
           {/* Certificate Metadata Grid */}
           <div

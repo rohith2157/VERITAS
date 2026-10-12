@@ -618,6 +618,9 @@ export default function ClassroomPortal({ onInspectDiff } = {}) {
       <style>{`
         .classroom-table-wrap {
           overflow-x: auto;
+          -webkit-overflow-scrolling: touch !important;
+          touch-action: pan-x pan-y !important;
+          overscroll-behavior-y: auto !important;
           border-radius: 12px;
           border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.08));
           background: var(--bg-card, rgba(0, 0, 0, 0.4));

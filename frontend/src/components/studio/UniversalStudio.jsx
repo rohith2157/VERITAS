@@ -1790,7 +1790,10 @@ def compute_fact(num):
                         padding: '12px 0',
                         fontFamily: 'var(--font-mono, monospace)',
                         fontSize: 12.5,
-                        lineHeight: 1.7
+                        lineHeight: 1.7,
+                        touchAction: 'pan-y',
+                        WebkitOverflowScrolling: 'touch',
+                        overscrollBehaviorY: 'auto'
                       }}
                     >
                       {alignedDiff.map((row, idx) => (
@@ -1894,7 +1897,10 @@ def compute_fact(num):
                         padding: '12px 0',
                         fontFamily: 'var(--font-mono, monospace)',
                         fontSize: 12.5,
-                        lineHeight: 1.7
+                        lineHeight: 1.7,
+                        touchAction: 'pan-y',
+                        WebkitOverflowScrolling: 'touch',
+                        overscrollBehaviorY: 'auto'
                       }}
                     >
                       {alignedDiff.map((row, idx) => (
@@ -2069,7 +2075,7 @@ def compute_fact(num):
                   </span>
                 </div>
 
-                <div style={{ overflowX: 'auto' }}>
+                <div style={{ overflowX: 'auto', WebkitOverflowScrolling: 'touch', touchAction: 'pan-x pan-y' }}>
                   <table className="matrix-table" id="cohort-matrix-table">
                     <thead>
                       <tr>
@@ -2530,7 +2536,7 @@ def compute_fact(num):
                 <h4 style={{ fontSize: 14, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.025em', color: 'var(--color-silver-mist)', marginBottom: 12 }}>
                   Unmasked Variable & Identifier Mappings:
                 </h4>
-                <div style={{ overflowX: 'auto' }}>
+                <div style={{ overflowX: 'auto', WebkitOverflowScrolling: 'touch', touchAction: 'pan-x pan-y' }}>
                   <table className="matrix-table" id="ast-variable-mapping-table">
                     <thead>
                       <tr>
@@ -3048,7 +3054,7 @@ def compute_fact(num):
                   </div>
 
                   {/* Sibling Path Table */}
-                  <div style={{ overflowX: 'auto', marginBottom: 16 }}>
+                  <div style={{ overflowX: 'auto', marginBottom: 16, WebkitOverflowScrolling: 'touch', touchAction: 'pan-x pan-y' }}>
                     <table style={{ width: '100%', fontSize: 12, borderCollapse: 'collapse', textAlign: 'left' }}>
                       <thead>
                         <tr style={{ color: 'var(--color-ash-gray)', borderBottom: '1px solid rgba(255, 255, 255, 0.08)' }}>

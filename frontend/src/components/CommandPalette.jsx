@@ -319,6 +319,9 @@ export default function CommandPalette({ isOpen, onClose, onNavigate, onToggleTh
           style={{
             maxHeight: 380,
             overflowY: 'auto',
+            touchAction: 'pan-y',
+            WebkitOverflowScrolling: 'touch',
+            overscrollBehaviorY: 'auto',
             padding: '8px'
           }}
         >

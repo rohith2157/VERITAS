@@ -76,6 +76,29 @@ function VeritasPortalShell() {
     };
   }, [theme]);
 
+  // Synchronize ASScroll lifecycle: disable when in Portal Shell, enable when in Manifesto
+  useEffect(() => {
+    const syncAsscroll = () => {
+      if (typeof window === 'undefined') return;
+      const ass = window.u?.ASS;
+      if (!ass) return;
+      if (activeTab === 'manifesto') {
+        if (typeof ass.enable === 'function') ass.enable();
+      } else {
+        if (typeof ass.disable === 'function') ass.disable();
+      }
+    };
+
+    syncAsscroll();
+    const interval = setInterval(syncAsscroll, 250);
+    const stopTimer = setTimeout(() => clearInterval(interval), 7500);
+
+    return () => {
+      clearInterval(interval);
+      clearTimeout(stopTimer);
+    };
+  }, [activeTab]);
+
   // Global Keyboard Shortcuts (Ctrl+K for Search, Ctrl+Shift+D for Dev Tools, Escape to dismiss)
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -220,11 +243,34 @@ function VeritasPortalShell() {
           color: 'var(--color-bone-white, #ffffff)',
           fontFamily: "var(--font-ppneuemontreal, 'PPNeueMontreal', -apple-system, BlinkMacSystemFont, sans-serif)",
           overflowY: 'auto',
+          overflowX: 'hidden',
+          WebkitOverflowScrolling: 'touch',
+          touchAction: 'pan-y',
+          overscrollBehaviorY: 'auto',
           display: 'flex',
           flexDirection: 'column'
         }}
       >
         <style>{`
+          #veritas-portal-shell {
+            -webkit-overflow-scrolling: touch !important;
+            touch-action: pan-y !important;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(128, 82, 255, 0.3) transparent;
+          }
+          #veritas-portal-shell::-webkit-scrollbar {
+            width: 8px;
+          }
+          #veritas-portal-shell::-webkit-scrollbar-track {
+            background: transparent;
+          }
+          #veritas-portal-shell::-webkit-scrollbar-thumb {
+            background: rgba(128, 82, 255, 0.25);
+            border-radius: 9999px;
+          }
+          #veritas-portal-shell::-webkit-scrollbar-thumb:hover {
+            background: var(--color-electric-iris);
+          }
           .portal-header {
             position: sticky;
             top: 0;

@@ -274,6 +274,47 @@ document.addEventListener('DOMContentLoaded', function() {
   window.addEventListener('storage', function(e) {
     if (e.key === 'veritas_auth_user') syncLandingAuthUI();
   });
+
+  // ASScroll Hash Synchronization for smooth finger touch and wheel scrolling
+  function syncASScrollWithHash() {
+    const hash = window.location.hash.replace('#', '');
+    const isPortal = ['studio', 'queue', 'ledger', 'portal', 'hub', 'demobench', 'dashboard', 'classroom', 'dev'].includes(hash);
+    const ass = window.u?.ASS;
+    if (ass) {
+      if (!ass._veritasPatched) {
+        ass._veritasPatched = true;
+        const origEnable = ass.enable ? ass.enable.bind(ass) : null;
+        if (origEnable) {
+          ass.enable = function() {
+            const currentHash = window.location.hash.replace('#', '');
+            const currentIsPortal = ['studio', 'queue', 'ledger', 'portal', 'hub', 'demobench', 'dashboard', 'classroom', 'dev'].includes(currentHash);
+            if (currentIsPortal) {
+              if (typeof ass.disable === 'function') ass.disable();
+              return;
+            }
+            return origEnable();
+          };
+        }
+      }
+      if (isPortal) {
+        if (typeof ass.disable === 'function') ass.disable();
+      } else {
+        if (typeof ass.enable === 'function') ass.enable();
+      }
+    }
+  }
+
+  window.addEventListener('hashchange', syncASScrollWithHash);
+  window.addEventListener('popstate', syncASScrollWithHash);
+
+  let assSyncAttempts = 0;
+  const assSyncInterval = setInterval(function() {
+    assSyncAttempts++;
+    syncASScrollWithHash();
+    if (assSyncAttempts > 35) {
+      clearInterval(assSyncInterval);
+    }
+  }, 250);
 });
 </script>
 
