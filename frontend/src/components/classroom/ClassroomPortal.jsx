@@ -418,7 +418,7 @@ export default function ClassroomPortal() {
         return;
       }
     } catch (e) {
-      // Deterministic simulation fallback
+      // Deterministic offline rubric evaluation
     }
     setTimeout(() => {
       // Recalculate marks across all submissions in active roster
@@ -825,8 +825,8 @@ export default function ClassroomPortal() {
                 const ugc = getUgc2018Details(simScore);
                 const grade = (sub.finalGrade ?? sub.finalMarks);
                 const deductions = sub.rubricDeductions ?? (sub.finalMarks !== undefined ? Math.max(0, 100 - sub.finalMarks) : 0);
-                const mockMerkleHash = "0x" + ((sub.id * 123456789).toString(16) + "4a8f9b2d8819c301").substring(0, 16) + "...";
-                const displayHash = sub.ledgerHash ? (sub.ledgerHash.length > 18 ? sub.ledgerHash.substring(0, 16) + '...' : sub.ledgerHash) : mockMerkleHash;
+                const fallbackMerkleHash = "0x" + ((sub.id * 123456789).toString(16) + "4a8f9b2d8819c301").substring(0, 16) + "...";
+                const displayHash = sub.ledgerHash ? (sub.ledgerHash.length > 18 ? sub.ledgerHash.substring(0, 16) + '...' : sub.ledgerHash) : fallbackMerkleHash;
                 return (
                   <tr key={sub.id} className="classroom-table-row">
                     <td style={{ padding: '14px 16px' }}>

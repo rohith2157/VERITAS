@@ -98,6 +98,7 @@ export default function OperationsDashboard({ onOpenStudio, onOpenClassroom, onO
   ];
 
   const [submissions, setSubmissions] = useState(recentSubmissions);
+  const [blocks, setBlocks] = useState(cryptographicBlocks);
   const [isLiveConnected, setIsLiveConnected] = useState(false);
 
   useEffect(() => {
@@ -125,6 +126,16 @@ export default function OperationsDashboard({ onOpenStudio, onOpenClassroom, onO
       .catch(() => {
         // Fallback gracefully to domain-accurate seed data
       });
+
+    fetch('/api/classrooms/ledger/blocks')
+      .then(res => res.ok ? res.json() : Promise.reject(res.status))
+      .then(blocksData => {
+        if (!isMounted || !Array.isArray(blocksData) || blocksData.length === 0) return;
+        setBlocks(blocksData);
+        setIsLiveConnected(true);
+      })
+      .catch(() => {});
+
     return () => { isMounted = false; };
   }, []);
 
@@ -136,6 +147,22 @@ export default function OperationsDashboard({ onOpenStudio, onOpenClassroom, onO
     if (filterStatus === 'flagged') return matchesSearch && sub.status !== 'verified';
     return matchesSearch;
   });
+
+  // Dynamic KPI metrics derived directly from live database submissions & Merkle blocks
+  const totalSubmissions = submissions.length;
+  const meanOriginality = totalSubmissions > 0
+    ? (submissions.reduce((acc, s) => acc + (s.originalityScore || 0), 0) / totalSubmissions).toFixed(1)
+    : '0.0';
+  const flaggedSubmissions = submissions.filter(s => s.status !== 'verified');
+  const flaggedCount = flaggedSubmissions.length;
+  const flaggedPercent = totalSubmissions > 0
+    ? ((flaggedCount / totalSubmissions) * 100).toFixed(1)
+    : '0.0';
+  const evasionCount = submissions.filter(s => 
+    s.status === 'flagged_evasion' || 
+    (s.flags && s.flags.some(f => typeof f === 'string' && (f.toLowerCase().includes('homoglyph') || f.toLowerCase().includes('evasion'))))
+  ).length;
+  const totalBlocksCount = blocks.length > 0 ? blocks.length : totalSubmissions;
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 36 }}>
@@ -250,11 +277,11 @@ export default function OperationsDashboard({ onOpenStudio, onOpenClassroom, onO
             {isLiveConnected ? (
               <span style={{ display: 'inline-flex', alignItems: 'center', gap: 5, background: 'rgba(21, 132, 110, 0.2)', color: '#2ee6b0', padding: '2px 8px', borderRadius: 12, fontSize: 10, border: '1px solid rgba(21, 132, 110, 0.4)' }}>
                 <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#2ee6b0', boxShadow: '0 0 6px #2ee6b0' }} />
-                POSTGRESQL LIVE (:2157)
+                POSTGRESQL &amp; LEDGER LIVE (:2157 / :8080)
               </span>
             ) : (
               <span style={{ display: 'inline-flex', alignItems: 'center', gap: 5, background: 'rgba(255, 184, 41, 0.1)', color: 'var(--color-saffron-spark)', padding: '2px 8px', borderRadius: 12, fontSize: 10, border: '1px solid rgba(255, 184, 41, 0.3)' }}>
-                STANDALONE NODE
+                OFFLINE ENGINE CACHE
               </span>
             )}
           </div>
@@ -323,23 +350,23 @@ export default function OperationsDashboard({ onOpenStudio, onOpenClassroom, onO
             Total Submissions
           </div>
           <div style={{ fontSize: 'var(--font-size-metric-display, clamp(34px, 3.5vw, 42px))', fontWeight: 400, letterSpacing: 'var(--letter-spacing-metric, -0.04em)', lineHeight: 1.05, color: 'var(--color-bone-white)', fontFamily: "var(--font-ppneuemontreal, 'PPNeueMontreal', -apple-system, sans-serif)", fontFeatureSettings: '"ss01" on' }}>
-            14,892
+            {totalSubmissions}
           </div>
           <div style={{ fontSize: 12, fontWeight: 400, color: 'var(--color-deep-verdant)', marginTop: 8, display: 'flex', alignItems: 'center', gap: 6 }}>
-            <span>↑ 12.4%</span>
-            <span style={{ color: 'var(--color-ash-gray)' }}>across 4 academic terms</span>
+            <span>Active Roster</span>
+            <span style={{ color: 'var(--color-ash-gray)' }}>live cohort entries evaluated</span>
           </div>
         </div>
 
         <div className="veritas-surface" style={{ padding: '24px 28px' }}>
           <div style={{ fontSize: 11, fontWeight: 600, textTransform: 'uppercase', letterSpacing: 'var(--letter-spacing-display-caps, 0.04em)', color: 'var(--color-ash-gray)', marginBottom: 8 }}>
-            Mean Originality Index
+            Cohort Mean Originality
           </div>
           <div style={{ fontSize: 'var(--font-size-metric-display, clamp(34px, 3.5vw, 42px))', fontWeight: 400, letterSpacing: 'var(--letter-spacing-metric, -0.04em)', lineHeight: 1.05, color: 'var(--color-electric-iris)', fontFamily: "var(--font-ppneuemontreal, 'PPNeueMontreal', -apple-system, sans-serif)", fontFeatureSettings: '"ss01" on' }}>
-            91.6%
+            {meanOriginality}%
           </div>
           <div style={{ fontSize: 12, fontWeight: 400, color: 'var(--color-ash-gray)', marginTop: 8 }}>
-            Algorithmic 95% Confidence Interval
+            Dynamically computed across {totalSubmissions} submissions
           </div>
         </div>
 
@@ -348,22 +375,22 @@ export default function OperationsDashboard({ onOpenStudio, onOpenClassroom, onO
             Flagged for Faculty Review
           </div>
           <div style={{ fontSize: 'var(--font-size-metric-display, clamp(34px, 3.5vw, 42px))', fontWeight: 400, letterSpacing: 'var(--letter-spacing-metric, -0.04em)', lineHeight: 1.05, color: 'var(--color-saffron-spark)', fontFamily: "var(--font-ppneuemontreal, 'PPNeueMontreal', -apple-system, sans-serif)", fontFeatureSettings: '"ss01" on' }}>
-            47
+            {flaggedCount}
           </div>
           <div style={{ fontSize: 12, fontWeight: 400, color: 'var(--color-saffron-spark)', marginTop: 8 }}>
-            3.2% of cohort (Collusion &amp; Clones)
+            {flaggedPercent}% of cohort ({flaggedCount} flagged incident{flaggedCount === 1 ? '' : 's'})
           </div>
         </div>
 
         <div className="veritas-surface" style={{ padding: '24px 28px' }}>
           <div style={{ fontSize: 11, fontWeight: 600, textTransform: 'uppercase', letterSpacing: 'var(--letter-spacing-display-caps, 0.04em)', color: 'var(--color-ash-gray)', marginBottom: 8 }}>
-            Evasion Attacks Neutralized
+            Cryptographic Ledger Blocks
           </div>
           <div style={{ fontSize: 'var(--font-size-metric-display, clamp(34px, 3.5vw, 42px))', fontWeight: 400, letterSpacing: 'var(--letter-spacing-metric, -0.04em)', lineHeight: 1.05, color: 'var(--color-electric-iris)', fontFamily: "var(--font-ppneuemontreal, 'PPNeueMontreal', -apple-system, sans-serif)", fontFeatureSettings: '"ss01" on' }}>
-            128
+            {totalBlocksCount}
           </div>
           <div style={{ fontSize: 12, fontWeight: 400, color: 'var(--color-ash-gray)', marginTop: 8 }}>
-            Cyrillic homoglyphs &amp; zero-width spaces
+            {evasionCount} evasion defenses • SHA-256 blocks anchored
           </div>
         </div>
       </div>
@@ -562,12 +589,12 @@ export default function OperationsDashboard({ onOpenStudio, onOpenClassroom, onO
             </p>
 
             <div style={{ display: 'flex', flexDirection: 'column' }}>
-              {cryptographicBlocks.map((b, idx) => (
+              {blocks.map((b, idx) => (
                 <div 
-                  key={b.height}
+                  key={b.height || idx}
                   style={{
                     padding: '12px 6px',
-                    borderBottom: idx === cryptographicBlocks.length - 1 ? 'none' : '1px solid rgba(255, 255, 255, 0.06)',
+                    borderBottom: idx === blocks.length - 1 ? 'none' : '1px solid rgba(255, 255, 255, 0.06)',
                     display: 'flex',
                     flexDirection: 'column',
                     gap: 4,
@@ -581,11 +608,11 @@ export default function OperationsDashboard({ onOpenStudio, onOpenClassroom, onO
                       {b.timestamp}
                     </span>
                   </div>
-                  <div style={{ fontSize: 11, color: 'var(--color-electric-iris)', fontFamily: 'monospace' }}>
+                  <div style={{ fontSize: 11, color: 'var(--color-electric-iris)', fontFamily: 'monospace', wordBreak: 'break-all' }}>
                     {b.hash}
                   </div>
                   <div style={{ fontSize: 11, color: 'var(--color-ash-gray)', display: 'flex', justifyContent: 'space-between', marginTop: 2 }}>
-                    <span>{b.txCount} submissions verified</span>
+                    <span>{b.studentName ? `${b.studentName} sealed` : `${b.txCount || 1} submissions verified`}</span>
                     <span>{b.validator}</span>
                   </div>
                 </div>
@@ -638,7 +665,7 @@ export default function OperationsDashboard({ onOpenStudio, onOpenClassroom, onO
             >
               <div>
                 <div style={{ fontSize: 14, fontWeight: 500 }}>Test Cyrillic Evasion Vectors</div>
-                <div style={{ fontSize: 12, color: 'var(--color-ash-gray)', marginTop: 2 }}>Simulate Unicode homoglyph attacks</div>
+                <div style={{ fontSize: 12, color: 'var(--color-ash-gray)', marginTop: 2 }}>Audit Unicode homoglyph attacks</div>
               </div>
               <ArrowRight size={16} color="var(--color-ash-gray)" />
             </button>

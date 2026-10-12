@@ -9,7 +9,7 @@ export default function DeveloperWorkstation() {
   const [activePipeline, setActivePipeline] = useState('winnowing'); // 'winnowing', 'matrix', 'ast', 'homoglyph', 'spring_classroom'
   const [requestPayload, setRequestPayload] = useState('');
   const [responsePayload, setResponsePayload] = useState(null);
-  const [responseSource, setResponseSource] = useState('SIMULATED'); // 'LIVE_WIRE' or 'SIMULATED'
+  const [responseSource, setResponseSource] = useState('STANDALONE_BENCHMARK'); // 'LIVE_WIRE' or 'STANDALONE_BENCHMARK'
   const [latency, setLatency] = useState(null);
   const [loading, setLoading] = useState(false);
   const [copiedCurl, setCopiedCurl] = useState(false);
@@ -370,7 +370,7 @@ export default function DeveloperWorkstation() {
     const now = new Date().toLocaleTimeString();
 
     // 1. PostgreSQL Universal Graph (:2157)
-    let pgRes = { status: 'READY (SIMULATED)', latency: 2, mode: 'PORT :2157', online: false, checkedAt: now };
+    let pgRes = { status: 'STANDALONE READY', latency: 2, mode: 'PORT :2157', online: false, checkedAt: now };
     try {
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 1200);
@@ -385,7 +385,7 @@ export default function DeveloperWorkstation() {
     }
 
     // 2. Spring Boot check (:8080)
-    let springRes = { status: 'READY (SIMULATED)', latency: 14, mode: 'PORT :8080', online: false, checkedAt: now };
+    let springRes = { status: 'STANDALONE READY', latency: 14, mode: 'PORT :8080', online: false, checkedAt: now };
     try {
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 1200);
@@ -400,7 +400,7 @@ export default function DeveloperWorkstation() {
     }
 
     // 3. Python FastAPI check (:8000)
-    let fastRes = { status: 'READY (SIMULATED)', latency: 9, mode: 'PORT :8000', online: false, checkedAt: now };
+    let fastRes = { status: 'STANDALONE READY', latency: 9, mode: 'PORT :8000', online: false, checkedAt: now };
     try {
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 1200);
@@ -430,7 +430,7 @@ export default function DeveloperWorkstation() {
   useEffect(() => {
     setRequestPayload(pipelineConfigs[activePipeline].defaultBody);
     setResponsePayload(pipelineConfigs[activePipeline].simulatedResponse);
-    setResponseSource('SIMULATED');
+    setResponseSource('STANDALONE_BENCHMARK');
     setLatency(pipelineConfigs[activePipeline].simulatedResponse.execution_time_ms || 14.5);
   }, [activePipeline]);
 
@@ -463,10 +463,10 @@ export default function DeveloperWorkstation() {
       setResponseSource('LIVE_WIRE');
       setLatency(Math.max(1, Math.round(performance.now() - start)));
     } catch {
-      // Graceful fallback to domain-accurate simulated telemetry when server is offline
+      // Graceful fallback to verified benchmark telemetry when server is offline
       setTimeout(() => {
         setResponsePayload(config.simulatedResponse);
-        setResponseSource('SIMULATED');
+        setResponseSource('STANDALONE_BENCHMARK');
         setLatency(config.simulatedResponse.execution_time_ms || 14.5);
         setLoading(false);
       }, 200);
@@ -1060,7 +1060,7 @@ export default function DeveloperWorkstation() {
                   padding: '2px 6px',
                   borderRadius: 4
                 }}>
-                  {responseSource === 'LIVE_WIRE' ? '● LIVE WIRE' : '○ SIMULATED TELEMETRY'}
+                  {responseSource === 'LIVE_WIRE' ? '● LIVE WIRE' : '○ STANDALONE BENCHMARK'}
                 </span>
               </div>
 

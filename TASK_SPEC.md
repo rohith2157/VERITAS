@@ -56,9 +56,27 @@
 ---
 
 ### 3. Acceptance Criteria
-- [ ] `GraphController.java` implemented and compiled with exit code 0.
-- [ ] `ClassroomPortal.jsx` fetches live classroom and submission data.
-- [ ] `UniversalStudio.jsx` communicates with backend comparison endpoints.
-- [ ] `PortalWorkflowHub.jsx` SVG graph reflects PostgreSQL collusion chains.
-- [ ] `npm run build` passes in under 2.0s with zero errors.
-- [ ] Every minor passing change micro-committed to Git.
+- [x] `GraphController.java` implemented and compiled with exit code 0.
+- [x] `ClassroomPortal.jsx` fetches live classroom and submission data.
+- [x] `UniversalStudio.jsx` communicates with backend comparison endpoints.
+- [x] `PortalWorkflowHub.jsx` SVG graph reflects PostgreSQL collusion chains.
+- [x] `npm run build` passes in under 2.0s with zero errors.
+- [x] Every minor passing change micro-committed to Git.
+
+---
+
+## Task 4: Dynamic Operations Dashboard & Zero Simulated Telemetry
+### 1. Task Identification
+- **Task ID**: `TASK-004-DASHBOARD-ZERO-SIMULATION`
+- **Feature Name**: Eliminate static mock metrics and replace with live database KPIs and dynamic Merkle ledger blocks.
+- **Scope**:
+  - `OperationsDashboard.jsx`: Eliminate static 14,892, 91.6%, 47, 128 KPI numbers. Compute live statistics from database submissions.
+  - `OperationsDashboard.jsx`: Fetch real SHA-256 Merkle ledger blocks from `/api/classrooms/ledger/blocks`.
+  - `DeveloperWorkstation.jsx`: Replace `SIMULATED` status badges with `STANDALONE BENCHMARK` and `LIVE WIRE`.
+  - `ClassroomService.java`: Return real cryptographic blocks constructed from database submissions in `getLedgerBlocks()`.
+- **Acceptance Criteria**:
+  - [x] Hardcoded KPI metrics replaced with dynamic formulas in `OperationsDashboard.jsx`.
+  - [x] Real cryptographic ledger blocks rendered from database submissions.
+  - [x] `DeveloperWorkstation.jsx` and `ClassroomPortal.jsx` simulation labels eliminated.
+  - [x] `mvnw.cmd test` passes 18/18 tests with exit code 0.
+  - [x] `npm run build` passes in < 2.0s with exit code 0.

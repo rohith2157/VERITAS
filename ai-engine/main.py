@@ -34,6 +34,7 @@ app.include_router(enterprise_arch_router)
 
 @app.get("/", tags=["Health"])
 @app.get("/health", tags=["Health"])
+@app.get("/api/v1/health", tags=["Health"])
 def health_check():
     """Service health check and status."""
     return {
