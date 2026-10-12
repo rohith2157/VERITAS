@@ -542,7 +542,7 @@ export default function DeveloperWorkstation({ onClose } = {}) {
         let color = '#fbbf24'; // number (saffron / amber)
         if (/^"/.test(match)) {
           if (/:$/.test(match)) {
-            color = 'var(--color-electric-iris, #c084fc)'; // key (iris)
+            color = 'var(--color-electric-iris, #2dd4bf)'; // key (iris)
           } else {
             color = 'var(--color-deep-verdant, #34d399)'; // string (emerald)
           }
@@ -652,7 +652,7 @@ export default function DeveloperWorkstation({ onClose } = {}) {
               fontSize: 11, 
               fontWeight: 600, 
               color: clusterStatus.postgres?.online ? 'var(--color-deep-verdant)' : 'var(--color-electric-iris)', 
-              background: clusterStatus.postgres?.online ? 'rgba(21,132,110,0.15)' : 'rgba(128,82,255,0.15)', 
+              background: clusterStatus.postgres?.online ? 'rgba(21,132,110,0.15)' : 'rgba(45,212,191,0.15)', 
               padding: '4px 8px', 
               borderRadius: 6 
             }}>
@@ -736,7 +736,7 @@ export default function DeveloperWorkstation({ onClose } = {}) {
                 Ping: {clusterStatus.react.latency}ms • Checked: {clusterStatus.react.checkedAt}
               </div>
             </div>
-            <span style={{ fontSize: 11, fontWeight: 600, color: 'var(--color-electric-iris)', background: 'rgba(128,82,255,0.15)', padding: '4px 8px', borderRadius: 6 }}>
+            <span style={{ fontSize: 11, fontWeight: 600, color: 'var(--color-electric-iris)', background: 'rgba(45,212,191,0.15)', padding: '4px 8px', borderRadius: 6 }}>
               LIVE
             </span>
           </div>
@@ -756,7 +756,7 @@ export default function DeveloperWorkstation({ onClose } = {}) {
           </div>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-            <span style={{ fontSize: 12, fontWeight: 600, color: 'var(--color-electric-iris)', background: 'rgba(128,82,255,0.12)', padding: '6px 14px', borderRadius: 20 }}>
+            <span style={{ fontSize: 12, fontWeight: 600, color: 'var(--color-electric-iris)', background: 'rgba(45,212,191,0.12)', padding: '6px 14px', borderRadius: 20 }}>
               SHARED SCHEMA REGISTRY ACTIVE
             </span>
           </div>
@@ -779,7 +779,7 @@ export default function DeveloperWorkstation({ onClose } = {}) {
                 }
               }}
               style={{
-                background: selectedAgent === ag.id ? 'rgba(128, 82, 255, 0.08)' : 'rgba(255, 255, 255, 0.02)',
+                background: selectedAgent === ag.id ? 'rgba(45, 212, 191, 0.12)' : 'rgba(255, 255, 255, 0.02)',
                 border: `1px solid ${selectedAgent === ag.id ? 'var(--color-electric-iris)' : 'rgba(255, 255, 255, 0.08)'}`,
                 borderRadius: 14,
                 padding: '16px 20px',
@@ -830,7 +830,7 @@ export default function DeveloperWorkstation({ onClose } = {}) {
         {/* Selected Agent Autonomous Collaboration Console */}
         <div style={{ 
           background: 'rgba(0, 0, 0, 0.5)', 
-          border: '1px solid rgba(128, 82, 255, 0.25)', 
+          border: '1px solid rgba(45, 212, 191, 0.25)', 
           borderRadius: 14, 
           padding: '20px 24px', 
           display: 'flex', 
@@ -843,8 +843,8 @@ export default function DeveloperWorkstation({ onClose } = {}) {
               <span style={{ 
                 fontSize: 12, 
                 fontWeight: 700, 
-                background: 'var(--color-electric-iris)', 
-                color: '#fff', 
+                background: 'linear-gradient(135deg, #67e8f9 0%, #6ee7b7 50%, #bef264 100%)', 
+                color: '#041316', 
                 padding: '4px 10px', 
                 borderRadius: 8 
               }}>
@@ -928,15 +928,16 @@ export default function DeveloperWorkstation({ onClose } = {}) {
                 key={key}
                 onClick={() => setActivePipeline(key)}
                 style={{
-                  background: activePipeline === key ? 'var(--color-electric-iris)' : 'rgba(255, 255, 255, 0.05)',
-                  color: activePipeline === key ? '#ffffff' : 'var(--color-ash-gray)',
-                  border: '1px solid rgba(255, 255, 255, 0.1)',
+                  background: activePipeline === key ? 'linear-gradient(135deg, #67e8f9 0%, #6ee7b7 50%, #bef264 100%)' : 'rgba(255, 255, 255, 0.05)',
+                  color: activePipeline === key ? '#041316' : 'var(--color-ash-gray)',
+                  fontWeight: activePipeline === key ? 700 : 600,
+                  border: activePipeline === key ? '1px solid rgba(110, 231, 183, 0.5)' : '1px solid rgba(255, 255, 255, 0.1)',
                   borderRadius: 20,
                   padding: '6px 14px',
                   fontSize: 12,
-                  fontWeight: 600,
                   cursor: 'pointer',
                   transition: 'all 0.15s ease',
+                  boxShadow: activePipeline === key ? '0 2px 12px rgba(110, 231, 183, 0.4)' : 'none',
                   display: 'inline-flex',
                   alignItems: 'center',
                   gap: 6
@@ -1003,20 +1004,21 @@ export default function DeveloperWorkstation({ onClose } = {}) {
             onClick={handleExecute}
             disabled={loading}
             style={{
-              background: 'var(--color-electric-iris)',
+              background: 'linear-gradient(135deg, #67e8f9 0%, #6ee7b7 50%, #bef264 100%)',
               border: 'none',
               borderRadius: 8,
               padding: '8px 18px',
               fontSize: 13,
-              fontWeight: 600,
-              color: '#ffffff',
+              fontWeight: 700,
+              color: '#041316',
               display: 'inline-flex',
               alignItems: 'center',
               gap: 8,
-              cursor: 'pointer'
+              cursor: 'pointer',
+              boxShadow: '0 4px 18px rgba(110, 231, 183, 0.4)'
             }}
           >
-            <Play size={13} fill="#fff" />
+            <Play size={13} fill="#041316" color="#041316" />
             <span>{loading ? 'Executing...' : 'Send Request'}</span>
           </button>
         </div>

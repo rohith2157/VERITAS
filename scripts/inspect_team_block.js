@@ -7,3 +7,4 @@ const block = html.substring(start, end);
 console.log('Block length:', block.length);
 console.log('First 200 chars:\n', block.slice(0, 200));
 console.log('\nLast 200 chars:\n', block.slice(-200));
+

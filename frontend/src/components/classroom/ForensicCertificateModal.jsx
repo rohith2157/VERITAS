@@ -53,9 +53,9 @@ export default function ForensicCertificateModal({ submission, onClose }) {
           width: '100%',
           maxWidth: 680,
           background: 'var(--color-void)',
-          border: '1px solid rgba(128, 82, 255, 0.4)',
+          border: '1px solid rgba(45, 212, 191, 0.4)',
           borderRadius: 24,
-          boxShadow: '0 32px 80px rgba(0, 0, 0, 0.8), 0 0 32px rgba(128, 82, 255, 0.15)',
+          boxShadow: '0 32px 80px rgba(0, 0, 0, 0.8), 0 0 32px rgba(45, 212, 191, 0.15)',
           overflow: 'hidden',
           display: 'flex',
           flexDirection: 'column',
@@ -70,7 +70,7 @@ export default function ForensicCertificateModal({ submission, onClose }) {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
-            background: 'linear-gradient(180deg, rgba(128, 82, 255, 0.08) 0%, rgba(0, 0, 0, 0) 100%)'
+            background: 'linear-gradient(180deg, rgba(45, 212, 191, 0.08) 0%, rgba(0, 0, 0, 0) 100%)'
           }}
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
@@ -243,8 +243,8 @@ export default function ForensicCertificateModal({ submission, onClose }) {
             style={{
               padding: '14px 18px',
               borderRadius: 12,
-              background: 'rgba(128, 82, 255, 0.06)',
-              border: '1px solid rgba(128, 82, 255, 0.25)',
+              background: 'rgba(45, 212, 191, 0.08)',
+              border: '1px solid rgba(45, 212, 191, 0.25)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'space-between',

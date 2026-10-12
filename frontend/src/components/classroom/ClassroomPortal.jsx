@@ -630,7 +630,7 @@ export default function ClassroomPortal({ onInspectDiff } = {}) {
           transition: background-color 0.2s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .classroom-table-row:hover {
-          background-color: rgba(128, 82, 255, 0.05) !important;
+          background-color: rgba(45, 212, 191, 0.05) !important;
         }
         [data-theme="light"] .classroom-table-wrap {
           border-color: rgba(0, 0, 0, 0.08);
@@ -670,9 +670,10 @@ export default function ClassroomPortal({ onInspectDiff } = {}) {
             style={{
               padding: '12px 20px',
               borderRadius: 12,
-              background: selectedClassroom?.id === c.id ? 'rgba(128, 82, 255, 0.15)' : 'rgba(255, 255, 255, 0.03)',
-              border: `1px solid ${selectedClassroom?.id === c.id ? 'var(--color-electric-iris)' : 'rgba(255, 255, 255, 0.08)'}`,
-              color: 'var(--color-bone-white)',
+              background: selectedClassroom?.id === c.id ? 'var(--gradient-multi-light)' : 'rgba(255, 255, 255, 0.03)',
+              border: `1px solid ${selectedClassroom?.id === c.id ? 'transparent' : 'rgba(255, 255, 255, 0.08)'}`,
+              color: selectedClassroom?.id === c.id ? '#041316' : 'var(--color-bone-white)',
+              fontWeight: selectedClassroom?.id === c.id ? 700 : 500,
               cursor: 'pointer',
               display: 'flex',
               alignItems: 'center',
@@ -858,14 +859,15 @@ export default function ClassroomPortal({ onInspectDiff } = {}) {
                 padding: '10px 20px',
                 borderRadius: 20,
                 border: 'none',
-                background: 'var(--color-electric-iris)',
-                color: '#fff',
+                background: 'linear-gradient(135deg, #67e8f9 0%, #6ee7b7 50%, #bef264 100%)',
+                color: '#041316',
                 fontSize: 13,
-                fontWeight: 600,
-                cursor: 'pointer'
+                fontWeight: 700,
+                cursor: 'pointer',
+                boxShadow: '0 4px 18px rgba(110, 231, 183, 0.4)'
               }}
             >
-              <Play size={15} fill="#fff" />
+              <Play size={15} fill="#041316" color="#041316" />
               <span>{loading ? 'Evaluating Cohort...' : 'Run Batch Grading'}</span>
             </button>
           </div>
@@ -873,7 +875,7 @@ export default function ClassroomPortal({ onInspectDiff } = {}) {
 
         {/* Evaluation Notification / Alert */}
         {evaluationData && (
-          <div style={{ padding: '14px 18px', borderRadius: 10, background: 'rgba(128, 82, 255, 0.12)', border: '1px solid var(--color-electric-iris)', marginBottom: 20, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <div style={{ padding: '14px 18px', borderRadius: 10, background: 'rgba(45, 212, 191, 0.12)', border: '1px solid var(--color-electric-iris)', marginBottom: 20, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
             <div>
               <div style={{ fontSize: 14, fontWeight: 600, color: 'var(--color-bone-white)' }}>
                 {evaluationData.status}
@@ -965,8 +967,8 @@ export default function ClassroomPortal({ onInspectDiff } = {}) {
                             }
                           }}
                           style={{
-                            background: 'rgba(128, 82, 255, 0.15)',
-                            border: '1px solid var(--color-electric-iris)',
+                            background: 'rgba(45, 212, 191, 0.12)',
+                            border: '1px solid rgba(45, 212, 191, 0.4)',
                             borderRadius: 8,
                             padding: '5px 10px',
                             color: 'var(--color-electric-iris)',
@@ -984,8 +986,8 @@ export default function ClassroomPortal({ onInspectDiff } = {}) {
                         <button
                           onClick={() => { setMerkleModalSub(sub); setMerkleVerification(null); }}
                           style={{
-                            background: 'rgba(128, 82, 255, 0.1)',
-                            border: '1px solid rgba(128, 82, 255, 0.3)',
+                            background: 'rgba(45, 212, 191, 0.1)',
+                            border: '1px solid rgba(45, 212, 191, 0.3)',
                             borderRadius: 8,
                             padding: '5px 10px',
                             color: 'var(--color-electric-iris)',
@@ -998,7 +1000,7 @@ export default function ClassroomPortal({ onInspectDiff } = {}) {
                           }}
                         >
                           <span>{displayHash}</span>
-                          <span style={{ fontSize: 10, background: 'rgba(128, 82, 255, 0.25)', padding: '1px 5px', borderRadius: 4 }}>Verify Proof</span>
+                          <span style={{ fontSize: 10, background: 'rgba(45, 212, 191, 0.25)', padding: '1px 5px', borderRadius: 4 }}>Verify Proof</span>
                         </button>
                         <button
                           onClick={() => setSelectedCertSub(sub)}
@@ -1113,7 +1115,7 @@ export default function ClassroomPortal({ onInspectDiff } = {}) {
                     width: '100%',
                     padding: '8px 12px',
                     background: 'rgba(255, 255, 255, 0.04)',
-                    border: '1px dashed rgba(128, 82, 255, 0.4)',
+                    border: '1px dashed rgba(45, 212, 191, 0.4)',
                     borderRadius: 8,
                     color: 'var(--color-silver-mist)',
                     fontSize: 12,
@@ -1159,7 +1161,7 @@ export default function ClassroomPortal({ onInspectDiff } = {}) {
                 <button
                   type="submit"
                   className="btn-pill-primary"
-                  style={{ padding: '8px 20px', borderRadius: 8, background: 'var(--color-electric-iris)', color: '#fff', border: 'none', cursor: 'pointer', fontWeight: 600 }}
+                  style={{ padding: '8px 20px', borderRadius: 8, background: 'var(--gradient-multi-light)', color: '#041316', border: 'none', cursor: 'pointer', fontWeight: 700 }}
                 >
                   Enroll Submission
                 </button>
@@ -1193,7 +1195,7 @@ export default function ClassroomPortal({ onInspectDiff } = {}) {
             role="dialog"
             aria-modal="true"
             aria-labelledby="merkle-modal-title"
-            style={{ width: 680, maxWidth: '95%', border: '1px solid rgba(128, 82, 255, 0.4)', padding: 28 }}
+            style={{ width: 680, maxWidth: '95%', border: '1px solid rgba(45, 212, 191, 0.4)', padding: 28 }}
           >
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 16 }}>
               <div>
@@ -1219,7 +1221,7 @@ export default function ClassroomPortal({ onInspectDiff } = {}) {
             {/* Apex Merkle Root Card */}
             <div style={{
               background: 'rgba(255, 255, 255, 0.02)',
-              border: '1px solid rgba(128, 82, 255, 0.35)',
+              border: '1px solid rgba(45, 212, 191, 0.35)',
               borderRadius: 12,
               padding: 18,
               marginBottom: 16
@@ -1314,7 +1316,17 @@ export default function ClassroomPortal({ onInspectDiff } = {}) {
                     }
                     setMerkleVerification(true);
                   }}
-                  style={{ padding: '8px 18px', borderRadius: 8, background: 'var(--color-electric-iris)', color: '#fff', border: 'none', cursor: 'pointer', fontWeight: 600, fontSize: 13 }}
+                  style={{
+                    padding: '8px 18px',
+                    borderRadius: 8,
+                    background: 'linear-gradient(135deg, #67e8f9 0%, #6ee7b7 50%, #bef264 100%)',
+                    color: '#041316',
+                    border: 'none',
+                    cursor: 'pointer',
+                    fontWeight: 700,
+                    fontSize: 13,
+                    boxShadow: '0 2px 14px rgba(110, 231, 183, 0.4)'
+                  }}
                 >
                   Verify Merkle Proof
                 </button>

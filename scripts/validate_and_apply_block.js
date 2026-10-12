@@ -44,3 +44,4 @@ if (!indexHtml.includes(rawBlock)) {
 const updatedHtml = indexHtml.replace(rawBlock, newBlock);
 fs.writeFileSync('frontend/index.html', updatedHtml, 'utf8');
 console.log('Successfully replaced team section in frontend/index.html!');
+

@@ -158,7 +158,7 @@ export default function AuthModal() {
           background: 'var(--bg-card, #0c0c10)',
           border: '1px solid var(--border-subtle)',
           borderRadius: 24,
-          boxShadow: '0 28px 72px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(128, 82, 255, 0.2)',
+          boxShadow: '0 28px 72px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(110, 231, 183, 0.25)',
           overflowY: 'auto',
           overflowX: 'hidden',
           WebkitOverflowScrolling: 'touch',
@@ -176,7 +176,7 @@ export default function AuthModal() {
             display: 'flex',
             alignItems: 'flex-start',
             justifyContent: 'space-between',
-            background: 'rgba(128, 82, 255, 0.03)'
+            background: 'rgba(110, 231, 183, 0.03)'
           }}
         >
           <div>
@@ -189,9 +189,9 @@ export default function AuthModal() {
                   letterSpacing: '0.08em',
                   padding: '2px 8px',
                   borderRadius: 6,
-                  background: 'rgba(128, 82, 255, 0.15)',
-                  color: 'var(--color-electric-iris)',
-                  border: '1px solid rgba(128, 82, 255, 0.3)'
+                  background: 'rgba(110, 231, 183, 0.15)',
+                  color: '#0d9488',
+                  border: '1px solid rgba(110, 231, 183, 0.35)'
                 }}
               >
                 Zero-Trust Gateway
@@ -276,13 +276,13 @@ export default function AuthModal() {
                 padding: '9px 16px',
                 borderRadius: 8,
                 fontSize: 13,
-                fontWeight: 600,
+                fontWeight: 700,
                 cursor: 'pointer',
                 border: 'none',
                 transition: 'all 0.18s ease',
-                background: activeTab === 'login' ? 'var(--color-electric-iris)' : 'transparent',
-                color: activeTab === 'login' ? '#ffffff' : 'var(--color-ash-gray)',
-                boxShadow: activeTab === 'login' ? '0 2px 10px rgba(128, 82, 255, 0.35)' : 'none'
+                background: activeTab === 'login' ? 'linear-gradient(135deg, #67e8f9 0%, #6ee7b7 50%, #bef264 100%)' : 'transparent',
+                color: activeTab === 'login' ? '#041316' : 'var(--color-ash-gray)',
+                boxShadow: activeTab === 'login' ? '0 2px 14px rgba(110, 231, 183, 0.45)' : 'none'
               }}
             >
               Sign In
@@ -298,13 +298,13 @@ export default function AuthModal() {
                 padding: '9px 16px',
                 borderRadius: 8,
                 fontSize: 13,
-                fontWeight: 600,
+                fontWeight: 700,
                 cursor: 'pointer',
                 border: 'none',
                 transition: 'all 0.18s ease',
-                background: activeTab === 'register' ? 'var(--color-electric-iris)' : 'transparent',
-                color: activeTab === 'register' ? '#ffffff' : 'var(--color-ash-gray)',
-                boxShadow: activeTab === 'register' ? '0 2px 10px rgba(128, 82, 255, 0.35)' : 'none'
+                background: activeTab === 'register' ? 'linear-gradient(135deg, #67e8f9 0%, #6ee7b7 50%, #bef264 100%)' : 'transparent',
+                color: activeTab === 'register' ? '#041316' : 'var(--color-ash-gray)',
+                boxShadow: activeTab === 'register' ? '0 2px 14px rgba(110, 231, 183, 0.45)' : 'none'
               }}
             >
               Create Account
@@ -369,16 +369,16 @@ export default function AuthModal() {
                   fontWeight: 600,
                   cursor: 'pointer',
                   border: selectedRole === 'FACULTY' 
-                    ? '1px solid var(--color-electric-iris)' 
+                    ? '1px solid #34d399' 
                     : '1px solid var(--border-subtle)',
                   background: selectedRole === 'FACULTY' 
-                    ? 'rgba(128, 82, 255, 0.14)' 
+                    ? 'rgba(52, 211, 153, 0.14)' 
                     : 'var(--bg-main)',
                   color: selectedRole === 'FACULTY' ? 'var(--color-bone-white)' : 'var(--color-ash-gray)',
                   transition: 'all 0.15s ease'
                 }}
               >
-                <ShieldCheck size={14} color={selectedRole === 'FACULTY' ? 'var(--color-electric-iris)' : 'var(--color-ash-gray)'} />
+                <ShieldCheck size={14} color={selectedRole === 'FACULTY' ? '#34d399' : 'var(--color-ash-gray)'} />
                 <span>Faculty Evaluator</span>
               </button>
 
@@ -579,22 +579,22 @@ export default function AuthModal() {
               marginTop: 6,
               padding: '12px 16px',
               borderRadius: 12,
-              background: 'var(--color-electric-iris)',
-              color: '#ffffff',
+              background: 'linear-gradient(135deg, #67e8f9 0%, #6ee7b7 50%, #bef264 100%)',
+              color: '#041316',
               fontSize: 14,
-              fontWeight: 600,
+              fontWeight: 700,
               cursor: 'pointer',
               border: 'none',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               gap: 8,
-              boxShadow: '0 4px 18px rgba(128, 82, 255, 0.4)',
+              boxShadow: '0 4px 20px rgba(110, 231, 183, 0.45), 0 0 14px rgba(103, 232, 249, 0.35)',
               transition: 'all 0.2s cubic-bezier(0.16, 1, 0.3, 1)'
             }}
           >
             <span>{activeTab === 'login' ? 'Sign In to Node' : 'Create & Verify Account'}</span>
-            <ArrowRight size={15} />
+            <ArrowRight size={15} color="#041316" />
           </button>
         </form>
 
@@ -642,8 +642,8 @@ export default function AuthModal() {
               style={{
                 padding: '8px 10px',
                 borderRadius: 10,
-                background: 'rgba(128, 82, 255, 0.08)',
-                border: '1px solid rgba(128, 82, 255, 0.25)',
+                background: 'rgba(103, 232, 249, 0.08)',
+                border: '1px solid rgba(103, 232, 249, 0.28)',
                 cursor: 'pointer',
                 textAlign: 'left',
                 display: 'flex',
@@ -655,7 +655,7 @@ export default function AuthModal() {
               <span style={{ fontSize: 11, fontWeight: 700, color: 'var(--color-bone-white)' }}>
                 Dr. Evelyn
               </span>
-              <span style={{ fontSize: 9.5, color: 'var(--color-electric-iris)', textTransform: 'uppercase', fontWeight: 600 }}>
+              <span style={{ fontSize: 9.5, color: '#0d9488', textTransform: 'uppercase', fontWeight: 600 }}>
                 Faculty Evaluator
               </span>
             </button>

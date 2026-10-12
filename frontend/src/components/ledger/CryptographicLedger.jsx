@@ -171,7 +171,7 @@ export default function CryptographicLedger() {
         paddingBottom: 24
       }}>
         <div>
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '4px 10px', borderRadius: 9999, background: 'rgba(128, 82, 255, 0.15)', border: '1px solid rgba(128, 82, 255, 0.3)', color: 'var(--color-electric-iris)', fontSize: 11, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.04em', marginBottom: 10 }}>
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '4px 10px', borderRadius: 9999, background: 'rgba(45, 212, 191, 0.15)', border: '1px solid rgba(45, 212, 191, 0.35)', color: 'var(--color-electric-iris)', fontSize: 11, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.04em', marginBottom: 10 }}>
             <Lock size={12} />
             <span>Pillar 3: Immutable Academic Ledger</span>
           </div>
@@ -310,8 +310,8 @@ export default function CryptographicLedger() {
         <div style={{
           padding: '16px 20px',
           borderRadius: 12,
-          background: tamperMode ? 'rgba(239, 68, 68, 0.08)' : 'rgba(128, 82, 255, 0.08)',
-          border: tamperMode ? '1px solid rgba(239, 68, 68, 0.3)' : '1px solid rgba(128, 82, 255, 0.3)',
+          background: tamperMode ? 'rgba(239, 68, 68, 0.08)' : 'rgba(45, 212, 191, 0.08)',
+          border: tamperMode ? '1px solid rgba(239, 68, 68, 0.3)' : '1px solid rgba(45, 212, 191, 0.3)',
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
@@ -353,7 +353,7 @@ export default function CryptographicLedger() {
           <div style={{
             padding: '12px 24px',
             borderRadius: 12,
-            background: 'rgba(128, 82, 255, 0.15)',
+            background: 'rgba(45, 212, 191, 0.15)',
             border: '1px solid var(--color-electric-iris)',
             textAlign: 'center',
             maxWidth: 420,
@@ -416,13 +416,13 @@ export default function CryptographicLedger() {
                   style={{
                     padding: 16,
                     borderRadius: 12,
-                    background: isSelected ? 'rgba(128, 82, 255, 0.12)' : 'rgba(255, 255, 255, 0.03)',
+                    background: isSelected ? 'rgba(45, 212, 191, 0.12)' : 'rgba(255, 255, 255, 0.03)',
                     border: isCorrupted
                       ? '1px solid #ef4444'
                       : (isSelected ? '1px solid var(--color-electric-iris)' : '1px solid rgba(255, 255, 255, 0.08)'),
                     cursor: 'pointer',
                     transition: 'all 0.2s ease',
-                    boxShadow: isSelected ? '0 0 16px rgba(128, 82, 255, 0.15)' : 'none'
+                    boxShadow: isSelected ? '0 0 16px rgba(45, 212, 191, 0.2)' : 'none'
                   }}
                 >
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
@@ -461,15 +461,16 @@ export default function CryptographicLedger() {
                 gap: 8,
                 padding: '10px 24px',
                 borderRadius: 24,
-                background: 'var(--color-electric-iris)',
-                color: '#ffffff',
+                background: 'linear-gradient(135deg, #67e8f9 0%, #6ee7b7 50%, #bef264 100%)',
+                color: '#041316',
                 border: 'none',
                 fontSize: 13,
-                fontWeight: 600,
-                cursor: 'pointer'
+                fontWeight: 700,
+                cursor: 'pointer',
+                boxShadow: '0 4px 18px rgba(110, 231, 183, 0.4)'
               }}
             >
-              <ShieldCheck size={16} />
+              <ShieldCheck size={16} color="#041316" />
               <span>{loading ? 'Verifying Path...' : `Verify Leaf ${selectedLeaf} Proof`}</span>
             </button>
           </div>

@@ -265,7 +265,7 @@ export default function CommandPalette({ isOpen, onClose, onNavigate, onToggleTh
           background: 'var(--bg-card, #000000)',
           border: '1px solid var(--border-subtle)',
           borderRadius: 20,
-          boxShadow: isDark ? '0 24px 64px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(128, 82, 255, 0.25)' : '0 24px 64px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(109, 40, 217, 0.25)',
+          boxShadow: isDark ? '0 24px 64px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(45, 212, 191, 0.25)' : '0 24px 64px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(13, 148, 136, 0.25)',
           overflow: 'hidden',
           display: 'flex',
           flexDirection: 'column'
@@ -348,8 +348,8 @@ export default function CommandPalette({ isOpen, onClose, onNavigate, onToggleTh
                     padding: '12px 14px',
                     borderRadius: 12,
                     cursor: 'pointer',
-                    background: isSelected ? 'rgba(128, 82, 255, 0.12)' : 'transparent',
-                    border: isSelected ? '1px solid rgba(128, 82, 255, 0.35)' : '1px solid transparent',
+                    background: isSelected ? 'rgba(110, 231, 183, 0.15)' : 'transparent',
+                    border: isSelected ? '1px solid rgba(110, 231, 183, 0.45)' : '1px solid transparent',
                     transition: 'all 120ms ease'
                   }}
                 >
@@ -359,7 +359,7 @@ export default function CommandPalette({ isOpen, onClose, onNavigate, onToggleTh
                         width: 32,
                         height: 32,
                         borderRadius: 8,
-                        background: isSelected ? 'rgba(128, 82, 255, 0.25)' : (isDark ? 'rgba(255, 255, 255, 0.04)' : 'rgba(0, 0, 0, 0.04)'),
+                        background: isSelected ? 'rgba(110, 231, 183, 0.25)' : (isDark ? 'rgba(255, 255, 255, 0.04)' : 'rgba(0, 0, 0, 0.04)'),
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',

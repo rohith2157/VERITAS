@@ -193,7 +193,7 @@ body[data-theme="light"] {
 }
 
 [data-theme="light"] .team-card__content span {
-  color: #6d28d9 !important;
+  color: #0d9488 !important;
 }
 
 [data-theme="light"] .footer__bar {
@@ -233,7 +233,7 @@ body[data-theme="light"] {
 }
 
 [data-theme="light"] .cookie-notice a {
-  color: #6d28d9 !important;
+  color: #0d9488 !important;
 }
 
 [data-theme="light"] .asscrollbar__handle>div {
@@ -268,9 +268,10 @@ body[data-theme="light"] {
 }
 
 [data-theme="light"] .veritas-tab-btn.active {
-  background: #6d28d9 !important;
-  border-color: #6d28d9 !important;
-  color: #ffffff !important;
+  background: linear-gradient(135deg, #67e8f9 0%, #6ee7b7 50%, #bef264 100%) !important;
+  border-color: transparent !important;
+  color: #041316 !important;
+  font-weight: 700 !important;
 }
 
 [data-theme="light"] #veritas-doc-preview {
@@ -290,7 +291,7 @@ body[data-theme="light"] {
 }
 [data-theme="light"] .theme-icon-moon {
   display: inline-block !important;
-  color: #6d28d9 !important;
+  color: #0d9488 !important;
 }
 [data-theme="dark"] .theme-icon-sun {
   display: inline-block !important;

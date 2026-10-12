@@ -8,3 +8,4 @@ if (html !== before) {
 } else {
   console.log('No replacement made.');
 }
+

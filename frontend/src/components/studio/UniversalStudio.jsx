@@ -1265,25 +1265,27 @@ def compute_fact(num):
                   padding: '10px 18px',
                   borderRadius: 24,
                   fontSize: 13,
-                  fontWeight: 600,
+                  fontWeight: isActive ? 700 : 600,
                   textTransform: 'uppercase',
                   letterSpacing: '0.025em',
-                  background: isActive ? 'var(--color-electric-iris, #8052ff)' : 'rgba(255, 255, 255, 0.04)',
-                  color: isActive ? '#ffffff' : 'var(--color-ash-gray, #9a9a9a)',
-                  border: isActive ? '1px solid var(--color-electric-iris, #8052ff)' : '1px solid rgba(255, 255, 255, 0.08)',
+                  background: isActive ? 'linear-gradient(135deg, #67e8f9 0%, #6ee7b7 50%, #bef264 100%)' : 'rgba(255, 255, 255, 0.04)',
+                  color: isActive ? '#041316' : 'var(--color-ash-gray, #9a9a9a)',
+                  border: isActive ? '1px solid rgba(110, 231, 183, 0.4)' : '1px solid rgba(255, 255, 255, 0.08)',
                   cursor: 'pointer',
                   transition: 'all 0.2s ease',
-                  boxShadow: isActive ? 'var(--shadow-velvet-sm)' : 'none'
+                  boxShadow: isActive ? '0 2px 14px rgba(110, 231, 183, 0.4)' : 'none'
                 }}
               >
                 <span>{t.icon}</span>
                 <span>{t.label}</span>
                 <span style={{
                   fontSize: 10,
-                  opacity: 0.85,
+                  opacity: 0.9,
+                  fontWeight: isActive ? 700 : 500,
                   padding: '2px 6px',
                   borderRadius: 8,
-                  background: isActive ? 'rgba(0, 0, 0, 0.25)' : 'rgba(255, 255, 255, 0.08)'
+                  background: isActive ? 'rgba(4, 19, 22, 0.15)' : 'rgba(255, 255, 255, 0.08)',
+                  color: isActive ? '#041316' : 'inherit'
                 }}>
                   {t.tier}
                 </span>
@@ -1366,13 +1368,13 @@ def compute_fact(num):
               <button
                 onClick={() => setSyncScroll(!syncScroll)}
                 style={{
-                  background: syncScroll ? 'rgba(128, 82, 255, 0.2)' : 'rgba(255, 255, 255, 0.05)',
-                  border: syncScroll ? '1px solid var(--color-electric-iris)' : '1px solid rgba(255, 255, 255, 0.12)',
-                  color: syncScroll ? '#c084fc' : 'var(--color-ash-gray)',
+                  background: syncScroll ? 'var(--gradient-multi-light)' : 'rgba(255, 255, 255, 0.05)',
+                  border: syncScroll ? 'none' : '1px solid rgba(255, 255, 255, 0.12)',
+                  color: syncScroll ? '#041316' : 'var(--color-ash-gray)',
                   padding: '5px 12px',
                   borderRadius: 14,
                   fontSize: 12,
-                  fontWeight: 600,
+                  fontWeight: syncScroll ? 700 : 600,
                   cursor: 'pointer',
                   display: 'inline-flex',
                   alignItems: 'center',
@@ -1402,8 +1404,8 @@ def compute_fact(num):
                     fontWeight: 600,
                     padding: '3px 8px',
                     borderRadius: 12,
-                    background: 'rgba(128, 82, 255, 0.15)',
-                    border: '1px solid rgba(128, 82, 255, 0.3)',
+                    background: 'rgba(45, 212, 191, 0.15)',
+                    border: '1px solid rgba(45, 212, 191, 0.35)',
                     color: 'var(--color-electric-iris)',
                     textTransform: 'uppercase'
                   }}>
@@ -1566,16 +1568,16 @@ def compute_fact(num):
                 padding: '10px 24px',
                 borderRadius: 24,
                 fontSize: 13,
-                fontWeight: 600,
-                background: 'var(--color-electric-iris, #8052ff)',
-                color: '#ffffff',
+                fontWeight: 700,
+                background: 'linear-gradient(135deg, #67e8f9 0%, #6ee7b7 50%, #bef264 100%)',
+                color: '#041316',
                 border: 'none',
                 cursor: 'pointer',
                 transition: 'all 0.2s ease',
-                boxShadow: 'var(--shadow-velvet-sm)'
+                boxShadow: '0 4px 18px rgba(110, 231, 183, 0.4)'
               }}
             >
-              <Zap size={15} />
+              <Zap size={15} color="#041316" />
               <span>{loading ? 'Fingerprinting Documents...' : 'Execute 1-to-1 Split Diff'}</span>
             </button>
           </div>
@@ -1638,13 +1640,13 @@ def compute_fact(num):
                 ))}
                 {evasionA.invisibleChars.slice(0, 4).map((inv, i) => (
                   <div key={i} style={{
-                    background: 'rgba(128, 82, 255, 0.2)',
+                    background: 'rgba(45, 212, 191, 0.15)',
                     border: '1px solid var(--color-electric-iris)',
                     padding: '6px 12px',
                     borderRadius: 8,
                     fontSize: 12,
                     fontFamily: 'var(--font-mono, monospace)',
-                    color: '#e9d5ff'
+                    color: '#6ee7b7'
                   }}>
                     [ZWS] {inv.name} ({inv.codepoint})
                   </div>
@@ -1970,16 +1972,16 @@ def compute_fact(num):
                   padding: '10px 22px',
                   borderRadius: 24,
                   fontSize: 13,
-                  fontWeight: 600,
-                  background: 'var(--color-electric-iris, #8052ff)',
-                  color: '#ffffff',
+                  fontWeight: 700,
+                  background: 'linear-gradient(135deg, #67e8f9 0%, #6ee7b7 50%, #bef264 100%)',
+                  color: '#041316',
                   border: 'none',
                   cursor: 'pointer',
                   transition: 'all 0.2s ease',
-                  boxShadow: 'var(--shadow-velvet-sm)'
+                  boxShadow: '0 4px 18px rgba(110, 231, 183, 0.4)'
                 }}
               >
-                <Zap size={15} />
+                <Zap size={15} color="#041316" />
                 <span>{loading ? 'Cross-Matching Submissions...' : 'Run N×N Collusion Scan'}</span>
               </button>
             </div>
@@ -2030,7 +2032,7 @@ def compute_fact(num):
                       <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap', marginBottom: 8 }}>
                         <strong>Collusion Ring #{i + 1} ({c.size} submissions):</strong>
                         <span style={{
-                          background: 'rgba(128, 82, 255, 0.25)',
+                          background: 'rgba(45, 212, 191, 0.2)',
                           border: '1px solid var(--color-electric-iris)',
                           padding: '3px 12px',
                           borderRadius: 14,
@@ -2046,7 +2048,7 @@ def compute_fact(num):
                         {c.members?.map((m, mIdx) => (
                           <React.Fragment key={m.id}>
                             <span style={{
-                              background: m.name.includes(c.patient_zero) ? 'rgba(128, 82, 255, 0.3)' : 'rgba(255, 255, 255, 0.05)',
+                              background: m.name.includes(c.patient_zero) ? 'rgba(45, 212, 191, 0.25)' : 'rgba(255, 255, 255, 0.05)',
                               border: m.name.includes(c.patient_zero) ? '1px solid var(--color-electric-iris)' : '1px solid rgba(255, 255, 255, 0.1)',
                               padding: '4px 10px',
                               borderRadius: 8,
@@ -2232,15 +2234,15 @@ def compute_fact(num):
                   padding: '10px 24px',
                   borderRadius: 24,
                   fontSize: 13,
-                  fontWeight: 600,
-                  background: 'var(--color-electric-iris, #8052ff)',
-                  color: '#ffffff',
+                  fontWeight: 700,
+                  background: 'linear-gradient(135deg, #67e8f9 0%, #6ee7b7 50%, #bef264 100%)',
+                  color: '#041316',
                   border: 'none',
                   cursor: 'pointer',
-                  boxShadow: 'var(--shadow-velvet-sm)'
+                  boxShadow: '0 4px 18px rgba(110, 231, 183, 0.4)'
                 }}
               >
-                <Cpu size={15} />
+                <Cpu size={15} color="#041316" />
                 <span>{loading ? 'Evaluating Model Forensics...' : 'Analyze AI Forensics'}</span>
               </button>
             </div>
@@ -2471,15 +2473,15 @@ def compute_fact(num):
                   padding: '10px 24px',
                   borderRadius: 24,
                   fontSize: 13,
-                  fontWeight: 600,
-                  background: 'var(--color-electric-iris, #8052ff)',
-                  color: '#ffffff',
+                  fontWeight: 700,
+                  background: 'linear-gradient(135deg, #67e8f9 0%, #6ee7b7 50%, #bef264 100%)',
+                  color: '#041316',
                   border: 'none',
                   cursor: 'pointer',
-                  boxShadow: 'var(--shadow-velvet-sm)'
+                  boxShadow: '0 4px 18px rgba(110, 231, 183, 0.4)'
                 }}
               >
-                <Code size={15} />
+                <Code size={15} color="#041316" />
                 <span>{loading ? 'Normalizing Abstract Syntax Trees...' : 'Execute AST Comparison'}</span>
               </button>
             </div>
@@ -2729,20 +2731,21 @@ def compute_fact(num):
               onClick={runStylometryAnalysis}
               disabled={loading}
               style={{
-                background: 'var(--color-electric-iris, #8052ff)',
-                color: '#ffffff',
+                background: 'linear-gradient(135deg, #67e8f9 0%, #6ee7b7 50%, #bef264 100%)',
+                color: '#041316',
                 border: 'none',
                 padding: '10px 24px',
                 borderRadius: 20,
                 fontSize: 13,
-                fontWeight: 600,
+                fontWeight: 700,
                 cursor: 'pointer',
                 display: 'inline-flex',
                 alignItems: 'center',
-                gap: 8
+                gap: 8,
+                boxShadow: '0 4px 18px rgba(110, 231, 183, 0.4)'
               }}
             >
-              {loading ? <RefreshCw size={14} className="animate-spin" /> : <Activity size={14} />}
+              {loading ? <RefreshCw size={14} color="#041316" className="animate-spin" /> : <Activity size={14} color="#041316" />}
               Execute Stylometric Writeprint Extraction
             </button>
           </div>
@@ -2924,8 +2927,8 @@ def compute_fact(num):
               <div>
                 {/* Apex Merkle Root Card */}
                 <div style={{
-                  background: 'linear-gradient(135deg, rgba(128, 82, 255, 0.12), rgba(0, 0, 0, 0.6))',
-                  border: '1px solid var(--color-electric-iris, #8052ff)',
+                  background: 'linear-gradient(135deg, rgba(110, 231, 183, 0.12), rgba(0, 0, 0, 0.6))',
+                  border: '1px solid #34d399',
                   borderRadius: 14,
                   padding: '20px 24px',
                   marginBottom: 24,
@@ -2933,7 +2936,7 @@ def compute_fact(num):
                 }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 12 }}>
                     <div>
-                      <span style={{ fontSize: 11, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--color-electric-iris)' }}>
+                      <span style={{ fontSize: 11, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', color: '#0d9488' }}>
                         Institutional Merkle Root (Block #{merkleTreeData.sealedBlockHeight || 3242})
                       </span>
                       <div id="merkle-root-display" style={{ fontFamily: 'var(--font-mono)', fontSize: 18, color: '#ffffff', wordBreak: 'break-all', marginTop: 4, fontWeight: 600 }}>
@@ -2945,8 +2948,8 @@ def compute_fact(num):
                       borderRadius: 12,
                       fontSize: 11,
                       fontWeight: 600,
-                      background: 'rgba(128, 82, 255, 0.25)',
-                      color: 'var(--color-electric-iris)'
+                      background: 'rgba(110, 231, 183, 0.25)',
+                      color: '#0d9488'
                     }}>
                       SEALED ON LEDGER
                     </div>
@@ -2990,10 +2993,10 @@ def compute_fact(num):
                         id={`merkle-leaf-${idx}`}
                         onClick={() => { setMerkleSelectedLeaf(idx); setMerkleVerificationResult(null); }}
                         style={{
-                          background: isSelected ? 'rgba(128, 82, 255, 0.1)' : '#0a0a0c',
+                          background: isSelected ? 'rgba(110, 231, 183, 0.12)' : '#0a0a0c',
                           border: isCorrupted
                             ? '1px solid #ef4444'
-                            : (isSelected ? '1px solid var(--color-electric-iris, #8052ff)' : '1px solid rgba(255, 255, 255, 0.08)'),
+                            : (isSelected ? '1px solid #34d399' : '1px solid rgba(255, 255, 255, 0.08)'),
                           borderRadius: 10,
                           padding: 14,
                           cursor: 'pointer',
@@ -3035,20 +3038,21 @@ def compute_fact(num):
                       onClick={verifySelectedProof}
                       disabled={loading}
                       style={{
-                        background: 'var(--color-electric-iris, #8052ff)',
-                        color: '#ffffff',
+                        background: 'linear-gradient(135deg, #67e8f9 0%, #6ee7b7 50%, #bef264 100%)',
+                        color: '#041316',
                         border: 'none',
                         padding: '8px 18px',
                         borderRadius: 16,
                         fontSize: 12.5,
-                        fontWeight: 600,
+                        fontWeight: 700,
                         cursor: 'pointer',
                         display: 'inline-flex',
                         alignItems: 'center',
-                        gap: 6
+                        gap: 6,
+                        boxShadow: '0 4px 18px rgba(110, 231, 183, 0.4)'
                       }}
                     >
-                      {loading ? <RefreshCw size={14} className="animate-spin" /> : <Key size={14} />}
+                      {loading ? <RefreshCw size={14} color="#041316" className="animate-spin" /> : <Key size={14} color="#041316" />}
                       Verify Merkle Proof
                     </button>
                   </div>

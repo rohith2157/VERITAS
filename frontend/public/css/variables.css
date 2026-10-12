@@ -4,7 +4,7 @@
   --color-bone-white: #ffffff;
   --color-ash-gray: #9a9a9a;
   --color-silver-mist: #bdbdbd;
-  --color-electric-iris: #8052ff;
+  --color-electric-iris: #2dd4bf;
   --color-saffron-spark: #ffb829;
   --color-deep-verdant: #15846e;
 
@@ -77,7 +77,7 @@
   /* Surfaces */
   --surface-void-canvas: #000000;
   --surface-deep-verdant-tint: #15846e;
-  --surface-electric-iris: #8052ff;
+  --surface-electric-iris: #2dd4bf;
 
   --bg-main: #000000;
   --bg-card: rgba(15, 15, 18, 0.72);
@@ -97,13 +97,13 @@
   --color-bone-white: #0a0b10;
   --color-ash-gray: #52525e;
   --color-silver-mist: #374151;
-  --color-electric-iris: #6d28d9;
+  --color-electric-iris: #0d9488;
   --color-saffron-spark: #b45309;
   --color-deep-verdant: #0f766e;
 
   --surface-void-canvas: #f8f9fc;
   --surface-deep-verdant-tint: #0f766e;
-  --surface-electric-iris: #6d28d9;
+  --surface-electric-iris: #0d9488;
 
   --bg-main: #f8f9fc;
   --bg-card: rgba(255, 255, 255, 0.92);

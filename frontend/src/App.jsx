@@ -256,7 +256,7 @@ function VeritasPortalShell() {
             -webkit-overflow-scrolling: touch !important;
             touch-action: pan-y !important;
             scrollbar-width: thin;
-            scrollbar-color: rgba(128, 82, 255, 0.3) transparent;
+            scrollbar-color: rgba(110, 231, 183, 0.3) transparent;
           }
           #veritas-portal-shell::-webkit-scrollbar {
             width: 8px;
@@ -265,11 +265,11 @@ function VeritasPortalShell() {
             background: transparent;
           }
           #veritas-portal-shell::-webkit-scrollbar-thumb {
-            background: rgba(128, 82, 255, 0.25);
+            background: rgba(110, 231, 183, 0.3);
             border-radius: 9999px;
           }
           #veritas-portal-shell::-webkit-scrollbar-thumb:hover {
-            background: var(--color-electric-iris);
+            background: #34d399;
           }
           .portal-header {
             position: sticky;
@@ -309,7 +309,7 @@ function VeritasPortalShell() {
             transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
           }
           .portal-back-btn:hover {
-            border-color: var(--color-electric-iris);
+            border-color: #38bdf8;
             color: var(--color-bone-white);
             transform: translateX(-2px);
           }
@@ -336,9 +336,9 @@ function VeritasPortalShell() {
             letter-spacing: 0.06em;
             padding: 2px 7px;
             border-radius: 6px;
-            background: rgba(128, 82, 255, 0.15);
-            color: var(--color-electric-iris);
-            border: 1px solid rgba(128, 82, 255, 0.3);
+            background: rgba(110, 231, 183, 0.15);
+            color: #0d9488;
+            border: 1px solid rgba(110, 231, 183, 0.3);
           }
           .veritas-cluster-pill {
             display: inline-flex;
@@ -396,12 +396,13 @@ function VeritasPortalShell() {
           }
           .portal-tab-pill:hover {
             color: var(--color-bone-white);
-            background: rgba(128, 82, 255, 0.08);
+            background: rgba(110, 231, 183, 0.12);
           }
           .portal-tab-pill.active {
-            background: var(--color-electric-iris) !important;
-            color: #ffffff !important;
-            box-shadow: 0 2px 12px rgba(128, 82, 255, 0.35);
+            background: linear-gradient(135deg, #67e8f9 0%, #6ee7b7 50%, #bef264 100%) !important;
+            color: #041316 !important;
+            font-weight: 700 !important;
+            box-shadow: 0 2px 14px rgba(110, 231, 183, 0.45) !important;
           }
           .portal-header-actions {
             display: flex;
@@ -423,7 +424,7 @@ function VeritasPortalShell() {
             transition: all 0.2s ease;
           }
           .portal-action-btn:hover {
-            border-color: var(--color-electric-iris);
+            border-color: #38bdf8;
             color: var(--color-bone-white);
           }
           [data-theme="light"] .portal-action-btn {
@@ -446,7 +447,7 @@ function VeritasPortalShell() {
           }
           .portal-theme-btn:hover {
             transform: rotate(18deg) scale(1.08);
-            border-color: var(--color-electric-iris);
+            border-color: #38bdf8;
           }
           [data-theme="light"] .portal-theme-btn {
             border-color: rgba(0, 0, 0, 0.12);
@@ -455,22 +456,23 @@ function VeritasPortalShell() {
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            padding: 7px 14px;
+            padding: 7px 16px;
             border-radius: 9999px;
-            background: var(--color-electric-iris);
-            color: #ffffff;
-            border: 1px solid var(--color-electric-iris);
+            background: linear-gradient(135deg, #67e8f9 0%, #6ee7b7 50%, #bef264 100%) !important;
+            color: #041316 !important;
+            border: 1px solid rgba(255, 255, 255, 0.4) !important;
             font-size: 12px;
-            font-weight: 600;
+            font-weight: 700 !important;
             text-transform: uppercase;
             letter-spacing: 0.03em;
             cursor: pointer;
-            box-shadow: 0 2px 10px rgba(128, 82, 255, 0.35);
+            box-shadow: 0 4px 18px rgba(110, 231, 183, 0.4) !important;
             transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
           }
           .portal-auth-btn:hover {
+            background: linear-gradient(135deg, #a5f3fc 0%, #86efac 50%, #d9f99d 100%) !important;
             transform: translateY(-1px);
-            box-shadow: 0 4px 14px rgba(128, 82, 255, 0.5);
+            box-shadow: 0 6px 24px rgba(110, 231, 183, 0.55), 0 0 14px rgba(103, 232, 249, 0.4) !important;
           }
           .portal-user-pill {
             display: inline-flex;
@@ -484,7 +486,7 @@ function VeritasPortalShell() {
             transition: all 0.2s ease;
           }
           .portal-user-pill:hover {
-            border-color: var(--color-electric-iris);
+            border-color: #38bdf8;
           }
           .portal-user-avatar {
             width: 24px;
@@ -654,7 +656,7 @@ function VeritasPortalShell() {
                       <div style={{ fontSize: 11, color: 'var(--color-ash-gray)', marginTop: 2 }}>
                         {user.email}
                       </div>
-                      <div style={{ marginTop: 6, display: 'inline-flex', alignItems: 'center', gap: 4, padding: '2px 7px', borderRadius: 4, background: 'rgba(128, 82, 255, 0.15)', color: 'var(--color-electric-iris)', fontSize: 10, fontWeight: 700, textTransform: 'uppercase' }}>
+                      <div style={{ marginTop: 6, display: 'inline-flex', alignItems: 'center', gap: 4, padding: '2px 7px', borderRadius: 4, background: 'rgba(45, 212, 191, 0.15)', color: 'var(--color-electric-iris)', fontSize: 10, fontWeight: 700, textTransform: 'uppercase' }}>
                         <UserCheck size={10} />
                         <span>{user.roleLabel}</span>
                       </div>
@@ -723,8 +725,8 @@ function VeritasPortalShell() {
               className="portal-action-btn"
               style={{
                 color: 'var(--color-electric-iris)',
-                borderColor: 'rgba(128, 82, 255, 0.3)',
-                background: 'rgba(128, 82, 255, 0.1)'
+                borderColor: 'rgba(45, 212, 191, 0.35)',
+                background: 'rgba(45, 212, 191, 0.12)'
               }}
               title="Open Developer Telemetry & API Playground (Ctrl+Shift+D)"
             >
@@ -810,7 +812,7 @@ function VeritasPortalShell() {
                 maxHeight: '90vh',
                 overflowY: 'auto',
                 background: 'var(--bg-main, #000000)',
-                border: '1px solid rgba(128, 82, 255, 0.3)',
+                border: '1px solid rgba(45, 212, 191, 0.35)',
                 borderRadius: 24,
                 padding: '32px',
                 boxShadow: '0 32px 80px rgba(0, 0, 0, 0.9)'

@@ -64,3 +64,4 @@ const newBlock = `<div class="team__head js-team-head" animate-mq="sm" animate-f
 
 fs.writeFileSync('scripts/team_block_new.html', newBlock, 'utf8');
 console.log('Successfully generated new block. Length:', newBlock.length);
+
