@@ -2,17 +2,17 @@ const { spawn } = require('child_process');
 const fs = require('fs');
 const path = require('path');
 
-const port = 9720;
+const port = 9740;
 const chrome = spawn('C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe', [
   '--headless=new',
   '--window-size=1440,900',
   '--remote-debugging-port=' + port,
-  'http://localhost:5173/?skiploader'
+  'http://localhost:5173/'
 ]);
 
 async function run() {
   console.log('[E2E TEST] Starting Chrome on port', port);
-  await new Promise(r => setTimeout(r, 2500));
+  await new Promise(r => setTimeout(r, 2000));
 
   let tabs;
   try {
@@ -69,35 +69,51 @@ async function run() {
   await send('Runtime.enable');
   await send('Page.enable');
 
-  console.log('[TEST 1] Waiting for initial page settlement...');
-  await new Promise(r => setTimeout(r, 1500));
+  console.log('[TEST 1] Testing instant page load and zero loader obstruction...');
+  const loaderCheck = await send('Runtime.evaluate', {
+    expression: `(() => {
+      const loader = document.querySelector('.site-loader');
+      const display = loader ? window.getComputedStyle(loader).display : 'none';
+      const pointerEvents = loader ? window.getComputedStyle(loader).pointerEvents : 'none';
+      return { loaderBlocked: display !== 'none' && pointerEvents !== 'none' };
+    })()`,
+    returnByValue: true
+  });
+  console.log('Loader check:', loaderCheck.result.value);
 
-  // Check 1: Scrollability on Manifesto page
-  console.log('[TEST 2] Testing native scroll on Manifesto...');
+  // Check 2: Real native scroll on Manifesto via mouseWheel & scrollTo
+  console.log('[TEST 2] Testing native mouse wheel and instant scroll on Manifesto...');
+  await send('Input.dispatchMouseEvent', {
+    type: 'mouseWheel',
+    x: 600,
+    y: 400,
+    deltaX: 0,
+    deltaY: 600
+  });
+  await new Promise(r => setTimeout(r, 400));
+
   const scrollCheck = await send('Runtime.evaluate', {
     expression: `(() => {
-      const initialScroll = window.scrollY;
-      window.scrollTo(0, 1200);
-      const afterScroll = window.scrollY;
+      const wheelScrollY = window.scrollY;
+      window.scrollTo({ top: 1200, behavior: 'instant' });
+      const instantScrollY = window.scrollY;
       const container = document.querySelector('[asscroll-container]');
       const containerPos = container ? window.getComputedStyle(container).position : 'none';
       const containerOverflow = container ? window.getComputedStyle(container).overflow : 'none';
-      const bodyOverflow = window.getComputedStyle(document.body).overflowY;
       return {
-        initialScroll,
-        afterScroll,
+        wheelScrollY,
+        instantScrollY,
         containerPos,
         containerOverflow,
-        bodyOverflow,
         scrollHeight: document.documentElement.scrollHeight
       };
     })()`,
     returnByValue: true
   });
-  console.log('Scroll metrics:', scrollCheck.result.value);
+  console.log('Manifesto scroll metrics:', scrollCheck.result.value);
 
-  // Check 2: ARS Forensics Architecture Section
-  console.log('[TEST 3] Testing ARS Architecture presence and console tabs...');
+  // Check 3: ARS Forensics Architecture Section & Interactivity
+  console.log('[TEST 3] Testing ARS Forensics section and interactive execution tabs...');
   const arsCheck = await send('Runtime.evaluate', {
     expression: `(() => {
       const head = document.querySelector('.js-team-head h2');
@@ -137,14 +153,14 @@ async function run() {
   await send('Runtime.evaluate', {
     expression: `document.querySelector('[section-name="team"]').scrollIntoView({ behavior: 'instant' })`
   });
-  await new Promise(r => setTimeout(r, 600));
+  await new Promise(r => setTimeout(r, 500));
 
   const screenshot = await send('Page.captureScreenshot', { format: 'png' });
   const shotPath = path.join(__dirname, 'verify_ars_architecture.png');
   fs.writeFileSync(shotPath, Buffer.from(screenshot.data, 'base64'));
   console.log('Screenshot saved to:', shotPath);
 
-  // Check 3: Portal view switching and scrollability
+  // Check 4: Portal views switching and scrollability
   console.log('[TEST 5] Testing Portal views (#hub, #dashboard, #studio, #classroom, #demobench, #dev)...');
   const views = ['hub', 'dashboard', 'studio', 'classroom', 'demobench', 'dev'];
   const viewResults = {};
@@ -153,18 +169,18 @@ async function run() {
     await send('Runtime.evaluate', {
       expression: `window.location.hash = '${v}'`
     });
-    await new Promise(r => setTimeout(r, 800));
+    await new Promise(r => setTimeout(r, 600));
 
     const viewTest = await send('Runtime.evaluate', {
       expression: `(() => {
         const shell = document.getElementById('veritas-portal-shell');
         if (!shell) return { exists: false };
-        const initialScroll = shell.scrollTop;
-        shell.scrollTop = 400;
+        shell.scrollTo({ top: 200, behavior: 'instant' });
         const scrolled = shell.scrollTop;
         return {
           exists: true,
           scrolled: scrolled > 0,
+          scrollTop: scrolled,
           scrollHeight: shell.scrollHeight,
           clientHeight: shell.clientHeight
         };
@@ -179,7 +195,7 @@ async function run() {
   await send('Runtime.evaluate', {
     expression: `window.location.hash = 'manifesto'`
   });
-  await new Promise(r => setTimeout(r, 500));
+  await new Promise(r => setTimeout(r, 400));
 
   console.log('[TEST 6] Console errors captured:', consoleErrors);
 
