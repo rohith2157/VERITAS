@@ -18,14 +18,26 @@ app = FastAPI(
     version="1.0.0",
 )
 
-# Enable CORS for React frontend (port 5173) and Spring Boot backend (port 8080)
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+# Configure CORS for cloud (Render) and local development
+cors_env = os.environ.get("CORS_ALLOWED_ORIGINS", "")
+custom_origins = [o.strip() for o in cors_env.split(",") if o.strip()]
+
+if custom_origins:
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=custom_origins,
+        allow_credentials=True,
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
+else:
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origin_regex=r"^https://.*\.onrender\.com$|^http://localhost:\d+$|^http://127\.0\.0\.1:\d+$",
+        allow_credentials=True,
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
 
 # Register routes
 app.include_router(compare_router)
