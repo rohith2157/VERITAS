@@ -1,6 +1,24 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Search, Compass, Shield, Users, Terminal, BookOpen, Zap, Moon, Sun, X, ChevronRight, Lock } from 'lucide-react';
+import { 
+  Search, 
+  Compass, 
+  Shield, 
+  Users, 
+  Terminal, 
+  BookOpen, 
+  Zap, 
+  Moon, 
+  Sun, 
+  X, 
+  ChevronRight, 
+  Lock,
+  LogIn,
+  LogOut,
+  UserPlus,
+  Sparkles
+} from 'lucide-react';
 import { useToast } from '../context/ToastContext';
+import { useAuth } from '../context/AuthContext';
 
 export default function CommandPalette({ isOpen, onClose, onNavigate, onToggleTheme, isDark }) {
   const [query, setQuery] = useState('');
@@ -8,6 +26,7 @@ export default function CommandPalette({ isOpen, onClose, onNavigate, onToggleTh
   const inputRef = useRef(null);
   const listRef = useRef(null);
   const { showToast } = useToast();
+  const { user, isAuthenticated, openAuthModal, quickLogin, logout } = useAuth();
 
   const commands = [
     {
@@ -93,7 +112,73 @@ export default function CommandPalette({ isOpen, onClose, onNavigate, onToggleTh
         if (onToggleTheme) onToggleTheme();
         showToast(`Theme switched to ${isDark ? 'Light' : 'Dark'} mode`, 'info');
       }
-    }
+    },
+    ...(isAuthenticated && user ? [
+      {
+        id: 'auth-user',
+        category: 'Account',
+        title: `Active Account: ${user.name}`,
+        subtitle: `${user.roleLabel} • ${user.institution}`,
+        icon: Users,
+        action: () => {
+          showToast(`Active Session: ${user.name} (${user.roleLabel})`, 'info');
+        }
+      },
+      {
+        id: 'auth-logout',
+        category: 'Account',
+        title: 'Sign Out / Lock Session',
+        subtitle: 'Terminate active session and clear token',
+        icon: LogOut,
+        action: () => {
+          logout();
+          showToast('Signed out of Veritas Node', 'info');
+        }
+      }
+    ] : [
+      {
+        id: 'auth-login',
+        category: 'Account',
+        title: 'Sign In to Veritas',
+        subtitle: 'Enter institutional credentials or switch roles',
+        icon: LogIn,
+        action: () => {
+          openAuthModal('login');
+        }
+      },
+      {
+        id: 'auth-register',
+        category: 'Account',
+        title: 'Create Academic Account',
+        subtitle: 'Register new Faculty or Student profile',
+        icon: UserPlus,
+        action: () => {
+          openAuthModal('register');
+        }
+      },
+      {
+        id: 'auth-demo-faculty',
+        category: 'Demo Persona',
+        title: 'Quick Login: Dr. Evelyn Chen (Faculty)',
+        subtitle: 'UGC DAIP Fellow & AST Forensics Architect',
+        icon: Sparkles,
+        action: () => {
+          quickLogin('faculty');
+          showToast('Signed in as Dr. Evelyn Chen (Faculty Evaluator)', 'success');
+        }
+      },
+      {
+        id: 'auth-demo-student',
+        category: 'Demo Persona',
+        title: 'Quick Login: Arjun Patel (Student)',
+        subtitle: 'Graduate Candidate & Submitter',
+        icon: Sparkles,
+        action: () => {
+          quickLogin('student');
+          showToast('Signed in as Arjun Patel (Graduate Candidate)', 'success');
+        }
+      }
+    ])
   ];
 
   const filtered = commands.filter((cmd) => {

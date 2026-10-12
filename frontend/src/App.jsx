@@ -1,14 +1,31 @@
 import React, { useState, useEffect, Suspense, lazy } from 'react';
-import { ArrowLeft, Sun, Moon, Search, GitCompare, Users, Lock, Terminal } from 'lucide-react';
+import { 
+  ArrowLeft, 
+  Sun, 
+  Moon, 
+  Search, 
+  GitCompare, 
+  Users, 
+  Lock, 
+  Terminal, 
+  LogIn, 
+  LogOut, 
+  ChevronDown, 
+  UserCheck 
+} from 'lucide-react';
 import { ToastProvider } from './context/ToastContext';
+import { AuthProvider, useAuth } from './context/AuthContext';
 import CommandPalette from './components/CommandPalette';
+import AuthModal from './components/auth/AuthModal';
 
 const UniversalStudio = lazy(() => import('./components/studio/UniversalStudio'));
 const ClassroomPortal = lazy(() => import('./components/classroom/ClassroomPortal'));
 const CryptographicLedger = lazy(() => import('./components/ledger/CryptographicLedger'));
 const DeveloperWorkstation = lazy(() => import('./components/dev/DeveloperWorkstation'));
 
-export default function App() {
+function VeritasPortalShell() {
+  const { user, isAuthenticated, openAuthModal, logout } = useAuth();
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [activeTab, setActiveTab] = useState(() => {
     if (typeof window !== 'undefined') {
       const hash = window.location.hash.replace('#', '');
@@ -150,10 +167,31 @@ export default function App() {
     };
   }, []);
 
+  // Close user profile dropdown on outside click
+  useEffect(() => {
+    const handleOutsideClick = (e) => {
+      if (!e.target.closest('#btn-portal-user-profile') && !e.target.closest('.portal-user-dropdown')) {
+        setIsUserMenuOpen(false);
+      }
+    };
+    document.addEventListener('click', handleOutsideClick);
+    return () => document.removeEventListener('click', handleOutsideClick);
+  }, []);
+
+  // Listen for open auth requests from Landing Page or other triggers
+  useEffect(() => {
+    const handleOpenAuth = (e) => {
+      openAuthModal(e.detail?.mode || 'login');
+    };
+    window.addEventListener('veritas-open-auth', handleOpenAuth);
+    return () => window.removeEventListener('veritas-open-auth', handleOpenAuth);
+  }, [openAuthModal]);
+
   // When on manifesto, the real Veritas engine and DOM run unobstructed
   if (activeTab === 'manifesto') {
     return (
-      <ToastProvider>
+      <>
+        <AuthModal />
         <CommandPalette
           isOpen={isCommandPaletteOpen}
           onClose={() => setIsCommandPaletteOpen(false)}
@@ -165,15 +203,14 @@ export default function App() {
           onToggleTheme={toggleTheme}
           isDark={theme === 'dark'}
         />
-      </ToastProvider>
+      </>
     );
   }
 
   // When user opens the Veritas Portal Shell
   return (
-    <ToastProvider>
-      <div
-        id="veritas-portal-shell"
+    <div
+      id="veritas-portal-shell"
         className="veritas-portal-shell"
         style={{
           position: 'fixed',
@@ -368,6 +405,68 @@ export default function App() {
           [data-theme="light"] .portal-theme-btn {
             border-color: rgba(0, 0, 0, 0.12);
           }
+          .portal-auth-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 7px 14px;
+            border-radius: 9999px;
+            background: var(--color-electric-iris);
+            color: #ffffff;
+            border: 1px solid var(--color-electric-iris);
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(128, 82, 255, 0.35);
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+          }
+          .portal-auth-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 14px rgba(128, 82, 255, 0.5);
+          }
+          .portal-user-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 4px 12px 4px 5px;
+            border-radius: 9999px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            cursor: pointer;
+            transition: all 0.2s ease;
+          }
+          .portal-user-pill:hover {
+            border-color: var(--color-electric-iris);
+          }
+          .portal-user-avatar {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: 700;
+            color: #ffffff;
+          }
+          .portal-user-dropdown {
+            position: absolute;
+            top: calc(100% + 8px);
+            right: 0;
+            min-width: 230px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 14px;
+            padding: 12px;
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
+            z-index: 1001;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            animation: fadeIn 120ms ease;
+          }
           @media (max-width: 1100px) {
             .veritas-cluster-pill {
               display: none !important;
@@ -464,6 +563,113 @@ export default function App() {
 
           {/* Action Tools & Theme Controls */}
           <div className="portal-header-actions">
+            {/* User Account / Auth Trigger */}
+            {!isAuthenticated || !user ? (
+              <button
+                id="btn-portal-signin"
+                onClick={() => openAuthModal('login')}
+                className="portal-auth-btn"
+                title="Sign In or Create Account"
+              >
+                <LogIn size={13} />
+                <span>Sign In</span>
+              </button>
+            ) : (
+              <div style={{ position: 'relative' }}>
+                <button
+                  id="btn-portal-user-profile"
+                  onClick={() => setIsUserMenuOpen((prev) => !prev)}
+                  className="portal-user-pill"
+                  title={`${user.name} (${user.roleLabel})`}
+                >
+                  <div 
+                    className="portal-user-avatar"
+                    style={{
+                      background: user.role === 'STUDENT' ? 'var(--color-saffron-spark)' : (user.role === 'AUDITOR' ? 'var(--color-deep-verdant)' : 'var(--color-electric-iris)')
+                    }}
+                  >
+                    {user.initials || 'U'}
+                  </div>
+                  <span style={{ fontSize: 12, fontWeight: 600, color: 'var(--color-bone-white)', maxWidth: 110, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                    {user.name.split(' ')[0]}
+                  </span>
+                  <ChevronDown size={12} color="var(--color-ash-gray)" />
+                </button>
+
+                {isUserMenuOpen && (
+                  <div
+                    className="portal-user-dropdown"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <div style={{ borderBottom: '1px solid var(--border-subtle)', paddingBottom: 8 }}>
+                      <div style={{ fontSize: 13, fontWeight: 700, color: 'var(--color-bone-white)' }}>
+                        {user.name}
+                      </div>
+                      <div style={{ fontSize: 11, color: 'var(--color-ash-gray)', marginTop: 2 }}>
+                        {user.email}
+                      </div>
+                      <div style={{ marginTop: 6, display: 'inline-flex', alignItems: 'center', gap: 4, padding: '2px 7px', borderRadius: 4, background: 'rgba(128, 82, 255, 0.15)', color: 'var(--color-electric-iris)', fontSize: 10, fontWeight: 700, textTransform: 'uppercase' }}>
+                        <UserCheck size={10} />
+                        <span>{user.roleLabel}</span>
+                      </div>
+                    </div>
+
+                    <div style={{ fontSize: 11, color: 'var(--color-silver-mist)', padding: '2px 0' }}>
+                      {user.institution}
+                    </div>
+
+                    <button
+                      onClick={() => {
+                        setIsUserMenuOpen(false);
+                        openAuthModal('login');
+                      }}
+                      style={{
+                        background: 'rgba(255, 255, 255, 0.04)',
+                        border: '1px solid var(--border-subtle)',
+                        borderRadius: 8,
+                        padding: '7px 10px',
+                        color: 'var(--color-bone-white)',
+                        fontSize: 12,
+                        fontWeight: 500,
+                        cursor: 'pointer',
+                        textAlign: 'left',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: 6
+                      }}
+                    >
+                      <LogIn size={12} />
+                      <span>Switch Account</span>
+                    </button>
+
+                    <button
+                      onClick={() => {
+                        setIsUserMenuOpen(false);
+                        logout();
+                      }}
+                      style={{
+                        background: 'rgba(239, 68, 68, 0.08)',
+                        border: '1px solid rgba(239, 68, 68, 0.25)',
+                        borderRadius: 8,
+                        padding: '7px 10px',
+                        color: '#f87171',
+                        fontSize: 12,
+                        fontWeight: 600,
+                        cursor: 'pointer',
+                        textAlign: 'left',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: 6
+                      }}
+                    >
+                      <LogOut size={12} />
+                      <span>Sign Out</span>
+                    </button>
+                  </div>
+                )}
+              </div>
+            )}
+
             {/* Developer Tools Modal Pill */}
             <button
               id="btn-dev-workstation-pill"
@@ -575,6 +781,9 @@ export default function App() {
           </div>
         )}
 
+        {/* Authentication Modal Dialog */}
+        <AuthModal />
+
         {/* Global Command Palette */}
         <CommandPalette
           isOpen={isCommandPaletteOpen}
@@ -588,6 +797,15 @@ export default function App() {
           isDark={theme === 'dark'}
         />
       </div>
-    </ToastProvider>
+  );
+}
+
+export default function App() {
+  return (
+    <AuthProvider>
+      <ToastProvider>
+        <VeritasPortalShell />
+      </ToastProvider>
+    </AuthProvider>
   );
 }
