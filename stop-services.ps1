@@ -40,3 +40,4 @@ Write-Host ""
 Write-Host "==========================================================" -ForegroundColor Green
 Write-Host " All Veritas Platform Services Stopped Successfully" -ForegroundColor Green
 Write-Host "==========================================================" -ForegroundColor Green
+

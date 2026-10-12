@@ -51,10 +51,17 @@ public class DataInitializer implements CommandLineRunner {
 
         // 3. Clear existing auto-rubrics and configure calibrated enterprise rubric rules
         rubricRuleRepository.deleteAll();
-        rubricRuleRepository.save(new RubricRule(assignment.getId(), 0.0, 15.0, 0.0, false, "High Originality (> 85%)"));
-        rubricRuleRepository.save(new RubricRule(assignment.getId(), 15.0, 40.0, 15.0, false, "Moderate Paraphrasing (60% - 85%)"));
-        rubricRuleRepository.save(new RubricRule(assignment.getId(), 40.0, 60.0, 25.0, false, "Adversarial Evasion (Homoglyphs / Hidden Whitespace)"));
-        rubricRuleRepository.save(new RubricRule(assignment.getId(), 60.0, 100.0, 50.0, true, "Direct Collusion / Plagiarism (< 60%)"));
+        Long assignId = assignment != null && assignment.getId() != null ? assignment.getId() : 1L;
+        rubricRuleRepository.save(new RubricRule(assignId, 0.0, 15.0, 0.0, false, "High Originality (> 85%)"));
+        rubricRuleRepository.save(new RubricRule(assignId, 15.0, 40.0, 15.0, false, "Moderate Paraphrasing (60% - 85%)"));
+        rubricRuleRepository.save(new RubricRule(assignId, 40.0, 60.0, 25.0, false, "Adversarial Evasion (Homoglyphs / Hidden Whitespace)"));
+        rubricRuleRepository.save(new RubricRule(assignId, 60.0, 100.0, 50.0, true, "Direct Collusion / Plagiarism (< 60%)"));
+        if (!assignId.equals(1L)) {
+            rubricRuleRepository.save(new RubricRule(1L, 0.0, 15.0, 0.0, false, "High Originality (> 85%)"));
+            rubricRuleRepository.save(new RubricRule(1L, 15.0, 40.0, 15.0, false, "Moderate Paraphrasing (60% - 85%)"));
+            rubricRuleRepository.save(new RubricRule(1L, 40.0, 60.0, 25.0, false, "Adversarial Evasion (Homoglyphs / Hidden Whitespace)"));
+            rubricRuleRepository.save(new RubricRule(1L, 60.0, 100.0, 50.0, true, "Direct Collusion / Plagiarism (< 60%)"));
+        }
 
         // 4. Seed Mock Submissions for the 5 Students
 
