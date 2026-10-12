@@ -227,4 +227,41 @@ Exit Code: 0
 - **Classroom Ledger Dynamic Synthesis**:
   - Implemented dynamic block construction in `ClassroomService.getLedgerBlocks()` mapping real database submissions to Merkle ledger blocks.
 
+---
+
+## 9. Task 6: Portal Consolidation to 3-Pillar Academic Architecture (`TASK-CONSOLIDATE-2026-01`)
+
+### 9.1 Verification Matrix (Task 6)
+
+| Task Node | Command Executed | Timestamp (IST) | Exit Code | Evidence / Result | Status |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **TASK-601** | `npm run build` | `2026-10-12T22:14:47` | `0` | Vite client built in **285ms** (< 2.0s SLA) with clean chunk-splitting | **PASS** |
+| **TASK-602** | `npm run lint` (`oxlint`) | `2026-10-12T22:14:01` | `0` | Scanned 32 files in 553ms with 0 errors | **PASS** |
+| **TASK-603** | `curl.exe -s -o NUL -w "%{http_code}\n" http://localhost:5173/` | `2026-10-12T22:15:04` | `0` | Vite presentation server returns HTTP 200 OK | **PASS** |
+| **TASK-604** | `curl.exe -s -o NUL -w "%{http_code}\n" http://localhost:8080/api/classrooms` | `2026-10-12T22:15:13` | `0` | Spring Boot 3 JPA endpoint returns HTTP 200 OK | **PASS** |
+| **TASK-605** | `curl.exe -s -o NUL -w "%{http_code}\n" http://localhost:8000/` | `2026-10-12T22:15:22` | `0` | Python FastAPI forensics engine returns HTTP 200 OK | **PASS** |
+
+### 9.2 Key Architectural Consolidations
+- **Pillar 1: Studio Inspector (`UniversalStudio.jsx`)**:
+  - Default view upon launching portal; eliminates 3-screen bouncing.
+  - Side-by-side dual-pane line offset tracking with synchronized scroll lock.
+  - Live Cyrillic homoglyph (U+0430) and invisible zero-width space (U+200B) detection.
+  - AST syntax clone analysis and stylometric writeprint telemetry.
+- **Pillar 2: Evaluation Queue (`ClassroomPortal.jsx`)**:
+  - Cohort gradebook with assignments and submissions roster.
+  - Integrated cohort batch ZIP upload dropzone (`.zip`, `.tar.gz`) for instant whole-class processing.
+  - Added 1-click `Inspect Diff` button directly on submission rows to hand off data to Studio Inspector.
+  - Enforces UGC 2018 Statutory classifications (Level 0 $\le 10\%$, Level 1 $10-40\%$, Level 2 $40-60\%$, Level 3 $>60\%$).
+- **Pillar 3: Cryptographic Ledger (`CryptographicLedger.jsx`)**:
+  - Dedicated decentralized institutional ledger explorer.
+  - Interactive SHA-256 Merkle tree visualizer with adversarial bit-mutation tamper toggle.
+  - Verifiable institutional certificate generator (`ForensicCertificateModal.jsx`).
+- **Developer Workstation Modal (`DeveloperWorkstation.jsx`)**:
+  - Removed diagnostic noise from primary student/faculty navigation.
+  - Triggered via top-right `[DEV TOOLS]` header button or global `Ctrl+Shift+D` shortcut.
+
+### 9.3 Micro-Commit Ledger (Task 6)
+- `17fb95b`: `feat(portal): consolidate architecture into 3 clean industry pillars`
+
+
 
