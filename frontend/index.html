@@ -489,6 +489,53 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     }
   });
+
+  // Universal Theme Toggle and Bidirectional Sync
+  const themeToggleBtn = document.querySelector('.js-theme-toggle');
+  const sunIcon = document.querySelector('.theme-icon-sun');
+  const moonIcon = document.querySelector('.theme-icon-moon');
+
+  function updateThemeIcons(activeTheme) {
+    if (!sunIcon || !moonIcon) return;
+    if (activeTheme === 'light') {
+      sunIcon.style.display = 'none';
+      moonIcon.style.display = 'inline-block';
+    } else {
+      sunIcon.style.display = 'inline-block';
+      moonIcon.style.display = 'none';
+    }
+  }
+
+  var currentTheme = document.documentElement.getAttribute('data-theme') || localStorage.getItem('veritas_theme') || 'dark';
+  updateThemeIcons(currentTheme);
+
+  if (themeToggleBtn) {
+    themeToggleBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      var cur = document.documentElement.getAttribute('data-theme') || 'dark';
+      var nxt = cur === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', nxt);
+      localStorage.setItem('veritas_theme', nxt);
+      updateThemeIcons(nxt);
+      window.dispatchEvent(new CustomEvent('veritas-theme-change', { detail: { theme: nxt } }));
+    });
+  }
+
+  window.addEventListener('veritas-theme-change', function(e) {
+    if (e.detail && e.detail.theme) {
+      document.documentElement.setAttribute('data-theme', e.detail.theme);
+      updateThemeIcons(e.detail.theme);
+    }
+  });
+
+  // Command Palette Trigger (Ctrl+K)
+  const cmdPaletteBtn = document.querySelector('.js-open-palette');
+  if (cmdPaletteBtn) {
+    cmdPaletteBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      window.dispatchEvent(new KeyboardEvent('keydown', { key: 'k', ctrlKey: true, bubbles: true }));
+    });
+  }
 });
 </script>
 

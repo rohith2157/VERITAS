@@ -31,10 +31,32 @@ export default function App() {
     const next = theme === 'dark' ? 'light' : 'dark';
     setTheme(next);
     localStorage.setItem('veritas_theme', next);
+    document.documentElement.setAttribute('data-theme', next);
+    window.dispatchEvent(new CustomEvent('veritas-theme-change', { detail: { theme: next } }));
   };
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
+  }, [theme]);
+
+  // Synchronize theme with external window events and storage
+  useEffect(() => {
+    const handleExternalTheme = (e) => {
+      if (e.detail && e.detail.theme && e.detail.theme !== theme) {
+        setTheme(e.detail.theme);
+      }
+    };
+    const handleStorage = (e) => {
+      if (e.key === 'veritas_theme' && e.newValue && e.newValue !== theme) {
+        setTheme(e.newValue);
+      }
+    };
+    window.addEventListener('veritas-theme-change', handleExternalTheme);
+    window.addEventListener('storage', handleStorage);
+    return () => {
+      window.removeEventListener('veritas-theme-change', handleExternalTheme);
+      window.removeEventListener('storage', handleStorage);
+    };
   }, [theme]);
 
   // Global Keyboard Shortcuts (Ctrl+K for Search, Ctrl+Shift+D for Dev Tools, Escape to dismiss)

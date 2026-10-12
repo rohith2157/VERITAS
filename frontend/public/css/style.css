@@ -284,3 +284,30 @@ body[data-theme="light"] {
   opacity: 0.65;
 }
 
+/* Theme Toggle Button Icons */
+[data-theme="light"] .theme-icon-sun {
+  display: none !important;
+}
+[data-theme="light"] .theme-icon-moon {
+  display: inline-block !important;
+  color: #6d28d9 !important;
+}
+[data-theme="dark"] .theme-icon-sun {
+  display: inline-block !important;
+  color: #ffb829 !important;
+}
+[data-theme="dark"] .theme-icon-moon {
+  display: none !important;
+}
+
+[data-theme="light"] .veritas-workbench-grid > div {
+  background: rgba(0, 0, 0, 0.02) !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+[data-theme="light"] #veritas-close-modal {
+  border-color: rgba(0, 0, 0, 0.2) !important;
+  color: #0a0b10 !important;
+}
+
+
