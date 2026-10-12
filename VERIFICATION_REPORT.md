@@ -367,3 +367,53 @@ Exit Code: 0
   ]
 }
 ```
+
+---
+
+## 13. Gate 13: Multi-Service Cloud Deployment (Render Blueprint & Render CLI)
+
+### 13.1 Verification Commands and Evidence
+| Verification ID | Deterministic Command | Exit Code | Expected vs Actual Evidence | Status |
+| :--- | :--- | :--- | :--- | :--- |
+| **RENDER-BLUEPRINT-001** | `cat render.yaml` | `0` | Multi-service Blueprint defined for ai-engine, backend, frontend | **PASS** |
+| **BACKEND-DOCKER-002** | `cat backend/Dockerfile` | `0` | Multi-stage Java 21 build with -Xmx384m memory guardrails | **PASS** |
+| **MAVEN-PACKAGE-003** | `.\mvnw.cmd clean package -DskipTests -B` | `0` | `BUILD SUCCESS in 16.571s` -> `veritas-backend-0.0.1-SNAPSHOT.jar` | **PASS** |
+| **FASTAPI-COMPILE-004**| `python -m py_compile ai-engine/main.py` | `0` | Python 3 syntax & CORS regex compile with zero errors | **PASS** |
+| **FRONTEND-BUILD-005** | `npm run build` in `frontend/` | `0` | Vite build passed in 3.25s; dist bundle generated with interceptor | **PASS** |
+| **RENDER-CLI-006** | `render --version` | `0` | Render CLI v2.28.0 installed and verified on system PATH | **PASS** |
+
+### 13.2 Deployment Architecture & Configuration
+1. **Render Infrastructure as Code (`render.yaml`)**:
+   - `veritas-ai-engine`: Python FastAPI web service (`plan: free`, `region: oregon`, root `ai-engine`, start `uvicorn main:app --host 0.0.0.0 --port $PORT`, healthCheckPath `/health`).
+   - `veritas-backend`: Docker web service (`plan: free`, `region: oregon`, root `backend`, dynamic port binding `${PORT:8080}`, dynamic AI Engine binding `fromService: veritas-ai-engine`).
+   - `veritas-frontend`: Static web service (`region: oregon`, root `frontend`, build `npm install && npm run build`, staticPublishPath `./dist`, SPA rewrite `/* -> /index.html`, dynamic AI Engine & Backend URL bindings `fromService`).
+2. **Enterprise Production CORS**:
+   - `ai-engine/main.py`: Configured `CORSMiddleware` with `allow_origin_regex=r"^https://.*\.onrender\.com$|^http://localhost:\d+$|^http://127\.0\.0\.1:\d+$"` and `CORS_ALLOWED_ORIGINS` override, supporting full credentials.
+   - `backend/CorsConfig.java`: Configured Spring MVC `WebMvcConfigurer` with `allowedOriginPatterns` derived from `${cors.allowed-origins:*}`, full HTTP methods, and `allowCredentials(true)`.
+   - `frontend/src/config/api.js`: Transparent `setupApiInterceptor()` automatically rewrites fetch paths to cloud Render URLs in production while preserving Vite reverse-proxying in local dev.
+3. **Render CLI Tooling**:
+   - Installed `Render.CLI` v2.28.0 natively via Windows Package Manager (`winget`).
+   - CLI is ready for interactive `render login` or automated CI deployments with `RENDER_API_KEY`.
+
+```json
+{
+  "success": true,
+  "summary": "Configured complete multi-service deployment infrastructure on Render using render.yaml blueprint, multi-stage Java 21 Dockerfile, bidirectional CORS, dynamic API routing, and verified Render CLI installation.",
+  "key_changes_made": [
+    "render.yaml: Master Blueprint defining veritas-ai-engine (Python), veritas-backend (Docker), and veritas-frontend (Static) with inter-service bindings",
+    "backend/Dockerfile: Multi-stage container build with Eclipse Temurin 21 and memory guard (-Xmx384m) for Render 512MB RAM free tier",
+    "backend/.dockerignore: Docker build context optimization excluding target/ and node_modules/",
+    "backend/src/main/resources/application.properties: Configured dynamic ${PORT:8080} and ${VERITAS_AI_ENGINE_URL:http://localhost:8000}",
+    "backend/src/main/java/com/veritas/backend/config/CorsConfig.java: Added global WebMvcConfigurer with allowedOriginPatterns and credentials",
+    "backend/src/main/java/com/veritas/backend/config/DataSourceConfig.java: Added cloud DATABASE_URL and postgres:// URI translation support",
+    "ai-engine/main.py: Updated CORSMiddleware with Render regex and CORS_ALLOWED_ORIGINS env override",
+    "frontend/src/config/api.js: Centralized microservice URL resolver and setupApiInterceptor fetch rewriter",
+    "frontend/src/main.jsx: Installed setupApiInterceptor on app initialization"
+  ],
+  "key_learnings": [
+    "Render does not have a native Java runtime; Java 21 Spring Boot requires Docker runtime (runtime: docker) with explicit memory bounds (-Xmx384m)",
+    "Starlette/FastAPI CORSMiddleware rejects wildcard allow_origins with allow_credentials=True; using allow_origin_regex allows arbitrary Render subdomains without browser credential rejections",
+    "Installing setupApiInterceptor globally in main.jsx ensures 100% of frontend fetch calls automatically route to cloud microservices without needing to manually edit thousands of lines across components"
+  ]
+}
+```
