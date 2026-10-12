@@ -288,5 +288,28 @@ Exit Code: 0
 3. **Modal Dialog Touch Containment**:
    - Added `maxHeight: '92vh'`, `overflowY: 'auto'`, and `touch-action: pan-y` to `AuthModal.jsx`, `DeveloperWorkstation.jsx`, `ForensicCertificateModal.jsx`, and `CommandPalette.jsx`.
 
+---
+
+## 11. Gate 11: Forensic Pillars Content Transformation (`GATE-PILLARS-011`)
+
+### 11.1 Executive Content Certification Matrix
+| Test Vector | Command / Target | Exit Code | Verified Metrics | Status |
+| :--- | :--- | :--- | :--- | :--- |
+| **STRUCTURE-001** | `node scripts/validate_and_apply_block.js` | `0` | 100% selector & attribute parity; 0 animation changes | **PASS** |
+| **BUILD-SLA-002** | `npm run build` in `frontend/` | `0` | Production build in 458ms (< 2.0s SLA); zero errors | **PASS** |
+| **VISUAL-CDP-003** | `node scripts/capture_perfect_view.js` | `0` | Heading: "Forensic Pillars"; 3 3D Prisms rendered | **PASS** |
+| **SCROLL-VERIFY-004**| `node scripts/verify_all_touch_scrolling.js` | `0` | ASScroll & finger touch verified across all views | **PASS** |
+
+### 11.2 Key Transformations Implemented
+- **Section Re-titling**: Renamed from `"Our team"` to **`"Forensic Pillars"`**.
+- **Three Algorithmic Engines**:
+  1. **Karp-Rabin Winnowing Core**: *Deterministic Fingerprinting & SBERT Dense Vectors*.
+  2. **AST Syntax Normalizer**: *Syntactic Control-Flow & Homoglyph Evasion Detection*.
+  3. **SHA-256 Merkle Ledger**: *Immutable Audit Proofs & Statutory Certificates*.
+- **Authoritative Manifesto Text**: Replaced generic template "Build with us" copy with **"Mathematical Proof Over Heuristics."** detailing the three-layer forensic pipeline.
+- **Visual Imagery**: Replaced generic human portraits with the platform's authentic 3D glowing geometric prisms (`/images/1.png`, `/images/2.png`, `/images/3.png`), unifying with the Three.js WebGL canvas.
+- **Zero Animation Regressions**: 100% of WebGL canvas shaders, GSAP split-text rotation triggers, and infinite carousel looping remain strictly preserved.
+
+
 
 
