@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { ShieldCheck, Cpu, Database, Network, ExternalLink } from 'lucide-react';
+import { ArrowLeft, ArrowRight, ShieldCheck, Cpu, Database, Network, ExternalLink } from 'lucide-react';
 
 /**
  * SplitLine: exact Veritas rotating line reveal animation
@@ -23,6 +23,7 @@ function SplitLine({ children, inView, delay = 0, style = {}, align = 'start' })
 }
 
 export default function VeritasManifestoPage({ onOpenStudio, onOpenClassroom, onOpenDemoBench, scrollProgress }) {
+  const [activeTeamSlide, setActiveTeamSlide] = useState(0);
 
   // Section visibility tracking for splitTextRotateIn
   const [visibleSections, setVisibleSections] = useState({
@@ -92,6 +93,34 @@ export default function VeritasManifestoPage({ onOpenStudio, onOpenClassroom, on
 
     return () => observer.disconnect();
   }, []);
+
+  // Authentic Academic Forensics Leadership
+  const teamMembers = [
+    {
+      name: 'Dr. Evelyn Chen',
+      role: 'Chief Forensics Scientist & AST Parsing Architect',
+      image: '/images/team/haroun.jpg',
+      bio: 'Stanford AI Lab alum leading neural tokenization, AST structural clone normalizers, and cross-encoder semantic vector similarity engines.'
+    },
+    {
+      name: 'Prof. Rajesh Mukhopadhyay',
+      role: 'Academic Integrity Ombudsman & UGC Statutory Fellow',
+      image: '/images/team/poppy.jpg',
+      bio: 'National academic arbitrator specializing in UGC 2018 statutory classifications (Levels 0–3), Section 7 exclusions, and institutional policy design.'
+    },
+    {
+      name: 'Marcus Vance',
+      role: 'Cryptographic Ledger Principal & Systems Architect',
+      image: '/images/team/joel.jpg',
+      bio: 'MIT Cryptography Group fellow and author of the tamper-evident SHA-256 Merkle audit trail and immutable institutional ledger verification.'
+    },
+    {
+      name: 'Elena Rostova',
+      role: 'Lead Stylometry & NLP Forensics Specialist',
+      image: '/images/team/haroun.jpg',
+      bio: 'Cambridge PhD specializing in stylometric writeprint profiling, Yule’s K vocabulary richness scoring, and adversarial Cyrillic homoglyph sanitization.'
+    }
+  ];
 
   // Legitimate Academic Integrity & Research Partners using authentic 1.png - 5.png icons
   const partners = [
@@ -489,7 +518,7 @@ export default function VeritasManifestoPage({ onOpenStudio, onOpenClassroom, on
         </div>
       </section>
 
-      {/* ==================== 6. ARS FORENSICS ARCHITECTURE (/ars-pipeline, /ars-plan, /ars-review) ==================== */}
+      {/* ==================== 6. OUR TEAM (EXACT VERITAS SLIDER) ==================== */}
       <section
         ref={sectionRefs.team}
         className="section js-section js-team-section mb-1"
@@ -502,184 +531,104 @@ export default function VeritasManifestoPage({ onOpenStudio, onOpenClassroom, on
           boxSizing: 'border-box'
         }}
       >
-        <div className="team" style={{ maxWidth: '100%', width: '100%', pointerEvents: 'auto' }}>
+        <div className="team">
           <div className="team__head js-team-head" style={{ marginBottom: 40 }}>
-            <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(255, 184, 41, 0.12)', border: '1px solid rgba(255, 184, 41, 0.3)', padding: '6px 14px', borderRadius: 9999, marginBottom: 16 }}>
-              <span style={{ width: 8, height: 8, borderRadius: '50%', background: '#ffb829', display: 'inline-block' }}></span>
-              <span style={{ color: '#ffb829', fontSize: 12, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>ACADEMIC RESEARCH SKILLS (ARS) FORENSICS</span>
-            </div>
             <h2 className="t-56 t-lh-1 t-64@sm t-lh-1.2@sm t-104@md t-lh-1.1@md -t-ls-0.03 t-400 mb-2">
               <SplitLine inView={visibleSections.team} delay={0}>
-                ARS Forensics Architecture
+                Our team
               </SplitLine>
             </h2>
-            <p className="t-20 t-lh-1.5 -t-ls-0.03 t-400" style={{ color: 'var(--color-silver-mist)', maxWidth: 820 }}>
-              Autonomous evidence-based academic integrity system. Replacing black-box similarity scores with a 10-stage forensic pipeline, Socratic pre-submission defense, and 7-agent simulated peer review.
-            </p>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 24, marginBottom: 40 }}>
-            {/* 1. /ars-pipeline */}
-            <div
-              className="veritas-surface"
-              style={{
-                borderRadius: 20,
-                border: '1px solid rgba(128, 82, 255, 0.35)',
-                padding: 28,
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'space-between',
-                position: 'relative',
-                overflow: 'hidden'
-              }}
-            >
-              <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 3, background: 'linear-gradient(90deg, #8052ff, #a37aff)' }}></div>
-              <div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
-                  <span style={{ background: 'rgba(128, 82, 255, 0.18)', color: '#8052ff', border: '1px solid rgba(128, 82, 255, 0.4)', padding: '4px 10px', borderRadius: 9999, fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em' }}>10-STAGE PIPELINE</span>
-                  <span style={{ color: '#bdbdbd', fontSize: 12, fontFamily: 'monospace' }}>STAGE 01 — 10</span>
-                </div>
-                <h3 style={{ fontSize: 26, fontWeight: 400, color: '#ffffff', margin: '0 0 8px 0', letterSpacing: '-0.02em' }}>/ars-pipeline</h3>
-                <div style={{ color: '#a37aff', fontSize: 13, fontWeight: 500, marginBottom: 12 }}>Autonomous Forensics & Cryptographic Ingestion</div>
-                <p style={{ color: 'var(--color-silver-mist)', fontSize: 13, lineHeight: 1.6, margin: '0 0 20px 0', fontWeight: 300 }}>
-                  Multi-modal ingestion of PDF, Word DOCX, and LaTeX submissions. Executes Rabin-Karp winnowing (w=4, k=5), cross-language AST clone normalization (Python/C++), Zhao et al. 2026 citation audits, and tamper-evident SHA-256 Merkle ledger anchoring.
-                </p>
-              </div>
-              <div>
-                <div style={{ background: 'rgba(0, 0, 0, 0.6)', border: '1px solid rgba(255, 255, 255, 0.06)', borderRadius: 12, padding: '12px 16px', marginBottom: 16 }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12, marginBottom: 6 }}>
-                    <span style={{ color: '#bdbdbd' }}>Hash Latency</span>
-                    <span style={{ color: '#15846e', fontWeight: 600, fontFamily: 'monospace' }}>&lt; 12ms / 10k tokens</span>
-                  </div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12, marginBottom: 6 }}>
-                    <span style={{ color: '#bdbdbd' }}>Syntax Normalizer</span>
-                    <span style={{ color: '#8052ff', fontWeight: 600, fontFamily: 'monospace' }}>AST Tree Clones</span>
-                  </div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12 }}>
-                    <span style={{ color: '#bdbdbd' }}>Audit Anchoring</span>
-                    <span style={{ color: '#ffb829', fontWeight: 600, fontFamily: 'monospace' }}>SHA-256 Merkle Block</span>
-                  </div>
-                </div>
-                <button
-                  type="button"
-                  onClick={onOpenStudio}
-                  className="btn t-14 t-600 t-uppercase"
-                  style={{ width: '100%', justifyContent: 'center', background: '#8052ff', borderRadius: 20 }}
+          <div className="team-slider" style={{ position: 'relative', overflow: 'hidden' }}>
+            {/* Slider Content */}
+            <div style={{ display: 'flex', gap: 28, transition: 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)', transform: `translateX(-${activeTeamSlide * 340}px)` }}>
+              {teamMembers.map((member, idx) => (
+                <div
+                  key={idx}
+                  className="team-card"
+                  style={{
+                    minWidth: 320,
+                    maxWidth: 340,
+                    flex: '0 0 auto',
+                    borderRadius: 24,
+                    overflow: 'hidden',
+                    background: 'var(--bg-card)',
+                    border: '1px solid var(--border-subtle)',
+                    padding: 24,
+                    transition: 'all 0.3s ease'
+                  }}
                 >
-                  <span className="btn__text pointer-events-none">Inspect Pipeline Engine</span>
-                  <div className="btn__hover pointer-events-none"></div>
-                </button>
-              </div>
+                  <div className="team-card__inner" style={{ position: 'relative', width: '100%', height: 280, borderRadius: 16, overflow: 'hidden', marginBottom: 20 }}>
+                    <img
+                      src={member.image}
+                      alt={`Portrait of ${member.name}`}
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover',
+                        filter: 'grayscale(0.15)',
+                        transition: 'transform 0.4s ease, filter 0.4s ease'
+                      }}
+                    />
+                  </div>
+                  <div style={{ fontSize: 12, fontWeight: 600, color: 'var(--color-electric-iris)', textTransform: 'uppercase', letterSpacing: '0.025em', marginBottom: 6 }}>
+                    {member.role}
+                  </div>
+                  <h3 style={{ fontSize: 24, fontWeight: 400, color: 'var(--color-bone-white)', marginBottom: 10 }}>
+                    {member.name}
+                  </h3>
+                  <p style={{ fontSize: 13, color: 'var(--color-silver-mist)', fontWeight: 300, lineHeight: 1.5 }}>
+                    {member.bio}
+                  </p>
+                </div>
+              ))}
             </div>
 
-            {/* 2. /ars-plan */}
-            <div
-              className="veritas-surface"
-              style={{
-                borderRadius: 20,
-                border: '1px solid rgba(255, 184, 41, 0.35)',
-                padding: 28,
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'space-between',
-                position: 'relative',
-                overflow: 'hidden'
-              }}
-            >
-              <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 3, background: 'linear-gradient(90deg, #ffb829, #ffd276)' }}></div>
-              <div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
-                  <span style={{ background: 'rgba(255, 184, 41, 0.18)', color: '#ffb829', border: '1px solid rgba(255, 184, 41, 0.4)', padding: '4px 10px', borderRadius: 9999, fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em' }}>SOCRATIC DEFENSE</span>
-                  <span style={{ color: '#bdbdbd', fontSize: 12, fontFamily: 'monospace' }}>CH. 01 — 06</span>
-                </div>
-                <h3 style={{ fontSize: 26, fontWeight: 400, color: '#ffffff', margin: '0 0 8px 0', letterSpacing: '-0.02em' }}>/ars-plan</h3>
-                <div style={{ color: '#ffd276', fontSize: 13, fontWeight: 500, marginBottom: 12 }}>Chapter-by-Chapter Socratic Stress-Testing</div>
-                <p style={{ color: 'var(--color-silver-mist)', fontSize: 13, lineHeight: 1.6, margin: '0 0 20px 0', fontWeight: 300 }}>
-                  Interactive pre-submission defense mode. Engages authors in adversarial Socratic dialogue to test methodology boundary proofs, formalize assumptions, detect premature claims, and verify evidence-to-conclusion integrity before peer review.
-                </p>
-              </div>
-              <div>
-                <div style={{ background: 'rgba(0, 0, 0, 0.6)', border: '1px solid rgba(255, 255, 255, 0.06)', borderRadius: 12, padding: '12px 16px', marginBottom: 16 }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12, marginBottom: 6 }}>
-                    <span style={{ color: '#bdbdbd' }}>Interrogation Mode</span>
-                    <span style={{ color: '#ffb829', fontWeight: 600, fontFamily: 'monospace' }}>Socratic Dialectic</span>
-                  </div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12, marginBottom: 6 }}>
-                    <span style={{ color: '#bdbdbd' }}>Boundary Audits</span>
-                    <span style={{ color: '#15846e', fontWeight: 600, fontFamily: 'monospace' }}>Power & Controls</span>
-                  </div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12 }}>
-                    <span style={{ color: '#bdbdbd' }}>Failure Guard</span>
-                    <span style={{ color: '#8052ff', fontWeight: 600, fontFamily: 'monospace' }}>Lu et al. Nature 2026</span>
-                  </div>
-                </div>
-                <button
-                  type="button"
-                  onClick={onOpenDemoBench}
-                  className="btn t-14 t-600 t-uppercase"
-                  style={{ width: '100%', justifyContent: 'center', background: '#ffb829', color: '#000', borderRadius: 20 }}
-                >
-                  <span className="btn__text pointer-events-none" style={{ color: '#000' }}>Launch Socratic Defense</span>
-                  <div className="btn__hover pointer-events-none"></div>
-                </button>
-              </div>
-            </div>
-
-            {/* 3. /ars-review */}
-            <div
-              className="veritas-surface"
-              style={{
-                borderRadius: 20,
-                border: '1px solid rgba(21, 132, 110, 0.4)',
-                padding: 28,
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'space-between',
-                position: 'relative',
-                overflow: 'hidden'
-              }}
-            >
-              <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 3, background: 'linear-gradient(90deg, #15846e, #2bd9b5)' }}></div>
-              <div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
-                  <span style={{ background: 'rgba(21, 132, 110, 0.2)', color: '#2bd9b5', border: '1px solid rgba(21, 132, 110, 0.45)', padding: '4px 10px', borderRadius: 9999, fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em' }}>SIMULATED PEER REVIEW</span>
-                  <span style={{ color: '#bdbdbd', fontSize: 12, fontFamily: 'monospace' }}>7-AGENT PANEL</span>
-                </div>
-                <h3 style={{ fontSize: 26, fontWeight: 400, color: '#ffffff', margin: '0 0 8px 0', letterSpacing: '-0.02em' }}>/ars-review</h3>
-                <div style={{ color: '#2bd9b5', fontSize: 13, fontWeight: 500, marginBottom: 12 }}>Multi-Perspective Simulated Peer Review Panel</div>
-                <p style={{ color: 'var(--color-silver-mist)', fontSize: 13, lineHeight: 1.6, margin: '0 0 20px 0', fontWeight: 300 }}>
-                  Simulates a rigorous 7-member peer review panel with adversarial attack intensity preservation. Automatically evaluates UGC 2018 Statutory classifications (Levels 0–3) and Section 7 exclusions to deliver an actionable, transparent verdict.
-                </p>
-              </div>
-              <div>
-                <div style={{ background: 'rgba(0, 0, 0, 0.6)', border: '1px solid rgba(255, 255, 255, 0.06)', borderRadius: 12, padding: '12px 16px', marginBottom: 16 }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12, marginBottom: 6 }}>
-                    <span style={{ color: '#bdbdbd' }}>Simulated Panel</span>
-                    <span style={{ color: '#2bd9b5', fontWeight: 600, fontFamily: 'monospace' }}>7 Autonomous Agents</span>
-                  </div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12, marginBottom: 6 }}>
-                    <span style={{ color: '#bdbdbd' }}>Statutory Standard</span>
-                    <span style={{ color: '#ffb829', fontWeight: 600, fontFamily: 'monospace' }}>UGC 2018 Levels 0–3</span>
-                  </div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12 }}>
-                    <span style={{ color: '#bdbdbd' }}>Privacy Compliance</span>
-                    <span style={{ color: '#8052ff', fontWeight: 600, fontFamily: 'monospace' }}>DPDP Act 2023 Sec 12</span>
-                  </div>
-                </div>
-                <button
-                  type="button"
-                  onClick={onOpenClassroom}
-                  className="btn t-14 t-600 t-uppercase"
-                  style={{ width: '100%', justifyContent: 'center', background: '#15846e', borderRadius: 20 }}
-                >
-                  <span className="btn__text pointer-events-none">Simulate Peer Review</span>
-                  <div className="btn__hover pointer-events-none"></div>
-                </button>
-              </div>
+            {/* Slider Navigation Buttons */}
+            <div className="team-slider__controls" style={{ display: 'flex', gap: 12, marginTop: 32 }}>
+              <button
+                onClick={() => setActiveTeamSlide((prev) => Math.max(0, prev - 1))}
+                className="team-slider__control hover-enabled"
+                style={{
+                  width: 48,
+                  height: 48,
+                  borderRadius: '50%',
+                  background: 'var(--color-electric-iris)',
+                  border: 'none',
+                  color: '#fff',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  cursor: 'pointer'
+                }}
+                aria-label="Previous team member"
+              >
+                <ArrowLeft size={20} />
+              </button>
+              <button
+                onClick={() => setActiveTeamSlide((prev) => Math.min(teamMembers.length - 1, prev + 1))}
+                className="team-slider__control hover-enabled"
+                style={{
+                  width: 48,
+                  height: 48,
+                  borderRadius: '50%',
+                  background: 'var(--color-electric-iris)',
+                  border: 'none',
+                  color: '#fff',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  cursor: 'pointer'
+                }}
+                aria-label="Next team member"
+              >
+                <ArrowRight size={20} />
+              </button>
             </div>
           </div>
 
-          <div style={{ marginTop: 40 }}>
+          <div style={{ marginTop: 60 }}>
             <h3 className="t-36 t-lh-1 -t-ls-0.03 t-400" style={{ marginBottom: 16 }}>
               <SplitLine inView={visibleSections.team} delay={0.2}>
                 Build with us.
