@@ -106,3 +106,181 @@ html{-webkit-text-size-adjust:100%;line-height:1.15}body{margin:0}main{display:b
 
 /* DESIGN REVIEW: Typography Polish */
 h1,h2,h3,h4,h5,h6,.landing__title,.manifesto__title,.introduction__title,.footer__head h2{text-wrap:balance;-webkit-text-wrap:balance}
+
+/* ==================== VERITAS LIGHT THEME ARCHITECTURE ==================== */
+html[data-theme="light"],
+body[data-theme="light"] {
+  background-color: #f8f9fc !important;
+  color: #0a0b10 !important;
+}
+
+[data-theme="light"] p {
+  text-shadow: none !important;
+  color: #374151;
+}
+
+[data-theme="light"] .landing__title,
+[data-theme="light"] .introduction__title,
+[data-theme="light"] .manifesto__title,
+[data-theme="light"] .team h2,
+[data-theme="light"] .investors__text h2,
+[data-theme="light"] .footer__head h2,
+[data-theme="light"] .h1,
+[data-theme="light"] h1,
+[data-theme="light"] h2,
+[data-theme="light"] h3 {
+  color: #0a0b10 !important;
+  text-shadow: none !important;
+}
+
+[data-theme="light"] .landing__body p,
+[data-theme="light"] .introduction__body,
+[data-theme="light"] .manifesto__body p,
+[data-theme="light"] .team__body p,
+[data-theme="light"] .investors__body p {
+  color: #374151 !important;
+  text-shadow: none !important;
+}
+
+[data-theme="light"] .header-blur-block {
+  background-color: #f8f9fc !important;
+}
+
+[data-theme="light"] .header__bg-inner {
+  background: rgba(248, 249, 252, 0.88) !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="light"] .nav__bg-inner {
+  background: rgba(248, 249, 252, 0.95) !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="light"] .nav__link {
+  color: #52525e !important;
+}
+
+[data-theme="light"] .nav__link:hover,
+[data-theme="light"] .nav__item.isActive .nav__link {
+  color: #0a0b10 !important;
+}
+
+[data-theme="light"] .js-header-logo-text {
+  fill: #0a0b10 !important;
+}
+
+[data-theme="light"] .js-header-logo-text-group text {
+  fill: #0a0b10 !important;
+}
+
+[data-theme="light"] .investor__body .t-32 {
+  color: #0a0b10 !important;
+}
+
+[data-theme="light"] .investor__body .t-grey-4 {
+  color: #52525e !important;
+}
+
+[data-theme="light"] .team-card__image {
+  filter: none !important;
+  -webkit-filter: none !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="light"] .team-card__content h3 {
+  color: #0a0b10 !important;
+  text-shadow: none !important;
+}
+
+[data-theme="light"] .team-card__content span {
+  color: #6d28d9 !important;
+}
+
+[data-theme="light"] .footer__bar {
+  border-top: 1px solid rgba(0, 0, 0, 0.08) !important;
+  background: rgba(248, 249, 252, 0.88) !important;
+}
+
+[data-theme="light"] .footer__copyright {
+  color: #52525e !important;
+}
+
+[data-theme="light"] .footer__nav__link {
+  color: #52525e !important;
+}
+
+[data-theme="light"] .footer__nav__link:hover {
+  color: #0a0b10 !important;
+}
+
+[data-theme="light"] .footer__social__icon {
+  fill: #52525e !important;
+}
+
+[data-theme="light"] .footer__social__link:hover .footer__social__icon {
+  fill: #0a0b10 !important;
+}
+
+[data-theme="light"] .cookie-notice {
+  background: rgba(255, 255, 255, 0.95) !important;
+  border: 1px solid rgba(0, 0, 0, 0.1) !important;
+  color: #0a0b10 !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08) !important;
+}
+
+[data-theme="light"] .cookie-notice__body {
+  color: #374151 !important;
+}
+
+[data-theme="light"] .cookie-notice a {
+  color: #6d28d9 !important;
+}
+
+[data-theme="light"] .asscrollbar__handle>div {
+  background-color: #0a0b10 !important;
+}
+
+[data-theme="light"] .value-card {
+  background: rgba(255, 255, 255, 0.95) !important;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06) !important;
+}
+
+[data-theme="light"] .veritas-studio-card {
+  background: #ffffff !important;
+  border: 1px solid rgba(0, 0, 0, 0.1) !important;
+  color: #0a0b10 !important;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.15) !important;
+}
+
+[data-theme="light"] .veritas-studio-card h2 {
+  color: #0a0b10 !important;
+}
+
+[data-theme="light"] .veritas-tab-btn {
+  border-color: rgba(0, 0, 0, 0.15) !important;
+  color: #52525e !important;
+}
+
+[data-theme="light"] .veritas-tab-btn:hover {
+  border-color: rgba(0, 0, 0, 0.4) !important;
+  color: #0a0b10 !important;
+}
+
+[data-theme="light"] .veritas-tab-btn.active {
+  background: #6d28d9 !important;
+  border-color: #6d28d9 !important;
+  color: #ffffff !important;
+}
+
+[data-theme="light"] #veritas-doc-preview {
+  background: #f1f3f7 !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+  color: #0f172a !important;
+}
+
+[data-theme="light"] #canvas {
+  filter: invert(1) hue-rotate(180deg);
+  opacity: 0.65;
+}
+
