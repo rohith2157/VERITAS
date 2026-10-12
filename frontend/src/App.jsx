@@ -157,6 +157,9 @@ export default function App() {
           color: 'var(--color-bone-white, #ffffff)',
           fontFamily: "var(--font-ppneuemontreal, 'PPNeueMontreal', -apple-system, BlinkMacSystemFont, sans-serif)",
           overflowY: 'auto',
+          scrollBehavior: 'smooth',
+          WebkitOverflowScrolling: 'touch',
+          overscrollBehaviorY: 'contain',
           display: 'flex',
           flexDirection: 'column'
         }}
