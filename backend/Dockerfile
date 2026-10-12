@@ -32,10 +32,10 @@ COPY --from=builder --chown=spring:spring /build/target/veritas-backend-*.jar /a
 
 # Render dynamic port and memory guardrails
 # Render free tier gives 512 MB RAM. Capping heap to 384 MB prevents OOM kills.
-ENV PORT=8080
+ENV PORT=10000
 ENV JAVA_OPTS="-Xms128m -Xmx384m -XX:+UseG1GC -XX:+ExitOnOutOfMemoryError"
 
-EXPOSE 8080
+EXPOSE 10000
 
-ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -Dserver.port=${PORT} -jar /app/app.jar"]
+ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -Dserver.address=0.0.0.0 -Dserver.port=${PORT} -jar /app/app.jar"]
 

@@ -38,6 +38,8 @@ services:
     healthCheckPath: /api/classrooms
     autoDeploy: true
     envVars:
+      - key: PORT
+        value: 10000
       - key: SPRING_PROFILES_ACTIVE
         value: prod
       - key: CORS_ALLOWED_ORIGINS
