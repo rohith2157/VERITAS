@@ -40,8 +40,13 @@ export function getApiUrl(path) {
     return AI_ENGINE_URL ? `${AI_ENGINE_URL}${subPath}` : subPath;
   }
 
-  // Already an absolute external URL
-  if (cleanPath.startsWith('http://') || cleanPath.startsWith('https://')) {
+  // Already an absolute external URL or data/blob URI
+  if (
+    cleanPath.startsWith('http://') ||
+    cleanPath.startsWith('https://') ||
+    cleanPath.startsWith('blob:') ||
+    cleanPath.startsWith('data:')
+  ) {
     return cleanPath;
   }
 
