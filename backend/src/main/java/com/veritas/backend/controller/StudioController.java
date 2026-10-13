@@ -10,7 +10,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/studio")
-@CrossOrigin(origins = "*")
+@CrossOrigin(originPatterns = "*")
 public class StudioController {
 
     private final AiEngineClient aiEngineClient;

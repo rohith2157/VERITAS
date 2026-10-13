@@ -21,7 +21,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/api/graph")
-@CrossOrigin(origins = "*")
+@CrossOrigin(originPatterns = "*")
 public class GraphController {
 
     private static final Logger log = LoggerFactory.getLogger(GraphController.class);

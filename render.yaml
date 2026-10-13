@@ -35,7 +35,7 @@ services:
     region: singapore
     rootDir: backend
     dockerfilePath: Dockerfile
-    healthCheckPath: /api/classrooms
+    healthCheckPath: /api/studio/health
     autoDeploy: true
     envVars:
       - key: PORT
