@@ -34,23 +34,39 @@ public class DataSourceConfig {
         HikariConfig config = new HikariConfig();
 
         if (envDbUrl != null && !envDbUrl.isBlank()) {
-            log.info(">>> [DATABASE ENGINE] Production DATABASE_URL DETECTED. Connecting to cloud database...");
-            // Handle postgres:// URI scheme if passed directly by cloud providers
-            String jdbcUrl = envDbUrl;
-            if (jdbcUrl.startsWith("postgres://")) {
-                jdbcUrl = jdbcUrl.replaceFirst("postgres://", "jdbc:postgresql://");
-            } else if (jdbcUrl.startsWith("postgresql://") && !jdbcUrl.startsWith("jdbc:postgresql://")) {
-                jdbcUrl = "jdbc:" + jdbcUrl;
+            log.info(">>> [DATABASE ENGINE] Production DATABASE_URL DETECTED. Connecting to cloud PostgreSQL database...");
+            try {
+                String cleanUri = envDbUrl.startsWith("jdbc:") ? envDbUrl.substring(5) : envDbUrl;
+                java.net.URI dbUri = new java.net.URI(cleanUri);
+                String host = dbUri.getHost();
+                int port = dbUri.getPort() > 0 ? dbUri.getPort() : 5432;
+                String path = dbUri.getPath();
+                String jdbcUrl = "jdbc:postgresql://" + host + ":" + port + path;
+                config.setJdbcUrl(jdbcUrl);
+
+                String userInfo = dbUri.getUserInfo();
+                if (userInfo != null && userInfo.contains(":")) {
+                    String[] parts = userInfo.split(":", 2);
+                    config.setUsername(parts[0]);
+                    config.setPassword(parts[1]);
+                } else {
+                    String dbUser = System.getenv("SPRING_DATASOURCE_USERNAME");
+                    String dbPass = System.getenv("SPRING_DATASOURCE_PASSWORD");
+                    if (dbUser != null) config.setUsername(dbUser);
+                    if (dbPass != null) config.setPassword(dbPass);
+                }
+                config.setDriverClassName("org.postgresql.Driver");
+                config.setPoolName("VeritasCloudPostgreSqlPool");
+                config.setConnectionTimeout(10000);
+                config.setMaximumPoolSize(4);
+                config.setMinimumIdle(1);
+                return new HikariDataSource(config);
+            } catch (Exception e) {
+                log.warn(">>> [DATABASE ENGINE] Could not parse DATABASE_URL ({}), falling back to H2.", e.getMessage());
             }
-            config.setJdbcUrl(jdbcUrl);
-            String dbUser = System.getenv("SPRING_DATASOURCE_USERNAME");
-            String dbPass = System.getenv("SPRING_DATASOURCE_PASSWORD");
-            if (dbUser != null) config.setUsername(dbUser);
-            if (dbPass != null) config.setPassword(dbPass);
-            config.setDriverClassName("org.postgresql.Driver");
-            config.setPoolName("VeritasCloudPostgreSqlPool");
-            config.setConnectionTimeout(5000);
-        } else if (checkPostgresPort("localhost", 2157, 500)) {
+        }
+
+        if (checkPostgresPort("localhost", 2157, 500)) {
             log.info(">>> [DATABASE ENGINE] Local PostgreSQL port 2157 DETECTED. Connecting to PostgreSQL (veritasdb)...");
             config.setJdbcUrl("jdbc:postgresql://localhost:2157/veritasdb");
             config.setUsername("postgres");
@@ -68,8 +84,8 @@ public class DataSourceConfig {
             config.setConnectionTimeout(3000);
         }
 
-        config.setMaximumPoolSize(10);
-        config.setMinimumIdle(2);
+        config.setMaximumPoolSize(5);
+        config.setMinimumIdle(1);
         return new HikariDataSource(config);
     }
 
