@@ -7,25 +7,36 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.core.env.Environment;
 
 import javax.sql.DataSource;
 import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.util.Arrays;
 
 /**
- * Intelligent self-healing dual-mode DataSource configuration.
- * - If PostgreSQL is online on port 2157: connects to PostgreSQL (veritasdb)
- * - If PostgreSQL is offline: gracefully falls back to embedded in-memory H2 database
- * Never crashes Spring Boot on startup.
+ * Enterprise Production DataSource configuration with Strict Production Integrity:
+ * - In PRODUCTION profile ('prod'): STRICTLY connects to PostgreSQL (DATABASE_URL or localhost:2157).
+ *   Refuses to start with an ephemeral in-memory database to prevent silent data loss.
+ * - In DEVELOPMENT / TEST profiles: Gracefully falls back to embedded in-memory H2 database.
  */
 @Configuration
 public class DataSourceConfig {
 
     private static final Logger log = LoggerFactory.getLogger(DataSourceConfig.class);
 
+    private final Environment environment;
+
+    public DataSourceConfig(Environment environment) {
+        this.environment = environment;
+    }
+
     @Bean
     @Primary
     public DataSource dataSource() {
+        boolean isProdProfile = Arrays.asList(environment.getActiveProfiles()).contains("prod") ||
+                "prod".equalsIgnoreCase(System.getenv("SPRING_PROFILES_ACTIVE"));
+
         String envDbUrl = System.getenv("DATABASE_URL");
         if (envDbUrl == null || envDbUrl.isBlank()) {
             envDbUrl = System.getenv("SPRING_DATASOURCE_URL");
@@ -62,7 +73,10 @@ public class DataSourceConfig {
                 config.setMinimumIdle(1);
                 return new HikariDataSource(config);
             } catch (Exception e) {
-                log.warn(">>> [DATABASE ENGINE] Could not parse DATABASE_URL ({}), falling back to H2.", e.getMessage());
+                if (isProdProfile) {
+                    throw new IllegalStateException("CRITICAL PRODUCTION DATABASE ERROR: Failed to parse or connect to production DATABASE_URL: " + e.getMessage(), e);
+                }
+                log.warn(">>> [DATABASE ENGINE] Could not parse DATABASE_URL ({}), falling back to local detection.", e.getMessage());
             }
         }
 
@@ -74,16 +88,26 @@ public class DataSourceConfig {
             config.setDriverClassName("org.postgresql.Driver");
             config.setPoolName("VeritasPostgreSqlPool");
             config.setConnectionTimeout(3000);
-        } else {
-            log.warn(">>> [DATABASE ENGINE] PostgreSQL NOT DETECTED. Self-healing fallback: Initializing embedded in-memory H2 database.");
-            config.setJdbcUrl("jdbc:h2:mem:veritasdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;MODE=PostgreSQL");
-            config.setUsername("sa");
-            config.setPassword("");
-            config.setDriverClassName("org.h2.Driver");
-            config.setPoolName("VeritasH2FallbackPool");
-            config.setConnectionTimeout(3000);
+            config.setMaximumPoolSize(5);
+            config.setMinimumIdle(1);
+            return new HikariDataSource(config);
         }
 
+        if (isProdProfile) {
+            throw new IllegalStateException(
+                "CRITICAL PRODUCTION ERROR: The application is configured with SPRING_PROFILES_ACTIVE=prod, " +
+                "but no persistent PostgreSQL database was reachable (checked DATABASE_URL and localhost:2157). " +
+                "Silent in-memory H2 fallback is disabled in production to protect institutional data integrity."
+            );
+        }
+
+        log.warn(">>> [DATABASE ENGINE] PostgreSQL NOT DETECTED in Dev/Test mode. Initializing embedded in-memory H2 database.");
+        config.setJdbcUrl("jdbc:h2:mem:veritasdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;MODE=PostgreSQL");
+        config.setUsername("sa");
+        config.setPassword("");
+        config.setDriverClassName("org.h2.Driver");
+        config.setPoolName("VeritasH2FallbackPool");
+        config.setConnectionTimeout(3000);
         config.setMaximumPoolSize(5);
         config.setMinimumIdle(1);
         return new HikariDataSource(config);
@@ -98,4 +122,3 @@ public class DataSourceConfig {
         }
     }
 }
-
