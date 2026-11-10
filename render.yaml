@@ -4,6 +4,7 @@
 #   1. veritas-ai-engine (Python FastAPI Uvicorn Web Service)
 #   2. veritas-backend (Java 21 Spring Boot 3 Docker Web Service)
 #   3. veritas-frontend (React 19 Vite Static Site with Global CDN)
+#   4. veritas-db (PostgreSQL 18 Database)
 
 services:
   # ============================================================================
@@ -23,7 +24,7 @@ services:
       - key: PYTHON_VERSION
         value: 3.11.9
       - key: CORS_ALLOWED_ORIGINS
-        value: "*"
+        value: "https://veritas-frontend.onrender.com,http://localhost:5173,http://localhost:8080"
 
   # ============================================================================
   # 2. Veritas Academic Ledger & Classroom Backend
@@ -43,7 +44,7 @@ services:
       - key: SPRING_PROFILES_ACTIVE
         value: prod
       - key: CORS_ALLOWED_ORIGINS
-        value: "*"
+        value: "https://veritas-frontend.onrender.com,http://localhost:5173,http://localhost:8080"
       - key: VERITAS_AI_ENGINE_URL
         fromService:
           type: web
@@ -99,4 +100,3 @@ databases:
     user: veritas
     region: singapore
     plan: free
-
